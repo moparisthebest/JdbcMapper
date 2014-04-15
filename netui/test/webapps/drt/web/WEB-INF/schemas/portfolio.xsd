@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.openuri.org/customerPortfolio"
+            xmlns:folio="http://www.openuri.org/customerPortfolio"
+            elementFormDefault="qualified">
+
+    <xsd:simpleType name="exchangeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="nyse"/>
+            <xsd:enumeration value="nasdaq"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:complexType name="stock">
+        <xsd:sequence>
+            <xsd:element name="symbol" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="price" type="xsd:double"/>
+            <xsd:element name="web" type="xsd:string"/>
+            <xsd:element name="shares" type="xsd:int"/>
+        </xsd:sequence>
+        <xsd:attribute name="exchange" type="folio:exchangeType" use="required"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="stocks">
+        <xsd:sequence>
+            <xsd:element name="stock" type="folio:stock" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="portfolio">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="stocks" type="folio:stocks" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

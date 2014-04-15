@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PI_ControlsOverride\ControlsController.java:17: This control field conflicts with another of the same name in superclass PI_ControlsOverride.parent.ControlsController.
+    protected GreetingsControlBean myControl;
+                                   ^
+1 error

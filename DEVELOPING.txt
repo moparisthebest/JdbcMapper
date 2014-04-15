@@ -1,0 +1,83 @@
+
+Developing in Beehive
+=====================
+
+Hey; we're glad you're here!  If you're interested in developing Beehive, the 
+information below is for you.  First, make sure you've read the introduction
+for Beehive contributors here:
+
+  http://wiki.apache.org/beehive/For_Beehive_Developers  
+
+This should help you get started setting up Beehive in your IDE and navigating
+what code is where.  
+
+You'll also need to configure your Subversion client to handle end-of-line styles
+correctly.  To do this, follow the directions below.
+
+Configuring your Subversion client
+==================================
+
+Every text file must have the svn:eol-style property set to 'native'.  This
+causes ends-of-line to be translated to the correct format for the local
+operating system when files are checked out (e.g., LF on linux, CR/LF on
+Windows).  You can do this on a per-file basis using the 'svn propset' command:
+
+     svn propset svn:eol-style native <file path>
+
+An easier way to ensure that all added files have the right properties set is
+to use the "auto-props" feature in the SVN client configuration file.  The
+location of this file varies depending on the operating system (see
+http://svnbook.red-bean.com/svnbook/book.html#svn-ch-7-sect-1).
+On Linux/UNIX it is located:
+
+   ~/.subversion/config
+
+On Windows, it is typically located in a hidden directory:
+
+   %SYSROOT%\Documents and Settings\<user name>\Application Data\Subversion
+If you have problems locating this, make sure you can view hidden directory 
+contents.
+
+Confirm the "header" named [miscellany] is uncommented.
+
+Then, add (uncomment) the following line under the "[miscellany]" section:
+
+    enable-auto-props = yes
+
+Then, add (uncomment) an "[auto-props]" section (include the [auto-props] 
+header as well) with a list of file extensions that will automatically 
+trigger the svn:eol-style=native property:
+
+[auto-props]
+*.txt = svn:eol-style=native
+*.java = svn:eol-style=native
+*.jj = svn:eol-style=native
+*.xml = svn:eol-style=native
+*.xsd = svn:eol-style=native
+*.xsdconfig = svn:eol-style=native
+*.dtd = svn:eol-style=native
+*.properties = svn:eol-style=native
+*.jcs = svn:eol-style=native
+*.jcx = svn:eol-style=native
+*.jpf = svn:eol-style=native
+*.jpfs = svn:eol-style=native
+Global.app = svn:eol-style=native
+*.jsp* = svn:eol-style=native
+*.jspx = svn:eol-style=native
+*.jspf = svn:eol-style=native
+*.jsf = svn:eol-style=native
+*.jsfb = svn:eol-style=native
+*.faces = svn:eol-style=native
+*.tld = svn:eol-style=native
+*.tldx = svn:eol-style=native
+*.tag = svn:eol-style=native
+*.tagf = svn:eol-style=native
+*.html = svn:eol-style=native
+*.css = svn:eol-style=native
+*.js = svn:eol-style=native
+*.inc = svn:eol-style=native
+*.sh = svn:eol-style=native;svn:executable
+*.cmd = svn:eol-style=native
+*.pl = svn:eol-style=native
+*.py = svn:eol-style=native
+*.beaninfo = svn:eol-style=native

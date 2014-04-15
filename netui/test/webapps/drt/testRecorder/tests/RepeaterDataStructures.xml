@@ -1,0 +1,2304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>RepeaterDataStructures</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>02 Aug 2004, 02:59:08.468 PM MDT</ses:startDate>
+   <ses:description>ekoneil</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/index.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies/>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>*/*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Repeater Data Structure Tests</title>
+  </head>
+
+  <body>
+    <b>Repeater Data Structure Tests</b>
+<br/>
+<br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/arrayRepeater.jsp">Array Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/listRepeater.jsp">List Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/vectorRepeater.jsp">Vector Repeater</a><br/>
+    <hr>
+    <address><a href="mailto:ekoneil@bea.com"></a></address>
+<!-- Created: Thu Aug 14 14:24:33 Mountain Daylight Time 2003 -->
+<!-- hhmts start -->
+Last modified: Thu Aug 14 14:25:26 Mountain Daylight Time 2003
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/arrayRepeater.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>A4AF6E74A52901576A22820817331A43</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=A4AF6E74A52901576A22820817331A43; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Array Repeater Tests</title>
+</head>
+<body>
+
+
+<!-- 
+A generic page that will consume data from some data source 
+This page expects the following data structures:
+
+- multiItemDataSource
+- singleItemDataSource
+- zeroItemDataSource
+- nullItemDataSource
+
+ -->
+<hr/>
+<b>Data Structures</b><br/>
+request.getAttribute("multiItemDataSource"): not null.  type: [Ldatabinding.SimpleJavaBean;<br/>request.getAttribute("singleItemDataSource"): not null.  type: [Ldatabinding.SimpleJavaBean;<br/>request.getAttribute("zeroItemDataSource"): not null.  type: [Ldatabinding.SimpleJavaBean;<br/>request.getAttribute("nullItemDataSource"): null
+<hr/>    
+<p><b>Repeater Test</b>
+<table><tr><td><a href="index.jsp">Data Structures Home</a></td></tr></table>
+<br>
+<h3>Body Content Tests</h3>
+<br/><br/><h2>Data Set: multiItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<br/><br/><h2>Data Set: singleItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<br/><br/><h2>Data Set: zeroItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+</table>
+<br/><br/><h2>Data Set: nullItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+</table>
+
+
+
+<address><a href="mailto:ekoneil@bea.com">Report Problems</a></address>
+<!-- Created: Wed Aug 07 10:07:00 Mountain Daylight Time 2002 -->
+<!-- hhmts start -->
+Last modified: Sun Jun 27 21:02:24 Mountain Standard Time 2004
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/index.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>A4AF6E74A52901576A22820817331A43</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=A4AF6E74A52901576A22820817331A43; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Repeater Data Structure Tests</title>
+  </head>
+
+  <body>
+    <b>Repeater Data Structure Tests</b>
+<br/>
+<br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/arrayRepeater.jsp">Array Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/listRepeater.jsp">List Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/vectorRepeater.jsp">Vector Repeater</a><br/>
+    <hr>
+    <address><a href="mailto:ekoneil@bea.com"></a></address>
+<!-- Created: Thu Aug 14 14:24:33 Mountain Daylight Time 2003 -->
+<!-- hhmts start -->
+Last modified: Thu Aug 14 14:25:26 Mountain Daylight Time 2003
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/listRepeater.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>A4AF6E74A52901576A22820817331A43</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=A4AF6E74A52901576A22820817331A43; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>List Repeater Tests</title>
+</head>
+<body>
+
+
+<!-- 
+A generic page that will consume data from some data source 
+This page expects the following data structures:
+
+- multiItemDataSource
+- singleItemDataSource
+- zeroItemDataSource
+- nullItemDataSource
+
+ -->
+<hr/>
+<b>Data Structures</b><br/>
+request.getAttribute("multiItemDataSource"): not null.  type: java.util.ArrayList<br/>request.getAttribute("singleItemDataSource"): not null.  type: java.util.ArrayList<br/>request.getAttribute("zeroItemDataSource"): not null.  type: java.util.ArrayList<br/>request.getAttribute("nullItemDataSource"): null
+<hr/>    
+<p><b>Repeater Test</b>
+<table><tr><td><a href="index.jsp">Data Structures Home</a></td></tr></table>
+<br>
+<h3>Body Content Tests</h3>
+<br/><br/><h2>Data Set: multiItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<br/><br/><h2>Data Set: singleItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<br/><br/><h2>Data Set: zeroItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+</table>
+<br/><br/><h2>Data Set: nullItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+</table>
+
+
+
+<address><a href="mailto:ekoneil@bea.com">Report Problems</a></address>
+<!-- Created: Wed Aug 07 10:07:00 Mountain Daylight Time 2002 -->
+<!-- hhmts start -->
+Last modified: Sun Jun 27 21:02:41 Mountain Standard Time 2004
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/index.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>A4AF6E74A52901576A22820817331A43</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=A4AF6E74A52901576A22820817331A43; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Repeater Data Structure Tests</title>
+  </head>
+
+  <body>
+    <b>Repeater Data Structure Tests</b>
+<br/>
+<br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/arrayRepeater.jsp">Array Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/listRepeater.jsp">List Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/vectorRepeater.jsp">Vector Repeater</a><br/>
+    <hr>
+    <address><a href="mailto:ekoneil@bea.com"></a></address>
+<!-- Created: Thu Aug 14 14:24:33 Mountain Daylight Time 2003 -->
+<!-- hhmts start -->
+Last modified: Thu Aug 14 14:25:26 Mountain Daylight Time 2003
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/vectorRepeater.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>A4AF6E74A52901576A22820817331A43</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=A4AF6E74A52901576A22820817331A43; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>List Repeater Tests</title>
+</head>
+<body>
+
+
+<!-- 
+A generic page that will consume data from some data source 
+This page expects the following data structures:
+
+- multiItemDataSource
+- singleItemDataSource
+- zeroItemDataSource
+- nullItemDataSource
+
+ -->
+<hr/>
+<b>Data Structures</b><br/>
+request.getAttribute("multiItemDataSource"): not null.  type: java.util.Vector<br/>request.getAttribute("singleItemDataSource"): not null.  type: java.util.Vector<br/>request.getAttribute("zeroItemDataSource"): not null.  type: java.util.Vector<br/>request.getAttribute("nullItemDataSource"): null
+<hr/>    
+<p><b>Repeater Test</b>
+<table><tr><td><a href="index.jsp">Data Structures Home</a></td></tr></table>
+<br>
+<h3>Body Content Tests</h3>
+<br/><br/><h2>Data Set: multiItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 1</span></td>
+            <td><center><span>1</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[1].index}" value="1" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 2</span></td>
+            <td><center><span>2</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[2].index}" value="2" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 3</span></td>
+            <td><center><span>3</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[3].index}" value="3" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 4</span></td>
+            <td><center><span>4</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[4].index}" value="4" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 5</span></td>
+            <td><center><span>5</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[5].index}" value="5" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 6</span></td>
+            <td><center><span>6</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[6].index}" value="6" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 7</span></td>
+            <td><center><span>7</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[7].index}" value="7" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 8</span></td>
+            <td><center><span>8</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[8].index}" value="8" size="7"></td>
+        </tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 9</span></td>
+            <td><center><span>9</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[9].index}" value="9" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<br/><br/><h2>Data Set: singleItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr>
+            <td><span>message from SimpleJavaBean: 0</span></td>
+            <td><center><span>0</span></center></td>
+            <td><input type="text" name="{pageScope.currentSource[0].index}" value="0" size="7"></td>
+        </tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+        <table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+    
+        <tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+        </table>
+    
+</table>
+<br/><br/><h2>Data Set: zeroItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+</table>
+<br/><br/><h2>Data Set: nullItemDataSource</h2><br/><br/>
+<h3>Body Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<hr/>
+<h3>Item Contet Tests</h3>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- items, no header, no footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+<!-- ====================================================================== -->
+<br/><b>Basic Data Source Test -- items, header, footer</b><br/>
+
+<hr/>    
+<h3>ErrorTests</h3></br>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, no footer</b><br/>
+
+<tr><td colspan=3><center>This space intentionally left blank.</center></td></tr>
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, no header, footer</b><br/>
+<table border=1><tr><td><center>Column 1</center></td><td><center>Column 2</center></td><td><center>Column 3</center></td></tr>
+
+</table>
+<!-- ====================================================================== -->
+<b>Basic Data Source Test -- body content, header, footer</b><br/>
+
+</table>
+
+
+
+<address><a href="mailto:ekoneil@bea.com">Report Problems</a></address>
+<!-- Created: Wed Aug 07 10:07:00 Mountain Daylight Time 2002 -->
+<!-- hhmts start -->
+Last modified: Sun Jun 27 21:02:55 Mountain Standard Time 2004
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/repeater/dataStructures/index.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>A4AF6E74A52901576A22820817331A43</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=A4AF6E74A52901576A22820817331A43; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-4dd291f9:fe21458fcd:-7b52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Repeater Data Structure Tests</title>
+  </head>
+
+  <body>
+    <b>Repeater Data Structure Tests</b>
+<br/>
+<br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/arrayRepeater.jsp">Array Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/listRepeater.jsp">List Repeater</a><br/>
+<a href="/coreWeb/databinding/repeater/dataStructures/vectorRepeater.jsp">Vector Repeater</a><br/>
+    <hr>
+    <address><a href="mailto:ekoneil@bea.com"></a></address>
+<!-- Created: Thu Aug 14 14:24:33 Mountain Daylight Time 2003 -->
+<!-- hhmts start -->
+Last modified: Thu Aug 14 14:25:26 Mountain Daylight Time 2003
+<!-- hhmts end -->
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>02 Aug 2004, 02:59:12.359 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>7</ses:testCount>
+   <ses:passedCount>4</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>J326</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Apr 2005, 10:58:37.566 AM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/j326/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-7b81</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Netui Tree Requirements
+        </title>
+    </head>
+    <body>
+<H3>Mixed Content</H3>
+<a href="/coreWeb/bugs/j326/resetTrees.do">Reset Trees</a><BR />
+<p style="color:green">This test verifies that labels defined in bodies don't
+actually get rendered if the treeItem also contains children.  This is a 
+a mixed content situation, and we don't allow it.  Instead, the tree needs
+to use treeLabel to define it's labels.  Below you should only see labels for TreeItem1.1.1.  All other labels should be blank.
+</p>
+Action: begin<br>
+<div>
+   <div>
+      <a href="/coreWeb/bugs/j326/myExpansionAction.do?netui_treenode=0&amp;netui_treeid=selectExpandJspTree1"><img src="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" style="vertical-align:bottom;" border="0" alt="Expand Tree Element"></a>
+      <a href="/coreWeb/bugs/j326/mySelectionAction.do?netui_treeselected=0&amp;netui_treeid=selectExpandJspTree1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree Node">&nbsp;</a>
+   </div>
+</div>
+
+
+<BR />
+
+</body>
+
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/j326/myExpansionAction.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_treeid</ses:name>
+                  <ses:value>selectExpandJspTree1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>netui_treenode</ses:name>
+                  <ses:value>0</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>-------</ses:name>
+                  <ses:value>----:-----------:-------------------------------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-7b81</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Netui Tree Requirements
+        </title>
+    </head>
+    <body>
+<H3>Mixed Content</H3>
+<a href="/coreWeb/bugs/j326/resetTrees.do">Reset Trees</a><BR />
+<p style="color:green">This test verifies that labels defined in bodies don't
+actually get rendered if the treeItem also contains children.  This is a 
+a mixed content situation, and we don't allow it.  Instead, the tree needs
+to use treeLabel to define it's labels.  Below you should only see labels for TreeItem1.1.1.  All other labels should be blank.
+</p>
+Action: myExpansionAction<br>
+<div>
+   <div>
+      <a href="/coreWeb/bugs/j326/myExpansionAction.do?netui_treenode=0&amp;netui_treeid=selectExpandJspTree1"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j326/mySelectionAction.do?netui_treeselected=0&amp;netui_treeid=selectExpandJspTree1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree Node">&nbsp;</a>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/bugs/j326/myExpansionAction.do?netui_treenode=0.0&amp;netui_treeid=selectExpandJspTree1"><img src="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" style="vertical-align:bottom;" border="0" alt="Expand Tree Element"></a>
+      <a href="/coreWeb/bugs/j326/mySelectionAction.do?netui_treeselected=0.0&amp;netui_treeid=selectExpandJspTree1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree Node">&nbsp;</a>
+   </div>
+</div>
+
+
+<BR />
+
+</body>
+
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/j326/myExpansionAction.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_treeid</ses:name>
+                  <ses:value>selectExpandJspTree1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>netui_treenode</ses:name>
+                  <ses:value>0.0</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>-------</ses:name>
+                  <ses:value>----:-----------:----------------------------------------------------------------------------------------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-7b81</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Netui Tree Requirements
+        </title>
+    </head>
+    <body>
+<H3>Mixed Content</H3>
+<a href="/coreWeb/bugs/j326/resetTrees.do">Reset Trees</a><BR />
+<p style="color:green">This test verifies that labels defined in bodies don't
+actually get rendered if the treeItem also contains children.  This is a 
+a mixed content situation, and we don't allow it.  Instead, the tree needs
+to use treeLabel to define it's labels.  Below you should only see labels for TreeItem1.1.1.  All other labels should be blank.
+</p>
+Action: myExpansionAction<br>
+<div>
+   <div>
+      <a href="/coreWeb/bugs/j326/myExpansionAction.do?netui_treenode=0&amp;netui_treeid=selectExpandJspTree1"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j326/mySelectionAction.do?netui_treeselected=0&amp;netui_treeid=selectExpandJspTree1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree Node">&nbsp;</a>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/bugs/j326/myExpansionAction.do?netui_treenode=0.0&amp;netui_treeid=selectExpandJspTree1"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j326/mySelectionAction.do?netui_treeselected=0.0&amp;netui_treeid=selectExpandJspTree1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree Node">&nbsp;</a>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j326/mySelectionAction.do?netui_treeselected=0.0.0&amp;netui_treeid=selectExpandJspTree1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="TreeItem1.1.1">&nbsp;TreeItem1.1.1&nbsp;</a>
+   </div>
+</div>
+
+
+<BR />
+
+</body>
+
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Apr 2005, 10:58:38.227 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>3</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

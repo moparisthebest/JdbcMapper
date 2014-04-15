@@ -1,0 +1,315 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * $Header:$
+ */
+
+options {
+  STATIC = false;
+  UNICODE_INPUT = true;
+  DEBUG_TOKEN_MANAGER = false;
+  DEBUG_PARSER = false;
+}
+
+//
+// parser declarations
+//
+PARSER_BEGIN(SqlGrammar)
+
+package org.apache.beehive.controls.system.jdbc.parser;
+import java.io.StringReader;
+
+public class SqlGrammar
+{
+    private StringBuilder buffer = new StringBuilder();
+    public static void main(String[] args) throws Exception
+    {
+        SqlGrammar parser = new SqlGrammar(new StringReader(args[0]));
+        SqlStatement statement = parser.parse();
+        System.out.println(statement.toString());
+    }
+}
+
+PARSER_END(SqlGrammar)
+
+//
+// token mgr decls
+//
+TOKEN_MGR_DECLS : { }
+
+//
+// default token mgr state -- just collect anything until a { or ' is read
+//
+<DEFAULT> TOKEN:
+{
+        < NON_EXPRESSION_TEXT : (~["{","}","'"])+ >
+      | < START_EXPRESSION    : "{"> : IN_EXPRESSION
+      | < SQUOTE              : "'"> : IN_LITERAL
+}
+
+//
+// this token mgr state is used to skip over literal values which occur in non_expression_text,
+// they need to be skipped in this state since they may contain a '{}' which needs to be ignored.
+//
+<IN_LITERAL> TOKEN:
+{
+       <STRING_LITERAL :  (((~["'", "\\", "\n", "\r"])|<ECMA_ESCAPE_SEQUENCE>)* "'") > : DEFAULT
+     | <#ECMA_ESCAPE_SEQUENCE: "\\" |
+       (
+        ["n", "t", "b", "r", "f", "\\", "\""] |
+        ["0"-"7"] (["0"-"7"])? |
+        ["0"-"3"] ["0"-"7"] ["0"-"7"] |
+        ["x","X"] <HIT> <HIT> |
+        ["u","U"] <HIT> <HIT> <HIT> <HIT>
+       )
+      >
+     | <#HIT: ["0"-"9","a"-"f","A"-"F"] >
+}
+
+//
+// state for parse db control sql expressions, delimited by {}
+//
+<IN_EXPRESSION> TOKEN [IGNORE_CASE]:
+{
+       <END_EXPRESSION : "}" > { SwitchTo(DEFAULT); }
+     | <REFLECT_SEP    : "|">
+     | <SQL_ESCAPE     : "sql:"(<WHITESPACE>)+>
+     | <SQL_SUBST      : "sql:"(<WHITESPACE>)*"subst"(<WHITESPACE>)+>
+     | <SQL_FN         : "sql:"(<WHITESPACE>)*"fn"(<WHITESPACE>)+> : IN_SQLFN
+     | <JDBC_CALL      : "call"(<WHITESPACE>)+> : IN_JDBC
+     | <JDBC_RET       : "?"(<WHITESPACE>)*"="(<WHITESPACE>)*> : IN_JDBC
+     | <JDBC_DATE      : "d"(<WHITESPACE>)+> : IN_JDBC
+     | <JDBC_TIME      : "t"(<WHITESPACE>)+> : IN_JDBC
+     | <JDBC_TIMESTAMP : "ts"(<WHITESPACE>)+> : IN_JDBC
+     | <JDBC_FUNCTION  : "fn"(<WHITESPACE>)+> : IN_JDBC
+     | <JDBC_ESCAPE    : "escape"(<WHITESPACE>)+> : IN_JDBC
+     | <JDBC_OUTERJOIN : "oj"(<WHITESPACE>)+> : IN_JDBC
+     | <WHITESPACE     : " " | "\t" | "\r" | "\n">
+     | <IDENTIFIER     : (<LETTER>) (<LETTER>|<DIGIT>|".")* >
+     | < #LETTER       :
+        [
+          "\u0024",
+          "\u0041"-"\u005a",
+          "\u005f",
+          "\u0061"-"\u007a",
+          "\u00c0"-"\u00d6",
+          "\u00d8"-"\u00f6",
+          "\u00f8"-"\u00ff",
+          "\u0100"-"\u1fff",
+          "\u3040"-"\u318f",
+          "\u3300"-"\u337f",
+          "\u3400"-"\u3d2d",
+          "\u4e00"-"\u9fff",
+          "\uf900"-"\ufaff"
+       ]
+      >
+    | < #DIGIT        :
+       [
+         "\u0030"-"\u0039",
+         "\u0660"-"\u0669",
+         "\u06f0"-"\u06f9",
+         "\u0966"-"\u096f",
+         "\u09e6"-"\u09ef",
+         "\u0a66"-"\u0a6f",
+         "\u0ae6"-"\u0aef",
+         "\u0b66"-"\u0b6f",
+         "\u0be7"-"\u0bef",
+         "\u0c66"-"\u0c6f",
+         "\u0ce6"-"\u0cef",
+         "\u0d66"-"\u0d6f",
+         "\u0e50"-"\u0e59",
+         "\u0ed0"-"\u0ed9",
+         "\u1040"-"\u1049"
+       ]
+      >
+}
+
+//
+// special state for the sql:fn constuct
+//
+<IN_SQLFN> TOKEN [IGNORE_CASE]:
+{
+     <SQL_FN_END        : ")" > : IN_EXPRESSION
+   | <SQL_FN_NM         : "in">
+   | <SQL_FN_PAREN      : "(">
+   | <SQL_FN_COMMA      : ",">
+   | <SQL_FN_PSTART     : <START_EXPRESSION>>
+   | <SQL_FN_PEND       : <END_EXPRESSION>>
+   | <SQL_FN_WHITESPACE : <WHITESPACE>>
+   | <SQL_FN_IDENTIFIER : <IDENTIFIER> >
+}
+
+<IN_JDBC> TOKEN:
+{
+     <JDBC_END          : <END_EXPRESSION> > { SwitchTo(DEFAULT); }
+   | <JDBC_LIT          : (~["{","}"])+ >
+   | <JDBC_PARAM        : <START_EXPRESSION> > : IN_PARAM
+}
+
+<IN_PARAM> TOKEN:
+{
+     <PARAM_IDENTIFIER  : <IDENTIFIER> >
+   | <PARAM_REFLECT_SEP : <REFLECT_SEP> >
+   | <PARAM_LITERAL     : ("'" ((~["'",  "\\", "\n", "\r"])|<ECMA_ESCAPE_SEQUENCE>)* "'") >
+   | <PARAM_END         : <END_EXPRESSION> > { SwitchTo(IN_JDBC); }
+}
+
+
+//
+// Parse methods
+//
+
+
+//
+// Main parse method
+//
+SqlStatement parse() :
+{
+    SqlStatement statement = new SqlStatement();
+    SqlFragment frag;
+    Token t, sq;
+}
+{
+    (
+     (
+       (t=<NON_EXPRESSION_TEXT> {statement.addChild(new LiteralFragment(t.image));})
+      |
+       (sq=<SQUOTE>t=<STRING_LITERAL> {statement.addChild(new LiteralFragment(sq.image + t.image));})
+      |
+       (frag=parseExpression() {statement.addChild(frag);})
+     )
+    )* <EOF>
+
+    {
+      return statement;
+    }
+}
+
+//
+// Parse an expression delimited by '{}'
+//
+SqlFragment parseExpression() :
+{
+    Token t, tt = null;
+    SqlFragment frag = null;
+}
+{
+    <START_EXPRESSION>(<WHITESPACE>)*
+    (
+     frag = parseSqlEscape()
+     | frag = parseJdbcEscape()
+     | (t=<IDENTIFIER> (<REFLECT_SEP>tt=<IDENTIFIER>)? <END_EXPRESSION> {frag = new ReflectionFragment(t.image,(tt == null) ? null : tt.image);})
+    )
+    (<WHITESPACE>)*
+    //<END_EXPRESSION>
+
+    {
+     return frag;
+    }
+}
+
+//
+// parse an sql: escape sequence
+//
+SqlSubstitutionFragment parseSqlEscape() :
+{
+    Token id1, id2; 
+    Token t = null;
+    SqlSubstitutionFragment frag;
+    String func = null;
+}
+{
+(
+    (
+     (
+      (<SQL_ESCAPE> | <SQL_SUBST>) t=<IDENTIFIER>)
+         {
+           if (t != null) {
+             frag = new SqlSubstitutionFragment(new ReflectionFragment(t.image));
+           } else {
+             frag = new SqlSubstitutionFragment(new LiteralFragment(func));
+           }
+         }
+     )
+    |
+     (
+      (
+       <SQL_FN> (<SQL_FN_WHITESPACE>)* <SQL_FN_NM> (<SQL_FN_WHITESPACE>)* <SQL_FN_PAREN> (<SQL_FN_WHITESPACE>)*
+       id1=<SQL_FN_IDENTIFIER> (<SQL_FN_WHITESPACE>)* <SQL_FN_COMMA> (<SQL_FN_WHITESPACE>)* (t=<SQL_FN_PSTART>)?
+       id2=<SQL_FN_IDENTIFIER> (<SQL_FN_PEND>)? (<SQL_FN_WHITESPACE>)* <SQL_FN_END>
+      )
+       {
+         if (t == null) {
+           frag = new SqlSubstitutionFragment(new LiteralFragment("(" + id1.image + " IN (" + id2.image + ")"));
+         } else {
+           frag = new SqlSubstitutionFragment(new LiteralFragment("(" + id1.image + " IN ("),
+                                        new ReflectionFragment(id2.image),
+                                        new LiteralFragment("))"));
+         }
+       }
+     )
+) <END_EXPRESSION>
+
+    { return frag; } 
+}
+
+//
+// parse a param sub inside of a jdbc escape
+//
+SqlFragment parseReflect() :
+{
+   Token t, tt = null;
+   SqlFragment frag;
+} 
+{
+     <JDBC_PARAM>
+       (((t=<PARAM_IDENTIFIER>)(<PARAM_REFLECT_SEP>tt=<IDENTIFIER>)?
+          { frag = new ReflectionFragment(t.image, (tt == null) ? null : tt.image); })
+          
+       |
+        ((t=<PARAM_LITERAL>)
+            { frag = new LiteralFragment(t.image); }))
+     <PARAM_END>
+
+     {return frag;}
+}
+
+//
+// parse a jdbc escape sequence
+//
+JdbcFragment parseJdbcEscape() :
+{
+  Token lit, c;
+  JdbcFragment jfrag = new JdbcFragment();
+  jfrag.addChild(new LiteralFragment("{"));
+  SqlFragment frag = null;
+}
+
+{
+     (c=<JDBC_CALL>|c=<JDBC_RET>|c=<JDBC_DATE>|c=<JDBC_ESCAPE>|c=<JDBC_FUNCTION>|c=<JDBC_TIME>|c=<JDBC_TIMESTAMP>|c=<JDBC_OUTERJOIN>)
+        {jfrag.addChild(new LiteralFragment(c.image));}
+       (
+          (lit=<JDBC_LIT> {jfrag.addChild(new LiteralFragment(lit.image));}
+        | (frag=parseReflect()) { jfrag.addChild(frag);})
+       )+
+      <JDBC_END>
+
+    {
+      jfrag.addChild(new LiteralFragment("}"));
+      return jfrag;
+    }
+}
+

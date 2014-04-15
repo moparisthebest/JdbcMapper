@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>ReturnToTest40</sessionName>
+  <tester>Spencer Keller</tester>
+  <startDate>13 Oct 2003, 11:09:52.802 AM MDT</startDate>
+  <description>Test return-to="currentPage" from the Global.app that returns to a page raised by the Global.app.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/returnTo/test40/Jpf1.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/returnTo/test40/StartTest.jsp</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>ReturnTo Test40</title>
+    </head>
+    <body>
+        <h3 align="center">ReturnTo Test40 - Jsp1.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <!--
+            test40GlobalAction is not handled by the Jpf1.jpf pageflow
+            instead it is handled by the Global.app.  This is by design.
+            -->
+            <a href="/coreWeb/returnTo/test40/test40GlobalAction.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/returnTo/test40/test40GlobalAction.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/returnTo/test40/Jpf1.jpf</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>ReturnTo Test40</title>
+    </head>
+    <body>
+        <h3 align="center">ReturnTo Test40 - Jsp2.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <h3><font color="blue">
+            We will visit this page three times.
+            </font></h3>
+             <br/><br/>
+            <hr width="95%"/>
+            <br/><br/>
+            <!--
+            test40GlobalAction_B is not handled by the Jpf1.jpf pageflow instead\
+            it is handled by the Global.app.  This is by design.
+            -->
+            First time select here:
+            <a href="/coreWeb/returnTo/test40/test40GlobalAction_B.do">Continue...</a>
+            <br/><br/>
+            Second time select here:
+            <a href="/coreWeb/returnTo/test40/action1.do">Continue...</a>
+            <br/><br/>
+            Third time select here:
+            <a href="/coreWeb/returnTo/test40/finish.do">Finish...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/returnTo/test40/test40GlobalAction_B.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/returnTo/test40/test40GlobalAction.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>ReturnTo Test40</title>
+    </head>
+    <body>
+        <h3 align="center">ReturnTo Test40 - Jsp2.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <h3><font color="blue">
+            We will visit this page three times.
+            </font></h3>
+             <br/><br/>
+            <hr width="95%"/>
+            <br/><br/>
+            <!--
+            test40GlobalAction_B is not handled by the Jpf1.jpf pageflow instead\
+            it is handled by the Global.app.  This is by design.
+            -->
+            First time select here:
+            <a href="/coreWeb/returnTo/test40/test40GlobalAction_B.do">Continue...</a>
+            <br/><br/>
+            Second time select here:
+            <a href="/coreWeb/returnTo/test40/action1.do">Continue...</a>
+            <br/><br/>
+            Third time select here:
+            <a href="/coreWeb/returnTo/test40/finish.do">Finish...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/returnTo/test40/action1.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/returnTo/test40/test40GlobalAction_B.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>ReturnTo Test40</title>
+    </head>
+    <body>
+        <h3 align="center">ReturnTo Test40 - Jsp2.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <h3><font color="blue">
+            We will visit this page three times.
+            </font></h3>
+             <br/><br/>
+            <hr width="95%"/>
+            <br/><br/>
+            <!--
+            test40GlobalAction_B is not handled by the Jpf1.jpf pageflow instead\
+            it is handled by the Global.app.  This is by design.
+            -->
+            First time select here:
+            <a href="/coreWeb/returnTo/test40/test40GlobalAction_B.do">Continue...</a>
+            <br/><br/>
+            Second time select here:
+            <a href="/coreWeb/returnTo/test40/action1.do">Continue...</a>
+            <br/><br/>
+            Third time select here:
+            <a href="/coreWeb/returnTo/test40/finish.do">Finish...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/returnTo/test40/finish.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1KchabYNusWoiQIKdLrDiUwWKIJMK4hsiqlyvbPN1wwVqKyfiAp0!-1176427035</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/returnTo/test40/action1.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>Merge Tests</title>
+    </head>
+    <body>
+        <h2 align="center">Merge Tests - done.jsp</h2>
+        <hr align="center" width="95%"/>
+        <br/>
+        <center>
+            <font color="green"><h2>Test completed successfully.</h2></font>
+            <br/>
+            <a href="/coreWeb/index.jsp">Return to main test menu.</a>
+            <br/><br/>
+            <hr align="center" width="95%"/>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>13 Oct 2003, 11:10:07.381 AM MDT</endDate>
+  <testCount>5</testCount>
+
+</recorderSession>

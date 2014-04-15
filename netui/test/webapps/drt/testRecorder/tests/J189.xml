@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>J189</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>29 Mar 2005, 09:42:21.548 AM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/j189/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7b98</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/bugs/j189/form.jsp">
+    &lt;/head>
+    &lt;body>
+        &lt;p style="color:green">The JavaScript lookupIdScope method required
+	a separator character.  Now it should default to the empty string.
+	You see this below, in the second test, the value "one".
+	&lt;/p>
+        &lt;div netui:idScope="one" >
+        &lt;form name="one.form" id="one.form" action="/coreWeb/bugs/j189/back.do" method="post">
+                Form JS Output Test -- JIRA169&lt;br/>
+                &lt;input type="text" name="{actionForm.text1}">&lt;br/>
+                &lt;input type="submit" value="Submit">&lt;br/>
+       &lt;p id="javaOut">&lt;/p>
+       &lt;/form>
+
+       &lt;/div>
+
+        
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.one__form="one.form"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.one___form="one.form"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>
+&lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+
+        var p = document.getElementById("javaOut");
+        var val = "&lt;b>Document Access&lt;/b>&lt;br/>";
+        var formTag = document.getElementById(lookupIdByTagId("form", p));
+        val = val + "Form Scope Id (Legacy Get): &lt;b>" + getScopeId(formTag) + "&lt;/b>&lt;br/>";
+        val = val + "Form Scope Id (non-Legacy Lookup): &lt;b>" + lookupIdScope(formTag) + "&lt;/b>&lt;br/>";
+        val = val + "Form Name: &lt;b>" + getNetuiTagName("form", formTag) + "&lt;/b>&lt;br/>";
+        val = val + "Form ID: &lt;b>" + lookupIdByTagId("form", formTag) + "&lt;/b>&lt;br/>";
+        val = val + "Form Name By Lookup: &lt;b>" + lookupNameByTagId("form", formTag) + "&lt;/b>&lt;br/> &lt;br/>";
+        val = val + "&lt;b>Lookup by lookup*(\"tagId\") signature: &lt;/b>&lt;br/>";
+        val = val + "Form ID: &lt;b>" + lookupIdByTagId("form") + "&lt;/b>&lt;br/>";
+        val = val + "Form Name: &lt;b>" + getNetuiTagName("form",p) + "&lt;/b>&lt;br/>";
+        val = val + "Form Name By Lookup: &lt;b>" + lookupNameByTagId("form",p) + "&lt;/b>&lt;br/>";
+
+        p.innerHTML = val;
+        
+
+-->
+&lt;/script>
+&lt;/body>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>29 Mar 2005, 09:42:22.519 AM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

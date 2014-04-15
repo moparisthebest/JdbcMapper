@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>CellRepeater2</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>08 Jul 2004, 06:56:59.913 PM MDT</ses:startDate>
+   <ses:description>Test the cell repeater in various valid data sets and min / max configurations</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/cellRepeater/index.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>9D6B2EF9774DFEE078BC48E9F33F8907</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=9D6B2EF9774DFEE078BC48E9F33F8907</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Cell Repeater</title>
+    <link rel="stylesheet" href="../default.css" type="text/css"/>
+  </head>
+
+  <body>
+    <b>Cell Repeater</b>
+
+<br/>
+<b>17 Item Array</b>
+<br/>
+<br/>
+<b>4x5 with 17 items</b><br/>
+<table class="table"><tr><td class="cell">
+    Item: <span>0</span>
+</td><td class="altCell">
+    Item: <span>1</span>
+</td><td class="cell">
+    Item: <span>2</span>
+</td><td class="altCell">
+    Item: <span>3</span>
+</td><td class="cell">
+    Item: <span>4</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>5</span>
+</td><td class="cell">
+    Item: <span>6</span>
+</td><td class="altCell">
+    Item: <span>7</span>
+</td><td class="cell">
+    Item: <span>8</span>
+</td><td class="altCell">
+    Item: <span>9</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>10</span>
+</td><td class="altCell">
+    Item: <span>11</span>
+</td><td class="cell">
+    Item: <span>12</span>
+</td><td class="altCell">
+    Item: <span>13</span>
+</td><td class="cell">
+    Item: <span>14</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>15</span>
+</td><td class="cell">
+    Item: <span>16</span>
+</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>4x5 with 17 items and databound row / column sizes</b><br/>
+<table class="table"><tr><td class="cell">
+    Item: <span>0</span>
+</td><td class="altCell">
+    Item: <span>1</span>
+</td><td class="cell">
+    Item: <span>2</span>
+</td><td class="altCell">
+    Item: <span>3</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>4</span>
+</td><td class="cell">
+    Item: <span>5</span>
+</td><td class="altCell">
+    Item: <span>6</span>
+</td><td class="cell">
+    Item: <span>7</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>8</span>
+</td><td class="altCell">
+    Item: <span>9</span>
+</td><td class="cell">
+    Item: <span>10</span>
+</td><td class="altCell">
+    Item: <span>11</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>12</span>
+</td><td class="cell">
+    Item: <span>13</span>
+</td><td class="altCell">
+    Item: <span>14</span>
+</td><td class="cell">
+    Item: <span>15</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>16</span>
+</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>4x5 (vert) with 17 items</b><br/>
+<table class="table"><tr><td class="altCell">
+    Item: <span>0</span>
+</td><td class="cell">
+    Item: <span>4</span>
+</td><td class="altCell">
+    Item: <span>8</span>
+</td><td class="cell">
+    Item: <span>12</span>
+</td><td class="altCell">
+    Item: <span>16</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>1</span>
+</td><td class="altCell">
+    Item: <span>5</span>
+</td><td class="cell">
+    Item: <span>9</span>
+</td><td class="altCell">
+    Item: <span>13</span>
+</td><td class="cell">&nbsp;</td></tr>
+<tr><td class="altCell">
+    Item: <span>2</span>
+</td><td class="cell">
+    Item: <span>6</span>
+</td><td class="altCell">
+    Item: <span>10</span>
+</td><td class="cell">
+    Item: <span>14</span>
+</td><td class="altCell">&nbsp;</td></tr>
+<tr><td class="cell">
+    Item: <span>3</span>
+</td><td class="altCell">
+    Item: <span>7</span>
+</td><td class="cell">
+    Item: <span>11</span>
+</td><td class="altCell">
+    Item: <span>15</span>
+</td><td class="cell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>Small 4 Item Array</b><br/>
+<br/>
+<b>1x5 with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td><td>
+    Item: <span>1</span>
+</td><td>
+    Item: <span>2</span>
+</td><td>
+    Item: <span>3</span>
+</td><td>&nbsp;</td></tr>
+</table>
+<br/>
+<b>1x5 (vert) with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td><td>
+    Item: <span>1</span>
+</td><td>
+    Item: <span>2</span>
+</td><td>
+    Item: <span>3</span>
+</td><td>&nbsp;</td></tr>
+</table>
+<br/>
+<b>5x1 with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td></tr>
+<tr><td>
+    Item: <span>1</span>
+</td></tr>
+<tr><td>
+    Item: <span>2</span>
+</td></tr>
+<tr><td>
+    Item: <span>3</span>
+</td></tr>
+<tr><td>&nbsp;</td></tr>
+</table>
+<br/>
+<b>5x1 (vert) with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td></tr>
+<tr><td>
+    Item: <span>1</span>
+</td></tr>
+<tr><td>
+    Item: <span>2</span>
+</td></tr>
+<tr><td>
+    Item: <span>3</span>
+</td></tr>
+<tr><td>&nbsp;</td></tr>
+</table>
+<br/>
+<b>1x1 with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td></tr>
+</table>
+<br/>
+<b>1x1 (vert) with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td></tr>
+</table>
+<br/>
+<b>2x2 (horiz) with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td><td>
+    Item: <span>1</span>
+</td></tr>
+<tr><td>
+    Item: <span>2</span>
+</td><td>
+    Item: <span>3</span>
+</td></tr>
+</table>
+<br/>
+<b>2x2 (vert) with 4 items</b><br/>
+<table><tr><td>
+    Item: <span>0</span>
+</td><td>
+    Item: <span>2</span>
+</td></tr>
+<tr><td>
+    Item: <span>1</span>
+</td><td>
+    Item: <span>3</span>
+</td></tr>
+</table>
+<br/>
+<b>Zero Item Array</b>
+<br/>
+<table><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+<br/>
+<table><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+<b>Zero Item Array with styles</b>
+<br/>
+<table class="table"><tr><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td></tr>
+<tr><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td></tr>
+<tr><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td></tr>
+<tr><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>NULL Array</b>
+<br/>
+<table><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+<br/>
+<b>NULL Array with styles</b>
+<br/>
+<table class="table"><tr><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td></tr>
+<tr><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td></tr>
+<tr><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td></tr>
+<tr><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td><td class="cell">&nbsp;</td><td class="altCell">&nbsp;</td></tr>
+</table>
+<br/>
+<table><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+<br/>
+<b>4x5 (vert) with 17 items</b><br/>
+<table class="table"><tr><td class="altCell">
+    Item: <span>0</span>
+</td><td class="cell">
+    Item: <span>4</span>
+</td><td class="altCell">
+    Item: <span>8</span>
+</td><td class="cell">
+    Item: <span>12</span>
+</td><td class="altCell">
+    Item: <span>16</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>1</span>
+</td><td class="altCell">
+    Item: <span>5</span>
+</td><td class="cell">
+    Item: <span>9</span>
+</td><td class="altCell">
+    Item: <span>13</span>
+</td><td class="cell">&nbsp;</td></tr>
+<tr><td class="altCell">
+    Item: <span>2</span>
+</td><td class="cell">
+    Item: <span>6</span>
+</td><td class="altCell">
+    Item: <span>10</span>
+</td><td class="cell">
+    Item: <span>14</span>
+</td><td class="altCell">&nbsp;</td></tr>
+<tr><td class="cell">
+    Item: <span>3</span>
+</td><td class="altCell">
+    Item: <span>7</span>
+</td><td class="cell">
+    Item: <span>11</span>
+</td><td class="altCell">
+    Item: <span>15</span>
+</td><td class="cell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>4x5 (vert) with 17 items</b><br/>
+<table class="table"><tr><td class="altCell">
+    Item: <span>0</span>
+</td><td class="cell">
+    Item: <span>2</span>
+</td><td class="altCell">
+    Item: <span>4</span>
+</td><td class="cell">
+    Item: <span>6</span>
+</td><td class="altCell">
+    Item: <span>8</span>
+</td><td class="cell">
+    Item: <span>10</span>
+</td><td class="altCell">
+    Item: <span>12</span>
+</td><td class="cell">
+    Item: <span>14</span>
+</td><td class="altCell">
+    Item: <span>16</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>1</span>
+</td><td class="altCell">
+    Item: <span>3</span>
+</td><td class="cell">
+    Item: <span>5</span>
+</td><td class="altCell">
+    Item: <span>7</span>
+</td><td class="cell">
+    Item: <span>9</span>
+</td><td class="altCell">
+    Item: <span>11</span>
+</td><td class="cell">
+    Item: <span>13</span>
+</td><td class="altCell">
+    Item: <span>15</span>
+</td><td class="cell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>4x5 (vert) with 17 items</b><br/>
+<table class="table"><tr><td class="altCell">
+    Item: <span>0</span>
+</td><td class="cell">
+    Item: <span>9</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>1</span>
+</td><td class="altCell">
+    Item: <span>10</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>2</span>
+</td><td class="cell">
+    Item: <span>11</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>3</span>
+</td><td class="altCell">
+    Item: <span>12</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>4</span>
+</td><td class="cell">
+    Item: <span>13</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>5</span>
+</td><td class="altCell">
+    Item: <span>14</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>6</span>
+</td><td class="cell">
+    Item: <span>15</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>7</span>
+</td><td class="altCell">
+    Item: <span>16</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>8</span>
+</td><td class="cell">&nbsp;</td></tr>
+</table>
+<br/>
+<b>4x5 (vert) with 17 items</b><br/>
+<table class="table"><tr><td class="altCell">
+    Item: <span>0</span>
+</td><td class="cell">
+    Item: <span>1</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>2</span>
+</td><td class="altCell">
+    Item: <span>3</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>4</span>
+</td><td class="cell">
+    Item: <span>5</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>6</span>
+</td><td class="altCell">
+    Item: <span>7</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>8</span>
+</td><td class="cell">
+    Item: <span>9</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>10</span>
+</td><td class="altCell">
+    Item: <span>11</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>12</span>
+</td><td class="cell">
+    Item: <span>13</span>
+</td></tr>
+<tr><td class="cell">
+    Item: <span>14</span>
+</td><td class="altCell">
+    Item: <span>15</span>
+</td></tr>
+<tr><td class="altCell">
+    Item: <span>16</span>
+</td><td class="cell">&nbsp;</td></tr>
+</table>
+<br/>
+<br/>
+<br/>
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>08 Jul 2004, 06:57:05.441 PM MDT</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>

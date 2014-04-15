@@ -1,0 +1,2037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>PfLifecycle</sessionName>
+  <tester>rich</tester>
+  <startDate>13 Jan 2004, 11:11:58.843 PM GMT-07:00</startDate>
+  <description>Tests all the pageflow lifecycle methods.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/doNothing.do">run an empty action</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nest.do">create a nesting stack</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/leave.do">leave this pageflow</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/clear.do">clear the history</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/doNothing.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/lifecycle/Controller.jpf</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/doNothing.do">run an empty action</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nest.do">create a nesting stack</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/leave.do">leave this pageflow</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/clear.do">clear the history</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/leave.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/lifecycle/doNothing.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/doNothing.do">run an empty action</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nest.do">create a nesting stack</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/leave.do">leave this pageflow</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/clear.do">clear the history</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/nest.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/lifecycle/leave.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/done.do">done</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/escapeNesting.do">escapeNesting</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/done.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/lifecycle/nest.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/doNothing.do">run an empty action</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nest.do">create a nesting stack</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/leave.do">leave this pageflow</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/clear.do">clear the history</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>5</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>5</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>6</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/nest.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/done.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/done.do">done</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/escapeNesting.do">escapeNesting</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>5</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>5</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>onCreate() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>onCreate() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>onCreate() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>7</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/lifecycle/nested1/nested2/nested3/escapeNesting.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEcQLnTVptcOdyesSIKbAEJkbIuZU51hXa9tdb1SnZkErbKx2242!-1795682959</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/lifecycle/nest.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Page 1</title>
+</head>
+<body bgcolor="white">
+
+<h3>Page 1</h3>
+
+<a href="/coreWeb/pageFlowCore/lifecycle/doNothing.do">run an empty action</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/nest.do">create a nesting stack</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/leave.do">leave this pageflow</a>
+<br>
+<a href="/coreWeb/pageFlowCore/lifecycle/clear.do">clear the history</a>
+
+
+
+
+
+
+<br>
+<br>
+<table border="1">
+        <tr>
+            <td><i>request #</i></td>
+            <td><i>description</i></td>
+            <td><i>message from control</i></td>
+            <td><i>request</i></td>
+            <td><i>response</i></td>
+            <td><i>session</i></td>
+            <td><i>mapping</i></td>
+            <td><i>servlet</i></td>
+        </tr>
+
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>1</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>2</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>onCreate</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>3</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>4</span></td>
+            <td><b><span>onCreate() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>5</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>5</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>onCreate() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>onCreate() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>6</span></td>
+            <td><b><span>onCreate() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested2</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested1</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>-1</span></td>
+            <td><b><span>onDestroy() in nested3</span></b></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[null]</span></td>
+            <td><span>[null]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>7</span></td>
+            <td><b><span>beforeAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+        <tr>
+            <td><span>7</span></td>
+            <td><b><span>afterAction</span></b></td>
+            <td><span>hello there</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+            <td><span>[present]</span></td>
+        </tr>
+    
+</table>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>13 Jan 2004, 11:15:08.687 PM GMT-07:00</endDate>
+  <testCount>7</testCount>
+
+</recorderSession>

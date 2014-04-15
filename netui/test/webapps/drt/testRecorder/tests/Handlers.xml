@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>Handlers</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>30 Jan 2005, 10:17:14.857 PM MST</ses:startDate>
+   <ses:description>Sanity check test of handlers, which are registered in netui-config.xml.  Tests the ability to define and "chain" (by adapting) handlers.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/handlers/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>0D60325061DA737321578B068D0E598D</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=0D60325061DA737321578B068D0E598D</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/miniTests/handlers/index.jsp">
+    &lt;/head>
+    &lt;body>
+        action-forward-handler: &lt;b>miniTests.handlers.Controller$OverrideActionForwardHandler which is adapting org.apache.beehive.netui.pageflow.internal.DefaultActionForwardHandler&lt;/b>&lt;br/>
+        exceptions-handler: &lt;b>miniTests.handlers.Controller$OverrideExceptionsHandler which is adapting org.apache.beehive.netui.pageflow.internal.DefaultExceptionsHandler&lt;/b>&lt;br/>
+        login-handler: &lt;b>miniTests.handlers.Controller$OverrideLoginHandler2 which is adapting miniTests.handlers.Controller$OverrideLoginHandler1 which is adapting org.apache.beehive.netui.pageflow.internal.DefaultLoginHandler&lt;/b>&lt;br/>
+        &lt;br/>
+        The following action normally requires the role "HandlerTest", but we've set a LoginHandler
+        to guarantee that we appear to be in that role.  If we return to this page, that means an
+        error was &lt;i>not&lt;/i> thrown, i.e., this test succeeded.
+        &lt;br/>
+        &lt;a href="/coreWeb/miniTests/handlers/roleRequiredAction.do">hit it&lt;/a>
+    &lt;/body>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/handlers/roleRequiredAction.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>0D60325061DA737321578B068D0E598D</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=0D60325061DA737321578B068D0E598D</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/handlers/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/miniTests/handlers/index.jsp">
+    &lt;/head>
+    &lt;body>
+        action-forward-handler: &lt;b>miniTests.handlers.Controller$OverrideActionForwardHandler which is adapting org.apache.beehive.netui.pageflow.internal.DefaultActionForwardHandler&lt;/b>&lt;br/>
+        exceptions-handler: &lt;b>miniTests.handlers.Controller$OverrideExceptionsHandler which is adapting org.apache.beehive.netui.pageflow.internal.DefaultExceptionsHandler&lt;/b>&lt;br/>
+        login-handler: &lt;b>miniTests.handlers.Controller$OverrideLoginHandler2 which is adapting miniTests.handlers.Controller$OverrideLoginHandler1 which is adapting org.apache.beehive.netui.pageflow.internal.DefaultLoginHandler&lt;/b>&lt;br/>
+        &lt;br/>
+        The following action normally requires the role "HandlerTest", but we've set a LoginHandler
+        to guarantee that we appear to be in that role.  If we return to this page, that means an
+        error was &lt;i>not&lt;/i> thrown, i.e., this test succeeded.
+        &lt;br/>
+        &lt;a href="/coreWeb/miniTests/handlers/roleRequiredAction.do">hit it&lt;/a>
+    &lt;/body>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>30 Jan 2005, 10:17:55.395 PM MST</ses:endDate>
+   <ses:testCount>2</ses:testCount>
+</ses:recorderSession>

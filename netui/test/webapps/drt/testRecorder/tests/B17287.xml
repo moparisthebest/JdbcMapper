@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>B17287</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>08 Jul 2004, 08:27:27.908 PM MDT</ses:startDate>
+   <ses:description>Ensure that type conversion exception from String to int is caught and reported as an ELException.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b17287/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>61F56CA2F9A0EC6BDF0B2636E4F9BEB2</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=61F56CA2F9A0EC6BDF0B2636E4F9BEB2</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Cell Repeater</title>
+</head>
+<body>
+<b>Error in Cell Repeater - Invalid rows value</b>
+
+success -- caught ELException; assumed to be related to invalid String to int type conversion
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>08 Jul 2004, 08:27:35.569 PM MDT</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>

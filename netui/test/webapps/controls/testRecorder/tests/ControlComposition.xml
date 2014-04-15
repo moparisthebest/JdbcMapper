@@ -1,0 +1,1275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>ControlComposition</sessionName>
+<tester>cschoett</tester>
+<startDate>11 Jul 2006, 10:53:29.657 AM MDT</startDate>
+<description>This test verifies various aspects of control composition</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testInstantiation.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testInstantiation.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testInstantiationP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testInstantiateP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testInstantiationWithProperty.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testInstantiationWithProperty.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testInstantiationWithPropertyP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testInstantiationWithPropertyP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testGetPropertyByContext.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testGetPropertyByContext.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>6</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testGetPropertyByContextP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testGetPropertyByContextP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>7</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testGetPropertyByGetter.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testGetPropertyByGetter.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>8</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testGetPropertyByGetterP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testGetPropertyByGetterP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>9</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testSetPropertyBySetter.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testSetPropertyBySetter.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>10</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testSetPropertyBySetterP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testSetPropertyBySetterP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>11</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testEventHandler.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testEventHandler.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>12</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testEventHandlerP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testEventHandlerP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>13</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testEventListener.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testEventListener.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>14</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testEventListenerP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testEventListenerP.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>15</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testInnerClassListener.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testInnerClassListener.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>16</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/composition/testInnerClassListenerP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <title>Control Composition Test</title>
+    </head>
+    <body>
+        <h4>Control Composition Test: 'testInnerClassListener.do: PASSED'</h4>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>11 Jul 2006, 10:57:11.017 AM MDT</endDate>
+<testCount>16</testCount>
+</recorderSession>

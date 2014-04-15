@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ActionNotReturnForward\Controller.java:47: Expected a return type of org.apache.beehive.netui.pageflow.Forward.
+    protected String page2()
+                     ^
+1 error

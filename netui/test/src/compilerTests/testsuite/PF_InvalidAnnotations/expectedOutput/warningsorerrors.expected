@@ -1,0 +1,11 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_InvalidAnnotations\Controller.java:35: cannot find symbol
+symbol  : variable blah
+location: class PF_InvalidAnnotations.Controller
+        readOnly = blah,
+                   ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_InvalidAnnotations\Controller.java:35: cannot find symbol
+symbol  : variable blah
+location: class PF_InvalidAnnotations.Controller
+        readOnly = blah,
+                   ^
+1 error

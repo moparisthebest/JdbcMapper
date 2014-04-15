@@ -1,0 +1,1306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>TempRelative</sessionName>
+  <tester>Daryl</tester>
+  <startDate>24 Mar 2004, 06:54:20.865 PM MST</startDate>
+  <description>Test of using the same template in nested page flows.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>1</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Template Test</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Begin.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Template Test</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/main.do">Main</a><br />
+  <a href="/coreWeb/template/tempRelative/sub.do">Nested Page Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <h4>Template Test</h4>
+    Test of the templates includes a side bar with actions from the Page Flow.
+    In addition, all Page Flows contain a "home" action that is called from
+    the template itself.
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/main.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>2</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Main Page Flow</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Test.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Main Page Flow</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/sub.do">Nest Sub Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <span style="color:red;">
+    <h4>Main Page Flow</h4>
+    <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66"><br />
+    This is text in the main page flow.
+    </span>
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/sub.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>3</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Nested Page Flow</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/sub/Test.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Nested Page Flow</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/sub/home.do">Home</a><br />
+    <hr />
+    
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <span style="color:blue;">
+    <h4>Nested Page Flow</h4>
+    <img src="/coreWeb/template/tempRelative/sub/../image/godzilla.gif" width="48" height="66"><br />
+    This is text in the nested page flow.<br/>
+    <a href="/coreWeb/template/tempRelative/sub/returnNow.do">Return</a>
+    </span>
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/sub/returnNow.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>4</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Template Test</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Begin.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Template Test</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/main.do">Main</a><br />
+  <a href="/coreWeb/template/tempRelative/sub.do">Nested Page Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <h4>Template Test</h4>
+    Test of the templates includes a side bar with actions from the Page Flow.
+    In addition, all Page Flows contain a "home" action that is called from
+    the template itself.
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/sub.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>5</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Nested Page Flow</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/sub/Test.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Nested Page Flow</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/sub/home.do">Home</a><br />
+    <hr />
+    
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <span style="color:blue;">
+    <h4>Nested Page Flow</h4>
+    <img src="/coreWeb/template/tempRelative/sub/../image/godzilla.gif" width="48" height="66"><br />
+    This is text in the nested page flow.<br/>
+    <a href="/coreWeb/template/tempRelative/sub/returnNow.do">Return</a>
+    </span>
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>6</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/sub/returnNow.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>6</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Template Test</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Begin.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Template Test</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/main.do">Main</a><br />
+  <a href="/coreWeb/template/tempRelative/sub.do">Nested Page Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <h4>Template Test</h4>
+    Test of the templates includes a side bar with actions from the Page Flow.
+    In addition, all Page Flows contain a "home" action that is called from
+    the template itself.
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>7</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/main.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Main Page Flow</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Test.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Main Page Flow</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/sub.do">Nest Sub Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <span style="color:red;">
+    <h4>Main Page Flow</h4>
+    <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66"><br />
+    This is text in the main page flow.
+    </span>
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>8</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/home.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>8</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Template Test</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Begin.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Template Test</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/main.do">Main</a><br />
+  <a href="/coreWeb/template/tempRelative/sub.do">Nested Page Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <h4>Template Test</h4>
+    Test of the templates includes a side bar with actions from the Page Flow.
+    In addition, all Page Flows contain a "home" action that is called from
+    the template itself.
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>9</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/sub.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>9</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Nested Page Flow</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/sub/Test.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Nested Page Flow</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/sub/home.do">Home</a><br />
+    <hr />
+    
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <span style="color:blue;">
+    <h4>Nested Page Flow</h4>
+    <img src="/coreWeb/template/tempRelative/sub/../image/godzilla.gif" width="48" height="66"><br />
+    This is text in the nested page flow.<br/>
+    <a href="/coreWeb/template/tempRelative/sub/returnNow.do">Return</a>
+    </span>
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>10</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/template/tempRelative/sub/home.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ai39B4NXRz98QKbUDYSaHpD6CR02r1m1d06gm3W2bdHRgo0t7UtM!1879045226</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>506182fe:fb7fa87b44:-7b4b</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>10</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Template Test</title>
+<link rel="stylesheet" href="/coreWeb/site/style.css"/>
+<base href="http://@NON_UNIQUE_HOST@:@NON_UNIQUE_PORT@/coreWeb/template/tempRelative/Begin.jsp">
+</head>
+<body>
+<table class="header" width="100%">
+<tr>
+  <td width="150" style="padding:4,0,0,4">
+      <img src="/coreWeb/template/tempRelative/image/godzilla.gif" width="48" height="66">
+  </td><td valign="top">
+      <h1 class="title">Template Test</h1>
+  </td></tr>
+<tr><td colspan="2">
+<hr />
+</td></tr>
+<tr>
+  <td valign="top" width="100px">
+    <a href="/coreWeb/template/tempRelative/home.do">Home</a><br />
+    <hr />
+    
+  <a href="/coreWeb/template/tempRelative/main.do">Main</a><br />
+  <a href="/coreWeb/template/tempRelative/sub.do">Nested Page Flow</a>
+  
+  </td><td valign="top">
+    <span style="background-color:white">
+    <table width="100%">
+    <tr><td>
+    
+    <h4>Template Test</h4>
+    Test of the templates includes a side bar with actions from the Page Flow.
+    In addition, all Page Flows contain a "home" action that is called from
+    the template itself.
+  
+    </td></tr>
+    </table>
+    </span>
+  </td>
+</tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>24 Mar 2004, 06:54:33.383 PM MST</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>10</testCount>
+  <passedCount>0</passedCount>
+  <failedCount>10</failedCount>
+</recorderSession>

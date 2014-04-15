@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>demo</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>11 Feb 2005, 06:28:59.690 PM MST</ses:startDate>
+   <ses:description>ekoneil</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/demo/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-777e</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Demo</title>
+<link rel="stylesheet" href="/coreWeb/demo/default.css" type="text/css" />
+<base href="http://localhost:8080/coreWeb/demo/Demo.jsp">
+</head>
+<body>
+<table width="300" class="wiztable">
+  <tr>
+    <td class="wizhead" colspan="3"><b>New Hire Wizard - Name</b></td>
+  </tr>
+  <tr>
+    
+
+<!-- The contents of the form -->
+<form action="/coreWeb/demo/DemoSubmit.do" method="post">
+<tr>
+  <td class="wizbody" colspan="3">Enter new hire's first and last name:</td>
+</tr>
+<tr>
+  <td class="wizbody" rowspan="2"><img src="images/_.gif" height="75" width="1"></td>
+  <td class="wizbody">Name</td>
+  <td class="wizbody"><input type="text" name="{actionForm.name}">
+</tr>
+<tr>
+  <td class="wizbodyright" colspan="3" ><hr>
+    <input type="submit" value="Next">
+  </td>
+</form>
+
+  
+  </tr>
+</table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/demo/DemoSubmit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.name}</ses:name>
+                  <ses:value>animals</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>29</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-777e</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Demo Results</title>
+<link rel="stylesheet" href="/coreWeb/demo/default.css" type="text/css" />
+<base href="http://localhost:8080/coreWeb/demo/DemoResults.jsp">
+</head>
+<body>
+<table width="300" class="wiztable">
+  <tr>
+    <td class="wizhead" colspan="3"><b>Demo Results</b></td>
+  </tr>
+  <tr>
+    
+    </tr><tr>
+    <td class="wizbody" colspan="3">Name: <b><span>animals</span></b></td>
+    </tr>
+    
+            <tr>
+                <td class="wizbody" colspan="3"><span>pig</span></td>
+            </tr>
+        
+            <tr>
+                <td class="wizbody" colspan="3"><span>frog</span></td>
+            </tr>
+        
+            <tr>
+                <td class="wizbody" colspan="3"><span>dog</span></td>
+            </tr>
+        
+<tr>
+  <td class="wizbodyright" colspan="3" ><hr>
+    <a href="/coreWeb/demo/begin.do">Back</a>
+  </td>
+
+</td>
+
+  
+  </tr>
+</table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/demo/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-777e</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Demo</title>
+<link rel="stylesheet" href="/coreWeb/demo/default.css" type="text/css" />
+<base href="http://localhost:8080/coreWeb/demo/Demo.jsp">
+</head>
+<body>
+<table width="300" class="wiztable">
+  <tr>
+    <td class="wizhead" colspan="3"><b>New Hire Wizard - Name</b></td>
+  </tr>
+  <tr>
+    
+
+<!-- The contents of the form -->
+<form action="/coreWeb/demo/DemoSubmit.do" method="post">
+<tr>
+  <td class="wizbody" colspan="3">Enter new hire's first and last name:</td>
+</tr>
+<tr>
+  <td class="wizbody" rowspan="2"><img src="images/_.gif" height="75" width="1"></td>
+  <td class="wizbody">Name</td>
+  <td class="wizbody"><input type="text" name="{actionForm.name}">
+</tr>
+<tr>
+  <td class="wizbodyright" colspan="3" ><hr>
+    <input type="submit" value="Next">
+  </td>
+</form>
+
+  
+  </tr>
+</table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/demo/DemoSubmit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.name}</ses:name>
+                  <ses:value>frumpels</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>30</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-777e</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Demo Results</title>
+<link rel="stylesheet" href="/coreWeb/demo/default.css" type="text/css" />
+<base href="http://localhost:8080/coreWeb/demo/DemoResults.jsp">
+</head>
+<body>
+<table width="300" class="wiztable">
+  <tr>
+    <td class="wizhead" colspan="3"><b>Demo Results</b></td>
+  </tr>
+  <tr>
+    
+    </tr><tr>
+    <td class="wizbody" colspan="3">Name: <b><span>frumpels</span></b></td>
+    </tr>
+    
+            <tr>
+                <td class="wizbody" colspan="3"><span>Bob</span></td>
+            </tr>
+        
+            <tr>
+                <td class="wizbody" colspan="3"><span>Fred</span></td>
+            </tr>
+        
+            <tr>
+                <td class="wizbody" colspan="3"><span>Pete</span></td>
+            </tr>
+        
+<tr>
+  <td class="wizbodyright" colspan="3" ><hr>
+    <a href="/coreWeb/demo/begin.do">Back</a>
+  </td>
+
+</td>
+
+  
+  </tr>
+</table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/demo/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-777e</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Demo</title>
+<link rel="stylesheet" href="/coreWeb/demo/default.css" type="text/css" />
+<base href="http://localhost:8080/coreWeb/demo/Demo.jsp">
+</head>
+<body>
+<table width="300" class="wiztable">
+  <tr>
+    <td class="wizhead" colspan="3"><b>New Hire Wizard - Name</b></td>
+  </tr>
+  <tr>
+    
+
+<!-- The contents of the form -->
+<form action="/coreWeb/demo/DemoSubmit.do" method="post">
+<tr>
+  <td class="wizbody" colspan="3">Enter new hire's first and last name:</td>
+</tr>
+<tr>
+  <td class="wizbody" rowspan="2"><img src="images/_.gif" height="75" width="1"></td>
+  <td class="wizbody">Name</td>
+  <td class="wizbody"><input type="text" name="{actionForm.name}">
+</tr>
+<tr>
+  <td class="wizbodyright" colspan="3" ><hr>
+    <input type="submit" value="Next">
+  </td>
+</form>
+
+  
+  </tr>
+</table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 06:29:04.467 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>5</ses:testCount>
+   <ses:passedCount>2</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

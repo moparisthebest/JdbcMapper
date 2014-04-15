@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>HitFacesPageDirectly</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>12 May 2005, 05:02:06.380 PM MDT</ses:startDate>
+   <ses:description>Test to ensure that our JSF page filter doesn't blow up when you hit a JSF page directly.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/restorePreviousBackingBean/page1.faces</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2D1E4D8DBD8A96AD7301F245FE1D6B4B</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=2D1E4D8DBD8A96AD7301F245FE1D6B4B</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;html>
+    &lt;head>
+    &lt;/head>
+    &lt;body>
+        
+            &lt;form id="_id0" name="_id0" method="post" action="/jsfWeb/restorePreviousBackingBean/page1.faces" enctype="application/x-www-form-urlencoded">
+                text: &lt;input id="_id0:_id1" name="_id0:_id1" type="text" value="init val"/>
+                &lt;br/>
+                &lt;a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id2';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id2">stay here, using navigateTo (backing bean is restored)&lt;/a>
+                &lt;br/>
+                &lt;a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id3';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id3">stay here, using a path (backing bean is not restored)&lt;/a>
+                &lt;br/>
+                &lt;a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id4';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id4">go to page 2&lt;/a>
+            &lt;input type="hidden" name="_id0_SUBMIT" value="1"/>&lt;input type="hidden" name="_id0:_link_hidden_"/>&lt;script type="text/javascript">
+&lt;!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+&lt;/script>&lt;/form>
+        
+    &lt;/body>
+&lt;/html></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>12 May 2005, 05:02:16.382 PM MDT</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>

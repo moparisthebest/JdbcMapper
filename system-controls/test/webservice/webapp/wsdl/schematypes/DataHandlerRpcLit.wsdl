@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://datahandler.attachments" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://datahandler.attachments" xmlns:intf="http://datahandler.attachments" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+
+   <wsdl:message name="getPlainTextRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getPlainTextResponse">
+
+      <wsdl:part name="return" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGifImageResponse">
+
+      <wsdl:part name="return" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getJpgImageRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getXmlTextRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getJpgImageResponse">
+
+      <wsdl:part name="return" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getXmlTextResponse">
+
+      <wsdl:part name="return" type="apachesoap:DataHandler"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGifImageRequest">
+
+   </wsdl:message>
+
+   <wsdl:portType name="DataHandlerRpcLit">
+
+      <wsdl:operation name="getPlainText">
+
+         <wsdl:input message="impl:getPlainTextRequest" name="getPlainTextRequest"/>
+
+         <wsdl:output message="impl:getPlainTextResponse" name="getPlainTextResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getXmlText">
+
+         <wsdl:input message="impl:getXmlTextRequest" name="getXmlTextRequest"/>
+
+         <wsdl:output message="impl:getXmlTextResponse" name="getXmlTextResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getJpgImage">
+
+         <wsdl:input message="impl:getJpgImageRequest" name="getJpgImageRequest"/>
+
+         <wsdl:output message="impl:getJpgImageResponse" name="getJpgImageResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGifImage">
+
+         <wsdl:input message="impl:getGifImageRequest" name="getGifImageRequest"/>
+
+         <wsdl:output message="impl:getGifImageResponse" name="getGifImageResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DataHandlerRpcLitSoapBinding" type="impl:DataHandlerRpcLit">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPlainText">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPlainTextRequest">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPlainTextResponse">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getXmlText">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getXmlTextRequest">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getXmlTextResponse">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getJpgImage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getJpgImageRequest">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getJpgImageResponse">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGifImage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGifImageRequest">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGifImageResponse">
+
+            <wsdlsoap:body namespace="http://datahandler.attachments" use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DataHandlerRpcLitService">
+
+      <wsdl:port binding="impl:DataHandlerRpcLitSoapBinding" name="DataHandlerRpcLit">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/attachments/datahandler/DataHandlerRpcLit.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

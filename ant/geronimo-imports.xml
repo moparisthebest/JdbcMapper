@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+
+<project name="Beehive/SVN/GeronimoImports" default="usage" basedir=".">
+
+    <property environment="os"/>
+    <property name="geronimo.home" location="${os.GERONIMO_HOME}"/>
+
+    <!-- Properties used to run Geronimo -->
+    <property name="geronimo.username" value="system"/>
+    <property name="geronimo.password" value="manager"/>
+    
+    <target name="deploy" description="Deploy a app to a running Geronimo server">
+        <fail unless="webapp.dir" message="Can't deploy webapp; the value ${webapp.dir} was unspecified"/>
+
+        <property name="_url" value="file://${webapp.dir}"/>
+        <echo>deploy webapp from ${_url} with context path ${context.path}</echo>
+
+        <java fork="true" jar="${geronimo.home}/bin/deployer.jar">
+            <arg value="--user"/>
+            <arg value="${geronimo.username}"/>
+            <arg value="--password"/>
+            <arg value="${geronimo.password}"/>
+            <arg value="deploy"/>
+            <arg value="${webapp.dir}"/>
+        </java>
+        <sleep seconds="5"/>
+    </target>
+
+    <target name="undeploy" description="Undeploy an app running on a Geronimo server">
+        <!-- context path as used here is actually the targetModuleId for the app to undeploy -->
+        <fail unless="context.path" message="Can't undeploy module; the value ${context.path} was unspecified"/>
+        <java fork="true" jar="${geronimo.home}/bin/deployer.jar">
+            <arg value="--user"/>
+            <arg value="${geronimo.username}"/>
+            <arg value="--password"/>
+            <arg value="${geronimo.password}"/>
+            <arg value="undeploy"/>
+            <arg value="${context.path}"/>
+        </java>
+    </target>
+
+    <target name="redeploy" description="Redeploy an app already running on a Geronimo server">
+        <!-- context path as used here is actually the targetModuleId for the app to redeploy -->
+        <fail unless="context.path" message="Can't undeploy module; the value ${context.path} was unspecified"/>
+
+        <java fork="true" jar="${geronimo.home}/bin/deployer.jar">
+            <arg value="--user"/>
+            <arg value="${geronimo.username}"/>
+            <arg value="--password"/>
+            <arg value="${geronimo.password}"/>
+            <arg value="redeploy"/>
+            <arg value="${context.path}"/>
+        </java>
+        <sleep seconds="5"/>
+    </target>
+
+    <target name="start" description="Start a Geronimo instance.">
+
+        <condition property="cmdline.options" value="">
+            <not><isset property="cmdline.options"/></not>
+        </condition>
+
+        <condition property="java.options" value="">
+            <not><isset property="java.options"/></not>
+        </condition>
+
+        <echo>startup.dir: ${geronimo.home}/bin</echo>
+        <echo>cmdline.options: ${cmdline.options}</echo>
+        <echo>java.options: ${java.options}</echo>
+
+        <echo>Starting Geronimo</echo>
+        <exec os="Linux,SunOS,Solaris,Mac OS X" dir="${geronimo.home}/bin" executable="sh">
+            <env key="GERONIMO_HOME" value="${geronimo.home}"/>
+            <arg line="geronimo.sh start ${cmdline.options}"/>
+        </exec>
+        <exec os="Windows 2000,Windows 2003,Windows XP" dir="${geronimo.home}\bin" executable="cmd.exe">
+            <env key="GERONIMO_HOME" value="${geronimo.home}"/>
+            <arg line="geronimo.bat start ${cmdline.options}"/>
+        </exec>
+        <echo>Pausing for 30 seconds while geronimo starts....</echo>
+        <sleep seconds="30"/>
+    </target>
+
+    <target name="start.with.shmem" description="Start a Geronimo instance with shared memory debugging.">
+
+        <condition property="cmdline.options" value="">
+            <not><isset property="cmdline.options"/></not>
+        </condition>
+
+        <condition property="java.options" value="">
+            <not><isset property="java.options"/></not>
+        </condition>
+
+        <echo>startup.dir: ${geronimo.home}/bin</echo>
+        <echo>cmdline.options: ${cmdline.options}</echo>
+        <echo>java.options: ${java.options}</echo>
+
+        <echo>Starting Geronimo with jpda</echo>
+        <exec os="Linux,SunOS,Solaris,Mac OS X" dir="${geronimo.home}/bin" executable="sh">
+            <env key="GERONIMO_HOME" value="${geronimo.home}"/>
+            <arg line="geronimo.sh jpda start ${cmdline.options}"/>
+        </exec>
+        <exec os="Windows 2000,Windows 2003,Windows XP" dir="${geronimo.home}\bin" executable="cmd.exe">
+            <env key="GERONIMO_HOME" value="${geronimo.home}"/>
+            <arg line="geronimo.bat jpda start ${cmdline.options}"/>
+        </exec>
+        <echo>Pausing for 30 seconds while geronimo starts....</echo>
+        <sleep seconds="30"/>
+    </target>
+
+    <target name="stop" description="Stop the Geronimo server.">
+        <echo>Stop Geronimo in: ${geronimo.home}</echo>
+        <exec os="Windows 2000,Windows 2003,Windows XP" dir="${geronimo.home}\bin" executable="cmd.exe">
+            <arg value="geronimo.bat"/>
+            <arg value="stop"/>
+            <arg value="--force"/>
+            <arg value="--user"/>
+            <arg value="${geronimo.username}"/>
+            <arg value="--password"/>
+            <arg value="${geronimo.password}"/>
+        </exec>
+
+        <exec os="Linux,SunOS,Solaris,Mac OS X" dir="${geronimo.home}/bin" executable="sh">
+            <arg value="geronimo.sh"/>
+            <arg value="stop"/>
+            <arg value="--force"/>
+            <arg value="--user"/>
+            <arg value="${geronimo.username}"/>
+            <arg value="--password"/>
+            <arg value="${geronimo.password}"/>
+        </exec>
+    </target>
+
+    <target name="usage" description="Print the usage for this build.xml">
+        <java fork="no" classname="org.apache.tools.ant.Main">
+            <arg line="-f ${ant.file} -projecthelp"/>
+        </java>
+    </target>
+
+</project>

@@ -1,0 +1,70 @@
+package PF_RolesAllowed;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains two actions that reverse the order of
+ * a "validationErrorForward" and a "rolesAllowed" attributes.  This test
+ * verifies that the order does not matter and that "validationErrorForward" and
+ * "rolesAllowed" over-ride each other.  See Radar bug 37710.
+ *
+ * @result Test should compile cleanly and the resulting config.xml file should be
+ * correct.
+ *
+ ******************************************************************************/
+@Jpf.Controller(
+        rolesAllowed = {
+            "heyRole"
+        })
+   public class Controller extends PageFlowController
+     {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+   protected Forward begin()
+      {
+      return new Forward("pg1");
+      }
+
+    @Jpf.Action(
+        validationErrorForward = @Jpf.Forward(
+            name="validationFailure",
+            path="Pg1.jsp"),
+        rolesAllowed = {
+            "foo",
+            "bar"
+        },
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "Pg1.jsp")
+        })
+   protected Forward newAction1()
+      {
+      return new Forward("success");
+      }
+
+    @Jpf.Action(
+        rolesAllowed = {
+            "foo",
+            "bar"
+        },
+        validationErrorForward = @Jpf.Forward(
+            name="validationFailure",
+            path="Pg1.jsp"),
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "Pg1.jsp")
+        })
+   protected Forward newAction2()
+      {
+      return new Forward("success");
+      }
+   }

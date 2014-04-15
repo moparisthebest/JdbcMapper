@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>ButtonTag</ses:sessionName>
+   <ses:tester>crogers</ses:tester>
+   <ses:startDate>24 Oct 2005, 02:03:24.484 PM MDT</ses:startDate>
+   <ses:description>Render netui:button tags as both HTML input and button elements.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/button/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1EA28F213D73B21445AE5E1F9573BEFB</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1EA28F213D73B21445AE5E1F9573BEFB</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+      <title>NetUI Button Tag Rendering</title>
+      <base href="http://localhost:8080/coreWeb/tags/button/index.jsp">
+    </head>
+    <body>
+      <h2>Test - NetUI Button tag rendering options</h2>
+
+      <form action="/coreWeb/tags/button/submitIt.do" method="post">
+        <table>
+          <tr valign="top">
+            <td>Shaper:</td>
+            <td>
+              <input type="text" name="{actionForm.shaper}">
+            </td>
+          </tr>
+          <tr valign="top">
+            <td>Style:</td>
+            <td>
+              <input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Short" checked><span>Short</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Longboard"><span>Longboard</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Hybrid"><span>Hybrid</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Fish"><span>Fish</span><br>
+
+            </td>
+          </tr>
+        </table>
+
+        <br>
+        <br>
+        &lt;netui:button>... rendered with &lt;input> element
+        <br>
+        <input type="submit" name="actionOverride:cancel" value="Cancel Submit">
+        <input type="submit" name="actionOverride:cancel" value="Cancel Submit...">
+        <br>
+        <input type="button" name="actionOverride:cancel" value="Cancel Button">
+        <input type="button" name="actionOverride:cancel" value="Cancel Button Text...">
+        <br>
+        <input type="reset" value="Reset Button">
+        <input type="reset" value="Reset Text...">
+        <br>
+        <input type="submit" value="Input Submit">
+        <input type="submit" value="Input Submit Text...">
+
+        <br>
+        <br>
+        &lt;netui:button>... rendered with &lt;button> element
+        <br>
+        <button type="submit" name="actionOverride:cancel" value="Cancel Submit 2">Cancel Submit 2</button>
+        <button type="submit" name="actionOverride:cancel" value="Click">Cancel Submit...</button>
+        <br>
+        <button type="button" name="actionOverride:cancel" value="Cancel Button 2">Cancel Button 2</button>
+        <br>
+        <button type="reset" value="Reset Button 2"><img src="/coreWeb/tags/button/folder.gif">Img Reset Text...</button>
+        <button type="reset" value="Click">Reset Text...</button>
+        <br>
+        <button type="submit" value="submit">Input Submit Text...</button>
+      </form>
+
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>24 Oct 2005, 02:03:45.764 PM MDT</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>

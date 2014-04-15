@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004"
+    targetNamespace="http://beehive.apache.org/netui/tools/testrecorder/2004"
+    elementFormDefault="qualified">
+
+    <xs:element name="server">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="nonZeroLengthString"/>
+                <xs:element name="hostname" type="nonZeroLengthString"/>
+                <xs:element name="port" type="xs:int"/>
+                <xs:element name="webapps" type="webappsType" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="webappsType">
+        <xs:sequence>
+            <xs:element name="webapp" type="webappType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="webappType">
+        <xs:sequence>
+            <xs:element name="name" type="nonZeroLengthString"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="testMode" type="xs:boolean"/>
+            <xs:element name="contextRoot" type="nonZeroLengthString"/>
+            <xs:element name="testDefinitionsDirectory" type="nonZeroLengthString"/>
+            <xs:element name="overrideDefaultConfig" type="overrideDefaultConfigType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="overrideDefaultConfigType">
+        <xs:sequence>
+            <xs:element name="suffixList" type="suffixListType" minOccurs="1"/>
+            <xs:element name="servletURI" type="nonZeroLengthString" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="suffixListType">
+        <xs:sequence>
+            <xs:element name="suffix" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="nonZeroLengthString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

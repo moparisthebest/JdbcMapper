@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\simpleInvalidPathWarning\ParentFlow.java:12: warning: File "index.jsp" could not be found in the web application.
+public class ParentFlow
+       ^
+1 warning

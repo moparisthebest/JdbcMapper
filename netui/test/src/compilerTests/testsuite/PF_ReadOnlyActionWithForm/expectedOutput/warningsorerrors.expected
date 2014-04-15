@@ -1,0 +1,8 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ReadOnlyActionWithForm\Controller.java:41: The "useFormBean" attribute may not be used on read-only actions.
+   protected Forward action1(Form1 inForm1)
+                     ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ReadOnlyActionWithForm\Controller.java:41: warning: This action has the readOnly attribute set to true, but the useFormBean attribute may cause the value of member field _form1 to be modified.
+   protected Forward action1(Form1 inForm1)
+                     ^
+1 error
+1 warning

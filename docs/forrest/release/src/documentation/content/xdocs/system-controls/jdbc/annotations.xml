@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>JDBC Control Annotations</title>
+  </header>
+    <body>
+        <p><a href="apidocs/javadoc/org/apache/beehive/controls/system/jdbc/JdbcControl.ConnectionDataSource.html">@JdbcControl.ConnectionDataSource</a></p>
+        <p><a href="apidocs/javadoc/org/apache/beehive/controls/system/jdbc/JdbcControl.ConnectionDriver.html">@JdbcControl.ConnectionDriver</a></p>
+        <p><a href="apidocs/javadoc/org/apache/beehive/controls/system/jdbc/JdbcControl.ConnectionOptions.html">@JdbcControl.ConnectionOptions</a></p>
+        <p><a href="apidocs/javadoc/org/apache/beehive/controls/system/jdbc/JdbcControl.SQL.html">@JdbcControl.SQL</a></p>
+        <p><a href="apidocs/javadoc/org/apache/beehive/controls/system/jdbc/JdbcControl.TypeMapper.html">@JdbcControl.TypeMapper</a></p>
+    </body>
+    <footer>
+        <legal>Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+               &copy; 2005, Apache Software Foundation
+        </legal>
+    </footer>
+</document>

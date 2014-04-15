@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004"
+    targetNamespace="http://beehive.apache.org/netui/tools/testrecorder/2004"
+    elementFormDefault="qualified">
+
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="suffixList" type="defaultSuffixListType" minOccurs="1"/>
+                <xs:element name="servletURI" type="nonZeroLengthString" minOccurs="1"/>
+                <xs:element name="baseDirectory" type="nonZeroLengthString" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="defaultSuffixListType">
+        <xs:sequence>
+            <xs:element name="suffix" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="nonZeroLengthString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

@@ -1,0 +1,8 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_FormDataOverrideValidateWarning\Controller.java:47: warning: Class PF_FormDataOverrideValidateWarning.Controller.MyForm extends org.apache.beehive.netui.pageflow.FormData and overrides its validate method. When doing this, super.validate must be called in order for declarative validation annotations on this class to work. Implementing the org.apache.beehive.netui.pageflow.Validatable interface instead of overriding validate avoids this issue.
+        public ActionErrors validate(ActionMapping mapping, HttpServletRequest request)
+                            ^
+Note: [LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_FormDataOverrideValidateWarning\Controller.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 warning
+Note: [LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_FormDataOverrideValidateWarning\Controller.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.

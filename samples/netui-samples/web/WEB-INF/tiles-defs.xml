@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+    "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+
+<!-- Tiles definition file for NetUI sample.  -->
+
+<tiles-definitions>
+
+    <definition name="defaultLayout" path="/tiles/layout/page.jsp">
+        <put name="sampleTitle"  value="Tiles" />
+        <put name="header"       value="/tiles/layout/header.jsp"/>
+        <put name="menu"         value="/tiles/menu.jsp"/>
+        <put name="body"         value="/tiles/layout/body.jsp"/>
+        <put name="footer"       value="/tiles/layout/footer.jsp"/>
+    </definition>
+
+    <definition name="page1" extends="defaultLayout">
+        <put name="sampleTitle"  value="Tiles - Page 1" />
+        <put name="body"         value="/tiles/page1.jsp" />
+    </definition>
+
+    <definition name="page2" extends="defaultLayout">
+        <put name="sampleTitle"  value="Tiles - Page 2" />
+        <put name="body"         value="/tiles/page2.jsp" />
+    </definition>
+
+    <definition name="flow1" extends="defaultLayout">
+        <put name="sampleTitle"  value="Tiles - Flow 1" />
+        <put name="body"         value="/tiles/flow1/index.jsp" />
+    </definition>
+
+    <definition name="flow2" extends="defaultLayout">
+        <put name="sampleTitle"  value="Tiles - Flow 2" />
+        <put name="body"         value="/tiles/flow2/index.jsp" />
+    </definition>
+
+</tiles-definitions>

@@ -1,0 +1,42 @@
+package PF_NonNestedWithReturnAction;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file does NOT specifiy the PageFlowController
+ * jpf:controller nested="true" annotation (making it a nestable PageFlowController), yet it
+ * declares a jpf:forward annotations in Forward method "page1" with the
+ * "returnAction" attribute.  The Spec. states that you can not "returnAction"
+ * if the PageFlowController is not "nestable".
+ *
+ * @result: The compiler should catch this and issue an error.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "begin",
+                path = "Begin.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("begin");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "page1",
+                returnAction = "createTest")
+        })
+    protected Forward page1()
+        {
+        return new Forward("page1");
+        }
+    }

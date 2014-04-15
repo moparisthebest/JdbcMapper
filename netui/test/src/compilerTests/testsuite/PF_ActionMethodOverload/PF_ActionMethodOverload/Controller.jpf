@@ -1,0 +1,70 @@
+package PF_ActionMethodOverload;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file overloads the Forward method "page1".  One
+ * method signature takes no parameters while the other takes an TempForm
+ * parameter.  This should be valid syntax.
+ *
+ * @result: This PageFlowController should compile successfully and generate a valid
+ * config xml file.
+ *
+ * @CR181626: OPEN
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    /***************************************************************************
+     * Inner ActionForm class
+     **************************************************************************/
+    public static final class TempForm implements java.io.Serializable
+        {
+        private String lastName = "John Doe";
+        public String getLastName()
+            {
+            return(this.lastName);
+            }
+        public void setLastName(String lastName)
+            {
+            this.lastName = lastName;
+            }
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "begin",
+                path = "Begin.jsp") 
+        })
+    protected Forward begin()
+        {
+        return new Forward("begin");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "page1",
+                path = "Page1.jsp") 
+        })
+    protected Forward page1()
+        {
+        return new Forward("page1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "page1",
+                path = "Page1.jsp") 
+        })
+    protected Forward page1(TempForm inForm)
+        {
+        TempForm    theForm = inForm;
+        return new Forward("page1");
+        }
+    }

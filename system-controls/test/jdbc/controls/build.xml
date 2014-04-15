@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<project name="Beehive/SystemControls/TestControls" default="build" basedir=".">
+
+    <import file="../../ant/test-imports.xml"/>
+
+    <taskdef name="apt" classname="org.apache.beehive.controls.runtime.generator.AptTask"
+        classpathref="controls.dependency.path" onerror="report"/>
+    <property name="module.name" value="controls"/>
+    <property name="module.dir" location="${test.src.dir}/jdbc/${module.name}"/>
+    <property name="module.classes.dir" location="${test.classes.dir}/${module.name}"/>
+    <property name="module.gensrc.dir" location="${test.classes.dir}/${module.name}-generated-src"/>
+    <property name="module.jar" location="${test.lib.dir}/${test-controls.jar.name}"/>
+
+    <path id="testcontrols.classpath">
+        <path refid="jdbc-control.dependency.path"/>
+        <path refid="controls.dependency.path"/>
+        <path refid="xbean.dependency.path"/>
+        <path refid="junit.dependency.path"/>
+        <path refid="servlet.dependency.path"/>
+        <path refid="velocity.dependency.path"/>
+    </path>
+
+    <target name="build">
+        <echo>compile module: ${module.name}</echo>
+        <echo>output directory: ${test.lib.dir}</echo>
+        <echo>debug: ${compile.debug}</echo>
+
+        <mkdir dir="${test.lib.dir}"/>
+        <mkdir dir="${module.classes.dir}"/>
+        <mkdir dir="${module.gensrc.dir}"/>
+
+        <echo message="** Generating test Xml Beans **"/>
+
+        <taskdef name="xmlbean" classname="org.apache.xmlbeans.impl.tool.XMLBean"
+            classpathref="xbean.dependency.path" onerror="report"/>
+
+        <xmlbean classgendir="${module.classes.dir}"
+            classpathref="testcontrols.classpath"
+            schema="${module.dir}/schemas"
+            includeJavaRuntime="yes">
+        </xmlbean>
+
+        <echo message="** Phase One **"/>
+
+        <build-controls srcdir="${module.dir}"
+                        destdir="${module.classes.dir}"
+                        tempdir="${module.gensrc.dir}"
+                        classpathref="testcontrols.classpath"/>
+
+        <control-jar destfile="${module.jar}" basedir="${module.classes.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${module.classes.dir}"/>
+        <delete file="${module.jar}"/>
+    </target>
+
+</project>
+

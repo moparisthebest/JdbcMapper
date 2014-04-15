@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+
+<project name="Beehive/NetUI/JSFTests" default="usage" basedir=".">
+
+    <property environment="os"/>
+    <property file="build.properties"/>
+
+    <property name="webapp.build.dir" location="build"/>
+    <property name="classes.dir" location="${webapp.build.dir}/WEB-INF/classes"/>
+    <property name="sourcegen.dir" location="${webapp.build.dir}/WEB-INF/.tmpbeansrc"/>
+    <property name="src.dir" location="src"/>
+    <property name="web.dir" location="web"/>
+
+    <property name="webapp.name" value="jsfWeb"/>
+    <property name="server.root.url" value="http://localhost:8080"/>
+    <property name="webapp.waitfor.url" value="${server.root.url}/${webapp.name}"/>
+
+    <import file="${testrecorder.dir}/testRecorder.xml"/>
+    <import file="${beehive.home}/beehive-imports.xml"/>
+
+    <path id="webapp.classpath">
+        <fileset dir="${webapp.build.dir}/WEB-INF/lib" includes="*.jar"/>
+        <pathelement location="${classes.dir}"/>
+    </path>
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- Targets for building a webapp                                    -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+    <target name="build.internal" description="Build webapp">
+        <!-- the default version of Struts for the BVTs.  To override, pass -Dstruts.version=1.1 on the command line -->
+        <property name="struts.version" value="1.2"/>
+  
+        <echo>Struts version: ${struts.version}</echo>
+ 
+        <deploy-netui webappdir="${webapp.build.dir}"/>
+
+        <testrecorder-config testfile="${basedir}/testRecorder/config/testRecorder-tests.xml"
+                             configfile="testRecorder/config/testRecorder-config.xml"
+                             webappfile="testRecorder/config/testRecorder-webapp-${jsf.dist}.xml"
+                             appdir="${basedir}"
+                             outputdir="${classes.dir}"/>
+
+        <testrecorder-deploy webappdir="${webapp.build.dir}"/>
+
+        <copy file="web/WEB-INF/web.xml.${jsf.dist}"
+              tofile="${webapp.build.dir}/WEB-INF/web.xml"
+              overwrite="true" 
+              failonerror="true"/>
+
+        <mkdir dir="${webapp.build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${webapp.build.dir}/WEB-INF/lib"/>
+
+        <copy todir="${webapp.build.dir}">
+            <fileset dir="${web.dir}">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+
+        <path id="build.classpath">
+            <path refid="webapp.classpath"/>
+            <path refid="velocity.dependency.path"/>
+            <path refid="netui-compiler.dependency.path"/>
+
+            <pathelement location="${servlet-api.jar}"/>
+            <pathelement location="${jsp-api.jar}"/>
+        </path>
+
+        <taskdef name="apt" 
+                 classname="org.apache.beehive.controls.runtime.generator.AptTask" 
+                 classpathref="build.classpath"
+                 onerror="fail"/>
+
+        <apt srcdir="${src.dir}:${web.dir}"
+             destdir="${classes.dir}"
+             gendir="${sourcegen.dir}"
+             classpathref="build.classpath"
+             debug="true"
+             processorOptions="web.content.root=${web.dir}"
+             nocompile="false"/>
+
+        <echo>Copying all .properties and .xml files to ${classes.dir}</echo>
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}" includes="**/*.properties"/>
+            <fileset dir="${src.dir}" includes="**/*.xml"/>
+        </copy>
+
+        <!--
+        Touch all JSPs to ensure that they're compiled.  When switching between MyFaces 
+        and the JSF RI, precompiled JSPs can cause CNFEs. 
+          -->
+        <touch>
+            <fileset dir="${build.dir}">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </touch>
+    </target>
+
+    <target name="build" description="Build the webapp using the default JSF implementation">
+        <antcall target="build.myfaces"/>
+    </target>
+
+    <target name="build.jsf-ri" description="Build webapp, and deploy the JSF Reference Implementation">
+        <echo message="--------------------------------------------------"/>
+        <echo message="    NetUI ${webapp.name} webapp build starting (JSF Reference Implementation)"/>
+        <echo message="--------------------------------------------------"/>
+
+        <fail unless="os.JSF_HOME" message="JSF_HOME must reference a JavaServer Faces 1.1.01 Reference Implementation distribution."/>
+
+        <copy todir="${webapp.build.dir}/WEB-INF/lib" overwrite="true" failonerror="true">
+            <fileset dir="${os.JSF_HOME}/lib" includes="*.jar"/>
+        </copy>
+
+        <property name="jsf.dist" value="jsf-ri"/>
+        <antcall target="build.internal"/>
+
+        <echo message="--------------------------------------------------"/>
+        <echo message="    NetUI ${webapp.name} webapp build ending      "/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <target name="build.myfaces" description="Build webapp, and deploy MyFaces">
+        <echo message="--------------------------------------------------"/>
+        <echo message="    NetUI ${webapp.name} webapp build starting (Apache MyFaces)"/>
+        <echo message="--------------------------------------------------"/>
+
+        <copy todir="${webapp.build.dir}/WEB-INF/lib" overwrite="true" failonerror="true">
+            <fileset dir="${myfaces.dir}" includes="*.jar"/>
+        </copy>
+
+        <property name="jsf.dist" value="myfaces"/>
+        <antcall target="build.internal"/>
+
+        <echo message="--------------------------------------------------"/>
+        <echo message="    NetUI ${webapp.name} webapp build ending      "/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <target name="clean" description="Clean webapp">
+        <delete dir="${webapp.build.dir}"/>
+    </target>
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- Targets for running test recorder test suites                    -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+    <target name="playback" description="Playback a specified list of test recorder tests">
+        <ant dir="${test.dir}/ant" antfile="testRecorder.xml" target="playback" inheritAll="false"/>
+    </target>
+
+    <target name="bvt.running" description="Playback the 'bvt' category to a running server">
+        <ant dir="${test.dir}/ant" antfile="testRecorder.xml" target="suite.callback" inheritAll="false">
+            <property name="suite.name" value="bvt"/>
+            <property name="playback.webapps" value="${webapp.name}"/>
+            <property name="waitfor.url" value="${webapp.waitfor.url}"/>
+        </ant>
+    </target>
+
+    <target name="bvt.jsf-ri" 
+            description="Run the bvt suite against the JSF Reference Implementation with full server start / stop support." 
+            depends="clean,build.jsf-ri">
+        <ant dir="${test.dir}/ant" antfile="testRecorder.xml" inheritAll="false" target="server.test">
+            <property name="app.build.dir" location="${basedir}"/>
+            <property name="suite.name" value="bvt"/>
+            <property name="drt.mode" value="true"/>
+            <property name="playback.webapps" value="${webapp.name}"/>
+            <!-- Wait for the server's root url to see if the server has started -->
+            <property name="waitfor.url" value="${server.root.url}"/>
+            <property name="formatter.type" value="xml"/>           
+            <property name="formatter.usefile" value="true"/> 
+        </ant>
+    </target>
+
+    <target name="bvt.myfaces" 
+            description="Run the bvt suite against the MyFaces with full server start / stop support." 
+            depends="clean,build.myfaces">
+        <ant dir="${test.dir}/ant" antfile="testRecorder.xml" inheritAll="false" target="server.test">
+            <property name="app.build.dir" location="${basedir}"/>
+            <property name="suite.name" value="bvt"/>
+            <property name="drt.mode" value="true"/>
+            <property name="playback.webapps" value="${webapp.name}"/>
+            <!-- Wait for the server's root url to see if the server has started -->
+            <property name="waitfor.url" value="${server.root.url}"/>
+            <property name="formatter.type" value="xml"/>           
+            <property name="formatter.usefile" value="true"/> 
+        </ant>
+    </target>
+
+    <target name="bvt" description="Default JSF + NetUI test webapp">
+        <antcall target="bvt.myfaces"/>
+    </target>
+
+    <target name="ensure.deployed" description="Deploy webapp">
+        <echo>Ensuring that the webapp ${webapp.name} is deployed on a running server at the url ${webapp.waitfor.url}</echo>
+
+        <waitfor maxwait="5" maxwaitunit="second" timeoutproperty="unavailable">
+            <http url="${webapp.waitfor.url}"/>
+        </waitfor>
+
+        <antcall target="do.deploy"/>
+        <antcall target="do.redeploy"/>
+
+        <fail if="still.unavailable" message="Couldn't find webapp with path ${webapp.waitfor.url}"/>
+    </target>
+
+    <target name="do.deploy" if="unavailable">
+        <echo>Webapp is not deployed; deploying</echo>
+
+        <antcall target="deploy"/>
+        <echo>...deploy complete</echo>
+
+        <waitfor maxwait="120" maxwaitunit="second" timeoutproperty="still.unavailable">
+            <http url="${webapp.waitfor.url}"/>
+        </waitfor>
+    </target>
+
+    <target name="do.redeploy" unless="unavailable">
+        <echo>Webapp is deployed; undeploy and redeploy</echo>
+
+        <antcall target="undeploy"/>
+        <echo>...undeploy complete</echo>
+
+        <antcall target="deploy"/>
+        <echo>...deploy complete</echo>
+
+        <waitfor maxwait="120" maxwaitunit="second" timeoutproperty="still.unavailable">
+            <http url="${webapp.waitfor.url}"/>
+        </waitfor>
+    </target>
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- Targets for deploying the webapp on a server                     -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+    <target name="deploy" description="Deploy webapp">
+        <deploy-webapp webappDir="${webapp.build.dir}" contextPath="${webapp.name}"/>
+    </target>
+
+    <target name="undeploy" description="Undeploy webapp">
+        <undeploy-webapp contextPath="${webapp.name}"/>
+    </target>
+
+    <target name="redeploy" description="Redeploy webapp">
+        <redeploy-webapp contextPath="${webapp.name}"/>
+    </target>
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- Targets for starting / stopping a server                         -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+    <target name="start" description="Start server">
+        <start-server shmem="false" javaOptions="-ea:org.apache.beehive.netui..."/>
+    </target>
+
+    <target name="start.without.asserts" description="Start server without assertions enabled">
+        <start-server shmem="false" javaOptions=""/>
+    </target>
+
+    <target name="start.with.shmem" description="Start server with shared memory debugging enabled">
+        <start-server shmem="true" javaOptions="-ea:org.apache.beehive.netui..."/>
+    </target>
+
+    <target name="stop" description="Stop server">
+        <stop-server/>
+    </target>
+
+    <target name="usage">
+        <java fork="no" classname="org.apache.tools.ant.Main">
+            <arg line="-projecthelp"/>
+        </java>
+    </target>
+
+</project>

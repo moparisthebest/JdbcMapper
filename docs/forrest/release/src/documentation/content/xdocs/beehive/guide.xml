@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v13.dtd">
+<document>
+    <header>
+        <title>Putting the Pieces Together</title>
+    </header>
+    <body>
+        <section id="intro">
+            <title>How Do NetUI, Controls, and Web Services Fit Together?</title>
+            <p>NetUI makes building Java web applications easy and intuitive.  When programming with NetUI, the developer writes Java classes and pages -- that's it.  There is very little occasion to work with configuration files or other components.  NetUI programming is not only simple, it is also excells at separating the presentation logic from the data processing logic.  This results in uncluttered JSP code which is easy to understand and edit.  Moreover, many of the most difficult programming tasks, such as security and validation, are handled with a simple declarative programming model using Java annotations.</p> 
+        </section>
+        <section>
+            <title>How Does NetUI Work?</title>
+            <p>A NetUI "page flow" consists of a single directory containing a Java class, called the "controller", and any number of pages (often JSPs).
+            The role of the pages is to present a visual interface for users of the web application.  The role of the controller class is to coordinate all of the things that can happen when a user visits a web site.  These duties include: handling user requests, fashioning responses to user requests, preserving session state, and coordinating back-end resources (such as databases and web services).</p>
+            <p>The JSP files use special tags (the <code>&lt;netui&gt;</code> tags) and databinding expressions which bind the user interface to objects and actions in the controller class.
+            </p>
+            <p>tbd: need diagram here</p> 
+            <p>The action methods in the controller class implement code that can result in site navigation, passing data, or invoking back-end business logic via controls. 
+            Significantly, the business logic in the controller class is separate from the presentation code defined in the JSP files.
+            The overall purpose of a page flow is to provide you with an easy-to-use framework for building dynamic, sophisticated web applications. 
+            While page flows give you access to advanced features of J2EE, you do not have to be a J2EE expert to quickly develop and deploy Java-based applications built on page flows.</p>    
+            <p>The programming model: annotations, data binding expressions, &lt;netui> tags, etc.</p>
+        </section>
+        <section id="nav">
+            <title>Navigation</title>
+        </section>
+        <section id="submit">
+            <title>Submitting Data: Form Beans, and Data Binding</title>
+        </section>
+        <section id="processing_data">
+            <title>Processing Data</title>
+        </section>
+        <section id="displaying_data">
+            <title>Displaying Data</title>
+        </section>
+        <section id="controls">
+            <title>Accessing Back-End Resources with Controls</title>
+        </section>
+        <section id="validation">
+            <title>Validation</title>
+        </section>
+        <section id="security">
+            <title>Security</title>
+        </section>
+    </body>
+    <footer>
+        <legal>Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+	&copy; 2004, Apache Software Foundation
+	</legal>
+    </footer>
+</document>

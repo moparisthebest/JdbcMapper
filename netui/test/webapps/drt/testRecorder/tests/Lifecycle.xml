@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>Lifecycle</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>03 Jul 2004, 04:30:15.265 PM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/lifecycle/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3AE3C9E203F0C3C242285C31B3545AA6</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=3AE3C9E203F0C3C242285C31B3545AA6</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testnumber</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-16471f64:fd871d6f4e:-7c3f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Lifecycle</title>
+</head>
+<body>
+<h4>Lifecycle</h4>
+<p style="color:green">
+This test will create appends a value to a global variable stored in the sharedFlow for each lifecycle event.
+When you go to the results page, it will call an action in sharedFlow which will forward to the <b>results/Controller.jpf</b> which
+displays that global variable.
+</p>
+<a href="/coreWeb/miniTests/lifecycle/postback.do">Postback</a>
+<a href="/coreWeb/miniTests/lifecycle/globalAction_results.do">Results</a>
+<hr />
+onCreate<br />beforeAction<br />begin<br />afterAction<br />
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/lifecycle/postback.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3AE3C9E203F0C3C242285C31B3545AA6</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=3AE3C9E203F0C3C242285C31B3545AA6</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testnumber</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-16471f64:fd871d6f4e:-7c3f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Lifecycle</title>
+</head>
+<body>
+<h4>Lifecycle</h4>
+<p style="color:green">
+This test will create appends a value to a global variable stored in the sharedFlow for each lifecycle event.
+When you go to the results page, it will call an action in sharedFlow which will forward to the <b>results/Controller.jpf</b> which
+displays that global variable.
+</p>
+<a href="/coreWeb/miniTests/lifecycle/postback.do">Postback</a>
+<a href="/coreWeb/miniTests/lifecycle/globalAction_results.do">Results</a>
+<hr />
+onCreate<br />beforeAction<br />begin<br />afterAction<br />beforeAction<br />postback<br />afterAction<br />
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/lifecycle/globalAction_results.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3AE3C9E203F0C3C242285C31B3545AA6</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=3AE3C9E203F0C3C242285C31B3545AA6</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testnumber</ses:name>
+                  <ses:value>3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-16471f64:fd871d6f4e:-7c3f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>results</title>
+</head>
+<body>
+<h2>results</h2>
+<p style="color:green">
+This displays the contents of the global property <b>sharedFlow.results</b>.  The Lifecycle test calls this PageFlow through
+the sharedFlow so that is can capture the onDestroy event within the lifecycle.
+</p>
+<hr />
+onCreate<br />beforeAction<br />begin<br />afterAction<br />beforeAction<br />postback<br />afterAction<br />onDestroy<br />onDestroy<br />
+<hr />
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>03 Jul 2004, 04:30:16.707 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>3</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

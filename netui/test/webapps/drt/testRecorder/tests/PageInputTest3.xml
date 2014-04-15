@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>PageInputTest3</sessionName>
+  <tester>Spencer Keller</tester>
+  <startDate>17 Sep 2003, 02:35:24.211 PM MDT</startDate>
+  <description>Test the new "Forward" constructor that supports pageInput and the "addPageInput" methods by passing null's, empty strings and other bad stuff.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/Jpf1.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/StartTest.jsp</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp1.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action1.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action1.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/Jpf1.jpf</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp2.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action2.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action2.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action1.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp3.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action3.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action3.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action2.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp4.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action4.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action4.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action3.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp5.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action5.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>6</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action5.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action4.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp6.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action6.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>7</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action6.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action5.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp7.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            
+            <br/>
+            PageInput field: "<span></span>"
+            <br/>
+            <font color="blue">
+                <b>
+                    Note: The above string is supposed to be an empty string.
+                </b>
+            </font>
+            <br/>
+            <hr width="95%"/>
+            <br/>
+            <a href="/coreWeb/pageInput/test3/action7.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>8</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action7.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action6.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp8.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action8.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>9</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action8.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action7.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp9.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action9.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>10</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action9.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action8.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp10.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="/coreWeb/pageInput/test3/action10.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>11</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action10.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action9.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp11.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            
+            <br/>
+            PageInput field: "<span></span>"
+            <br/>
+            <font color="blue">
+                <b>
+                    Note: The above string is supposed to be an empty string.
+                </b>
+            </font>
+            <br/>
+            <hr width="95%"/>
+            <br/>
+            <a href="/coreWeb/pageInput/test3/action11.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>12</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action11.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action10.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp12.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            
+            <br/>
+            PageInput field: "<span>PageValue 2</span>"
+            <br/>
+            <hr width="95%"/>
+            <br/>
+            <a href="/coreWeb/pageInput/test3/action12.do">Continue...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>13</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/action12.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action11.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>PageInput Test3</title>
+    </head>
+    <body>
+        <h3 align="center">PageInput Test3 - Jsp13.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            
+            
+            <br/>
+            PageInput field1: "<span>PageValue 1</span>"
+            <br/>
+            PageInput field2: "<span>PageValue 2</span>"
+            <br/>
+            <hr width="95%"/>
+            <br/>
+            <a href="/coreWeb/pageInput/test3/finish.do">Finish...</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>14</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test3/finish.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1oFc1VcSQE7ooXfPla9KXnJxVRVmhGC6YMQIGwVfq6xz0UGdq7fR!-2100074344</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageInput/test3/action12.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>Merge Tests</title>
+    </head>
+    <body>
+        <h2 align="center">Merge Tests - done.jsp</h2>
+        <hr align="center" width="95%"/>
+        <br/>
+        <center>
+            <font color="green"><h2>Test completed successfully.</h2></font>
+            <br/>
+            <a href="/coreWeb/index.jsp">Return to main test menu.</a>
+            <br/><br/>
+            <hr align="center" width="95%"/>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>17 Sep 2003, 02:36:04.559 PM MDT</endDate>
+  <testCount>14</testCount>
+
+</recorderSession>

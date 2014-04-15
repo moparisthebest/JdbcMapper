@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>pfPageInput</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>16 Mar 2005, 10:13:04.442 AM MST</ses:startDate>
+   <ses:description>rich</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/PageInputController.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <body>
+        action output string: <b><span></span></b>
+        <br>
+        action output array: 
+        <br>
+        <br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good1.do">good1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good2.do">good2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable1.do">missingButNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable2.do">missingButNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched1.do">mismatched1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched2.do">mismatched2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable1.do">missingNotNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable2.do">missingNotNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/lots.do">lots</a><br>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/good1.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <body>
+        action output string: <b><span>hello</span></b>
+        <br>
+        action output array: 
+        <br>
+        <br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good1.do">good1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good2.do">good2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable1.do">missingButNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable2.do">missingButNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched1.do">mismatched1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched2.do">mismatched2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable1.do">missingNotNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable2.do">missingNotNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/lots.do">lots</a><br>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/good2.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <body>
+        action output string: <b><span></span></b>
+        <br>
+        action output array: 
+                            <ul>
+                        
+                            <li><span>hello</span></li>
+                        
+                            <li><span>there</span></li>
+                        
+                            </ul>
+                        
+        <br>
+        <br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good1.do">good1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good2.do">good2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable1.do">missingButNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable2.do">missingButNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched1.do">mismatched1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched2.do">mismatched2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable1.do">missingNotNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable2.do">missingNotNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/lots.do">lots</a><br>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/missingButNullable1.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <body>
+        action output string: <b><span></span></b>
+        <br>
+        action output array: 
+        <br>
+        <br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good1.do">good1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good2.do">good2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable1.do">missingButNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable2.do">missingButNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched1.do">mismatched1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched2.do">mismatched2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable1.do">missingNotNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable2.do">missingNotNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/lots.do">lots</a><br>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/missingButNullable2.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <body>
+        action output string: <b><span></span></b>
+        <br>
+        action output array: 
+        <br>
+        <br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good1.do">good1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/good2.do">good2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable1.do">missingButNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingButNullable2.do">missingButNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched1.do">mismatched1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/mismatched2.do">mismatched2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable1.do">missingNotNullable1</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/missingNotNullable2.do">missingNotNullable2</a><br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/lots.do">lots</a><br>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/mismatched1.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html><head><title>Page Flow Error - Mismatched Action Output</title></head>
+ <body>
+ <h1>Page Flow Error - Mismatched Action Output</h1>
+ <table border="1" cellspacing="0">
+ <tr><td><b>Page Flow:</b></td><td>/pageFlowCore/pfPageInput/PageInputController.jpf</td></tr>
+ <tr><td><b>Action:</b></td><td>mismatched1</td></tr>
+ <tr><td><b>Forward:</b></td><td>success</td></tr>
+ <tr><td><b>Action Output:</b></td><td>mismatched</td></tr>
+ </table><br />
+ <span style="color:red">
+ The action output <b>mismatched</b> is of type <b>java.lang.Integer</b>, but was declared to expect type <b>java.lang.String</b>.
+ </span>
+ </body></html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/mismatched2.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html><head><title>Page Flow Error - Mismatched Action Output</title></head>
+ <body>
+ <h1>Page Flow Error - Mismatched Action Output</h1>
+ <table border="1" cellspacing="0">
+ <tr><td><b>Page Flow:</b></td><td>/pageFlowCore/pfPageInput/PageInputController.jpf</td></tr>
+ <tr><td><b>Action:</b></td><td>mismatched2</td></tr>
+ <tr><td><b>Forward:</b></td><td>globalSuccessMismatched</td></tr>
+ <tr><td><b>Action Output:</b></td><td>mismatched</td></tr>
+ </table><br />
+ <span style="color:red">
+ The action output <b>mismatched</b> is of type <b>java.lang.String[]</b>, but was declared to expect type <b>java.lang.String</b>.
+ </span>
+ </body></html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>8</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/missingNotNullable1.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html><head><title>Page Flow Error - Missing Action Output</title></head>
+ <body>
+ <h1>Page Flow Error - Missing Action Output</h1>
+ <table border="1" cellspacing="0">
+ <tr><td><b>Page Flow:</b></td><td>/pageFlowCore/pfPageInput/PageInputController.jpf</td></tr>
+ <tr><td><b>Action:</b></td><td>missingNotNullable1</td></tr>
+ <tr><td><b>Forward:</b></td><td>success</td></tr>
+ <tr><td><b>Action Output:</b></td><td>missingNotNullable</td></tr>
+ </table><br />
+ <span style="color:red">
+ The required action output <b>missingNotNullable</b> was not present on forward <b>success</b>.
+ </span>
+ </body></html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>9</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/missingNotNullable2.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html><head><title>Page Flow Error - Missing Action Output</title></head>
+ <body>
+ <h1>Page Flow Error - Missing Action Output</h1>
+ <table border="1" cellspacing="0">
+ <tr><td><b>Page Flow:</b></td><td>/pageFlowCore/pfPageInput/PageInputController.jpf</td></tr>
+ <tr><td><b>Action:</b></td><td>missingNotNullable2</td></tr>
+ <tr><td><b>Forward:</b></td><td>globalSuccessMissingNotNullable</td></tr>
+ <tr><td><b>Action Output:</b></td><td>missingNotNullable</td></tr>
+ </table><br />
+ <span style="color:red">
+ The required action output <b>missingNotNullable</b> was not present on forward <b>globalSuccessMissingNotNullable</b>.
+ </span>
+ </body></html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>10</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageFlowCore/pfPageInput/lots.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1D169E462AAA1A75EC771AA2EBD51A21</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------- ------- --------- ----------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1D169E462AAA1A75EC771AA2EBD51A21; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-621dc6f6:102ac533be8:-79ca</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.5) Gecko/20031007 Firebird/0.7 RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            lots of action outputs:
+        </title>
+    </head>
+    <body>
+        pi1: <span>hi</span>
+        <br>
+        pi2: 
+                    <ul>
+                
+                    <li><span>hi</span></li>
+                
+                    <li><span>there</span></li>
+                
+                    </ul>
+                
+        <br>
+        pi3: 
+                    <ul>
+                
+                    
+                            subarray: <ul>
+                        
+                            <li><span>hi</span></li>
+                        
+                            <li><span>there</span></li>
+                        
+                            </ul>
+                        
+                
+                    
+                            subarray: <ul>
+                        
+                            <li><span>this</span></li>
+                        
+                            <li><span>works</span></li>
+                        
+                            </ul>
+                        
+                
+                    </ul>
+                
+
+        <br>
+        <br>
+        <a href="/coreWeb/pageFlowCore/pfPageInput/begin.do">back to start</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>16 Mar 2005, 10:13:06.596 AM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>10</ses:testCount>
+   <ses:passedCount>9</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

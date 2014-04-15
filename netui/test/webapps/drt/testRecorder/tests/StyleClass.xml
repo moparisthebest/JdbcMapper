@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>StyleClass</ses:sessionName>
+   <ses:tester>daryl</ses:tester>
+   <ses:startDate>08 Mar 2005, 11:18:23.245 AM MST</ses:startDate>
+   <ses:description>daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/styleClass/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>ADE0C63FFD540A9412B6B573C389BBCD</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=ADE0C63FFD540A9412B6B573C389BBCD; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1932b703:102835a0095:-7719</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Style</title>
+<!-- target -->
+<base href="http://localhost:8080/coreWeb/tags/styleClass/Begin.jsp">
+<style>
+.red {
+        color: red
+}
+.green {
+        color: green
+}
+.redBorder {
+        border: solid 1pt red;
+        color: red
+}
+.blueBorder {
+        border:solid 1pt blue;
+        color:blue
+}
+.bigBlue {
+        Color: blue;
+        font: bold 14pt sans-serif
+}
+.select {
+        margin:10;
+        color: red;
+        font: bold 14pt sans-serif
+}
+.selectOpt {
+        margin:10;
+        color: blue;
+        font: bold 12pt serif
+}
+.blueButton {
+        color:blue;
+        font: bold 12pt serif
+}
+.redImage {
+        border: solid 10pt red;
+        padding: 10pt;
+        margin:2pt
+}
+.blueImage {
+        border: solid 2pt blue;
+}
+.greenImage {
+        border: solid 4pt green;
+}
+.form {
+        border: solid 1pt;
+        padding: 10pt;
+}
+</style>
+</head>
+<body>
+<h4>Style</h4>
+<form action="/coreWeb/tags/styleClass/postback.do" class="form" method="post">
+<!-- TEXTBOX -->
+<input type="text" name="{actionForm.text}" class="red" maxlength="30"><br />
+<!-- TEXTAREA -->
+<textarea name="{actionForm.textArea}" class="green" rows="5" cols="20"></textarea><br />
+<!-- CHECKBOXGROUP with Option-->
+<input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup}OldValue" value="true">
+<!-- CHECKBOXOPTION -->
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup}" class="blueBorder" value="foo"><span>foo</span>
+<br />
+
+<!-- CHECKBOXGROUP with OptionDataSource-->
+<input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}OldValue" value="true"><input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}" class="redBorder" value="Check 1"><span>Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}" class="redBorder" value="Check 2"><span>Check 2</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}" class="redBorder" value="Check 3"><span>Check 3</span><br>
+
+
+<!-- LABEL:-->
+<span class="bigBlue">Checkbox 1</span>
+<!-- CHECKBOX: defaultValue, style, styleClass, tabindex
+-->
+<input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}" class="blueBorder"><br /><br />
+<!-- RADIOBUTTONGROUP with Option-->
+
+<!-- RADIOBUTTONOPTION -->
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" class="blueBorder" value="Choice 1"><span>Choice 1</span><br />
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" class="redBorder" value="Choice 2" checked><span>Choice 2</span>
+<br />
+
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio2}" class="blueBorder" value="Check 1"><span>Check 1</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio2}" class="blueBorder" value="Check 2"><span>Check 2</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio2}" class="blueBorder" value="Check 3" checked><span>Check 3</span><br>
+
+<br />
+<!-- SELECT -->
+<input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" class="select" size="3"><!-- SELECTOPTION, locale, style, styleClass, tabindex
+-->
+<option class="selectOpt" value="1">1</option>
+<option value="2" selected>Choice 2</option>
+<option value="3" disabled>Choice 3</option></select><br />
+<!-- HIDDEN -->
+<input type="hidden" name="{actionForm.hidden}" value="hidden">
+<hr />
+<input type="reset" class="red" value="Reset">
+<!-- BUTTON -->
+<input type="submit" class="blueButton" value="submit">
+<br />
+<!-- IMAGEBUTTON -->
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Simple rollover function which replaces the image.src with the passed image
+function swapImage(control, image)
+{
+  control.src = image;
+}
+-->
+</script>
+<input type="image" class="redImage" src="/coreWeb/images/godzilla.gif" onmouseout="swapImage(this,'/coreWeb/images/godzilla.gif')" onmouseover="swapImage(this,'/coreWeb/images/godzillaRollover.gif')">
+</form>
+<hr />
+<!-- ANCHOR -->
+<a href="/coreWeb/tags/styleClass/postback.do">Post Back</a><br />
+<!-- IMAGE -->
+<img src="/coreWeb/images/godzilla.gif" class="blueImage" width="48" height="66" hspace="10" align="center" vspace="10"><br />
+<!-- IMAGEANCHOR -->
+<a href="/coreWeb/tags/styleClass/postback.do"><img src="/coreWeb/images/godzilla.gif" class="greenImage" width="48" height="66" hspace="10" align="center" vspace="10" onmouseout="swapImage(this,'/coreWeb/images/godzilla.gif')" onmouseover="swapImage(this,'/coreWeb/images/godzillaRollover.gif')"></a>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>08 Mar 2005, 11:18:24.316 AM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

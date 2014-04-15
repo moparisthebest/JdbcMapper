@@ -1,0 +1,63 @@
+body, table {
+  font-family: Helvetica, sans-serif;
+  font-size: 14px; 
+  font-style: normal; 
+  font-weight: normal; 
+}
+
+table.datagrid {
+  border: 1px solid #000666;
+  width: 80%;
+  margin: 20px 0 20px 0;
+}
+
+th.datagrid, td.datagrid {
+  padding: 2px 4px 2px 4px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th.datagrid-filtered, td.datagrid-filtered {
+  color:#990022;
+}
+
+tr.datagrid-header {
+  background-color: #5f7797;
+  color: #ffffff;
+}
+
+tr.datagrid-even {
+  background-color: #ffffff;
+}
+
+tr.datagrid-odd {
+  background-color:#bfc4cb;
+}
+
+tr.datagrid-footer {
+}
+
+td.sorted, th.sorted {
+  background-color: #99bb99;
+}
+
+a.sortable {
+  color:#ffffff;
+}
+
+table.debug {
+  border: 1px solid #aaaa;
+  width: 20%;
+  margin: 20px 0 20px 0;
+}
+
+th.debug {
+  background-color: #dddddd;
+}
+
+hr.debug {
+  width: 80%;
+  color: #444444;
+  height: 3px;
+  border-style: dashed;
+}

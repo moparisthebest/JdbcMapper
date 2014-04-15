@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>UseFormBean</sessionName>
+<tester>rich</tester>
+<startDate>02 Nov 2005, 01:36:10.446 PM MST</startDate>
+<description>Test to ensure that sending a form bean from a JSF page to an action (where the action specifies useFormBean=some member variable) causes the page flow form bean member variable to be replaced with the one sent from the JSF page.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is a test to ensure that sending a form bean from a JSF page to an action (where the
+        action specifies useFormBean=<i>some member variable</i>) causes the page flow form bean
+        member variable to be replaced with the one sent from the JSF page.
+
+        
+            <form id="_id0" method="post" action="/jsfWeb/useFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+
+                &#35;{backing.theForm.foo}: <input type="text" name="_id0:_id1" />
+                <br/>
+                <br/>
+                <input type="submit" name="_id0:_id2" value="send bean through attribute" />
+                    
+                
+                <br/>
+                <input type="submit" name="_id0:_id3" value="send bean through command handler" />
+                <br/>
+                
+                    
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id4'; document.forms['_id0'].submit(); return false;">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id5'; document.forms['_id0'].submit(); return false;">send bean through command handler</a>
+            <input type="hidden" name="_id0" value="_id0" /><input type="hidden" name="_id0:_idcl" /></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0</name>
+<value>_id0</value>
+</parameter>
+<parameter>
+<name>_id0:_id1</name>
+<value>a</value>
+</parameter>
+<parameter>
+<name>_id0:_id2</name>
+<value>send bean through attribute</value>
+</parameter>
+<parameter>
+<name>_id0:_idcl</name>
+<value></value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>77</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/useFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>a</span>
+        <br/>
+        <a href="/jsfWeb/useFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/input.faces</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is a test to ensure that sending a form bean from a JSF page to an action (where the
+        action specifies useFormBean=<i>some member variable</i>) causes the page flow form bean
+        member variable to be replaced with the one sent from the JSF page.
+
+        
+            <form id="_id0" method="post" action="/jsfWeb/useFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+
+                &#35;{backing.theForm.foo}: <input type="text" name="_id0:_id1" />
+                <br/>
+                <br/>
+                <input type="submit" name="_id0:_id2" value="send bean through attribute" />
+                    
+                
+                <br/>
+                <input type="submit" name="_id0:_id3" value="send bean through command handler" />
+                <br/>
+                
+                    
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id4'; document.forms['_id0'].submit(); return false;">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id5'; document.forms['_id0'].submit(); return false;">send bean through command handler</a>
+            <input type="hidden" name="_id0" value="_id0" /><input type="hidden" name="_id0:_idcl" /></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0</name>
+<value>_id0</value>
+</parameter>
+<parameter>
+<name>_id0:_id1</name>
+<value>b</value>
+</parameter>
+<parameter>
+<name>_id0:_id3</name>
+<value>send bean through command handler</value>
+</parameter>
+<parameter>
+<name>_id0:_idcl</name>
+<value></value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>83</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/begin.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/useFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>b</span>
+        <br/>
+        <a href="/jsfWeb/useFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/input.faces</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is a test to ensure that sending a form bean from a JSF page to an action (where the
+        action specifies useFormBean=<i>some member variable</i>) causes the page flow form bean
+        member variable to be replaced with the one sent from the JSF page.
+
+        
+            <form id="_id0" method="post" action="/jsfWeb/useFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+
+                &#35;{backing.theForm.foo}: <input type="text" name="_id0:_id1" />
+                <br/>
+                <br/>
+                <input type="submit" name="_id0:_id2" value="send bean through attribute" />
+                    
+                
+                <br/>
+                <input type="submit" name="_id0:_id3" value="send bean through command handler" />
+                <br/>
+                
+                    
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id4'; document.forms['_id0'].submit(); return false;">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id5'; document.forms['_id0'].submit(); return false;">send bean through command handler</a>
+            <input type="hidden" name="_id0" value="_id0" /><input type="hidden" name="_id0:_idcl" /></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>6</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0</name>
+<value>_id0</value>
+</parameter>
+<parameter>
+<name>_id0:_id1</name>
+<value>c</value>
+</parameter>
+<parameter>
+<name>_id0:_idcl</name>
+<value>_id0:_id4</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>48</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/begin.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/useFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>c</span>
+        <br/>
+        <a href="/jsfWeb/useFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>7</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/input.faces</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is a test to ensure that sending a form bean from a JSF page to an action (where the
+        action specifies useFormBean=<i>some member variable</i>) causes the page flow form bean
+        member variable to be replaced with the one sent from the JSF page.
+
+        
+            <form id="_id0" method="post" action="/jsfWeb/useFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+
+                &#35;{backing.theForm.foo}: <input type="text" name="_id0:_id1" />
+                <br/>
+                <br/>
+                <input type="submit" name="_id0:_id2" value="send bean through attribute" />
+                    
+                
+                <br/>
+                <input type="submit" name="_id0:_id3" value="send bean through command handler" />
+                <br/>
+                
+                    
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id4'; document.forms['_id0'].submit(); return false;">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="document.forms['_id0']['_id0:_idcl'].value='_id0:_id5'; document.forms['_id0'].submit(); return false;">send bean through command handler</a>
+            <input type="hidden" name="_id0" value="_id0" /><input type="hidden" name="_id0:_idcl" /></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>8</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/useFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0</name>
+<value>_id0</value>
+</parameter>
+<parameter>
+<name>_id0:_id1</name>
+<value>d</value>
+</parameter>
+<parameter>
+<name>_id0:_idcl</name>
+<value>_id0:_id5</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>3C988732AC2BD4FB9E7711E1941F0AD2</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>48</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=3C988732AC2BD4FB9E7711E1941F0AD2; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/useFormBean/begin.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/useFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>d</span>
+        <br/>
+        <a href="/jsfWeb/useFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>02 Nov 2005, 01:36:28.191 PM MST</endDate>
+<testCount>8</testCount>
+</recorderSession>

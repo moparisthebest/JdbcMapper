@@ -1,0 +1,12 @@
+package PI_ControlsOverride;
+
+import org.apache.beehive.controls.api.bean.ControlImplementation;
+
+@ControlImplementation( isTransient=true )
+public class HelloControlImpl implements HelloControl
+{
+    public String hello()
+    {
+        return "Hello!";
+    }
+} 

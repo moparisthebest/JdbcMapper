@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>HTML to NetUI Tag Mapping</title>
+    </header>
+    <body>
+        <section id="Intro">
+            <title>HTML to NetUI Tag Mapping</title>
+            <p>The following table maps HTML elements to NetUI Tags.  Most of NetUI tags produce HTML elements
+                directly, which is summerized below.  There is a brief description and links to more details in
+                the tag user documentation.
+            </p>
+            <table>
+                <tr><th>Html Tag</th><th>NetUI Tag</th><th>Description</th><th>Links</th></tr>
+                <tr>
+                    <td>&lt;a></td><td>netui:anchor</td><td>Create an anchor</td><td><a href="site:pageflow_jspOverview_SimpleLinking">Simple Linking</a>,
+                        <a href="site:pageflow_tag_formControls_anchor">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;a>&lt;img>&lt;/a></td><td>netui:imageAnchor</td><td>A composite set of HTML elements with an anchor surrounding an image</td><td></td>
+                </tr>
+                <tr>
+                    <td>&lt;area></td><td>netui:area</td><td>Specify a geometric region of an image map and the link associated with it</td><td></td>
+                </tr>
+                <tr>
+                    <td>&lt;base></td><td>netui:base</td><td>Specify the absolute URI for resolving relative URIs</td><td></td>
+                </tr>
+                <tr>
+                    <td>&lt;body></td><td>netui:body</td><td>Create the body containing the document content</td>
+                    <td><a href="site:pageflow_tagsXhtml_BodyTag">HTML/XHTML</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;form></td><td>netui:form</td><td>A form containing a set of controls that can be posted to the server</td>
+                    <td><a href="site:pageflow_tag_formControls_form">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;html></td><td>netui:html</td><td>The containing HTML tag</td>
+                    <td><a href="site:pageflow_tagsXhtml_ScriptBlock">XHTML/HTML</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type=checkbox></td><td>netui:checkBox</td><td>Form Control allowing a binary value</td>
+                    <td><a href="site:pageflow_tag_formControls_checkbox">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type=checkbox></td><td>netui:checkBoxGroup</td><td>A group of checkboxes</td>
+                    <td><a href="site:pageflow_tag_formControls_checkboxgroup">Form Controls</a>,
+                    <a href="site:pageflow_tag_repeating_checkboxgroup">Repeating</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type=file></td><td>netui:fileUpload</td><td>Form Control allowing a file to be uploaded</td>
+                    <td><a href="site:pageflow_tag_formControls_fileupload">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type=hidden></td><td>netui:hidden</td><td>Form Control that posts a value back</td>
+                    <td><a href="site:pageflow_tag_formControls_hidden">Form Controls</a></td>
+                 </tr>
+                <tr>
+                    <td>&lt;input type=image></td><td>netui:imageButton</td><td>Form Control that creates a graphical button</td>
+                    <td><a href="site:pageflow_tag_formControls_imagebutton">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type=radio></td><td>netui:radioButtonGroup</td><td>Form Control creating a single selection radio button group</td>
+                    <td><a href="site:pageflow_tag_formControls_radiobuttongroup">Form Controls</a>,
+                    <a href="site:pageflow_tag_repeating_radiobuttongroup">Repeating</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type={submit, button, reset}></td><td>netui:button</td><td>Create a button, supports submit, button and reset</td>
+                    <td><a href="site:pageflow_tag_formControls_button">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;input type={text, password}</td><td>netui:textBox</td><td>Form Control creating either a text or password field</td>
+                    <td><a href="site:pageflow_tag_formControls_textbox">Form Controls</a></td>
+                </tr>
+                 <tr>
+                    <td>&lt;img></td><td>netui:image</td><td>Embed an image into a document</td><td></td>
+                </tr>
+                <tr>
+                    <td>&lt;label></td><td>netui:label</td><td>Create a label to attach information to a Form Control</td><td></td>
+                </tr>
+                <tr>
+                    <td>&lt;option></td><td>netui:selectOption</td><td>Create an item inside of a select control</td>
+                    <td><a href="site:pageflow_tag_formControls_selectoption">Form Controls</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;script></td><td>netui:scriptBlock</td><td>Create a client side JavaScript block</td>
+                        <td><a href="site:pageflow_tagsJavascript_ScriptBlock">JavaScript</a>,
+                            <a href="site:pageflow_tagsXhtml_ScriptBlock">XHTML/HTML</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;select></td><td>netui:select</td><td>Form Control that creates a single or multiple selection</td>
+                    <td><a href="site:pageflow_tag_formControls_select">Form Controls</a>,
+                    <a href="site:pageflow_tag_repeating_select">Repeating</a></td>
+                </tr>
+                <tr>
+                    <td>&lt;span></td><td>netui:span</td><td>Create an inline span element</td><td></td>
+                </tr>
+                <tr>
+                    <td>&lt;textArea></td><td>netui:textArea</td><td>Form Control creating a multiple line text input field</td>
+                    <td><a href="site:pageflow_tag_formControls_textarea">Form Controls</a></td>
+                </tr>
+             </table>
+        </section>
+    </body>
+</document>

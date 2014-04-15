@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!-- Generated from /testInheritance/parent/nested/NestedController.jpf and /testInheritance/parent/nested/struts4merge.xml on Tue Feb 01 17:15:31 MST 2005
+  -->
+<struts-config>
+  <action-mappings>
+    <action path="/strutsMergeAction" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" parameter="testInheritance.parent.actionForward.ActionForwardController" scope="request" validate="false" className="org.apache.beehive.netui.pageflow.config.PageFlowActionMapping">
+      <set-property property="loginRequired" value="true"/>
+      <set-property property="readonly" value="true"/>
+      <forward name="success" path="/display.jsp"/>
+    </action>
+  </action-mappings>
+</struts-config>

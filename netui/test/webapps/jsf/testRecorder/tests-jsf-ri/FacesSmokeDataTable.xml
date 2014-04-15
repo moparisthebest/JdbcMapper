@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>FacesSmokeDataTable</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>24 Apr 2005, 09:12:06.135 PM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/faces/facesSmoke/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>61B7B4B135A9902BEB669FCB4B977813</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=61B7B4B135A9902BEB669FCB4B977813; $Path=/jsfWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>5ef40300:10377569c09:-7ff3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <title>CustomRenderer - Test Web</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+    <body style="border: 1px dotted;">
+        
+            <form id="pageForm" method="post" action="/jsfWeb/faces/facesSmoke/index.faces" enctype="application/x-www-form-urlencoded">
+
+            
+                
+            <table width="600pt">
+<tbody>
+<tr>
+<td class="titleBar">Custom Renderer Tests</td>
+</tr>
+</tbody>
+</table>
+
+            
+                    
+                
+                
+                
+                
+                
+
+                
+                
+
+                
+                
+                
+                
+                
+                
+                
+                
+
+                
+                
+
+                
+                
+
+            <table width="600pt">
+<tbody>
+<tr>
+<td><a href="goPanels.do" class="normal">Panel</a></td>
+<td><span class="normal">Test of the PanelGrid and related controls</span></td>
+</tr>
+<tr>
+<td><a href="goImages.do" class="normal">Images</a></td>
+<td><span class="normal">Test of the GraphicImage</span></td>
+</tr>
+<tr>
+<td><a href="goAnchors.do" class="normal">Anchors</a></td>
+<td><span class="normal">Test of Anchors and Buttons</span></td>
+</tr>
+<tr>
+<td><a href="goConvert.do" class="normal">Conversions</a></td>
+<td><span class="normal">Test of Converters</span></td>
+</tr>
+<tr>
+<td><a href="goFormOne.do" class="normal">Form One</a></td>
+<td><span class="normal">Test the Form Fields</span></td>
+</tr>
+<tr>
+<td><a href="goFormTwo.do" class="normal">Form Two</a></td>
+<td><span class="normal">Test the Select/Radio/Checkbox Form Fields</span></td>
+</tr>
+<tr>
+<td><a href="goBundle.do" class="normal">Bundle</a></td>
+<td><span class="normal">Test of the Bundle</span></td>
+</tr>
+<tr>
+<td><a href="goDataTable.do" class="normal">Data Table</a></td>
+<td><span class="normal">Test of the DataTable</span></td>
+</tr>
+</tbody>
+</table>
+
+            <input type="hidden" name="pageForm" value="pageForm" /></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/faces/facesSmoke/goDataTable.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>61B7B4B135A9902BEB669FCB4B977813</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=61B7B4B135A9902BEB669FCB4B977813; $Path=/jsfWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>5ef40300:10377569c09:-7ff3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <title>DataTable</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+    <body>
+        
+          <form id="_id0" method="post" action="/jsfWeb/faces/facesSmoke/DataTable.faces" enctype="application/x-www-form-urlencoded">
+
+                
+                    
+                    
+                <table cellpadding="0" cellspacing="0" width="600pt">
+<tbody>
+<tr>
+<td class="titleBar">DataTable Tests</td>
+</tr>
+<tr>
+<td class="titleBar"><hr width="600pt" /></td>
+</tr>
+</tbody>
+</table>
+
+                
+                    
+                <a href="Controller.jpf"><span class="normal">Navigate Home</span></a><br />
+
+              
+            
+            <!-- The columns contain facets which act as headers -->      
+            
+                
+                    
+                
+                
+                    
+                
+                    
+            
+            
+            <!-- The columns contain facets which act as headers -->      
+            
+                
+                    
+                
+                
+                    
+                
+                    
+            
+            <table id="_id0:table" border="1" cellpadding="2" cellspacing="0">
+<thead>
+<tr>
+<th class="dataHeaders" scope="col">Name</th>
+<th class="dataHeaders" scope="col">Type</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td class="dataHeaders">Last Name</td>
+<td class="dataHeaders">Last Type</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td class="dataColumnOne">Name 0</td>
+<td class="dataColumnTwo">Type 0</td>
+</tr>
+<tr>
+<td class="dataColumnOne">Name 1</td>
+<td class="dataColumnTwo">Type 1</td>
+</tr>
+<tr>
+<td class="dataColumnOne">Name 2</td>
+<td class="dataColumnTwo">Type 2</td>
+</tr>
+<tr>
+<td class="dataColumnOne">Name 3</td>
+<td class="dataColumnTwo">Type 3</td>
+</tr>
+<tr>
+<td class="dataColumnOne">Name 4</td>
+<td class="dataColumnTwo">Type 4</td>
+</tr>
+</tbody>
+</table>
+
+        <input type="hidden" name="_id0" value="_id0" /></form>
+    
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>24 Apr 2005, 09:12:06.856 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>2</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>2</ses:failedCount>
+</ses:recorderSession>

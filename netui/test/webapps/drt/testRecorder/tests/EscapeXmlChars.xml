@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>EscapeXmlChars</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>21 Sep 2005, 08:49:23.025 PM MDT</ses:startDate>
+   <ses:description>Test to ensure that trouble-causing XML characters are properly escaped in XML attributes and XML text values, in generated Struts and Validator config files.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}">
+                <span style="color:red"></span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.foo}</ses:name>
+                  <ses:value>'"&lt;>&amp;</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>36</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}" value="&#39;&quot;&lt;&gt;&amp;">
+                <span style="color:red"></span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.foo}</ses:name>
+                  <ses:value>'"&lt;>&amp;thiswillnotmatch</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/submit.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}" value="&#39;&quot;&lt;&gt;&amp;thiswillnotmatch">
+                <span style="color:red">does not match
+</span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>x</ses:name>
+                  <ses:value>3</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/submit.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/success.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        Success (got here through a conditional forward).
+        <br/>
+        <a href="/coreWeb/miniTests/escapeXmlChars/begin.do">back</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/begin.do?x=3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}">
+                <span style="color:red"></span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>x</ses:name>
+                  <ses:value>11</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/begin.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/success.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        Success (got here through a conditional forward).
+        <br/>
+        <a href="/coreWeb/miniTests/escapeXmlChars/begin.do">back</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/begin.do?x=11</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}">
+                <span style="color:red"></span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>8</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>y</ses:name>
+                  <ses:value>hi</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/begin.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/success.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        Success (got here through a conditional forward).
+        <br/>
+        <a href="/coreWeb/miniTests/escapeXmlChars/begin.do">back</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>9</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}">
+                <span style="color:red"></span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>10</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/escapeXmlChars/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>x</ses:name>
+                  <ses:value>7</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B34B5E0C6F9A040C49A9AFFF2006E641</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Language</ses:name>
+                  <ses:value>en</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>Country</ses:name>
+                  <ses:value>US</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=B34B5E0C6F9A040C49A9AFFF2006E641; Language=en; Country=US</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/escapeXmlChars/begin.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/escapeXmlChars/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/escapeXmlChars/Controller.jpf</h3>
+
+        <p>
+            This test ensures that trouble-causing XML characters are properly escaped in XML
+            attributes and XML text values, in generated Struts and Validator config files.
+        </p>
+        <p>
+            The <code>condition</code> attribute on <code>@Jpf.ConditionalForward</code> and the
+            <code>regex</code> attribute on <code>@Jpf.ValidateMask</code> contain characters that
+            need to be escaped in generated XML attributes and XML text values, respectively.
+        </p>
+
+        <hr/>
+        <form action="/coreWeb/miniTests/escapeXmlChars/submit.do" method="post">
+            match regex pattern <code>^[' "=,\\&lt;&gt;#|&amp;~?(){}%*]*$</code>:
+                <input type="text" name="{actionForm.foo}">
+                <span style="color:red"></span>
+            <input type="submit" value="submit">
+        </form>
+
+        Conditional forwards against condition=<code>param.x &lt; 5 || param.x &gt; 10 || param.y == "hi"</code>:
+        <blockquote>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=3">begin.do?x=3 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=11">begin.do?x=11 -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?y=hi">begin.do?y=hi -&gt; success.jsp</a>
+            <br/>
+            <a href="/coreWeb/miniTests/escapeXmlChars/begin.do?x=7">begin.do?x=7 -&gt; index.jsp</a>
+        </blockquote>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>21 Sep 2005, 08:50:04.274 PM MDT</ses:endDate>
+   <ses:testCount>10</ses:testCount>
+</ses:recorderSession>

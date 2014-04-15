@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<server xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <name>controls</name>
+    <hostname>localhost</hostname>
+    <port>8080</port>
+    <webapps>
+        <webapp>
+            <name>controlsWeb</name>
+            <description>NetUI / JSP controls tests</description>
+            <testMode>true</testMode>
+            <contextRoot>/controlsWeb</contextRoot>
+            <testDefinitionsDirectory>@DOMAIN_DIR@/testRecorder/tests</testDefinitionsDirectory>
+        </webapp>
+    </webapps>
+</server>

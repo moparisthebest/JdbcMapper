@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<serverDefinition xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/server">
+    <name>Beehive NetUI Tests</name>
+    <hostname>localhost</hostname>
+    <port>8080</port>
+    <webapps>
+        <webapp>
+            <name>controlsWeb</name>
+            <contextRoot>/controlsWeb</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+        <webapp>
+            <name>coreWeb</name>
+            <contextRoot>/coreWeb</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+        <webapp>
+            <name>testRecorder</name>
+            <contextRoot>/testRecorder-test</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+        <webapp>
+            <name>jsfWeb</name>
+            <contextRoot>/jsfWeb</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+        <webapp>
+            <name>tomcatWeb</name>
+            <contextRoot>/tomcatWeb</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+        <webapp>
+            <name>urlTemplates</name>
+            <contextRoot>/urlTemplates</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+        <webapp>
+            <name>projectModelWeb</name>
+            <contextRoot>/projectModelWeb</contextRoot>
+            <servletURI>testRecorder</servletURI>
+        </webapp>
+    </webapps>
+</serverDefinition>

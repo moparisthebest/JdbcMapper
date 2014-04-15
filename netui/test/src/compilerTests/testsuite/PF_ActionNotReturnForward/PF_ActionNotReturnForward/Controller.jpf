@@ -1,0 +1,51 @@
+package PF_ActionNotReturnForward;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file declares an action "page2" with the jpf:action
+ * annotation but the method returns a String and not the required Forward
+ * object.
+ *
+ * @result: The compiler should catch this and issue an error.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "begin",
+                path = "Begin.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("begin");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Page1.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg2",
+                path = "Page2.jsp")
+        })
+    protected String page2()
+        {
+        return "pg2";
+        }
+    }

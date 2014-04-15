@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>MockPortalScopingTest</ses:sessionName>
+   <ses:tester>njantz</ses:tester>
+   <ses:startDate>29 Mar 2005, 09:43:03.368 AM MST</ses:startDate>
+   <ses:description>njantz</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/scoping/ScopingController.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7af8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;title>
+            Portal Scoping Test
+        &lt;/title>
+    &lt;/head>
+    &lt;body>
+        &lt;h3>Portal Scoping Test&lt;/h3>
+        
+        &lt;form action="/coreWeb/mockportal/scoping/submit.do" method="post">
+&lt;input type="hidden" name="jpfScopeID" value="a">
+            data: &lt;input type="text" name="{pageFlow.data}" id="tb">
+            &lt;input type="submit" value="submit">
+        &lt;/form>
+        &lt;p>
+    &lt;/body>
+&lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.tb="{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.tb="{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/scoping/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>jpfScopeID</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.data}</ses:name>
+                  <ses:value>test data 1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>44</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7af8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Portal Scoping Test
+        </title>
+    </head>
+    <body>
+        <h3>Portal Scoping Test</h3>
+
+        data: <b><span>test data 1</span></b>
+        <br/>
+        <a href="window1.jsp?jpfScopeID=a" target="_a">launch pop-up window</a>
+        <br/>
+        <a href="/coreWeb/mockportal/scoping/submit.do?jpfScopeID=a">refresh results</a>
+        <br/>
+        <a href="/coreWeb/mockportal/scoping/begin.do?jpfScopeID=a">go back</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/scoping/window1.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>jpfScopeID</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7af8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;title>
+            Portal Scoping Test
+        &lt;/title>
+    &lt;/head>
+    &lt;body>
+        data: &lt;b>&lt;span>test data 1&lt;/span>&lt;/b>
+        &lt;p>
+        &lt;form action="/coreWeb/mockportal/scoping/showResults.do" method="post">
+&lt;input type="hidden" name="jpfScopeID" value="a">
+	    new data: &lt;input type="text" name="{pageFlow.data}" id="tb" value="test data 1">
+	    &lt;input type="submit" value="submit">
+        &lt;/form>
+    &lt;/body>
+&lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.tb="{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.tb="{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/scoping/showResults.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>jpfScopeID</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.data}</ses:name>
+                  <ses:value>test data 2</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>44</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7af8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Portal Scoping Test
+        </title>
+    </head>
+    <body>
+        data: <b><span>test data 2</span></b>
+        <p>
+        <a href="javascript:window.close();">close window</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/scoping/submit.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>jpfScopeID</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7af8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Portal Scoping Test
+        </title>
+    </head>
+    <body>
+        <h3>Portal Scoping Test</h3>
+
+        data: <b><span>test data 2</span></b>
+        <br/>
+        <a href="window1.jsp?jpfScopeID=a" target="_a">launch pop-up window</a>
+        <br/>
+        <a href="/coreWeb/mockportal/scoping/submit.do?jpfScopeID=a">refresh results</a>
+        <br/>
+        <a href="/coreWeb/mockportal/scoping/begin.do?jpfScopeID=a">go back</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/scoping/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>jpfScopeID</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7af8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;title>
+            Portal Scoping Test
+        &lt;/title>
+    &lt;/head>
+    &lt;body>
+        &lt;h3>Portal Scoping Test&lt;/h3>
+        
+        &lt;form action="/coreWeb/mockportal/scoping/submit.do" method="post">
+&lt;input type="hidden" name="jpfScopeID" value="a">
+            data: &lt;input type="text" name="{pageFlow.data}" id="tb" value="test data 2">
+            &lt;input type="submit" value="submit">
+        &lt;/form>
+        &lt;p>
+    &lt;/body>
+&lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.tb="{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.tb="{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>29 Mar 2005, 09:43:05.932 AM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>6</ses:testCount>
+   <ses:passedCount>3</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

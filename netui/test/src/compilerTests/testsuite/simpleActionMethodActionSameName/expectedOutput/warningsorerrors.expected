@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\simpleActionMethodActionSameName\Controller.java:17: Duplicate action "dupAction".
+public class Controller 
+       ^
+1 error

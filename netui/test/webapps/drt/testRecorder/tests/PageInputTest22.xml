@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>PageInputTest22</sessionName>
+  <tester>Spencer Keller</tester>
+  <startDate>25 Mar 2004, 12:19:50.848 AM MST</startDate>
+  <description>Test the pageInput data-binding context being used with a textBox.  Can the value be changed?</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test22/Jpf1.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AiGJp5NQIhE4ZM9GuFlgYCiMaTpYnRKBiBlbgemi8VkO84D5Bsn7!-976488671</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AiGJp5NQIhE4ZM9GuFlgYCiMaTpYnRKBiBlbgemi8VkO84D5Bsn7!-976488671</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>-340cac35:fb80c5cc1d:-775c</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>1</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+   <head>
+      <title>PageInput Test22</title>
+   </head>
+   <body>
+      <h3 align="center">PageInput Test22 - Jsp1.jsp</h3>
+      <hr width="95%"/>
+      <br/>
+      <center>
+         <br/>
+         
+
+         PageInput value1:
+         <font color="blue">
+            <input type="text" name="{pageInput.pgInput1}" value="PageValue 1">
+         </font>
+         <br/><br/>
+         <a href="/coreWeb/pageInput/test22/finish.do">Finish...</a>
+         <br/><br/>
+         <font color="green">
+            Try to change the value in the textBox then press Finish.
+         </font>
+      </center>
+   </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageInput/test22/finish.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AiGJp5NQIhE4ZM9GuFlgYCiMaTpYnRKBiBlbgemi8VkO84D5Bsn7!-976488671</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AiGJp5NQIhE4ZM9GuFlgYCiMaTpYnRKBiBlbgemi8VkO84D5Bsn7!-976488671</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>-340cac35:fb80c5cc1d:-775c</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>2</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>Merge Tests</title>
+    </head>
+    <body>
+        <h2 align="center">Merge Tests - done.jsp</h2>
+        <hr align="center" width="95%"/>
+        <br/>
+        <center>
+            <font color="green"><h2>Test completed successfully.</h2></font>
+            <br/>
+            <a href="/coreWeb/index.jsp">Return to main test menu.</a>
+            <br/><br/>
+            <hr align="center" width="95%"/>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>25 Mar 2004, 12:19:52.099 AM MST</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>2</testCount>
+  <passedCount>1</passedCount>
+  <failedCount>1</failedCount>
+</recorderSession>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>J478</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Apr 2005, 10:58:42.933 AM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/j478/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-7b6f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>Root Image Testing</title>
+        <link href="attributesStyle.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+<H3>Root Image Testing</H3>
+<a href="/coreWeb/bugs/j478/resetTrees.do">Reset Trees</a>
+<p>JSP static tree - Root node images are set correctly</p>
+<div>
+   <div>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0&amp;netui_treeid=attrJspTree1"><img src="./rootminus.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0&amp;netui_treeid=attrJspTree1" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="My Attribute Tree">&nbsp;My Attribute Tree&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0.0&amp;netui_treeid=attrJspTree1"><img src="./minusbottom.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0.0&amp;netui_treeid=attrJspTree1" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="TreeItem1">&nbsp;TreeItem1&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./joinbottom.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0.0.0&amp;netui_treeid=attrJspTree1" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="TreeItem1.1">&nbsp;TreeItem1.1&nbsp;</a>
+   </div>
+</div>
+
+<br />
+
+<p>Dynamic pageFlow tree - Root node images and all others are set in the JSP.  Root node images do not appear in the rendered HTML but the other lastNode, itemIcon, etc. images do appear as expected</p>
+<div>
+   <div>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0&amp;netui_treeid=attrDynTree1"><img src="./rootminus.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0&amp;netui_treeid=attrDynTree1" title="HELLOOOOOOOOOO. This should appear in the HTML source." style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="Dynamic Tree 1">&nbsp;Dynamic Tree 1&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0.0&amp;netui_treeid=attrDynTree1"><img src="./plusbottom.gif" style="vertical-align:bottom;" border="0" alt="Expand Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0.0&amp;netui_treeid=attrDynTree1" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="TreeElement1 named in the page flow">&nbsp;TreeElement1 named in the page flow&nbsp;</a>
+   </div>
+</div>
+
+
+<p>None ITreeRootElement used for the root.  Set the root here</p>
+<div>
+   <div>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0&amp;netui_treeid=attrDynTree3"><img src="./minusbottom.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0&amp;netui_treeid=attrDynTree3" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="Dynamic Tree 3">&nbsp;Dynamic Tree 3&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0.0&amp;netui_treeid=attrDynTree3"><img src="./minusbottom.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0.0&amp;netui_treeid=attrDynTree3" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="NOT disabled">&nbsp;NOT disabled&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treenode=0.0.0&amp;netui_treeid=attrDynTree3"><img src="./minusbottom.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0.0.0&amp;netui_treeid=attrDynTree3" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="not disabled">&nbsp;not disabled&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./join.gif" style="vertical-align:bottom;" border="0" alt="">
+      <span style="color: #00FF7F; font-weight:bold;">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="disabled">&nbsp;disabled&nbsp;</span>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./join.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j478/postback.do?netui_treeselected=0.0.0.1&amp;netui_treeid=attrDynTree3" style="text-decoration: none">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="not disabled">&nbsp;not disabled&nbsp;</a>
+   </div>
+   <div>
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./spacer.gif" width="16px" border="0" alt="">
+      <img src="./joinbottom.gif" style="vertical-align:bottom;" border="0" alt="">
+      <span style="color: #00FF7F; font-weight:bold;">&nbsp;<img src="./alien.gif" style="vertical-align:text-top" border="0" alt="disabled">&nbsp;disabled&nbsp;</span>
+   </div>
+</div>
+<span style="color:red;background-color:white">
+ [<b>Tag Error:1</b>, Found in tag <b>Tree</b>]</span>
+    <div> <hr /><table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="6">Page Errors</th></tr>
+ <tr><th>Error Number</th><th>Tag Type</th><th colspan="4">Error</th></tr>
+<tr><th>1</th><th>Tree</th><th>Message</th><td>Unable to set the root images on the tree because it is not an ITreeRootElement.</td></tr>
+<tr><th>2</th><th>Tree</th><th>Message</th><td>Unable to set the root images on the tree because it is not an ITreeRootElement.</td></tr>
+</table></div>
+</body>
+
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Apr 2005, 10:58:43.805 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

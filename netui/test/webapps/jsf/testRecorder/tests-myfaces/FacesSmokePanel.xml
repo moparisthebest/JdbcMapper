@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>FacesSmokePanel</ses:sessionName>
+   <ses:tester>rich (re-record of daryl)</ses:tester>
+   <ses:startDate>24 Apr 2005, 08:54:48.333 PM MDT</ses:startDate>
+   <ses:description>Smoke test of the JSF Panel</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/faces/facesSmoke/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.7) Gecko/20050414 Firefox/1.0.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <title>CustomRenderer - Test Web</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+    <body style="border: 1px dotted;">
+        
+            <form id="pageForm" name="pageForm" method="post" action="/jsfWeb/faces/facesSmoke/index.faces" enctype="application/x-www-form-urlencoded">
+            <table width="600pt"><tbody><tr><td class="titleBar">Custom Renderer Tests</td></tr>
+</tbody></table>
+            <table width="600pt"><tbody><tr><td><a id="pageForm:_id3" href="goPanels.do" class="normal">Panel</a></td><td><span class="normal">Test of the PanelGrid and related controls</span></td></tr>
+<tr><td><a id="pageForm:_id6" href="goImages.do" class="normal">Images</a></td><td><span class="normal">Test of the GraphicImage</span></td></tr>
+<tr><td><a id="pageForm:_id9" href="goAnchors.do" class="normal">Anchors</a></td><td><span class="normal">Test of Anchors and Buttons</span></td></tr>
+<tr><td><a id="pageForm:_id12" href="goConvert.do" class="normal">Conversions</a></td><td><span class="normal">Test of Converters</span></td></tr>
+<tr><td><a id="pageForm:_id15" href="goFormOne.do" class="normal">Form One</a></td><td><span class="normal">Test the Form Fields</span></td></tr>
+<tr><td><a id="pageForm:_id18" href="goFormTwo.do" class="normal">Form Two</a></td><td><span class="normal">Test the Select/Radio/Checkbox Form Fields</span></td></tr>
+<tr><td><a id="pageForm:_id21" href="goBundle.do" class="normal">Bundle</a></td><td><span class="normal">Test of the Bundle</span></td></tr>
+<tr><td><a id="pageForm:_id24" href="goDataTable.do" class="normal">Data Table</a></td><td><span class="normal">Test of the DataTable</span></td></tr>
+</tbody></table>
+            <input type="hidden" name="pageForm_SUBMIT" value="1"/></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/faces/facesSmoke/goPanels.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/faces/facesSmoke/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.7) Gecko/20050414 Firefox/1.0.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <title>PanelGrid - Test Web</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+    <body>
+        
+              <form id="_id0" name="_id0" method="post" action="/jsfWeb/faces/facesSmoke/Panels.faces" enctype="application/x-www-form-urlencoded">
+                <table cellpadding="0" cellspacing="0" width="600pt"><tbody><tr><td class="titleBar">PanelGrid Tests</td></tr>
+<tr><td class="titleBar"><hr width="600pt" /></td></tr>
+</tbody></table>
+                
+                    
+                <a id="_id0:_id4" href="Controller.jpf"><span class="normal">Navigate Home</span></a>
+                <span class="normal">Bordered Table, Backgroup color</span>
+                <table bgcolor="#c0c0c0" border="1" cellpadding="0" cellspacing="0" width="600pt"><tbody><tr><td class="normal">Object One</td><td>Object Two</td></tr>
+<tr><td class="normal">Object Three</td><td>Object Four</td></tr>
+</tbody></table>
+                <table cellpadding="5" cellspacing="5"><tbody><tr><td><hr width="590pt" /></td></tr>
+</tbody></table>
+                <span class="normal">Alternating Row Colors</span>
+                <table cellpadding="0" cellspacing="0" width="600pt"><tbody><tr class="rowOne"><td class="normal">Object One</td></tr>
+<tr class="rowTwo"><td class="normal">Object Two</td></tr>
+<tr class="rowOne"><td class="normal">Object Three</td></tr>
+<tr class="rowTwo"><td class="normal">Object Four</td></tr>
+</tbody></table>
+                <table cellpadding="5" cellspacing="5"><tbody><tr><td><hr width="590pt" /></td></tr>
+</tbody></table>
+                <span class="normal">Header/Footers</span>
+                <table cellpadding="0" cellspacing="0" width="600pt">
+<thead><tr><th class="titleBar" scope="colgroup" colspan="2">
+Header
+</th></tr></thead><tbody><tr><td class="normal">Object One</td><td>Object Two</td></tr>
+<tr><td class="normal">Object Three</td><td>Object Four</td></tr>
+</tbody>
+<tfoot><tr><td class="footerBar" colspan="2">
+Footer
+</td></tr></tfoot></table>
+                <table cellpadding="5" cellspacing="5"><tbody><tr><td><hr width="590pt" /></td></tr>
+</tbody></table>
+                <span class="normal">panelGroup</span>
+                <table cellpadding="0" cellspacing="0" width="600pt"><tbody><tr class="rowOne"><td class="normal"><span style="color:#ff00ff;">Object One </span><span style="color:#ff9900;">Object Two</span></td><td>Object Three</td></tr>
+</tbody></table>
+             <input type="hidden" name="_id0_SUBMIT" value="1"/></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>24 Apr 2005, 08:55:34.068 PM MDT</ses:endDate>
+   <ses:testCount>2</ses:testCount>
+</ses:recorderSession>

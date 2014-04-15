@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>XhtmlTree</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>14 Apr 2005, 04:13:40.004 PM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/xhtml/goTreeTest.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>396B51E38820AE6BE77EF0E7E0EEB45C</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=396B51E38820AE6BE77EF0E7E0EEB45C; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>a7debe4:10342bbf21a:-7522</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+&lt;html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+    &lt;head>
+        &lt;title>Tree Test&lt;/title>
+        &lt;style type="text/css">
+        .normal {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        li {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalError {color: #ff0033;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalHead {color: #000099;font-family:Verdana; font-size:8pt;font-weight: strong;margin:0,0,0,0;}
+        .title {color: #000099;font-family:Verdana; font-size:12pt;margin:2,0,5,0;}
+        .resultDiv {border: thin solid;height: 400px;}
+        &lt;/style>
+        &lt;base href="http://localhost:8080/coreWeb/xhtml/treeTest.jsp" />
+    &lt;/head>        
+  &lt;body>
+    &lt;h1 class="normalHead">Tree Tests&lt;/h1>
+    &lt;div>
+   &lt;div>
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treenode=0&amp;amp;netui_treeid=tree">&lt;img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element" />&lt;/a>
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0" />&amp;nbsp;0&amp;nbsp;&lt;/a>
+   &lt;/div>
+   &lt;div>
+      &lt;img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="" />
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treenode=0.0&amp;amp;netui_treeid=tree">&lt;img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element" />&lt;/a>
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0.0&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0" />&amp;nbsp;0.0&amp;nbsp;&lt;/a>
+   &lt;/div>
+   &lt;div>
+      &lt;img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="" />
+      &lt;img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="" />
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treenode=0.0.0&amp;amp;netui_treeid=tree">&lt;img src="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" style="vertical-align:bottom;" border="0" alt="Expand Tree Element" />&lt;/a>
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0.0.0&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0" />&amp;nbsp;0.0.0&amp;nbsp;&lt;/a>
+   &lt;/div>
+   &lt;div>
+      &lt;img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="" />
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treenode=0.1&amp;amp;netui_treeid=tree">&lt;img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element" />&lt;/a>
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0.1&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1" />&amp;nbsp;0.1&amp;nbsp;&lt;/a>
+   &lt;/div>
+   &lt;div>
+      &lt;img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="" />
+      &lt;img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="" />
+      &lt;img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="" />
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0.1.0&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1.0" />&amp;nbsp;0.1.0&amp;nbsp;&lt;/a>
+   &lt;/div>
+   &lt;div>
+      &lt;img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="" />
+      &lt;img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="" />
+      &lt;img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="" />
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0.1.1&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1.1" />&amp;nbsp;0.1.1&amp;nbsp;&lt;/a>
+   &lt;/div>
+   &lt;div>
+      &lt;img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="" />
+      &lt;img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="" />
+      &lt;a href="/coreWeb/xhtml/postback.do?netui_treeselected=0.2&amp;amp;netui_treeid=tree" style="text-decoration: none">&amp;nbsp;&lt;img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2" />&amp;nbsp;0.2&amp;nbsp;&lt;/a>
+   &lt;/div>
+&lt;/div>
+
+    &lt;/body>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>14 Apr 2005, 04:13:40.584 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

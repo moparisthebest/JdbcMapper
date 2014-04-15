@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+
+<project name="NetUI/XDoclet Compiler" default="compile" basedir=".">
+
+    <property name="module.classpath" value="${pageflow.jar};${compiler.jar};${commons-logging.jar};${commons-collections.jar};${xdoclet.jar};${xjavadoc.jar};${xbean.jar}"/>
+
+    <!-- Module specific properties used by the xdoclet portions of the build -->
+    <property name="module.build.dir"         value="${classes.dir}/${module.name}"/>
+    <property name="module.jar.file"          value="${dist.dir}/xdoclet-${ant.project.name}-module-${version}.jar"/>
+    <property name="xdoclet-xml.dir"          value="${module.build.dir}/META-INF"/>
+    <property name="module.tag.docs.file"     value="${docs.tags.dir}/${ant.project.name}-tags.xml"/>
+    <property name="xdoclet-xml.template.file" value="${basedir}/xdoclet-xml.xdt" />
+
+
+    <!-- =================================================================== -->
+    <!-- Initialises the build.                                              -->
+    <!-- =================================================================== -->
+    <target name="init">
+        <!-- Define classpath required for compiling modules -->
+        <path id="module.compile.class.path">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+            </fileset>
+
+            <fileset dir="${dist.dir}">
+                <!-- include previously built jars -->
+                <include name="*.jar"/>
+            </fileset>
+
+            <!-- Include core classes, might not have been jarred yet -->
+            <!-- pathelement location="${core.classes.dir}"/ -->
+            <pathelement location="${xdoclet.jar}" />
+        </path>
+
+        <mkdir dir="${module.build.dir}"/>
+
+        <path id="module.xml.class.path">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="${dist.dir}">
+                <!-- include previously built jars -->
+                <include name="*.jar"/>
+            </fileset>
+            <!-- include classes from this module -->
+            <pathelement location="${module.build.dir}"/>
+            <!-- include resources from this module -->
+            <pathelement location="${basedir}"/>
+
+            <!--
+            Include classes from the core. The core is also a module,
+            since it contains an xdoclet.xml and core taghandlers.
+            This is required only because of the externalizer, which
+            is invoked by the core build before the xdoclet.jar file
+            is assembled.
+            -->
+            <!-- pathelement location="${core.classes.dir}"/ -->
+            <pathelement location="${xdoclet.jar}" />
+        </path>
+
+        <condition property="file.url.prefix" value="file://">
+            <os family="unix" />
+        </condition>
+        <condition property="file.url.prefix" value="file:/">
+            <os family="windows" />
+        </condition>
+
+        <!-- Checks if the module jar is uptodate -->
+        <uptodate property="module.jar.uptodate" targetfile="${module.jar.file}">
+            <srcfiles dir="${basedir}"/>
+        </uptodate>
+
+    </target>
+
+
+    <!-- =================================================================== -->
+    <!-- Generates an xdoclet.xml deployment descriptor for xdoclet modules  -->
+    <!-- =================================================================== -->
+    <target name="xdoclet-xml"
+        description="Generates an xdoclet.xml deployment descriptor for xdoclet modules"
+        unless="module.jar.uptodate"
+        depends="sub-compile"
+    >
+        <!--
+        Define classpath required for generating xml descriptors
+        We're including our own classes on the class path because
+        the module might contain a subtask which depends on a doclettask
+        in the same module. all classes have to be on the classpath for
+        the xdoclet.xml generation to succeed. The classpath has to be defined
+        *after* compilation because Ant will strip away nonexistant
+        paths from the classpath. (The class directory doesn't exist before
+        the classes are compiled).
+        -->
+        <!-- Define the xdoclet task -->
+        <taskdef name="xdoclet" classname="xdoclet.DocletTask"
+            classpath="${module.classpath}"
+        />
+
+        <mkdir dir="${xdoclet-xml.dir}"/>
+        <xdoclet destdir="${xdoclet-xml.dir}">
+
+            <fileset dir="${basedir}">
+                <include name="**/*Handler.java" />
+                <include name="**/*SubTask.java" />
+            </fileset>
+
+            <template
+                templateFile="${xdoclet-xml.template.file}"
+                destinationFile="xdoclet.xml"
+            />
+        </xdoclet>
+    </target>
+
+    <!-- the main task; this will run the XDoclet validation, compile the classes, run the XDoclet xml gen, and jar it all up -->
+    <target name="compile" depends="sub-compile,xdoclet-xml,jar" />
+
+    <target name="sub-compile" >
+        <echo>Compile module: ${module.name}</echo>
+        <echo>module.classpath: ${module.classpath}</echo>
+        <echo>dist.dir=${dist.dir}</echo>
+        <echo>Debug=${compile.debug}</echo>
+
+        <mkdir dir="${classes.dir}/${module.name}"/>
+
+        <javac srcdir="."
+               destdir="${classes.dir}/${module.name}"
+               classpath="${module.classpath}"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               optimize="${compile.optimize}"
+               source="${compile.source}">
+            <include name="**/*.java"/>
+        </javac>
+        <copy todir="${classes.dir}/${module.name}">
+            <fileset dir="." >
+                <include name="**/*.properties"/>
+                <include name="**/*.dtd"/>
+                <include name="**/*.xdt"/>
+                <include name="**/*.xml"/>
+                <exclude name="**/xdoclet-xml.xdt" />
+                <exclude name="**/build.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="jar" depends="sub-compile, xdoclet-xml">
+        <jar jarfile="${dist.tomcat.dir}/${xdoclet-compiler.jar.name}">
+            <fileset dir="${classes.dir}/${module.name}">
+              <include name="**/*.class"/>
+              <include name="**/*.properties"/>
+              <include name="**/*.dtd"/>
+              <include name="**/*.xdt"/>
+              <include name="**/*.xml"/>
+            </fileset>
+
+            <!-- Include com.bea.wlw.netui.pageflow.model from the compiler module.
+            <fileset dir="${classes.dir}/compiler">
+              <include name="com/bea/wlw/netui/pageflow/model/**/*.class"/>
+              <include name="com/bea/wlw/netui/pageflow/schema/**/*.class"/>
+              <include name="schema/**/*.class"/>
+              <include name="com/bea/wlw/netui/pageflow/compiler/*Constants*.class"/>
+              <include name="com/bea/wlw/netui/pageflow/compiler/*.properties"/>
+              <include name="**/*.xsd"/>
+              <include name="**/*.xsb"/>
+            </fileset>
+            -->
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${classes.dir}/${module.name}"/>
+        <delete file="${dist.tomcat.dir}/${xdoclet-compiler.jar.name}" failonerror="false"/>
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="${javadoc.dir}/${module.name}"/>
+        <javadoc packagenames="${javadoc.packages}"
+                 sourcepath="."
+                 destdir="${javadoc.dir}/${module.name}"
+                 version="true"
+                 windowtitle="${javadoc.windowtitle}"
+                 >
+            <link href="${j2ee.docs}"/>
+        </javadoc>
+    </target>
+
+    <target name="clean.javadoc">
+        <delete dir="${javadoc.dir}/${module.name}" includeEmptyDirs="true"/>
+    </target>
+
+</project>

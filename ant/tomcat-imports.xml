@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+<project name="Beehive/SVN/TomcatImports" default="usage" basedir=".">
+
+    <property environment="os"/>
+    <property name="tomcat.home" location="${os.CATALINA_HOME}"/>
+
+    <!-- Properties used to run Tomcat -->
+    <!-- 
+         In the long run, there probably needs to be a tomcat.properties file that is imported here
+         which defines the username / password / port number so that they can be overridden 
+         in a user's environment
+      -->
+    <property name="catalina.username" value="manager"/>
+    <property name="catalina.password" value="manager"/>
+    <property name="catalina-ant.jar" location="${tomcat.home}/server/lib/catalina-ant.jar"/>
+
+    <path id="appserver.build.classpath">
+        <fileset dir="${tomcat.home}/common/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="deploy" description="Deploy a webapp to a running Tomcat server">
+        <fail unless="context.path" message="Can't deploy webapp; the value ${context.path} was unspecified"/>
+        <fail unless="webapp.dir" message="Can't deploy webapp; the value ${webapp.dir} was unspecified"/>
+
+        <available property="webapp.available" file="${webapp.dir}" type="dir"/>
+        <fail unless="webapp.available" message="The webapp at ${webapp.dir} does not exist."/>
+
+        <property name="_url" value="file://${webapp.dir}"/>
+        <echo>deploy webapp from ${_url} with context path ${context.path}</echo>
+
+        <taskdef name="tomcatdeploy" classname="org.apache.catalina.ant.DeployTask" classpath="${catalina-ant.jar}"/>
+        <tomcatdeploy path="/${context.path}" localWar="${_url}" username="${catalina.username}" password="${catalina.password}"/>
+        <!-- The Tomcat deploy task doesn't necessarily finish deploying the app when the task completes.  Sleep for a few... -->
+        <sleep seconds="5"/>
+    </target>
+
+    <target name="undeploy" description="Undeploy a webapp running on a Tomcat server">
+        <fail unless="context.path" message="Can't undeploy webapp; the value ${context.path} was unspecified"/>
+
+        <taskdef name="tomcatundeploy" classname="org.apache.catalina.ant.UndeployTask" classpath="${catalina-ant.jar}"/>
+        <tomcatundeploy path="/${context.path}" username="${catalina.username}" password="${catalina.password}"/>
+    </target>
+
+    <target name="redeploy" description="Redeploy a webapp already running on a Tomcat server">
+        <fail unless="context.path" message="Can't undeploy webapp; the value ${context.path} was unspecified"/>
+
+        <taskdef name="tomcatreload" classname="org.apache.catalina.ant.ReloadTask" classpath="${catalina-ant.jar}"/>
+        <tomcatreload path="/${context.path}" username="${catalina.username}" password="${catalina.password}"/>
+        <!-- The Tomcat deploy task doesn't necessarily finish deploying the app when the task completes.  Sleep for a few... -->
+        <sleep seconds="5"/>
+    </target>
+
+    <target name="start" description="Start a Tomcat instance.">
+
+        <condition property="cmdline.options" value="">
+            <not><isset property="cmdline.options"/></not>
+        </condition>
+
+        <condition property="java.options" value="">
+            <not><isset property="java.options"/></not>
+        </condition>
+
+        <echo>startup.dir: ${tomcat.home}/bin</echo>
+        <echo>cmdline.options: ${cmdline.options}</echo>
+        <echo>java.options: ${java.options}</echo>
+
+        <echo>Start Tomcat</echo>
+        <exec os="Windows 2000,Windows 2003,Windows XP" dir="${tomcat.home}\bin" executable="cmd.exe">
+            <env key="JAVA_OPTS" value="${java.options}"/>
+            <arg line="/c startup.bat ${cmdline.options}"/>
+        </exec>
+        <exec os="Linux,SunOS,Solaris,Mac OS X" dir="${tomcat.home}/bin" executable="sh">
+            <env key="JAVA_OPTS" value="${java.options}"/>
+            <arg line="startup.sh ${cmdline.options}"/>
+       </exec>
+    </target>
+
+    <target name="start.with.shmem" description="Start a Tomcat instance with shared memory debugging.">
+
+        <condition property="cmdline.options" value="">
+            <not><isset property="cmdline.options"/></not>
+        </condition>
+
+        <condition property="java.options" value="">
+            <not><isset property="java.options"/></not>
+        </condition>
+
+        <echo>startup.dir: ${tomcat.home}/bin</echo>
+        <echo>cmdline.options: ${cmdline.options}</echo>
+        <echo>java.options: ${java.options}</echo>
+
+        <echo>Start Tomcat</echo>
+        <exec os="Windows 2000,Windows 2003,Windows XP" dir="${tomcat.home}\bin" executable="cmd.exe">
+            <env key="JAVA_OPTS" value="${java.options}"/>
+            <arg line="/c catalina.bat jpda start ${cmdline.options}"/>
+        </exec>
+        <exec os="Linux,SunOS,Solaris,Mac OS X" dir="${tomcat.home}/bin" executable="sh">
+            <env key="JAVA_OPTS" value="${java.options}"/>
+            <arg line="startup.sh jpda start ${cmdline.options}"/>
+       </exec>
+    </target>
+
+    <target name="stop" description="Stop the NetUI server">
+        <echo>Stop Tomcat in: ${tomcat.home}</echo>
+        <exec os="Windows 2000,Windows 2003,Windows XP" dir="${tomcat.home}\bin" executable="cmd.exe">
+            <arg line=" /c shutdown"/>
+        </exec>
+
+        <exec os="Linux,SunOS,Solaris,Mac OS X" dir="${tomcat.home}/bin" executable="sh">
+            <arg line="shutdown.sh"/>
+        </exec>
+    </target>
+
+    <target name="usage" description="Print the usage for this build.xml">
+        <java fork="no" classname="org.apache.tools.ant.Main">
+            <arg line="-f ${ant.file} -projecthelp"/>
+        </java>
+    </target>
+    
+</project>

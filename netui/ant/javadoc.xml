@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+
+<project name="Beehive/NetUI/Documentation" default="usage" basedir=".">
+
+    <import file="../netui-imports.xml"/>
+
+    <path id="javadoc.classpath">
+        <fileset dir="${jars.dir}" includes="*.jar"/>
+        <path refid="commons-el.dependency.path"/>
+        <path refid="commons-codec.dependency.path"/>
+        <path refid="webdoclet.dependency.path"/>
+        <path refid="xbean.dependency.path"/>
+        <path refid="jsf.dependency.path"/>
+        <path refid="log4j.dependency.path"/>
+        <path refid="servlet.dependency.path"/>
+        <path refid="struts12.dependency.path"/>
+        <path refid="controls.dependency.path"/>
+        <path refid="tools.dependency.path"/>
+        <path refid="ant-jar.dependency.path"/>
+    </path>
+        
+    <target name="build" description="Generates documentation for classes and JSP tags">
+        <antcall target="generate-class-ref"/>
+        <antcall target="generate-taglib-ref"/>
+        <fixcrlf srcDir="${build.dir}/docs/apidocs" includes="**/*.html"/>
+    </target>
+    
+    <target name="clean">
+        <delete dir="${build.dir}/docs"/>
+    </target>
+    
+    <!--
+    The 'use' attribute is currently set to 'false' because of Java bug 5055723.
+         This bug will be fixed for the general release of JDK5.
+         Track the bug at: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5055723
+         When the fix arrives in JDK5, set use="true".
+      -->
+    <target name="generate-class-ref">
+        <javadoc destdir="${build.dir}/docs/apidocs" 
+                 maxmemory="256M" 
+                 windowtitle="Apache Beehive NetUI API Documentation (Version ${beehive.version})"
+                 doctitle="Apache Beehive NetUI API Documentation (Version ${beehive.version})"
+                 version="true" 
+                 author="false" 
+                 use="false" 
+                 additionalparam="-breakiterator -noqualifier all -notimestamp" 
+                 useexternalfile="true" 
+                 classpathref="javadoc.classpath" 
+                 source="1.5">
+            <tag name="example" description="Example"/>
+            <tag name="xdoclet.taghandler" enabled="false" description=""/>
+            <tag name="doc\:tag" enabled="false" description=""/>
+            <tag name="doc.tag" enabled="false" description=""/>
+            <tag name="doc\:param" enabled="false" description=""/>
+            <tag name="doc.param" enabled="false" description=""/>
+            <tag name="created" enabled="false" description=""/>
+            <tag name="ant.element" enabled="false" description=""/>
+            <tag name="netui\:tag" enabled="false" description=""/>
+            <tag name="netui\:attribute" enabled="false" description=""/>
+            <tag name="netui\:jspfunction" enabled="false" description=""/>
+            <tag name="netui\:jspfunctions" enabled="false" description=""/>
+            <tag name="todo" enabled="false" description=""/>
+            <tag name="todo\:" enabled="false" description=""/>
+            <tag name="exclude" enabled="false" description=""/>
+            <tag name="jsptagref.tagdescription" enabled="false" description=""/>
+            <tag name="jsptagref.attributedescription" enabled="false" description=""/>
+            <tag name="jsptagref.databindable" enabled="false" description=""/>
+            <tag name="jsptagref.attributesyntaxvalue" enabled="false" description=""/>
+            <packageset dir="${src.dir}/core"/>
+            <packageset dir="${src.dir}/pageflow">
+                <exclude name="org/apache/beehive/netui/pageflow/internal/**"/>
+                <exclude name="org/apache/beehive/netui/pageflow/faces/internal/**"/>
+                <exclude name="org/apache/beehive/netui/pageflow/interceptor/action/internal/**"/>
+                <exclude name="org/apache/beehive/netui/script/el/**"/>
+            </packageset>
+            <packageset dir="${src.dir}/scoping">
+                <exclude name="org/apache/beehive/netui/pageflow/scoping/internal/**"/>
+            </packageset>
+            <packageset dir="${src.dir}/tags-databinding"/>
+            <packageset dir="${src.dir}/tags-html">
+                <exclude name="org/apache/beehive/netui/tags/internal/**"/>
+            </packageset>
+            <packageset dir="${src.dir}/tags-template"/>
+            <packageset dir="${src.dir}/util">
+                <exclude name="org/apache/beehive/netui/util/internal/**"/> 
+                <exclude name="org/apache/beehive/netui/util/logging/internal/**"/> 
+            </packageset>
+        </javadoc>
+    </target>
+    
+    <target name="generate-taglib-ref" 
+            description="Uses a custom doclet to generate HTML topics from Java source files.">
+
+        <property name="title" value="NetUI Tag Library Documentation (Version ${beehive.version})"/>
+
+        <mkdir dir="${build.dir}/docs/taglib"/>
+
+        <path id="_tagref.doclet.path">
+            <path refid="xbean.dependency.path"/>
+            <pathelement location="${docs.dir}/external/xalan.jar"/>
+            <pathelement location="${docs.dir}/tools/lib/jsptagrefdoclet_single.jar"/>
+        </path>
+
+        <javadoc classpathref="javadoc.classpath" destdir="${build.dir}/docs/taglib"> 
+            <doclet name="org.apache.beehive.netui.tools.doclet.jsptagref.JspTagDoc" pathref="_tagref.doclet.path">
+                <param name="-source" value="1.5"/>
+                <param name="-tldpath" value="${tlds.dir}"/>
+                <param name="-contentsource" value="jsptagref"/>
+                <param name="-tag" value="see"/>
+                <param name="-tag" value="example"/>
+                <param name="-breakiterator"/>
+                <param name="-header" value="${title}"/>
+                <param name="-doctitle" value="${title}"/>
+                <param name="-windowtitle" value="${title}"/>
+            </doclet>
+            <link href="http://java.sun.com/j2se/1.5/docs/api/"/>
+            <packageset dir="${src.dir}/tags-databinding">
+                <include name="org/apache/beehive/netui/tags/databinding/bundle"/>
+                <include name="org/apache/beehive/netui/tags/databinding/cellrepeater"/>
+                <include name="org/apache/beehive/netui/tags/databinding/datagrid"/>
+                <include name="org/apache/beehive/netui/tags/databinding/invoke"/>
+                <include name="org/apache/beehive/netui/tags/databinding/message"/>
+                <include name="org/apache/beehive/netui/tags/databinding/pageinput"/>
+                <include name="org/apache/beehive/netui/tags/databinding/repeater"/>
+                <include name="org/apache/beehive/netui/tags/databinding/repeater/pad"/>
+                <include name="org/apache/beehive/netui/tags/databinding/script"/>
+                <include name="org/apache/beehive/netui/tags/databinding/xml"/>
+            </packageset>
+            <packageset dir="${src.dir}/tags-html">
+                <include name="org/apache/beehive/netui/tags/divpanel"/>
+                <include name="org/apache/beehive/netui/tags/html"/>
+                <include name="org/apache/beehive/netui/tags/javascript"/>
+                <include name="org/apache/beehive/netui/tags/tree"/>
+            </packageset>
+            <packageset dir="${src.dir}/tags-template">
+                <include name="org/apache/beehive/netui/tags/template"/>
+            </packageset>
+        </javadoc>
+        <delete file="${build.dir}/docs/taglib/taglib-frame-ignore.html" failonerror="false"/>
+        <delete file="${build.dir}/docs/taglib/taglib-summary-ignore.html" failonerror="false"/>
+    </target>
+
+    <target name="make-doclet-jar" 
+            description="Re-JAR the jsptagrefdoclet.jar.  Use this target if you make changes to the XSLT files, or other files, embedded in jsptagrefdoclet.jar">
+        <jar jarfile="${docs.dir}/tools/lib/jsptagrefdoclet.jar" basedir="${docs.dir}/tools/docletsrc"/>
+    </target>
+
+    <target name="usage">
+        <echo message="================================================================================"/>
+        <echo message="|                                  Usage                                       |"/>
+        <echo message="================================================================================"/>
+        <echo message="build - Cleans and builds all doc, copies the result to the forrest site.    "/>
+        <echo message="clean - Deletes the built netui docs and associated temp files."/>
+        <echo message="generate-class-ref - Generates the NetUI class reference, using the standard Javadoc doclet."/>
+        <echo message="generate-taglib-ref - Generates the NetUI Tag Library reference."/>
+        <echo message="copy-to-forrest - Copies the built netui docs to the forrest site."/>
+        <echo message="================================================================================"/>
+        <echo message="|                                                                              |"/>
+        <echo message="================================================================================"/>
+    </target>
+    
+</project>

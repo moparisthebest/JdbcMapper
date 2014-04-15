@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>CallPageFlow</sessionName>
+  <tester>ekoneil</tester>
+  <startDate>13 Jan 2004, 02:23:18.234 PM GMT-07:00</startDate>
+  <description>Tests calling a page flow to get simple values and to invoke a method via a repeater on the page flow.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/databinding/callMethod/callPageFlow/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>*/*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>d115db:fa1110c565:-7ae1</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>1</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Call Page Flow Tests</title>
+  </head>
+
+  <body>
+    <b>Call Page Flow Tests</b><br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/SimpleTest.do">SimpleTest</a><br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/SumTest.do">SumTest</a><br/>
+<br/>
+  </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/databinding/callMethod/callPageFlow/SimpleTest.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>d115db:fa1110c565:-7ae1</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>2</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Simple JSP -&gt; JPF Test</title>
+  </head>
+
+  <body>
+    <b>Call Page Flow Tests</b><br/>
+
+PageFlow defaultText = <span>Some Default Text</span><br/>
+<br/>
+
+
+
+PageFlow said: <span>Hello JSP Page</span><br/>
+<br/>
+<br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/begin.do">Home</a>
+  </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/databinding/callMethod/callPageFlow/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>d115db:fa1110c565:-7ae1</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>3</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Call Page Flow Tests</title>
+  </head>
+
+  <body>
+    <b>Call Page Flow Tests</b><br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/SimpleTest.do">SimpleTest</a><br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/SumTest.do">SumTest</a><br/>
+<br/>
+  </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/databinding/callMethod/callPageFlow/SumTest.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>d115db:fa1110c565:-7ae1</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>4</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Simple JSP -&gt; JPF Test</title>
+    <link rel="stylesheet" href="../default.css" type="text/css"/>
+  </head>
+
+  <body>
+    <b>Call Page Flow Tests</b><br/>
+
+
+
+        <table class="table">
+        <tr class="tablehead"><td>Name</td><td>Quantity</td><td>Price</td></tr>
+    
+        <tr class="row">
+        <td><span>Product A</span></td>
+        <td><center><span>3</span></center></td>
+        <td><span>$9.95</span>
+        </td>
+        </tr>
+    
+        <tr class="row">
+        <td><span>Product C</span></td>
+        <td><center><span>2</span></center></td>
+        <td><span>$19.95</span>
+        </td>
+        </tr>
+    
+        <tr class="row">
+        <td><span>Product B</span></td>
+        <td><center><span>5</span></center></td>
+        <td><span>$29.95</span>
+        </td>
+        </tr>
+    
+        <tr class="row">
+        <td><span>Product D</span></td>
+        <td><center><span>1</span></center></td>
+        <td><span>$39.95</span>
+        </td>
+        </tr>
+    
+        <tr class="row">
+        <td><span>Product E</span></td>
+        <td><center><span>3</span></center></td>
+        <td><span>$59.95</span>
+        </td>
+        </tr>
+    
+        <tr class="row">
+        <td><span>Product F</span></td>
+        <td><center><span>2</span></center></td>
+        <td><span>$1.95</span>
+        </td>
+        </tr>
+    
+        <tr class="row">
+        <td><span>Product G</span></td>
+        <td><center><span>2</span></center></td>
+        <td><span>$4.95</span>
+        </td>
+        </tr>
+    
+        <tr>
+            <td></td>
+            <td>Sum:</td>
+            <td>
+            
+            <span>$453.10</span>
+            </td>
+         </tr>
+        </table>
+    
+<br/>
+<br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/begin.do">Home</a>
+  </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/databinding/callMethod/callPageFlow/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AEh22rI4pPWzy5VCigqPpumNlKIfLSwknIwKHJNaxZY47V7kqLJW!1396698601</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>d115db:fa1110c565:-7ae1</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>5</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Call Page Flow Tests</title>
+  </head>
+
+  <body>
+    <b>Call Page Flow Tests</b><br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/SimpleTest.do">SimpleTest</a><br/>
+<a href="/coreWeb/databinding/callMethod/callPageFlow/SumTest.do">SumTest</a><br/>
+<br/>
+  </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>13 Jan 2004, 02:23:23.156 PM GMT-07:00</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>5</testCount>
+  <passedCount>3</passedCount>
+  <failedCount>2</failedCount>
+</recorderSession>

@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>ExceptHierPage</sessionName>
+  <tester>Daryl</tester>
+  <startDate>02 Apr 2003, 10:25:00.731 AM MST</startDate>
+  <description>Test the exception hierarchy using page based navigation</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>1</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Exception Hierarchy</title>
+</head>
+<body>
+<h4>Exception Hierarchy</h3>
+<a href="/coreWeb/miniTests/exceptHierPage/throwBase.do">Throw a ExceptBase - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub.do">Throw a ExceptSub - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub2.do">Throw a ExceptSub2 - sub2 handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSubLocal.do">Throw a ExceptSub with local - local sub handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwRuntime.do">Throw a Runtime - global handler</a><br />
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/throwBase.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>2</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Base Handler</title>
+</head>
+<body>
+<h4>Base Handler</h4>
+<a href="/coreWeb/miniTests/exceptHierPage/Controller.jpf">Home</a>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>3</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Exception Hierarchy</title>
+</head>
+<body>
+<h4>Exception Hierarchy</h3>
+<a href="/coreWeb/miniTests/exceptHierPage/throwBase.do">Throw a ExceptBase - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub.do">Throw a ExceptSub - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub2.do">Throw a ExceptSub2 - sub2 handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSubLocal.do">Throw a ExceptSub with local - local sub handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwRuntime.do">Throw a Runtime - global handler</a><br />
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/throwSub.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>4</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Base Handler</title>
+</head>
+<body>
+<h4>Base Handler</h4>
+<a href="/coreWeb/miniTests/exceptHierPage/Controller.jpf">Home</a>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>5</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Exception Hierarchy</title>
+</head>
+<body>
+<h4>Exception Hierarchy</h3>
+<a href="/coreWeb/miniTests/exceptHierPage/throwBase.do">Throw a ExceptBase - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub.do">Throw a ExceptSub - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub2.do">Throw a ExceptSub2 - sub2 handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSubLocal.do">Throw a ExceptSub with local - local sub handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwRuntime.do">Throw a Runtime - global handler</a><br />
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>6</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/throwSub2.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>6</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Sub2 Handler</title>
+</head>
+<body>
+<h4>Sub2 Handler</h4>
+<a href="/coreWeb/miniTests/exceptHierPage/Controller.jpf">Home</a>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>7</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>7</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Exception Hierarchy</title>
+</head>
+<body>
+<h4>Exception Hierarchy</h3>
+<a href="/coreWeb/miniTests/exceptHierPage/throwBase.do">Throw a ExceptBase - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub.do">Throw a ExceptSub - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub2.do">Throw a ExceptSub2 - sub2 handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSubLocal.do">Throw a ExceptSub with local - local sub handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwRuntime.do">Throw a Runtime - global handler</a><br />
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>8</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/throwSubLocal.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>8</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Local Sub Handler</title>
+</head>
+<body>
+<h4>Local Sub Handler</h4>
+<a href="/coreWeb/miniTests/exceptHierPage/Controller.jpf">Home</a>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>9</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>9</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Exception Hierarchy</title>
+</head>
+<body>
+<h4>Exception Hierarchy</h3>
+<a href="/coreWeb/miniTests/exceptHierPage/throwBase.do">Throw a ExceptBase - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub.do">Throw a ExceptSub - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub2.do">Throw a ExceptSub2 - sub2 handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSubLocal.do">Throw a ExceptSub with local - local sub handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwRuntime.do">Throw a Runtime - global handler</a><br />
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>10</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/throwRuntime.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>10</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Global Handler</title>
+</head>
+<body>
+<h4>Global Handler</h4>
+<a href="/coreWeb/miniTests/exceptHierPage/Controller.jpf">Home</a>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>11</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/exceptHierPage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2Lc41B6KIdbpgn31KMvu60SHjSSS6KftVHFvVpksQSH2fJ0NynVI!1101013018</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>3f0b70:f44f67ac90:-7f78</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>11</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Exception Hierarchy</title>
+</head>
+<body>
+<h4>Exception Hierarchy</h3>
+<a href="/coreWeb/miniTests/exceptHierPage/throwBase.do">Throw a ExceptBase - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub.do">Throw a ExceptSub - base handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSub2.do">Throw a ExceptSub2 - sub2 handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwSubLocal.do">Throw a ExceptSub with local - local sub handler</a><br />
+<a href="/coreWeb/miniTests/exceptHierPage/throwRuntime.do">Throw a Runtime - global handler</a><br />
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>pass</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>02 Apr 2003, 10:25:06.200 AM MST</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>11</testCount>
+  <passedCount>6</passedCount>
+  <failedCount>5</failedCount>
+</recorderSession>

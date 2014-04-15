@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>RadioButtonError</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Feb 2005, 06:36:58.899 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/errors/radioButtonError/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7468</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Radio Tests</title>
+</head>
+<body>
+<h4>Radio</h4>
+<form action="/coreWeb/errors/radioButtonError/postback.do" method="post">
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>RadioButtonOption</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Could not find the RadioButtonGroup parent tag for the RadioButtonOption.</td></tr>
+</table></span>
+<br />
+<input type="submit" value="Submit">
+</form>
+<br />
+Selected: <span></span>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 06:37:00.482 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_NotExtendingPageFlow\Controller.java:16: The Controller annotation is not valid on this class.  The class should extend org.apache.beehive.netui.pageflow.PageFlowController or org.apache.beehive.netui.pageflow.SharedFlowController.
+public class Controller
+       ^
+1 error

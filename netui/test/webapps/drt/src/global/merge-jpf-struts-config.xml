@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+
+   <!-- ========== Form Bean Definitions =================================== -->
+   <form-beans>
+   </form-beans>
+
+   <!-- ========== Global Forward Definitions ============================== -->
+   <global-forwards>
+   </global-forwards>
+
+   <!-- ========== Action Mapping Definitions ============================== -->
+   <action-mappings>
+      <action
+         path="/unKnown"/>
+      <action
+         path="/unHandledAction">
+         <forward
+            contextRelative="true"
+            path="/strutsMerge/test2/action1.do"
+            name="gotoAction1"/>
+      </action>
+   </action-mappings>
+
+</struts-config>

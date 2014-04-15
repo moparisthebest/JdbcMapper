@@ -1,0 +1,43 @@
+package PF_ForwardRedirect;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains a legal attribute "redirect" on the
+ * jpf:forward annotation for ActionForward method "page1" but provides it an
+ * invalid value.
+ *
+ * @result: The compiler should catch this and issue an error that "badValue" is not a
+ * valid value for the "redirect" annotation.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp",
+                redirect = badValue)
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    }

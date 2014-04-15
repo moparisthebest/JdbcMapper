@@ -1,0 +1,38 @@
+package PF_ForwardMissingNameAttr;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file declares a jpf:forward annotations without the
+ * required "name" attribute.
+ *
+ * @result: The compiler should catch this and issue an error.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "begin",
+                path = "Begin.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("begin");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                path = "Page1.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("page1");
+        }
+    }

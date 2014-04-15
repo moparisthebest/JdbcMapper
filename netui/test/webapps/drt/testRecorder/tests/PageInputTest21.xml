@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>PageInputTest21</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>26 Jan 2005, 09:28:15.479 PM MST</ses:startDate>
+   <ses:description>Spencer Keller</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/pageInput/test21/Jpf1.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>458FDE2AAA96B55DD55002D11E9D30CC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=458FDE2AAA96B55DD55002D11E9D30CC</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+   <head>
+      <title>PageInput Test21</title>
+   </head>
+   <body>
+      <h3 align="center">PageInput Test21 - Jsp1.jsp</h3>
+      <hr width="95%"/>
+      <br/>
+      <center>
+         <br/>
+         <h2><font color="blue">Testing nonExistant value</font></h2>
+         <br/><br/>
+         
+
+         
+         Class A string value. <font color="blue">"Unable to find a value for "nonExistString" in object of class "shared.ClassA" using operator "."
+         <br/><br/>
+         <a href="/coreWeb/pageInput/test21/finish.do">Finish...</a>
+         </font>
+         <br/><br/>
+         Note the expected behavior is an error string.
+      </center>
+   </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>26 Jan 2005, 09:28:25.504 PM MST</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>DivPanelScopedId</sessionName>
+<tester>cschoett</tester>
+<startDate>03 Mar 2006, 10:14:01.252 AM MST</startDate>
+<description>DivPanel test using the netui:html attribute generateIdScope = true</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanel/beginScopedId.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>110776711A1DB35C51B7C9F1996ED304</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=110776711A1DB35C51B7C9F1996ED304</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.12) Gecko/20050915</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="n0">
+
+    <head>
+        <title>
+            Basic DivPanel 
+        </title>
+        <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    </head>
+    <body>
+    <h4>Basic DivPanel with generateIdScope</h4>
+        <div id="n0.divPanel" netui-div-panel="true">
+            <div  id="page1">
+            <table><tr>
+                <td colspan="2" align="center">Page 1</td>
+            </tr><tr>
+                <td width="100pt">&nbsp</td>
+                <td width="100pt"><a href="" onclick="return netUI.action(this, 'divPanel.showPage(&quot;page2&quot;);');">Next</a></td>
+            </tr></table>
+            </div>
+            <div  id="page2">
+            <table><tr>
+                <td colspan="2" align="center">Page 2</td>
+            </tr><tr>
+                <td width="100pt"><a href="" onclick="return netUI.action(this, 'divPanel.showPage(&quot;page1&quot;);');">Previous</a></td>
+                <td width="100pt"><a href="" onclick="return netUI.action(this, 'divPanel.showPage(&quot;page3&quot;);');">Next</a></td>
+            </tr></table>
+            </div>
+             <div  id="page3">
+            <table><tr>
+                <td colspan="2" align="center">Page 3</td>
+            </tr><tr>
+                <td width="100pt"><a href="" onclick="return netUI.action(this, 'divPanel.showPage(&quot;page2&quot;);');">Previous</a></td>
+                <td width="100pt">&nbsp;</td>
+            </tr></table>
+            </div>
+        </div>
+    <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+netUI.netUIDivPanel = new NetUIDivPanel();
+netUI.netUIDivPanel.init();
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.n0__page2="page2"
+netui_names.n0__page3="page3"
+netui_names.n0__page1="page1"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>03 Mar 2006, 10:14:21.370 AM MST</endDate>
+<testCount>1</testCount>
+</recorderSession>

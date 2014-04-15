@@ -1,0 +1,31 @@
+package simpleActionMethodActionSameName;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+    @Jpf.SimpleAction(name = "dupAction",
+                      path = "index.jsp")
+}
+)
+public class Controller 
+    extends PageFlowController
+{
+   
+        @Jpf.Action(forwards = { 
+        @Jpf.Forward(name = "success",
+                     path = "index.jsp")
+    })
+
+    protected Forward dupAction()
+    {
+        Forward forward = new Forward("success");        
+        return forward;
+    }
+}

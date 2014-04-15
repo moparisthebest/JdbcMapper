@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>TemplateXhtml</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>14 Apr 2005, 04:12:10.034 PM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/template/xhtml/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>396B51E38820AE6BE77EF0E7E0EEB45C</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=396B51E38820AE6BE77EF0E7E0EEB45C; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>a7debe4:10342bbf21a:-7691</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+   <head>
+      <title>Simple Test</title>
+      <base href="http://localhost:8080/coreWeb/template/xhtml/Test.jsp" />
+   </head>
+   <body>
+      <h1>Simple Test</h1>
+      <p><form action="/coreWeb/template/xhtml/search.do" method="post" style="display:inline">
+	<input type="text" name="{pageFlow.search}" />
+	<input type="submit" value="Search" />
+      </form></p>
+      <table width="100%">
+         <tr><td valign="top">
+	 <div style="height="200px">
+	 <h4>'left' Section</h4>
+         
+     <form action="/coreWeb/template/xhtml/post.do" method="post">
+        <input type="hidden" name="wlw-select_key:{pageFlow.selectedValue}OldValue" value="true" />
+<select name="wlw-select_key:{pageFlow.selectedValue}">
+<option value="Select One">Select One</option>
+<option value="Select Two">Select Two</option>
+<option value="Select Three">Select Three</option></select><br />
+	<input type="submit" value="submit" />
+     </form>
+  
+	 </div>
+	 </td><td valign="top">
+	 <div style="height="200px">
+	 <h4>'right Section</h4>
+         
+      Enter some value in the form fool....
+  
+	 </div>
+         </td>
+      </tr>
+      </table>
+      <hr>
+      Selected Value: <span></span>
+   </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>14 Apr 2005, 04:12:11.526 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

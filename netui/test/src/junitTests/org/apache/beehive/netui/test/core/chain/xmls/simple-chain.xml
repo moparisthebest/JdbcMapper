@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<catalog xmlns="http://beehive.apache.org/netui/2006/server/catalog">
+    <chain name="echo-1234">
+        <command>
+            <id>1</id>
+            <command-class>org.apache.beehive.netui.test.core.chain.commands.EchoCommand</command-class>
+            <custom-property>
+                <name>message</name>
+                <value>echo 1</value>
+            </custom-property>
+        </command>
+        <command>
+            <id>2</id>
+            <command-class>org.apache.beehive.netui.test.core.chain.commands.EchoCommand</command-class>
+            <custom-property>
+                <name>message</name>
+                <value>echo 2</value>
+            </custom-property>
+        </command>
+        <command>
+            <id>3</id>
+            <command-class>org.apache.beehive.netui.test.core.chain.commands.EchoCommand</command-class>
+            <custom-property>
+                <name>message</name>
+                <value>echo 3</value>
+            </custom-property>
+        </command>
+        <command>
+            <id>4</id>
+            <command-class>org.apache.beehive.netui.test.core.chain.commands.EchoCommand</command-class>
+            <custom-property>
+                <name>message</name>
+                <value>echo 4</value>
+            </custom-property>
+        </command>
+    </chain>
+    <chain name="echo-abc">
+        <command>
+            <id>1</id>
+            <command-class>org.apache.beehive.netui.test.core.chain.commands.EchoCommand</command-class>
+            <custom-property>
+                <name>message</name>
+                <value>echo aaa</value>
+            </custom-property>
+        </command>
+        <command>
+            <id>2</id>
+            <command-class>org.apache.beehive.netui.test.core.chain.commands.EchoCommand</command-class>
+            <custom-property>
+                <name>message</name>
+                <value>echo bbb</value>
+            </custom-property>
+        </command>
+    </chain>
+    <command>
+        <id>configurable</id>
+        <command-class>org.apache.beehive.netui.test.core.chain.commands.ConfigurableCommand</command-class>
+        <custom-property>
+            <name>foo</name>
+            <value>Homer</value>
+        </custom-property>
+        <custom-property>
+            <name>bar</name>
+            <value>54321</value>
+        </custom-property>
+    </command>
+</catalog>

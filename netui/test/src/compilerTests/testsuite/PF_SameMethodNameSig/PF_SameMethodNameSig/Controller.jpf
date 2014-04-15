@@ -1,0 +1,51 @@
+package PF_SameMethodNameSig;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains two Forward methods with the same
+ * method name and signature, "page2".  This is invalid Java syntax.
+ *
+ * @result: The compiler should catch this and issue an error that a method name and
+ * signature was duplicated.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp") 
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg2",
+                path = "Pg2.jsp") 
+        })
+    protected Forward page2()
+        {
+        return new Forward("pg2");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg3",
+                path = "Pg3.jsp") 
+        })
+    protected Forward page2()
+        {
+        return new Forward("pg3");
+        }
+    }

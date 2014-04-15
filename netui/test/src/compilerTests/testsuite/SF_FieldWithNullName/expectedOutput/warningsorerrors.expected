@@ -1,0 +1,4 @@
+[LOCAL_PATH]/WEB-INF/.tmpbeansrc/fieldWithNullName/Controller.java:25: annotation org.apache.beehive.netui.pageflow.annotations.Jpf.SharedFlowField is missing name
+    @Jpf.SharedFlowField()
+        ^
+1 error

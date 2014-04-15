@@ -1,0 +1,22 @@
+/*
+ * Test defect: http://issues.apache.org/jira/browse/BEEHIVE-389
+ * NPE when compiling a page flow with @Jpf.MessageBundle that lacks 'bundlePath' attribute
+ * Expected:  There should be a compiler error message
+ */
+package Jira389;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(
+        messageBundles={
+            @Jpf.MessageBundle()
+        },
+        simpleActions={
+		@Jpf.SimpleAction(name="begin", path="index.jsp")
+        }
+    )
+public class Controller extends PageFlowController
+{
+}

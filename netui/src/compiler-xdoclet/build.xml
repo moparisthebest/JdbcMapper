@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/Compiler (XDoclet)" default="build" basedir=".">
+
+    <import file="../../netui-imports.xml"/>
+
+    <property name="module.name" value="compiler-xdoclet"/>
+    <property name="module.classes.dir" value="${classes.dir}/${module.name}"/>
+    <property name="module.dir" location="${src.dir}/${module.name}"/>
+    <property name="xdoclet-xml.dir" value="${module.classes.dir}/META-INF"/>
+    <property name="xdoclet-xml.template.file" value="${module.dir}/xdoclet-xml.xdt" />
+    <property name="compiler-core.classes.dir" location="${classes.dir}/compiler-core"/>
+    <property name="pageflow.module.dir" location="${src.dir}/pageflow"/>
+
+    <path id="module.classpath">
+        <path refid="xbean.dependency.path"/>
+        <path refid="commons-logging.dependency.path"/>
+        <path refid="commons-collections.dependency.path"/>
+        <fileset refid="controls.fileset"/>
+        <fileset file="${xdoclet.jar}"/>
+        <fileset file="${xjavadoc.jar}"/>
+        <pathelement path="${compiler-core.classes.dir}"/>
+    </path>
+
+    <target name="build" depends="compile,xdoclet-xml,jar"/>
+
+    <target name="compile">
+        <echo>compile module: ${module.name}</echo>
+        <property name="classpath" refid="module.classpath"/>
+        <echo>module classpath: ${classpath}</echo>
+        <echo>basedir: ${basedir}</echo>
+ 
+        <mkdir dir="${module.classes.dir}"/>
+
+        <javac srcdir="${module.dir}"
+               destdir="${module.classes.dir}"
+               classpathref="module.classpath"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               optimize="${compile.optimize}"
+               source="${compile.source}"
+               target="${compile.target}">
+            <include name="**/*.java"/>
+        </javac>
+
+        <copy todir="${module.classes.dir}">
+            <fileset dir="${module.dir}" includes="**/*.properties"/>
+            <fileset dir="${module.dir}" includes="**/*.xml" excludes="build.xml"/>
+            <fileset dir="${module.dir}" includes="META-INF/**"/>
+            <fileset dir="${pageflow.module.dir}" includes="**/Jpf.java"/>
+        </copy>
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Generates an xdoclet.xml deployment descriptor for xdoclet modules  -->
+    <!-- =================================================================== -->
+    <target name="xdoclet-xml"
+        description="Generates an xdoclet.xml deployment descriptor for xdoclet modules"
+        unless="module.jar.uptodate"
+        depends="compile"
+    >
+        <!--
+        Define classpath required for generating xml descriptors
+        We're including our own classes on the class path because
+        the module might contain a subtask which depends on a doclettask
+        in the same module. all classes have to be on the classpath for
+        the xdoclet.xml generation to succeed. The classpath has to be defined
+        *after* compilation because Ant will strip away nonexistant
+        paths from the classpath. (The class directory doesn't exist before
+        the classes are compiled).
+        -->
+        <!-- Define the xdoclet task -->
+        <taskdef name="xdoclet" classname="xdoclet.DocletTask" classpathref="module.classpath"/>
+
+        <mkdir dir="${xdoclet-xml.dir}"/>
+        <xdoclet destdir="${xdoclet-xml.dir}">
+
+            <fileset dir="${basedir}">
+                <include name="**/*Handler.java" />
+                <include name="**/*SubTask.java" />
+            </fileset>
+
+            <template
+                templateFile="${xdoclet-xml.template.file}"
+                destinationFile="xdoclet.xml"
+            />
+        </xdoclet>
+    </target>
+
+    <target name="jar">
+        <!-- copy class files from the compiler-core module -->
+        <copy todir="${module.classes.dir}">
+            <fileset dir="${compiler-core.classes.dir}" includes="**/*"/>
+        </copy>
+
+        <jar jarfile="${jars.dir}/${compiler-xdoclet.jar.name}" basedir="${module.classes.dir}">
+            <manifest>
+                <attribute name="Class-Path" value="apache-xbean.jar"/>
+            </manifest>
+        </jar>
+
+        <!-- Copy the distributable build file to build/lib -->
+        <copy todir="${jars.dir}" file="${module.dir}/pageflow-webapp-build-xdoclet.xml" failonerror="true"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${module.classes.dir}"/>
+        <delete file="${jars.dir}/${compiler-xdoclet.jar.name}"/>
+    </target>
+
+</project>

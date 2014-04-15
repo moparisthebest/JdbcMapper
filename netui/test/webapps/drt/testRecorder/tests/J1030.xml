@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>J1030</sessionName>
+<tester>crogers</tester>
+<startDate>21 Dec 2005, 02:46:17.923 PM MST</startDate>
+<description>Test Class-level @Jpf.Forward annotations with inheritLocalPaths=true in the derived class.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j1030/derived/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>16885510347D9A1C7CA964A3040D40DC</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=16885510347D9A1C7CA964A3040D40DC</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>inheritLocalPaths=true</title>
+        <base href="http://localhost:8080/coreWeb/bugs/j1030/base/index.jsp">
+    </head>
+    <body>
+        <h3>base!</h3>
+        <p>Derived Controller has annotation inheritLocalPaths=true</p>
+
+        <a href="/coreWeb/bugs/j1030/derived/begin.do">begin</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>21 Dec 2005, 02:46:34.156 PM MST</endDate>
+<testCount>1</testCount>
+</recorderSession>

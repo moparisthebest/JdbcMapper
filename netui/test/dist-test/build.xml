@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/BuildTestDist" default="usage" basedir=".">
+    
+    <import file="../ant/netui-test-imports.xml"/>
+
+    <target name="build.tests" description="Build all netui tests">
+        <property name="test.dist.base.dir" location="${build.dir}/test-dist"/>
+
+        <!-- Build the JUnit tests -->
+        <ant antfile="${test.dir}/ant/build.xml" target="build" inheritAll="false"/>
+    </target>    
+
+    <target name="assemble.tests" description="Assemble all netui tests for test distribution">
+        <property name="netui.test.dist.dir" value="${test.dist.base.dir}/beehive-test-dist/netui"/>
+
+        <!-- Clean NetUI test webapps -->
+        <ant dir="${app.dir}/drt" antfile="build.xml" target="clean"/>
+        <ant dir="${app.dir}/controls" antfile="build.xml" target="clean"/>
+        <ant dir="${app.dir}/jsf" antfile="build.xml" target="clean"/>
+        <ant dir="${app.dir}/urlTemplates" antfile="build.xml" target="clean"/>
+
+        <!-- Prepare destination directories for the test-dist infrastructure -->
+        <mkdir dir="${test.dist.base.dir}/beehive-test-dist"/>
+        <mkdir dir="${netui.test.dist.dir}"/>
+
+        <!-- Populate the NetUI Ant build infrastructure -->
+        <copy todir="${netui.test.dist.dir}">
+            <fileset dir="${test.dir}/dist-test/files"/>
+        </copy> 
+
+        <!-- Copy the shared Ant build infrastructure -->
+        <copy todir="${netui.test.dist.dir}/ant" file="${test.dir}/ant/junitCore.xml"/>
+        <copy todir="${netui.test.dist.dir}/ant" file="${test.dir}/ant/struts-imports.xml"/>
+        <copy todir="${netui.test.dist.dir}/ant" file="${test.dir}/ant/compiler-test.properties"/>   
+ 
+        <!-- Copy the NetUI test webapps -->
+        <copy todir="${netui.test.dist.dir}/webapps/drt">
+            <fileset dir="${app.dir}/drt"/>
+        </copy>
+        
+        <copy todir="${netui.test.dist.dir}/webapps/controls">
+            <fileset dir="${app.dir}/controls"/>
+        </copy>
+        
+        <copy todir="${netui.test.dist.dir}/webapps/jsf">
+             <fileset dir="${app.dir}/jsf"/>
+        </copy>
+
+        <copy todir="${netui.test.dist.dir}/webapps/urlTemplates">
+             <fileset dir="${app.dir}/urlTemplates"/>
+        </copy>
+
+        <!-- Copy the JUnit test classes -->
+        <copy todir="${netui.test.dist.dir}/junit/junitTests">
+            <fileset dir="${test.classes.dir}/junitTests" excludes="build.xml"/>
+        </copy>
+     
+        <!-- Copy the compiler test classes -->  
+        <copy todir="${netui.test.dist.dir}/junit/compilerTests">
+            <fileset dir="${test.classes.dir}/compilerTests" excludes="build.xml"/>
+        </copy> 
+        
+        <!-- Copy the Test Recorder -->
+        <copy todir="${netui.test.dist.dir}/testRecorder">
+             <fileset dir="${build.dir}/tools/testRecorder"/>
+        </copy>
+
+        <!-- Copy the Test Recorder configuration files -->
+        <copy todir="${netui.test.dist.dir}/conf">
+             <fileset dir="${test.dir}/conf"/>
+        </copy>
+     
+        <!-- Copy the NetUI runtime support JARs -->
+        <copy todir="${netui.test.dist.dir}/external/jsf">
+             <fileset dir="${netui.home}/external/jsf"/>
+        </copy>
+
+        <!-- Struts 1.1 -->
+        <copy todir="${netui.test.dist.dir}/external/struts/struts1.1">
+             <fileset dir="${struts11.dir}"/>
+        </copy>
+
+        <copy todir="${netui.test.dist.dir}/external/struts/struts1.2">
+             <fileset dir="${struts12.dir}"/>
+        </copy>
+   
+        <!-- StrutsTestCase -->
+        <copy todir="${netui.test.dist.dir}/external/strutstestcase">
+            <fileset dir="${netui.home}/test/external/strutstestcase"/>
+            <fileset dir="${netui.home}/external/commons-collections"/>
+        </copy>
+    </target>
+    
+    <target name="usage" description="How to use this build file">
+        <echo>
+Build the tests first by build.tests
+Assemble the tests after the tests are being built by assemble the tests
+        </echo>
+    </target>
+
+</project>

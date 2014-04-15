@@ -1,0 +1,2 @@
+The typesrc source directory contains classes which are needed by the WebServiceControlGenerator when generating
+a wsc.  These classes get compiled BEFORE the WebServiceControlGenerator is run on a WSDL.

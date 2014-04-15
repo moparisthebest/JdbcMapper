@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Beehive Controls Tutorial</title>
+    </header>
+    <body>
+        <section id="introduction">
+            <title>Introduction</title>
+            <p>
+            The Controls Tutorial is a good way to become familiar with the concepts of Beehive Controls.  This describes 
+            how to write, build, package, and test a simple Hello Control.  The following concepts will be convered here:
+            </p>
+            <ul>
+                <li>Creating a standalone Beehive Control project</li>
+                <li>Creating a Control interface and implementation</li>
+                <li>Compiling a Control</li>
+                <li>Packaging a Control into a JAR file</li>
+                <li>Testing a Control using JUnit</li>
+            </ul>
+            <p>
+            For a technical description of Controls, see the <a href="site:docs/controls/programming">Controls programming guide</a>.
+            </p>
+        </section>
+        <section id="setup">
+            <title>Step 1: Setup Control Development</title>
+            <section id="setup-beehive">
+                <title>Install Beehive</title>
+                <p>
+                Complete all of the required and optional steps to install and setup Beehive <a class="fork" href="site:setup">here</a>.
+                </p>
+            </section>
+            <section id="setup-junit">
+                <title>Install JUnit</title>
+                <p>
+                In this tutorial, JUnit is the test framework used.  In order to use JUnit, download a JUnit release  
+                <a href="http://sourceforge.net/project/showfiles.php?group_id=15278">here</a> and unzip it into a local
+                directory.
+                </p>
+            </section>
+            <section id="setup-control-project">
+                <title>Create a Control Project</title>
+                <p>
+                Copy the directory <code>&lt;BeehiveRoot>/samples/controls-blank</code> to a location of your choice.  For example, you might copy 
+                to the following location: <code>/beehive-projects/controls-blank</code>.
+                </p>
+                <p>
+                Rename <code>controls-blank</code> to <code>controls_tutorial</code>.
+                </p>
+                <p>
+                Edit the file <code>controls_tutorial/build.properties</code> so that the property <code>beehive.home</code> points 
+                to the top level folder of your Beehive distribution.
+                </p>
+                <p>
+                Add the property <code>junit.home</code> to the file and ensure that it points to your JUnit installation.
+                </p>
+                <p>
+                For example, if Beehive distribution is located in <code>/apache/apache-beehive-1.0</code>
+                and JUnit is located in <code>/test-tools/junit</code>, then your <code>build.properties</code> file 
+                would appear as follows:
+                </p>
+                <source>
+beehive.home=<strong>/apache/apache-beehive-1.0</strong>
+                    
+junit.home=<strong>/test-tools/junit</strong></source>
+                <note>
+                Properties files should use the '/' character to separate drive, directory, and file names.
+                </note>
+            </section>
+        </section>
+        <section id="compile">
+            <title>Step 2: Compile Control Interface and Implementation Source Files</title>
+            <section id="compile-introduction">
+                <title>Introduction</title>
+                <p>
+                A Beehive Control consists of two source files -- an interface file and an implementation file.  The interface 
+                file is the public API of a control and provides all of the methods that can be invoked by a Control user (or client).
+                The implementation file contains the implementation code for the methods listed in the interface file.
+                </p>
+            </section>
+            <section id="compile-examine">
+                <title>A Control's Source Files</title>
+                <p>Open the file <code>/controls_tutorial/src/pkg/HelloImpl.java</code>.</p>
+                <p>The implementation file appears as follows. (There is no need to edit the file at this point in the tutorial.)</p>
+                <source>package pkg;
+
+import org.apache.beehive.controls.api.bean.ControlImplementation;
+
+@ControlImplementation(isTransient=true)
+public class HelloImpl 
+    implements Hello {
+
+    public String hello() {
+        return "Hello!";
+    }
+}</source>
+                <p>
+                    Open the file <code>controls_tutorial/src/pkg/Hello.java</code>.  The interface file should appear appears as follows.
+                </p>
+                <source>package pkg;
+
+import org.apache.beehive.controls.api.bean.ControlInterface;
+
+@ControlInterface
+public interface Hello {
+    String hello();
+}</source>
+            </section>
+            <section id="name-control-jar">
+                <title>Set a Name for the Hello Control JAR</title>
+                <p>
+                    This step sets the name of the JAR file created when compiling the <code>Hello</code> and <code>HelloImpl</code> interface
+                    and implementation.
+                </p>
+                <p>
+                    Edit the file <code>controls_tutorial/build.xml</code> to set the <code>build.jar</code> property to the name
+                    <code>helloControl.jar</code>.  The property should appear as:
+                </p>
+                <source>
+&lt;project name="<strong>controls_tutorial</strong>" default="usage" basedir=".">
+...                 
+    &lt;property name="build.jar" value="<strong>helloControl.jar</strong>"/>
+...
+&lt;project></source>                
+            </section>       
+            <section id="build">
+                <title>Build and Package the Control</title>
+                <p>
+                Now, compile the control and build the Control's JAR file.  The following Ant command should be run from the
+                <code>controls_tutorial</code> project directory; at the command prompt, enter:
+                </p>
+                <source>ant clean build</source>
+                <p>
+                The Control's classes are generated in <code>build/classes</code>, and the Control's JAR file is created in <code>build/helloControl.jar</code>.
+                </p>
+            </section>
+        </section>
+        <section id="test-setup">
+            <title>Step 3: Create a JUnit Test for the Control</title>
+            <section id="add-test-class">
+                <title>Create a JUnit Test Class</title>
+                <p>
+                Now that the control builds successfully, it's time to write a JUnit test case to ensure that the 
+                Control operates as it is intended.  To do this, create a <code>test</code> directory to contain
+                the JUnit test cases for the control.  The directory should be created under <code>controls_tutorial/test</code>
+                with the command:
+                </p>
+                <source>mkdir test</source>
+                <p>
+                In this directory, create a Java package to contain the source of a JUnit test with:
+                </p>
+                <source>mkdir test/testpackage</source>
+                <p>
+                Now, create a JUnit test case called <code>HelloControlTest.java</code>.  This class wil declare an instance of the
+                Hello control and unit test its API.  This class should appear as follows:
+                </p>
+                <source>package testpackage;
+
+import org.apache.beehive.controls.api.bean.Control;
+import org.apache.beehive.controls.test.junit.ControlTestCase;
+
+import pkg.Hello;
+
+public class HelloControlTest 
+    extends ControlTestCase {   
+
+    @Control
+    private Hello _helloControl;
+    
+    public void testHello() 
+        throws Exception {
+        String message = _helloControl.hello();
+
+        assertEquals("Failed to receive message \"Hello!\"", "Hello!", message);
+    }
+}</source>
+            </section>
+            <section id="add-test-to-build">
+                <title>Edit build.xml to Compile and Run the JUnit Test</title>
+                <p>
+                Now that the test has been written, the Ant build.xml file still needs to change to support building
+                and running JUnit tests.  To do this, add the following <code>test</code> target to the build.xml file:
+                </p>
+                <source>&lt;target name="test">
+    &lt;property name="test.src" location="test"/>
+    &lt;property name="test.classes" location="${build.dir}/test-classes"/>
+    &lt;property name="test.beansrc" location="${build.dir}/test-beansrc"/>
+
+    &lt;mkdir dir="${test.classes}"/>
+    &lt;mkdir dir="${test.beansrc}"/>
+
+    &lt;path id="test.classpath">
+        &lt;path refid="build.classpath"/>
+        &lt;pathelement location="${build.dir}/${build.jar}"/>
+        &lt;pathelement location="${junit.home}/junit.jar"/>
+    &lt;/path>
+
+    &lt;build-controls srcdir="${test.src}"
+                    destdir="${test.classes}"
+                    tempdir="${test.beansrc}"
+                    classpathref="test.classpath"/>
+
+    &lt;path id="test-run.classpath">
+        &lt;path refid="test.classpath"/>
+        &lt;pathelement location="${test.classes}"/>
+        &lt;pathelement location="${beehive.home}/lib/common/commons-discovery-0.2.jar"/>
+        &lt;pathelement location="${beehive.home}/lib/common/commons-logging-1.0.4.jar"/>
+    &lt;/path>
+
+    &lt;java classname="junit.textui.TestRunner"
+          classpathref="test-run.classpath">
+        &lt;arg line="testpackage.HelloControlTest"/>
+    &lt;/java>
+&lt;/target></source>
+                <p>
+                This target first builds the test source files.  Then, it runs the JUnit tests, reporting errors 
+                if tests fail.
+                </p>
+                <note>
+                There are lots of ways to run JUnit tests in Ant including the use of the <code>&lt;junit></code>
+                Ant tasks.  This tutorial has taken a simple approach to running JUnit; this example test should
+                run in other JUnit execution environments as well.  For information on configuring Ant's JUnit
+                tasks, see <a href="file:///c:/java/apache-ant-1.6.5/docs/manual/OptionalTasks/junit.html">here</a>.
+                </note>
+            </section>
+            <section id="run-test">
+                <title>Run the Test</title>
+                <p>In your command shell, ensure that you are in the directory <code>controls_tutorial/</code></p>
+                <p>Run the following Ant command to test the control.</p>
+                <source>
+ant clean build test                        
+                </source>
+            </section>
+        </section>
+        <section id="add-parameter-method">
+            <title>Step 4: Edit the Control and Re-test</title>
+            <section>
+                <title>Edit the Control Source Files</title>
+                <p>Edit the file <code>HelloImpl.java</code> so it appears as follows. Code to add appears in bold</p>
+                <source>package pkg;
+    
+import org.apache.beehive.controls.api.bean.ControlImplementation;
+    
+@ControlImplementation(isTransient=true)
+public class HelloImpl 
+    implements Hello {
+
+    public String hello() {
+        return "Hello!";
+    }
+    
+<strong>public String hello(String name) {
+        return "Hello, " + name + "!";
+    }</strong>
+}</source>
+                <p>Edit the file <code>Hello.java</code> so it appears as follows. Code to add appears in bold</p>
+                <source>package pkg;
+    
+import org.apache.beehive.controls.api.bean.ControlInterface;
+    
+@ControlInterface
+public interface Hello {
+    String hello();
+        
+    <strong>String hello(String name);</strong>
+}</source>
+            </section>
+            <section>
+                <title>
+                    Add a Test Case for the New Control Method
+                </title>
+                <p>Edit the file <code>Tests.java</code> so it appears as follows.  Code to add appears in bold.</p>
+                <source>package testpackage;
+
+import org.apache.beehive.controls.api.bean.Control;
+import org.apache.beehive.controls.test.junit.ControlTestCase;
+
+import pkg.Hello;
+
+public class Tests 
+    extends ControlTestCase {   
+
+    @Control
+    private Hello _helloControl;
+    
+    public void testHello() 
+        throws Exception {
+
+        String message = _helloControl.hello();
+        assertEquals("Failed to receive message \"Hello!\"", "Hello!", message);
+    }
+    
+    <strong>public void testParam() 
+        throws Exception {
+        String message = _helloControl.hello("World");
+
+        assertEquals("Failed to receive message \"Hello, World!\"", "Hello, World!", message);
+    }</strong>
+}</source>
+            </section>
+            <section id="run-test2">
+                <title>Run the Test</title>
+                <p>
+                Test the control according to the previous instructions <a href="#run_test">here</a>.
+                </p>
+            </section>            
+        </section>
+       </body>
+    <footer>
+        <legal>
+        Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.
+        <br/>&copy; 2006, Apache Software Foundation
+        </legal>
+    </footer>
+</document>

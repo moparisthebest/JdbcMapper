@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+<project name="Beehive/ServiceControl DRT For WebService Control Generation" default="drt" basedir=".">
+
+    <property environment="os"/>
+    <import file="../../../systemcontrols-imports.xml"/>
+
+    <property name="junit-source.dir" location="src"/>
+    <property name="wsdls.dir" location="wsdl"/>
+    <property name="wsdls.settings.dir" location="${wsdls.dir}/settings"/>
+
+    <property name="wscgen.build.dir" location="../build/junit-wscgen"/>
+
+    <property name="wscgen.beansrc" location="${wscgen.build.dir}/beansrc"/>
+    <property name="wscgen.classes" location="${wscgen.build.dir}/classes"/>
+    <property name="wscgen.gensrc" location="${wscgen.build.dir}/wscsrc"/>
+
+    <property name="wscgen.package.name" value="generated.wsctest.junit"/>
+    <property name="log.dir" location="${basedir}/../build/logs/wscgen"/>
+
+    <property name="beehive-webservice-control.jar"
+              location="${beehive.home}/system-controls/build/jars/beehive-webservice-control.jar"/>
+
+    <!-- hack to satisfy the WSM dependence for the web service control's build -->
+    <path id="wsm.dependency.path">
+        <fileset dir="../external/beehive-wsm-snapshot" includes="*.jar"/>
+    </path>
+
+    <path id="beehive.classpath">
+        <path refid="wsm.dependency.path"/>
+        <path refid="wsdl4j.dependency.path"/>
+        <path refid="axis.dependency.path"/>
+        <path refid="jaxrpc.dependency.path"/>
+        <path refid="saaj.dependency.path"/>
+        <path refid="controls.dependency.path"/>
+        <path refid="junit.dependency.path"/>
+    </path>
+
+    <path id="wscgen.classpath">
+        <pathelement path="${wscgen.classes}"/>
+        <pathelement path="${beehive-webservice-control.jar}"/>
+        <path refid="beehive.classpath"/>
+        <path refid="xbean.dependency.path"/>
+        <path refid="log4j.dependency.path"/>
+        <path refid="velocity.dependency.path"/>
+        <path refid="commons-logging.dependency.path"/>
+        <path refid="commons-discovery.dependency.path"/>
+    </path>
+
+    <target name="build" description="Build the tests and controls for the drts.">
+        <mkdir dir="${log.dir}"/>
+        <mkdir dir="${wscgen.gensrc}"/>
+
+        <antcall target="generate_wscs"/>
+
+        <echo message="-----------------------------------------------------"/>
+        <echo message="|     Web service control generation build starting |"/>
+        <echo message="-----------------------------------------------------"/>
+
+        <build-controls srcdir="${wscgen.gensrc}"
+                        destdir="${wscgen.classes}"
+                        tempdir="${wscgen.beansrc}"
+                        classpathref="wscgen.classpath"/>
+
+        <copy todir="${wscgen.classes}">
+            <fileset dir="${wscgen.gensrc}" includes="**/*.wsdl"/>
+        </copy>
+
+        <!-- build the client junit tests, use apt since they may access controls -->
+        <build-controls srcdir="${junit-source.dir}"
+                        destdir="${wscgen.classes}"
+                        tempdir="${wscgen.beansrc}"
+                        classpathref="wscgen.classpath"/>
+
+        <echo message="-----------------------------------------------------"/>
+        <echo message="|     Web service control generation build completed |"/>
+        <echo message="-----------------------------------------------------"/>
+    </target>
+
+    <!-- Test overall generation as well as variations of genertor task arguments. -->
+    <target name="generate_wscs" depends="gen_xmlbeans" description="Generate web service controls for JUnit tests">
+        <taskdef name="webservice-control-gen"
+                 classname="org.apache.beehive.controls.system.webservice.generator.WebServiceControlGeneratorTask"
+                 classpathref="wscgen.classpath"/>
+
+        <!-- general task tests -->
+        <webservice-control-gen wsdlsrc="${wsdls.dir}"
+                                destdir="${wscgen.gensrc}"/>
+
+        <!-- *** task parameter / settings tests *** -->
+
+        <!-- wsdl runtime path not set -->
+        <webservice-control-gen wsdlsrc="${wsdls.settings.dir}/TaskGeneratorTest.wsdl"
+                                destdir="${wscgen.gensrc}"
+                                destPackageName="test1"/>
+
+        <!-- wsdl runtime path set to location of generated control-->
+        <webservice-control-gen wsdlsrc="${wsdls.settings.dir}/TaskGeneratorTest.wsdl"
+                                destdir="${wscgen.gensrc}"
+                                copyWsdl="yes"
+                                destPackageName="test2"/>
+
+        <!-- wsdl runtime path explicitly set -->
+        <webservice-control-gen wsdlsrc="${wsdls.settings.dir}/TaskGeneratorTest.wsdl"
+                                destdir="${wscgen.gensrc}"
+                                wsdlRuntimePath="/tmp"
+                                destPackageName="test3"/>
+
+        <!-- wsdl runtime path explicitly set, so is copyWsdl -->
+        <webservice-control-gen wsdlsrc="${wsdls.settings.dir}/TaskGeneratorTest.wsdl"
+                                destdir="${wscgen.gensrc}"
+                                wsdlRuntimePath="/tmp/"
+                                copyWsdl="yes"
+                                destPackageName="test4"/>
+
+        <!-- explictly set the service name and port name we are looking for -->
+        <webservice-control-gen wsdlsrc="${wsdls.settings.dir}/TaskGeneratorTest.wsdl"
+                                destdir="${wscgen.gensrc}"
+                                copyWsdl="yes"
+                                serviceName="TestService1"
+                                serviceNamespace="http://foo"
+                                servicePort="TestService1"
+                                destPackageName="test5"/>
+
+    </target>
+
+    <target name="gen_xmlbeans" depends="checkxbean" unless="noxbeanrebuild">
+        <build-schemas srcdir="${wsdls.dir}" destdir="${wscgen.classes}"/>
+    </target>
+
+    <target name="checkxbean">
+        <uptodate property="noxbeanrebuild" targetfile="${xbeangen.dir}">
+            <srcfiles dir="${wsdls.dir}" includes="*.wsdl,*.xsd"/>
+        </uptodate>
+    </target>
+
+    <target name="clean" description="Clean generated source and class artifacts">
+        <delete dir="${wscgen.build.dir}"/>
+        <delete dir="${log.dir}"/>
+    </target>
+
+    <target name="drt" description="Run the web service control drts.">
+        <antcall target="clean"/>
+        <antcall target="build"/>
+
+        <echo message="-----------------------------------------------------"/>
+        <echo message="|     Web service control generation DRTs starting  |"/>
+        <echo message="-----------------------------------------------------"/>
+
+        <echo message="Web Service Control JUnit log files written to ${log.dir}"/>
+        <junit failureproperty="drtfailed"
+               printsummary="on"
+               tempdir="${wscgen.build.dir}"
+               fork="yes">
+            <classpath>
+                <path refid="wscgen.classpath"/>
+                <pathelement location="${wscgen.classes}"/>
+            </classpath>
+            <formatter type="plain"/>
+            <batchtest filtertrace="off" todir="${log.dir}">
+                <fileset dir="${junit-source.dir}">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <echo message="-----------------------------------------------------"/>
+        <echo message="|     Web service control generation DRTs completed |"/>
+        <echo message="-----------------------------------------------------"/>
+
+        <fail if="drtfailed" message="One or more tests in the ServiceControl DRT failed."/>
+    </target>
+
+</project>

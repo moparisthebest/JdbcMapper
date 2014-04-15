@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+    "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<tiles-definitions>
+
+    <definition name="overridePage" extends="defaultLayout">
+        <put name="titleString"  value="Override Action Page - Tiles"/>
+        <put name="menu" value="/tiles/pf/anotherInherit/localMenu.jsp"/>
+        <put name="body" value="/tiles/pf/anotherInherit/overrideBody.jsp"/>
+    </definition>
+
+    <definition name="localPage" extends="defaultLayout">
+        <put name="titleString"  value="Local Page - Tiles"/>
+        <put name="menu" value="/tiles/pf/anotherInherit/localMenu.jsp"/>
+        <put name="body" value="/tiles/pf/anotherInherit/localBody.jsp"/>
+    </definition>
+
+</tiles-definitions>

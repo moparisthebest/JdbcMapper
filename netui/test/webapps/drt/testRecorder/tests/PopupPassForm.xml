@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>PopupPassForm</ses:sessionName>
+   <ses:tester>crogers</ses:tester>
+   <ses:startDate>01 Sep 2005, 11:22:25.678 PM MDT</ses:startDate>
+   <ses:description>Test popup support for passing a form's fields (name/value pairs) to a popup window form.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popupFormBean/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/tags/popupFormBean/index.jsp">
+    &lt;/head>
+    &lt;body>
+      &lt;h2>Test - Passing a FormBean to a Popup&lt;/h2>
+
+      &lt;form name="Netui_Form_0" id="Netui_Form_0" action="/coreWeb/tags/popupFormBean/submit.do" method="post">
+        &lt;table>
+          &lt;tr valign="top">
+            &lt;td>&lt;b>Dealer:&lt;/b>&lt;/td>
+            &lt;td>
+              &lt;input type="text" name="{actionForm.dealer}">
+            &lt;/td>
+          &lt;/tr>
+          &lt;tr valign="top">
+            &lt;td>&lt;b>Color:&lt;/b>&lt;/td>
+            &lt;td>
+              &lt;input type="hidden" name="wlw-checkbox_group_key:{actionForm.color}OldValue" value="true">&lt;input type="checkbox" name="wlw-checkbox_group_key:{actionForm.color}" value="Red">&lt;span>Red&lt;/span>&lt;br>
+&lt;input type="checkbox" name="wlw-checkbox_group_key:{actionForm.color}" value="Blue">&lt;span>Blue&lt;/span>&lt;br>
+&lt;input type="checkbox" name="wlw-checkbox_group_key:{actionForm.color}" value="Green">&lt;span>Green&lt;/span>&lt;br>
+&lt;input type="checkbox" name="wlw-checkbox_group_key:{actionForm.color}" value="Yellow">&lt;span>Yellow&lt;/span>&lt;br>
+&lt;input type="checkbox" name="wlw-checkbox_group_key:{actionForm.color}" value="White" checked>&lt;span>White&lt;/span>&lt;br>
+&lt;input type="checkbox" name="wlw-checkbox_group_key:{actionForm.color}" value="Black">&lt;span>Black&lt;/span>&lt;br>
+
+            &lt;/td>
+          &lt;/tr>
+          &lt;tr valign="top">
+            &lt;td>Style:&lt;/td>
+            &lt;td>
+              (passed to nested popup when looking up a model)
+              &lt;br>
+              &lt;input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Short" checked>&lt;span>Short&lt;/span>&lt;br>
+&lt;input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Longboard">&lt;span>Longboard&lt;/span>&lt;br>
+&lt;input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Hybrid">&lt;span>Hybrid&lt;/span>&lt;br>
+&lt;input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Fish">&lt;span>Fish&lt;/span>&lt;br>
+&lt;input type="radio" name="wlw-radio_button_group_key:{actionForm.style}" value="Soft Top">&lt;span>Soft Top&lt;/span>&lt;br>
+
+            &lt;/td>
+          &lt;/tr>
+          &lt;tr valign="top">
+            &lt;td>&lt;b>Model:&lt;/b>&lt;/td>
+            &lt;td>
+              &lt;input type="text" name="{actionForm.model}" id="modelField">
+
+              &lt;a href="/coreWeb/tags/popupFormBean/getModel.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AretrieveItem=outputFormBean.model%3AmodelField&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" onclick="Netui_Popup('/coreWeb/tags/popupFormBean/getModel.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AretrieveItem=outputFormBean.model%3AmodelField&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=500,resizable=1,height=350',false,'Netui_Window','Netui_Form_0');return false;">look up&lt;/a>
+
+            &lt;/td>
+          &lt;/tr>
+        &lt;/table>
+        &lt;br/>
+        &lt;input type="submit" name="actionOverride:getModel?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.model%3AmodelField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" value="Get Model" onclick="Netui_Popup('/coreWeb/tags/popupFormBean/getModel.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AretrieveItem=outputFormBean.model%3AmodelField&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=500,resizable=1,height=350',false,'Netui_Window','Netui_Form_0');return false;">
+        &lt;br/>
+        &lt;input type="submit" value="submit">
+      &lt;/form>
+
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+if (!window_netui_popup) {
+  var window_netui_popup = new Array();
+}
+
+// Parse the field names and values from a Form and return
+// them as a string of parameters to add to a url query
+function get_form_query(formNode)
+{
+  var params = "";
+
+  if (formNode != null)
+  {
+    var sep = "";
+    for (var i = 0; i &lt; formNode.elements.length; i++) {
+      switch (formNode[i].type) {
+        case "radio":
+        case "checkbox":        // input type=checkbox
+          if (!formNode[i].checked)
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&amp;";
+          break;
+        case "file":            // input type=file
+        case "hidden":          // input type=hidden
+        case "text":            // input type=text
+        case "textArea":        // textarea
+        case "select-one":      // select
+        case "select-multiple": // select multiple
+          if (formNode[i].value == "")
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&amp;";
+          break;
+        // ignore these...
+        case "submit":          // input type=submit
+        case "reset":           // input type=reset
+        case "button":          // input type=button
+        case "password":        // input type=password
+          break;
+      }
+    }
+  }
+
+  return params;
+}
+
+function Netui_Popup(url, name, features, replace, popup, formName)
+{
+  if (window_netui_popup[popup] != null &amp;&amp; ! window_netui_popup[popup].closed)
+  {
+    window_netui_popup[popup].focus();
+    return;
+  }
+
+  if (formName != null &amp;&amp; formName.length > 0) {
+    var formNode = null;
+    for (var i = 0; i &lt; document.forms.length; i++) {
+      if (document.forms[i].name == formName) {
+          formNode = document.forms[i];
+          break;
+      }
+    }
+
+    if (formNode != null) {
+      var sep = "?";
+      if (url != null &amp;&amp; url.length != 0 &amp;&amp; url.indexOf("?") > 0) {
+          sep = "&amp;";
+      }
+      url += sep + get_form_query(formNode);
+    }
+  }
+
+  window_netui_popup[popup]=open(url, name, features, replace);
+  if (window_netui_popup[popup].opener == null) window_netui_popup[popup].opener=self;
+}
+
+function Netui_OnPopupDone(map)
+{
+  for (var i in map)
+  {
+    var element = document.getElementById(i);
+    if (element != null)
+    {
+      element.value=map[i];
+    }
+  }
+}
+
+window_netui_popup["Netui_Window"] = null;
+
+window_netui_popup["Netui_Window"] = null;
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.modelField="{actionForm.model}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.modelField="{actionForm.model}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>&lt;/body>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popupFormBean/getModel.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_netui:retrieveItem</ses:name>
+                  <ses:value>outputFormBean.model:modelField</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_netui:returnActionCallback</ses:name>
+                  <ses:value>Netui_OnPopupDone</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_netui:returnActionViewRenderer</ses:name>
+                  <ses:value>org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{actionForm.color}</ses:name>
+                  <ses:value>Blue</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{actionForm.color}OldValue</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{actionForm.style}</ses:name>
+                  <ses:value>Hybrid</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/popupFormBean/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/tags/popupFormBean/getModel/index.jsp">
+    </head>
+    <body>
+
+      <h3>Select a Model</h3>
+      <p>Board Style: Hybrid</p>
+      <form action="/coreWeb/tags/popupFormBean/getModel/done.do" method="post">
+        <table>
+          <tr valign="top">
+            <td>Model:</td>
+            <td>
+              <input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="6'6" checked><span>6'6</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="6'8"><span>6'8</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="7'0"><span>7'0</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="7'6"><span>7'6</span><br>
+
+            </td>
+          </tr>
+        </table>
+        <br/>&nbsp;
+        <input type="submit" value="submit">
+        <input type="submit" name="actionOverride:cancel" value="cancel">
+      </form>
+
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popupFormBean/getModel/done.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{actionForm.model}</ses:name>
+                  <ses:value>6'8</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>57</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/popupFormBean/getModel.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.model%3AmodelField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone&amp;wlw-checkbox_group_key:{actionForm.color}OldValue=true&amp;wlw-checkbox_group_key:{actionForm.color}=Blue&amp;wlw-radio_button_group_key:{actionForm.style}=Hybrid</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+var map = new Object();
+map["modelField"] = "6'8";
+top.opener.Netui_OnPopupDone(map);
+window.close();
+-->
+&lt;/script></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popupFormBean/getModel.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_netui:retrieveItem</ses:name>
+                  <ses:value>outputFormBean.model:modelField</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_netui:returnActionCallback</ses:name>
+                  <ses:value>Netui_OnPopupDone</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_netui:returnActionViewRenderer</ses:name>
+                  <ses:value>org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{actionForm.color}</ses:name>
+                  <ses:value>Blue</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{actionForm.color}OldValue</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{actionForm.style}</ses:name>
+                  <ses:value>Longboard</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.model}</ses:name>
+                  <ses:value>6'8</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/popupFormBean/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/tags/popupFormBean/getModel/index.jsp">
+    </head>
+    <body>
+
+      <h3>Select a Model</h3>
+      <p>Board Style: Longboard</p>
+      <form action="/coreWeb/tags/popupFormBean/getModel/done.do" method="post">
+        <table>
+          <tr valign="top">
+            <td>Model:</td>
+            <td>
+              <input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="9'0 tri" checked><span>9'0 tri</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="9'0 classic"><span>9'0 classic</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="9'2 tri"><span>9'2 tri</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="9'6 tri"><span>9'6 tri</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="9'6 classic"><span>9'6 classic</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="10'0 tri"><span>10'0 tri</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.model}" value="10'6 classic"><span>10'6 classic</span><br>
+
+            </td>
+          </tr>
+        </table>
+        <br/>&nbsp;
+        <input type="submit" value="submit">
+        <input type="submit" name="actionOverride:cancel" value="cancel">
+      </form>
+
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popupFormBean/getModel/done.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{actionForm.model}</ses:name>
+                  <ses:value>9'2 tri</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>61</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/popupFormBean/getModel.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.model%3AmodelField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone&amp;wlw-checkbox_group_key:{actionForm.color}OldValue=true&amp;wlw-checkbox_group_key:{actionForm.color}=Blue&amp;wlw-radio_button_group_key:{actionForm.style}=Longboard&amp;{actionForm.model}=6'8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+var map = new Object();
+map["modelField"] = "9'2 tri";
+top.opener.Netui_OnPopupDone(map);
+window.close();
+-->
+&lt;/script></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popupFormBean/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{actionForm.color}</ses:name>
+                  <ses:value>Blue</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{actionForm.color}OldValue</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{actionForm.style}</ses:name>
+                  <ses:value>Longboard</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.dealer}</ses:name>
+                  <ses:value>Takayama</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.model}</ses:name>
+                  <ses:value>9'2 tri</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>UTF-8,*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>241</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1C9782A807B124A439F869223F62BA42</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/popupFormBean/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.10) Gecko/20050716 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/tags/popupFormBean/results.jsp">
+    </head>
+    <body>
+        Dealer: <b>Takayama</b>
+        <br/>
+        Color: <b>Blue</b>
+        <br/>
+        Style: <b>Longboard</b>
+        <br/>
+        Model: <b>9'2 tri</b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/tags/popupFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>01 Sep 2005, 11:28:15.611 PM MDT</ses:endDate>
+   <ses:testCount>6</ses:testCount>
+</ses:recorderSession>

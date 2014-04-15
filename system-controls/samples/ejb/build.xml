@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+
+<project name="ejb-control sample" basedir="." default="build">
+
+    <import file="../../systemcontrols-imports.xml"/>
+
+    <property environment="env"/>
+
+    <property name="sample.build.dir" value="${basedir}/build"/>
+
+    <property name="build.samples.classes" value="${sample.build.dir}/classes"/>
+    <property name="build.samples.beansrc" value="${sample.build.dir}/beansrc"/>
+    <property name="samples.control.dir" value="${basedir}/control"/>
+    <property name="samples.ejb.dir" value="${basedir}/ejb"/>
+    <property name="samples.client.dir" value="${basedir}/client"/>
+    <property name="build.samples.jar" value="ejb-control-samples.jar"/>
+
+    <path id="build.classpath">
+        <pathelement path="${build.samples.classes}"/>
+        <fileset file="${build.lib.dir}/beehive-ejb-control.jar"/>
+        <path refid="ejb.dependency.path"/>
+        <path refid="controls.dependency.path"/>
+        <path refid="xbean.dependency.path"/>
+    </path>
+
+    <taskdef name="assemble"
+        classname="org.apache.beehive.controls.runtime.assembly.AssembleTask"
+        classpathref="build.classpath"
+        onerror="report"/>
+
+    <target name="clean" description="Deletes all generated files">
+        <delete dir="${sample.build.dir}"/>
+        <delete file="velocity.log"/>
+    </target>
+
+    <target name="dirs">
+        <mkdir dir="${sample.build.dir}"/>
+        <mkdir dir="${build.samples.classes}"/>
+        <mkdir dir="${build.samples.beansrc}"/>
+    </target>
+
+
+    <target name="build-samples-ejb" depends="dirs" description="Builds sample control ejb">
+        <javac srcdir="${samples.ejb.dir}" destdir="${build.samples.classes}"
+            classpathref="build.classpath"
+            debug="on"
+            target="1.5">
+        </javac>
+
+        <jar jarfile="${sample.build.dir}/HelloEJB.jar">
+            <fileset dir="${build.samples.classes}" includes="org/controlhaus/ejb/sample/bean/**"/>
+            <fileset dir="${samples.ejb.dir}" includes="META-INF/**"/>
+        </jar>
+    </target>
+
+
+    <target name="build-samples-control" depends="build-samples-ejb" description="Builds sample control control">
+        <build-controls srcdir="${samples.control.dir}" destdir="${build.samples.classes}"
+            tempdir="${build.samples.beansrc}" classpathref="build.classpath"/>
+    </target>
+
+
+    <target name="build" depends="build-samples-control" description="Builds sample control client">
+
+        <build-controls srcdir="${samples.client.dir}" destdir="${build.samples.classes}"
+            tempdir="${build.samples.beansrc}" classpathref="build.classpath"/>
+
+        <assemble moduleDir="${build.samples.classes}"
+            srcOutputDir="${build.samples.beansrc}"
+            contextFactoryClassname="org.apache.beehive.controls.runtime.assembly.EJBAssemblyContext$Factory">
+            <classpath>
+                <path refid="build.classpath"/>
+            </classpath>
+            <fileset dir="${build.samples.classes}">
+                <include name="**/*.controls.properties"/>
+            </fileset>
+        </assemble>
+
+        <control-jar destfile="${build.dir}/${build.samples.jar}" basedir="${build.samples.classes}"/>
+    </target>
+
+</project>

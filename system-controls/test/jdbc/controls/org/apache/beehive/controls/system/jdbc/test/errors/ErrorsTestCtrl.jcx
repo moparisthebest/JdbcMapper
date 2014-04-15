@@ -1,0 +1,82 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * $Header:$
+ */
+
+package org.apache.beehive.controls.system.jdbc.test.errors;
+
+import org.apache.beehive.controls.system.jdbc.JdbcControl;
+import testBad.customerDb.XCustomerRowBadDocument;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ * This control is used for checking error reporting / recovery from the db control.
+ */
+@org.apache.beehive.controls.api.bean.ControlExtension
+@JdbcControl.ConnectionDriver(databaseDriverClass = "org.apache.derby.jdbc.EmbeddedDriver", databaseURL = "jdbc:derby:MyDB")
+public interface ErrorsTestCtrl extends JdbcControl {
+
+    public static class BadCustomer {
+        private String fnam;
+        public int serid;
+
+        public void setFname(String fname) { this.fnam = fname; }
+
+        public String getFname() { return fnam; }
+    }
+
+    public static class BadCustomer2 {
+        private int fname;
+        public int serid;
+
+        public void setFname(int fname) { this.fname = fname; }
+
+        public int getFname() { return fname; }
+    }
+
+    //
+    //  Missing @SQL annotation
+    //
+    public ResultSet getAllUsersBad1() throws SQLException;
+
+    //
+    //  BadCustomer contains improper field / method names for mapping the result
+    //
+    @SQL(statement = "SELECT * FROM USERS WHERE FNAME = {name}")
+    public BadCustomer getAUserBad1(String name) throws SQLException;
+
+    //
+    //  fname in BadCustomer2 is an int when it should be a String
+    //
+    @SQL(statement = "SELECT * FROM USERS WHERE FNAME = {fname}")
+    public BadCustomer2 getAUserBad3(String fname) throws SQLException;
+
+    //
+    // query returning an XmlObject
+    //
+    @SQL(statement = "SELECT * FROM USERS WHERE fname={someUser}")
+    public XCustomerRowBadDocument.XCustomerRowBad getAUserBad4(String someUser) throws SQLException;
+
+    //
+    // null sql param substitution
+    //
+    @SQL(statement = "SELECT * FROM USERS {sql: where}")
+    public ResultSet getAUserBad5(String where) throws SQLException;
+}
+

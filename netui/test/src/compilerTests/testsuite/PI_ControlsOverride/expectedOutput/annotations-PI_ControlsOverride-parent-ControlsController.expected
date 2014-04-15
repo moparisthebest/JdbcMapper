@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<processed-annotations>
+  <type-name>PI_ControlsOverride.parent.ControlsController</type-name>
+  <annotated-element>
+    <element-name>myControl</element-name>
+    <annotation>
+      <annotation-name>org.apache.beehive.controls.api.bean.Control</annotation-name>
+    </annotation>
+  </annotated-element>
+</processed-annotations>

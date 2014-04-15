@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>FacesSmokeFormOne</ses:sessionName>
+   <ses:tester>rich (re-record of daryl)</ses:tester>
+   <ses:startDate>24 Apr 2005, 08:50:12.256 PM MDT</ses:startDate>
+   <ses:description>Test of JSF Forms and controls</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/faces/facesSmoke/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.7) Gecko/20050414 Firefox/1.0.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <title>CustomRenderer - Test Web</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+    <body style="border: 1px dotted;">
+        
+            <form id="pageForm" name="pageForm" method="post" action="/jsfWeb/faces/facesSmoke/index.faces" enctype="application/x-www-form-urlencoded">
+            <table width="600pt"><tbody><tr><td class="titleBar">Custom Renderer Tests</td></tr>
+</tbody></table>
+            <table width="600pt"><tbody><tr><td><a id="pageForm:_id3" href="goPanels.do" class="normal">Panel</a></td><td><span class="normal">Test of the PanelGrid and related controls</span></td></tr>
+<tr><td><a id="pageForm:_id6" href="goImages.do" class="normal">Images</a></td><td><span class="normal">Test of the GraphicImage</span></td></tr>
+<tr><td><a id="pageForm:_id9" href="goAnchors.do" class="normal">Anchors</a></td><td><span class="normal">Test of Anchors and Buttons</span></td></tr>
+<tr><td><a id="pageForm:_id12" href="goConvert.do" class="normal">Conversions</a></td><td><span class="normal">Test of Converters</span></td></tr>
+<tr><td><a id="pageForm:_id15" href="goFormOne.do" class="normal">Form One</a></td><td><span class="normal">Test the Form Fields</span></td></tr>
+<tr><td><a id="pageForm:_id18" href="goFormTwo.do" class="normal">Form Two</a></td><td><span class="normal">Test the Select/Radio/Checkbox Form Fields</span></td></tr>
+<tr><td><a id="pageForm:_id21" href="goBundle.do" class="normal">Bundle</a></td><td><span class="normal">Test of the Bundle</span></td></tr>
+<tr><td><a id="pageForm:_id24" href="goDataTable.do" class="normal">Data Table</a></td><td><span class="normal">Test of the DataTable</span></td></tr>
+</tbody></table>
+            <input type="hidden" name="pageForm_SUBMIT" value="1"/></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/faces/facesSmoke/goFormOne.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=6E74CE9A7A70DABC25D534E7459DA9E7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/faces/facesSmoke/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.7) Gecko/20050414 Firefox/1.0.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <title>Form One - Test Web</title>
+        <link rel="stylesheet" href="styles.css" type="text/css" />
+    </head>
+    <body>
+        
+              <form id="_id0" name="_id0" method="post" action="/jsfWeb/faces/facesSmoke/FormOne.faces" enctype="application/x-www-form-urlencoded">
+                <table cellpadding="0" cellspacing="0" width="600pt"><tbody><tr><td class="titleBar">Form One Tests</td></tr>
+<tr><td class="titleBar"><hr width="600pt" /></td></tr>
+</tbody></table>
+                
+                    
+                <a id="_id0:_id4" href="Controller.jpf"><span class="normal">Navigate Home</span></a><br />
+
+                <span class="sectionTitle">Form One</span>
+                <br />
+                <table width="600pt" class="normal"><tbody><tr><td class="columnRight"><label for="_id0:text">Text:</label></td><td class="columnLeft"><input id="_id0:text" name="_id0:text" type="text" value="x-initial Text Value" size="25" class="normal"/></td><td></td></tr>
+<tr><td class="columnRight"><label for="_id0:textArea">Text Area:</label></td><td class="columnLeft"><textarea name="_id0:textArea" id="_id0:textArea" cols="25" rows="10" style="color: #000099;font-family:Verdana; font-size:8pt; margin:5,5,5,5; ">initial Text Area Value</textarea></td><td></td></tr>
+<tr><td class="columnRight"><label for="_id0:password">Secret:Secret:</label></td><td class="columnLeft"><input type="password" id="_id0:password" name="_id0:password"/></td><td></td></tr>
+<tr><td class="columnRight"><label for="_id0:textInt">Binding to Number (0.8%)</label></td><td class="columnLeft"><input id="_id0:textInt" name="_id0:textInt" type="text" value="80" size="3" class="normal"/></td><td></td></tr>
+</tbody></table>
+                 <input type="hidden" id="_id0:_id20" name="_id0:_id20" value="PostFromHidden"/>
+                <input id="_id0:_id21" name="_id0:_id21" type="submit" value="Submit" onclick="clear__5Fid0();"/>
+                <hr>
+                
+              <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>24 Apr 2005, 08:51:52.049 PM MDT</ses:endDate>
+   <ses:testCount>2</ses:testCount>
+</ses:recorderSession>

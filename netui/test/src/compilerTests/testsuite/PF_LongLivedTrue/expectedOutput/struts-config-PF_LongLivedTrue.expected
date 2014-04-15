@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+  <!-- Generated from /WEB-INF/.tmpbeansrc/PF_LongLivedTrue/Controller.java on Tue Aug 09 16:46:22 MDT 2005 -->
+  <form-beans/>
+  <global-exceptions/>
+  <global-forwards>
+    <forward name="_auto" path=""/>
+  </global-forwards>
+  <action-mappings>
+    <action parameter="PF_LongLivedTrue.Controller" path="/Action1" scope="request" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" validate="false">
+      <forward name="success" path="/Pg1.jsp"/>
+    </action>
+    <action parameter="PF_LongLivedTrue.Controller" path="/begin" scope="request" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" validate="false">
+      <forward name="success" path="/Pg1.jsp"/>
+    </action>
+  </action-mappings>
+  <controller className="org.apache.beehive.netui.pageflow.config.PageFlowControllerConfig" inputForward="true" processorClass="org.apache.beehive.netui.pageflow.PageFlowRequestProcessor">
+    <set-property property="isLongLivedPageFlow" value="true"/>
+    <set-property property="isReturnToPageDisabled" value="true"/>
+    <set-property property="isReturnToActionDisabled" value="true"/>
+    <set-property property="sharedFlows" value=""/>
+    <set-property property="controllerClass" value="PF_LongLivedTrue.Controller"/>
+    <set-property property="isMissingDefaultMessages" value="true"/>
+  </controller>
+  <message-resources key="_defaultMsgs" null="true" parameter="org.apache.beehive.netui.pageflow.validation.defaultMessages"/>
+</struts-config>

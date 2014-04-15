@@ -1,0 +1,18 @@
+package PI_ControlsOverride;
+
+import javax.servlet.http.HttpSession;
+import org.apache.beehive.controls.api.bean.Control;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import PI_ControlsOverride.*;
+
+/**
+ * This is the default controller for a blank web application.
+ */
+@Jpf.Controller
+public class ControlsController extends PI_ControlsOverride.parent.ControlsController
+{
+    @Control()
+    protected GreetingsControlBean myControl;
+}

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>ControlContext</sessionName>
+<tester>cschoett</tester>
+<startDate>11 Jul 2006, 10:50:33.555 AM MDT</startDate>
+<description>Test that all expected services are available from a control context</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/context/testServices.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+</head>
+
+<body>
+    <p>Test that all of the expected contextual services are available to a control in a page flow container.
+    Controller 1 contains a control which was declarativly instantiated, Controller 2 contains a control which
+    was programatically instantiated.</p>
+
+    <a href="/controlsWeb/controls/context/testServices.do">Test services for a control.</a>
+    <br>
+    <a href="/controlsWeb/controls/context/testServicesP.do">Test services for a control declared programmatically.</a>
+    <br>
+
+    <h3>Test Results</h3>
+    <table border="1">
+        <tr><td>Test Results:</td><td>'PASSED'</td></tr>
+    </table>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/controlsWeb/controls/context/testServicesP.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>0314BADD30357DEB056867D089CBE246</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=0314BADD30357DEB056867D089CBE246; nde-textsize=16px</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.4) Gecko/20060614 Fedora/1.5.0.4-1.2.fc5 Firefox/1.5.0.4 pango-text</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+</head>
+
+<body>
+    <p>Test that all of the expected contextual services are available to a control in a page flow container.
+    Controller 1 contains a control which was declarativly instantiated, Controller 2 contains a control which
+    was programatically instantiated.</p>
+
+    <a href="/controlsWeb/controls/context/testServices.do">Test services for a control.</a>
+    <br>
+    <a href="/controlsWeb/controls/context/testServicesP.do">Test services for a control declared programmatically.</a>
+    <br>
+
+    <h3>Test Results</h3>
+    <table border="1">
+        <tr><td>Test Results:</td><td>'PASSED'</td></tr>
+    </table>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>11 Jul 2006, 10:51:16.701 AM MDT</endDate>
+<testCount>2</testCount>
+</recorderSession>

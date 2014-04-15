@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>DivPanelTree</sessionName>
+<tester>Daryl</tester>
+<startDate>25 Feb 2006, 08:38:09.171 PM MST</startDate>
+<description>Verification of the DivPanel and Tree running together supporting AJAX.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Web Application Page
+        </title>
+        <style type="text/css">
+            .selected {color: #0000cc;}
+            .unselected {color: #cccccc;}
+        </style>
+        
+        <!-- This needs to be put here by the script container -->
+        <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    </head>
+    <body>
+        <table width="100%" cellspacing="5"><tr><td width="20%" valign="top">
+        <div netui:treeName="Tree233">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;RootPage&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree">&nbsp;Tree&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page1&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1">&nbsp;1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page11&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1.1">&nbsp;1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page12&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1.2">&nbsp;1.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.2"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page13&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1.3">&nbsp;1.3&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page131&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1.3.1">&nbsp;1.3.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page132&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1.3.2">&nbsp;1.3.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page14&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="1.4">&nbsp;1.4&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page2&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="2">&nbsp;2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="" class="unselected" onclick="return netUI.action(this, 'divPanel.showPage(&quot;Page3&quot;);');">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="3">&nbsp;3&nbsp;</a>
+   </div>
+   </div>
+
+        </td><td valign="top" width="50%">
+                <div id="divPanel" netui-div-panel="true">
+                    <div  id="RootPage"><h4>Root of the Tree<h4></div>
+                    <div  id="Page1"><h4>Page 1</h4></div>
+                    <div  id="Page11"><h4>Page 1.1</h4></div>
+                    <div  id="Page12"><h4>Page 1.12</h4></div>
+                    <div  id="Page13"><h4>Page 1.3</h4></div>
+                    <div  id="Page131"><h4>Page 1.3.1</h4></div>
+                    <div  id="Page132"><h4>Page 1.3.2</h4></div>
+                    <div  id="Page14"><h4>Page 1.4</h4></div>
+                    <div  id="Page2"><h4>Page 2</h4></div>
+                    <div  id="Page3"><h4>Page 3</h4></div>
+                </div>
+        </td></tr></table>
+    <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree233 = new Object();
+netUI.netUITree.trees["Tree233"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree233"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree233"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree233"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree233"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree233"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree233"].ajaxPrefix = "/coreWeb/template/divPanelTree";
+
+netUI.netUITree.trees["Tree233"].ajaxParam = "Tree233";
+
+netUI.netUIDivPanel = new NetUIDivPanel();
+netUI.netUIDivPanel.init();
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.Page12="Page12"
+netui_names.RootPage="RootPage"
+netui_names.Page2="Page2"
+netui_names.Page13="Page13"
+netui_names.Page3="Page3"
+netui_names.Page11="Page11"
+netui_names.Page132="Page132"
+netui_names.Page131="Page131"
+netui_names.Page14="Page14"
+netui_names.Page1="Page1"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/treeCollapse.xhr</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netuiajax</name>
+<value>Tree233</value>
+</parameter>
+<parameter>
+<name>node</name>
+<value>0.0.2</value>
+</parameter>
+<parameter>
+<name>tree</name>
+<value>Tree233</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/template/divPanelTree/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/treeCollapse.xhr</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netuiajax</name>
+<value>Tree233</value>
+</parameter>
+<parameter>
+<name>node</name>
+<value>0.0</value>
+</parameter>
+<parameter>
+<name>tree</name>
+<value>Tree233</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/template/divPanelTree/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/treeExpand.xhr</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netuiajax</name>
+<value>Tree233</value>
+</parameter>
+<parameter>
+<name>node</name>
+<value>0.0</value>
+</parameter>
+<parameter>
+<name>tree</name>
+<value>Tree233</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/template/divPanelTree/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/treeExpand.xhr</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netuiajax</name>
+<value>Tree233</value>
+</parameter>
+<parameter>
+<name>node</name>
+<value>0.0.2</value>
+</parameter>
+<parameter>
+<name>tree</name>
+<value>Tree233</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/template/divPanelTree/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>6</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/treeCollapse.xhr</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netuiajax</name>
+<value>Tree233</value>
+</parameter>
+<parameter>
+<name>node</name>
+<value>0</value>
+</parameter>
+<parameter>
+<name>tree</name>
+<value>Tree233</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/template/divPanelTree/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>7</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/template/divPanelTree/treeExpand.xhr</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netuiajax</name>
+<value>Tree233</value>
+</parameter>
+<parameter>
+<name>node</name>
+<value>0</value>
+</parameter>
+<parameter>
+<name>tree</name>
+<value>Tree233</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>5BA5534689435546BA2D3153504C3082</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=5BA5534689435546BA2D3153504C3082</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/template/divPanelTree/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50215)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>25 Feb 2006, 08:38:37.718 PM MST</endDate>
+<testCount>7</testCount>
+</recorderSession>

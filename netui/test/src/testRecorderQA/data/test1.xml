@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<testDefinitions xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <categories>
+        <category>
+            <name>DRT</name>
+            <description>
+                Developer Regression Tests
+            </description>
+        </category>
+        <category>
+            <name>BVT</name>
+            <description>
+                Build Verification Tests
+            </description>
+        </category>
+        <category>
+            <name>EmptyCategory</name>
+            <description>
+                A cateogry with no tests
+            </description>
+        </category>
+
+    </categories>
+
+    <tests>
+        <test>
+            <name>t1</name>
+            <description>test 1</description>
+            <webapp>webapp1</webapp>
+            <categories>
+                <category>DRT</category>
+            </categories>
+        </test>
+        <test>
+            <name>t2</name>
+            <description>test 2</description>
+            <webapp>webappOverride1</webapp>
+            <categories>
+                <category>DRT</category>
+                <category>BVT</category>
+            </categories>
+        </test>
+        <test>
+            <name>t3</name>
+            <description>test 3</description>
+            <webapp>webappOverride2</webapp>
+            <categories>
+                <category>BVT</category>
+            </categories>
+        </test>
+        <test>
+            <name>testWithNoCategories</name>
+            <description>a test without categories</description>
+            <webapp>webappOverride1</webapp>
+        </test>
+    </tests>
+</testDefinitions>
+

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="Netui XDoclet Build" default="build" basedir=".">
+    
+    <!-- Note: ${tomcat.home} is used to pick up the Servlet/JSP APIs for compilation.  This default
+         behavior can be overridden by changing the value of servlet-api.jar/jsp-api.jar. -->
+    <property environment="os"/>
+    <property name="tomcat.home" location="${os.CATALINA_HOME}"/>
+    <property name="servlet-api.jar" location="${tomcat.home}/common/lib/servlet-api.jar"/>
+    <property name="jsp-api.jar" location="${tomcat.home}/common/lib/jsp-api.jar"/>
+
+    <!-- compiler.lib.dir is the directory that contains the Page Flow XDoclet compiler as well as XDoclet/XJavaDoc jars.
+         It defaults to "lib" in the current directory, but can be overridden. -->
+    <property name="compiler.lib.dir" value="lib"/>
+
+    <!-- webapp.dir must be provided externally -->
+    <property name="webinf.dir" value="${webapp.dir}/WEB-INF"/>
+    <property name="temp.build.dir" value="${webinf.dir}/.tmpbeansrc"/>
+    <property name="webapp.classes.dir" value="${webinf.dir}/classes"/>
+
+    <!-- this is the classpath to include when building webapp sources -->
+    <path id="webapp.classpath">
+        <pathelement location="${webapp.classes.dir}"/>
+        <fileset dir="${webapp.dir}/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${servlet-api.jar}"/>
+        <pathelement path="${jsp-api.jar}"/>
+    </path>
+
+    <path id="xdoclet-compiler.classpath">
+        <path refid="webapp.classpath"/>
+        <fileset dir="${compiler.lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- =================================================================== -->
+    <!-- Initialise                                                          -->
+    <!-- =================================================================== -->
+    <target name="init">
+        <available property="webapp.dir.available" file="${webapp.dir}" type="dir"/>
+        <fail unless="webapp.dir.available" message="Can't find the webapp directory ${webapp.dir}"/>
+        <tstamp>
+            <format property="TODAY" pattern="d-MM-yy"/>
+        </tstamp>
+        <echo>webapp.classpath ( ${webapp.classpath} )</echo>
+        <taskdef
+            name="netuidoclet"
+            classname="org.apache.beehive.netui.xdoclet.NetuiDocletTask"
+            classpathRef="xdoclet-compiler.classpath" />
+        <taskdef
+            name="source-copy"
+            classname="org.apache.beehive.netui.compiler.xdoclet.tools.SourceCopy"
+            classpathRef="xdoclet-compiler.classpath" />
+    </target>
+
+    <!-- =================================================================== -->
+    <!-- Invoke netui doclet                                          -->
+    <!-- =================================================================== -->
+    <target name="build" depends="init" description="Build all classes in the webapp, and generate struts-config files for any page flows" >
+
+        <echo>Copying pageflows and webapp source files for compilation...</echo>
+
+        <!-- copy all java and jpf/jpfs files to a temp directory -->
+        <delete dir="${temp.build.dir}" />
+        <mkdir dir="${temp.build.dir}" />
+        <source-copy todir="${temp.build.dir}">
+            <fileset dir="${webapp.dir}">
+                <include name="**/*.java" />
+                <include name="**/*.jpf" />
+                <include name="**/*.jpfs" />
+                <include name="**/*.app" />
+            </fileset>
+            <fileset dir="${webinf.dir}/src">
+                <include name="**/*.java" />
+                <include name="**/*.jpf" />
+                <include name="**/*.jpfs" />
+                <include name="**/*.app" />
+            </fileset>
+        </source-copy>
+
+        <!-- rename .jpf/.jpfs and .app to .java -->
+          <move todir="${temp.build.dir}">
+            <fileset dir="${temp.build.dir}">
+              <include name="**/*.jpf"/>
+            </fileset>
+            <mapper type="glob" from="*.jpf" to="*.java"/>
+          </move>
+          <move todir="${temp.build.dir}">
+            <fileset dir="${temp.build.dir}">
+              <include name="**/*.jpfs"/>
+            </fileset>
+            <mapper type="glob" from="*.jpfs" to="*.java"/>
+          </move>
+          <move todir="${temp.build.dir}">
+            <fileset dir="${temp.build.dir}">
+              <include name="**/Global.app"/>
+            </fileset>
+            <mapper type="glob" from="*.app" to="*.java"/>
+          </move>
+
+          <echo>Compiling source files...</echo>
+
+          <!-- compile the java files into web-inf/classes -->
+          <mkdir dir="${webapp.classes.dir}" />
+          <javac srcdir="${temp.build.dir}"
+                 destdir="${webapp.classes.dir}"
+                 classpathRef="webapp.classpath"
+                 source="1.4">
+              <include name="**/*.java"/>
+          </javac>
+
+          <echo>Generating struts-config files...</echo>
+
+          <!-- set verbose="true" to view informational messages -->
+        <netuidoclet
+            webapproot="${webapp.dir}"
+            excludedtags="@version,@author,@todo"
+            force="true"
+            verbose="false"
+            >
+            <fileset dir="${temp.build.dir}">
+                <include name="**/*.java"/>
+            </fileset>
+            <netui/>
+        </netuidoclet>
+
+        <echo>Deleting temporary source files...</echo>
+
+        <!-- delete the temp dir -->
+        <delete dir="${temp.build.dir}" />
+    </target>
+
+
+    <!-- =================================================================== -->
+    <!-- Clean                                                               -->
+    <!-- =================================================================== -->
+    <target name="clean" depends="init">
+        <delete dir="${temp.build.dir}"/>
+        <delete dir="${webapp.classes.dir}"/>
+        <delete dir="${temp.build.dir}"/>
+    </target>
+
+</project>

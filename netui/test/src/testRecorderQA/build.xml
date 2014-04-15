@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<project name="Beehive/NetUI/testRecorderQa" default="build" basedir=".">
+    
+    <import file="../../ant/netui-test-imports.xml"/>
+
+    <property name="module.name" value="testRecorderQA"/>
+    <property name="module.dir" location="${test.src.dir}/${module.name}"/>
+    <property name="module.classes.dir" location="${test.classes.dir}/${module.name}"/>
+    <property name="module.jar.name" value="testRecorder-qa.jar"/>
+    <property name="module.jar" location="${test.lib.dir}/${module.jar.name}"/>
+
+    <path id="testrecorder-test.dependency.path">
+        <fileset dir="${testRecorder.dir}/lib"/>
+    </path>
+
+    <path id="module.classpath">
+        <path refid="xbean.dependency.path"/>
+        <path refid="testrecorder-test.dependency.path"/>
+    </path>
+
+    <target name="build">
+        <echo>compile module: ${module.name}</echo>
+        <echo>debug: ${compile.debug}</echo>
+
+        <mkdir dir="${module.classes.dir}"/>
+
+        <javac srcdir="${module.dir}"
+               destdir="${module.classes.dir}"
+               classpathref="module.classpath"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               optimize="${compile.optimize}"
+               source="1.4">
+            <include name="**/*.java"/>
+        </javac>
+
+        <jar jarfile="${module.jar}" basedir="${module.classes.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${module.classes.dir}"/>
+        <delete file="${module.jar}"/>
+    </target>
+
+    <path id="tr.test.classpath">
+        <path refid="module.classpath"/>
+        <path refid="log4j.dependency.jar"/>
+        <pathelement path="${module.jar}"/>
+    </path>
+
+    <target name="testrecorder.test">
+        <junit printsummary="true" fork="true" haltonfailure="true" haltonerror="true">
+            <jvmarg value="-ea"/>
+            <classpath refid="tr.test.classpath"/>
+            <test name="org.apache.beehive.netui.tools.testrecorder.qa.SchemaTest" todir="${tr.results.dir}"/>
+            <test name="org.apache.beehive.netui.tools.testrecorder.qa.SessionSchemaTest" todir="${tr.results.dir}"/>
+        </junit>
+    </target>
+ 
+</project>
+

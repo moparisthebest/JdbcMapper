@@ -1,0 +1,47 @@
+package PF_ForwardAttrCase;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains annotations that test the case
+ * sensativity of the attribute values.
+ *
+ * @result: The compiler should catch these errors and issue an error message(s).
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+                forwards = {
+            @Jpf.Forward(Name = "pg1", path = "Pg1.jsp")
+        }
+    )
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+                forwards = {
+            @Jpf.Forward(name = "pg1", redirect = TRUE)
+        }
+    )
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    
+    @Jpf.Action(
+                forwards = {
+            @Jpf.Forward(name = "pg1", Redirect = true)
+        }
+    )
+    protected Forward page2()
+        {
+        return new Forward("pg1");
+        }
+    }

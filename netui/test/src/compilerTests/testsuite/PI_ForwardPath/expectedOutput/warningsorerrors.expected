@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PI_ForwardPath\Controller.java:12: warning: File "index.jsp" (reference inherited from a Jpf.Forward annotation on method begin in PI_ForwardPath.parent.ParentFlowController) could not be found.  To inherit local paths automatically, set inheritLocalPaths to true on @Jpf.Controller.
+public class Controller extends PI_ForwardPath.parent.ParentFlowController
+       ^
+1 warning

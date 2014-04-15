@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+
+<!-- 
+    Beehive Maven v1 / v2 support file.  These targets create directories that are ready to be
+    uploaded to the Maven repositories.
+-->
+<project name="Beehive/Maven" default="usage" basedir=".">
+
+    <import file="../beehive-imports.xml"/>
+
+    <property name="_maven.dir" location="${beehive.home}/build/maven/"/>
+    <property name="_maven.groupid" value="org.apache.beehive"/>
+
+    <target name="build.m2">
+        <!-- copy all of the Maven POMs -->
+        <ant dir="${beehive.home}/controls" target="deploy.m2" inheritall="false"/>
+        <ant dir="${beehive.home}/netui" target="deploy.m2" inheritall="false"/>
+        <ant dir="${beehive.home}/system-controls" target="deploy.m2" inheritall="false"/>
+
+        <!-- add version #s to all of the artifacts -->
+        <do-checksum dir="${build.m2.dir}"/>
+        <echo>
+Note, don't forget to sign the Maven upload!zip
+
+for i in *.*; do gpg --output $i.asc --detach-sig --armor $i; done
+        </echo>
+    </target>
+
+    <target name="clean.m2">
+        <delete dir="${build.m2.dir}"/>
+    </target>
+
+    <target name="install.m2" description="Install the Beehive JARs into a local Maven2 repository">
+        <m2-install-jar resource="beehive-controls"/>
+        <m2-install-jar resource="beehive-netui-compiler"/>
+        <m2-install-jar resource="beehive-netui-core"/>
+        <m2-install-jar resource="beehive-netui-tags"/>
+        <m2-install-jar resource="beehive-jdbc-control"/>
+        <m2-install-jar resource="beehive-jms-control"/>
+        <m2-install-jar resource="beehive-ejb-control"/>
+    </target>
+   
+    <macrodef name="m2-install-jar" description="Install a resource in a Maven 2 repository">
+        <attribute name="resource"/>
+        <sequential>
+            <property name="root.dir" location="${_maven.dir}/m2/org/apache/beehive"/>
+ 
+            <condition property="_cmd" value="mvn.bat">
+                <os family="windows"/>
+            </condition>
+            <condition property="_cmd" value="mvn">
+                <not><os family="windows"/></not>
+            </condition>
+
+            <exec executable="${_cmd}" failonerror="true">
+                <arg line="install:install-file -Dfile=${root.dir}/@{resource}/${beehive.version}/@{resource}-${beehive.version}.jar -DgroupId=${_maven.groupid} -DartifactId=@{resource} -Dversion=${beehive.version} -Dpackaging=jar"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="build.m1">
+        <!-- copy POMs -->
+        <copy todir="${build.m1.dir}/poms/tmp" failonerror="true" flatten="true">
+            <fileset dir="${beehive.home}">
+                <include name="controls/src/beehive-controls.pom"/>
+                <include name="netui/src/compiler-apt/beehive-netui-complier.pom"/>
+                <include name="netui/src/pageflow/beehive-netui-core.pom"/>
+                <include name="netui/src/tags-html/beehive-netui-tags.pom"/>
+                <include name="system-controls/src/ejb/beehive-ejb-control.pom"/>
+                <include name="system-controls/src/jdbc/beehive-jdbc-control.pom"/>
+                <include name="system-controls/src/jms/beehive-jms-control.pom"/>
+            </fileset>
+        </copy>
+        <copy todir="${build.m1.dir}/poms">
+            <mapper type="glob" from="*.pom" to="*-${beehive.version}.pom"/>
+            <fileset dir="${build.m1.dir}/poms/tmp"/>
+        </copy>
+        <delete dir="${build.m1.dir}/poms/tmp"/>
+        <copy-libraries destdir="${build.m1.dir}/jars"/>
+        <do-checksum dir="${build.m1.dir}"/>
+    </target>
+
+    <target name="clean.m1">
+        <delete dir="${build.m1.dir}"/>
+    </target>
+
+    <macrodef name="copy-libraries" description="Copy the Beehive libraries for upload to Maven">
+        <attribute name="destdir"/>
+        <sequential>
+            <copy todir="@{destdir}" flatten="true">
+                <fileset dir="${beehive.home}/build/dist/${dist.name}/lib">
+                    <include name="**/beehive-*.jar"/>
+                </fileset>
+            </copy>
+            <!-- 
+            this two-step copy && move is required because Ant has a bug that 
+            copy's flatten attribute doesn't work in the presence of mapping
+              -->
+            <move todir="@{destdir}">
+                <mapper type="glob" from="*.jar" to="*-${beehive.version}.jar"/>
+                <fileset dir="@{destdir}"/>
+            </move>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="copy-poms" description="Copy the Beehive POMs for upload to Maven">
+        <attribute name="destdir"/>
+        <sequential>
+            <copy todir="@{destdir}" flatten="true">
+                <mapper type="glob" from="*.pom" to="*-${beehive.version}.pom"/>
+                <fileset dir="poms" includes="*.pom"/>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="do-checksum" description="Checksum a set of resources">
+        <attribute name="dir"/>
+        <sequential> 
+            <checksum fileext=".md5">
+                <fileset dir="@{dir}">
+                    <exclude name="*.md5"/>
+                </fileset>
+            </checksum>
+        </sequential> 
+    </macrodef>
+
+</project>

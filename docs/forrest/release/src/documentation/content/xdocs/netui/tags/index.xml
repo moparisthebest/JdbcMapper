@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>NetUI Tag Library Overview</title>
+    </header>
+    <body>
+        <section id="Overview">
+            <title>NetUI Tag Library Overview</title>
+            <p> This topic provides an overview of the NetUI JSP tag libraries.  NetUI provides three tag
+                libraries, the core HTML tags, the data grid tags and a simple set of template tags.
+            </p>
+            <table>
+                <tr><th>Tag Library URI</th><th>Prefix</th><th>Description</th></tr>
+                <tr><td><code>http://beehive.apache.org/netui/tags-html-1.0</code></td><td><code>netui</code></td><td>
+                    This is the primary tag library supporting HTML, including the form controls.  It provides a number
+                    of features, used throughout the tag libraries, such as error reporting and base tags.  In addition,
+                    it contains the Tree support.</td></tr>
+                <tr><td><code>http://beehive.apache.org/netui/tags-databinding-1.0</code></td><td><code>netui-data</code></td><td>
+                    This tag library provides binding to relational data, providing the Data Grid.  The feature
+                    spans uses from simple tables, to sortable, filterable, pageable and updateable grids.
+                    </td></tr>
+                <tr><td><code>http://beehive.apache.org/netui/tags-template-1.0</code></td><td><code>netui-template</code></td><td>
+                    This tag library provides a very simple templating facility, allowing common elements such
+                    as headers, footers, etc.</td></tr>
+            </table>
+            <p>The prefix is the prefix used within the documentation set and obviously can be changed.</p>
+            <p>In a typical JSP, the following lines would be used to include each of the NetUI tag libraries:</p>
+            <source>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-databinding-1.0" prefix="netui-data"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-template-1.0" prefix="netui-template"%></source>
+            <p> For more information on JSPs with NetUI see the <a href="site:pageflow_jsp">JSP Files</a>
+                topic.  In particular, there is a very simple <a href="site:pageflow_jspOverview_StartingJSP">template</a>
+                providing a starting point for developing NetUI enabled JSPs.
+            </p>
+            <p> The NetUI tags support binding values from implicit object to attributes through the
+                JSP 2.0 Expression Language (EL).  This
+                support is for <em>read-only</em> data.  In addition, many tags support <em>read-write</em>
+                access to implicit objects. This support is almost always done through the <strong>dataSource</strong>
+                attribute on the tags.  In addition, there are a number of binding contexts introduced to allow
+                binding to page flows and other NetUI implicit objects.
+                For more information on data binding see the
+                <a href="site:databinding">Data binding to NetUI Implicit Objects</a> topic.
+            </p>
+        </section>
+        <section id="RuntimeErrors">
+            <title>Runtime Error Reporting</title>
+            <p> The tag libraries report runtime errors in a common way.  In the page fragment below, a set of
+                anchors have invalid attribute values.  There is an error reported where the tag would normally
+                have rendered HTML.  In addition, there is a table rendered at the end of the document that
+                contains the details of the errors.  In many cases, runtime errors in the tags result in the
+                tag reporting an error and rendering continues on.  This means that multiple errors will be
+                reported.  In addition, many tags will report multiple errors. Typically, errors wouldn't occur in
+                production because they would be fixed during development.  The error reporting is intended to
+                make developing new pages easier by making errors obvious.
+            </p>
+            <p><strong>Runtime Errors Reported in a Rendered Page</strong></p>
+            <p><img src="images/tagErrors.png" alt="Runtime Errors produced by the tags"/></p>
+        </section>
+        <section id="coreHtmlTags">
+            <title>Core HTML Tags</title>
+            <p> The core HTML tag library provides the core HTML elements.  These include both the HTML
+                structure and the HTML form controls.  In addition, the tags provide a number of core
+                features that are used by all of the NetUI tag libraries.
+            </p>
+            <p> The HTML tags have a simple and expected mapping to the HTML elements that they generate.  See
+                the <a href="site:pageflow_tag_htmlMapping">HTML to NetUI Tag Mapping</a> for details.  In addition,
+                the HTML controls, called form controls in this document, have additional details in the
+                <a href="site:pageflow_tag_formControls">NetUI Form Control Tags</a> topic.
+            </p>
+            <p> The HTML tags can support multiple versions of the HTML specifications, including HTML 4.01
+                and XHTML 1.0 Transitional.  The default format is specified for a WebApp and may be overridden
+                for an individual document.  For more information see the
+                <a href="site:pageflow_tag_xhtml">HTLM and XHTML Support</a> topic.
+            </p>
+            <p> NetUI provides the ability to build pages that are part of a larger composite page such as
+                a portal.  Part of this support is the ability to scope the HTML <strong>id</strong> attributes.
+                In order to allow client side JavaScript to run, the core tags provide support for accessing
+                the generated <strong>id</strong> and <strong>name</strong> values based upon a local name.  For
+                more information on JavaScript support see the
+                <a href="site:pageflow_tag_javascript">Tags Support for JavaScript</a> topic.
+            </p>
+            <p> Finally, the core tags provides a set of tags and classes that can be used to build complex
+                tree representations.  See the <a href="site:pageflow_tag_tree">Tree Tags</a> topic for information
+                on creating trees.
+            </p>
+        </section>
+        <section id="dataGridTags">
+            <title>Data Tags</title>
+            <p>
+            The NetUI data tag library provides tags that render complex, high-level HTML markup in a page or 
+            that support data binding in JSPs.  The library supports a range of features from simple tables 
+            rendered with the repeater to complex data grids rendered with the data grid tag set.  The data grid
+            includes support for sortable columns, filtering, paging and updatable grids.  Styles can be applied 
+            to the grids to customize their presentation.   For more information on the data grid see 
+            <a href="site:pageflow/tags/datagrid">Beehive NetUI Data Grids</a>.  For more information on the repeater tags, see 
+            <a href="site:pageflow/tags/repeater">Repeating JSP Tags</a>.
+            </p>
+        </section>
+        <section id="templateTags">
+            <title>Template Tags</title>
+            <p> The template tags represent a very simple templating system.  The tags allow for a very simple
+                template page to be created.  Content pages then include their template to form the resulting
+                rendered page.  The content pages are written as sections of content that are inserted into defined
+                points inside the template. For more information on the template tags see the
+                <a href="site:pageflow/tags/pageflow_template">NetUI Template Tags</a> topic.
+            </p>
+        </section>
+    </body>
+</document>

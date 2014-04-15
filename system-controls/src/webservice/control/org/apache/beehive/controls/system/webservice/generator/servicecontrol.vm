@@ -1,0 +1,72 @@
+##
+## Licensed to the Apache Software Foundation (ASF) under one or more
+## contributor license agreements.  See the NOTICE file distributed with
+## this work for additional information regarding copyright ownership.
+## The ASF licenses this file to You under the Apache License, Version 2.0
+## (the "License"); you may not use this file except in compliance with
+## the License.  You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+## $Header:$
+##
+## LOCAL SUPPORTING MACROS
+##
+## This macro is used to create the argument list to a web service
+##
+#macro(params $method)
+  #set($size=$method.params.size())
+  #set($ctr=0)
+  #foreach($param in $method.getParams())
+  #set($ctr=$ctr + 1)
+            $param.className $param.name#if($ctr < $size),#else)#end
+
+  #end
+#end
+##
+##
+##
+## THE WEB SERVICE CONTROL CLASS TEMPLATE
+##
+package $controlPackageName;
+
+import org.apache.beehive.controls.api.bean.ControlExtension;
+import org.apache.beehive.controls.system.webservice.ServiceControl;
+import org.apache.beehive.controls.system.webservice.ServiceControl.WSDL;
+import org.apache.beehive.controls.system.webservice.ServiceControl.OperationName;
+import org.apache.beehive.controls.system.webservice.ServiceControl.ServiceFactoryProvider;
+import org.apache.beehive.controls.system.webservice.ServiceControl.ServiceFactoryProviderType;
+
+/**
+ * This file is service control which was automatically generated from wsdl:
+ *    $wsdlPath
+ */
+@ControlExtension
+@WSDL(path = "$wsdlPath",
+      portName="$portName",
+      service = "$serviceName",
+      serviceTns="$serviceTns")
+@ServiceFactoryProvider(ServiceFactoryProviderType.APACHE_AXIS)
+public interface $wscClassName
+    extends ServiceControl {
+
+#foreach($method in $methodList)
+    @OperationName("$method.operationName")
+    public $method.returnTypeName $method.methodName(
+#if($method.params.size() > 0)
+#params($method)
+#else
+    )
+#end
+       throws Exception;
+#end
+
+
+
+}

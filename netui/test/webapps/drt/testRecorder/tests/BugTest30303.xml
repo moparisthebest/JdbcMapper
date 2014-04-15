@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>BugTest30303</sessionName>
+  <tester>BVT</tester>
+  <startDate>27 May 2003, 12:02:52.975 PM MDT</startDate>
+  <description>Tests having the enctype="multipart/form-data" for a multipart request.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miscJpf/bug30303/StartTest.jsp</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2TldgBuB2OYI8Hf4kT7RAU8GBjFdVFIJuGV1amEMN73YHG2svyZ2!1893460649</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>*/*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2TldgBuB2OYI8Hf4kT7RAU8GBjFdVFIJuGV1amEMN73YHG2svyZ2!1893460649</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>MiscJpf Bug 30303 test</title>
+    </head>
+    <body>
+        <h3 align="center">MiscJpf Bug 30303 test - StartTest.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <center>
+            <a href="Jpf1.jpf">Start test</a>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miscJpf/bug30303/Jpf1.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2TldgBuB2OYI8Hf4kT7RAU8GBjFdVFIJuGV1amEMN73YHG2svyZ2!1893460649</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2TldgBuB2OYI8Hf4kT7RAU8GBjFdVFIJuGV1amEMN73YHG2svyZ2!1893460649</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/miscJpf/bug30303/StartTest.jsp</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+      <title>MiscJpf Bug 30303 test</title>
+   </head>
+   <body>
+      <h3 align="center">MiscJpf Bug 30303 test - Jsp1.jsp</h3>
+      <hr width="95%"/>
+      <br/>
+      <center>
+      <font color="red">
+         <strong>
+            Do Not change any of the values just press the "Submit" button!
+         </strong>
+      </font>
+
+      <!-- ---------------------------------------------------------------------
+      The most important part of this test is to have the form's enctype to be
+      "multipart/form-data".
+      ---------------------------------------------------------------------- -->
+      <form name="uploadForm" method="post" action="/coreWeb/miscJpf/bug30303/jpfAction1.do" enctype="multipart/form-data">
+         <table align="center" width="100%" border="0">
+            <tr>
+               <td align="right" width="50%">
+                  Struts text:
+               </td>
+               <td align="left" width="50%">
+                  <input type="text" name="{actionForm.strutsText}" value="Struts Value"/>
+               </td>
+            </tr>
+            <tr>
+               <td align="right" width="50%">
+                  PageFlow text:
+               </td>
+               <td align="left" width="50%">
+                  <input type="text" name="{actionForm.pageflowText}" value="PageFlow Value"/>
+               </td>
+            </tr>
+         </table>
+         <br/>
+         <input type="submit" value="Submit"/>
+      </form>
+   </body></html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miscJpf/bug30303/jpfAction1.do</uri>
+      <method>POST</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2TldgBuB2OYI8Hf4kT7RAU8GBjFdVFIJuGV1amEMN73YHG2svyZ2!1893460649</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Cache-Control</name>
+          <value>no-cache</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Content-Length</name>
+          <value>298</value>
+        </header>
+        <header>
+          <name>Content-Type</name>
+          <value>multipart/form-data; boundary=---------------------------7d332c9110520</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2TldgBuB2OYI8Hf4kT7RAU8GBjFdVFIJuGV1amEMN73YHG2svyZ2!1893460649</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/miscJpf/bug30303/Jpf1.jpf</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+    <head>
+        <title>Merge Tests</title>
+    </head>
+    <body>
+        <h2 align="center">Merge Tests - done.jsp</h2>
+        <hr align="center" width="95%"/>
+        <br/>
+        <center>
+            <font color="green"><h2>Test completed successfully.</h2></font>
+            <br/>
+            <a href="/coreWeb/index.jsp">Return to main test menu.</a>
+            <br/><br/>
+            <hr align="center" width="95%"/>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>27 May 2003, 12:03:11.234 PM MDT</endDate>
+  <testCount>3</testCount>
+
+</recorderSession>

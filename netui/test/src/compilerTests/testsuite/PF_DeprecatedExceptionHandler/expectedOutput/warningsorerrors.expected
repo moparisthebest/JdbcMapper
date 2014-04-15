@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_DeprecatedExceptionHandler\Controller.java:60: warning: This ExceptionHandler method signature is deprecated. Use the new signature: (<exception-type>, String actionName, String message, Object formBean).
+   public Forward exceptionHandler(Throwable e
+                  ^
+1 warning

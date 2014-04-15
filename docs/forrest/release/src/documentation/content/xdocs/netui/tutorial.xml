@@ -1,0 +1,1435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Beehive NetUI Tutorial</title>
+    </header>
+    <body>
+        <section id="intro">
+            <title>Introduction</title>
+            <p>
+                The NetUI tutorial is provided as a way to become familiar with NetUI's Page Flow controllers and JSP
+                tags.  The tutorial walks through creating, building, and deploying a sample project page flow that
+                submits data from a browser to the server.
+            </p>
+            <section id="goals">
+            <title>Tutorial Goals</title>
+            <ul>
+                <li>How to create a basic NetUI web application.</li>
+                <li>
+                    How to perform simple user navigation with the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SimpleAction.html">
+                        <code>@Jpf.SimpleAction</code>
+                    </a>
+                    annotation.
+                </li>
+                <li>
+                    How to coordinate user navigation with the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Forward.html">
+                        <code>@Jpf.Forward</code>
+                    </a>
+                    annotation and the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">
+                        <code>Forward</code>
+                    </a>
+                    object.
+                </li>
+                <li>
+                    How to handle data submission and processing with
+                    <a href="site:docs/pageflow/netuiBasic/databinding">databinding</a> and form beans.
+                </li>
+                <li>
+                    How to create a user interface with the
+                    <a href="site:docs/pageflow/tags/pageflow_tag_overview">NetUI JSP tag library</a>.
+                </li>
+                <li>How page flows help to separate data processing and data presentation.</li>
+                <li>How to make a web application a client of a <a href="site:docs/controls/overview">Java control</a>.</li>
+                <li>
+                    How to use 
+                    <a href="site:docs/pageflow/netuiBasic/validation">declarative validation</a> with data submission.
+                </li>
+                <li>
+                    How to collect data from a
+                    <a href="site:docs/pageflow/netuiBasic/nestedPageFlow">nested page flow</a> and 'return' it to the
+                    calling page flow.
+                </li>
+                <li>How to make an action available to multiple page flows.</li>
+            </ul>
+            </section>
+        </section>
+        <section id="setup">
+            <title>Step 1: Set up a Beehive-enabled Web Application</title>
+            <section id="setup_shell">
+                <title>Set Shell Variables</title>
+                <p>Complete all of the necessary and optional steps in the following topic: <a class="fork" href="site:setup">Beehive Installation and Setup</a></p>
+            </section>
+            <section id="setup_make_project">
+                <title>Create a Beehive-enabled Web Project</title>
+                <p>
+                In order to follow the steps in this tutorial, it's necessary to create a Beehive-enabled web application.  Beehive-enabled web applications
+                are described <a href="site:netui-blank">here</a>.  A skeleton Beehive-enabled web project is provided in the samples/ directory as 
+                <a href="site:netui-blank">netui-blank</a>.  This contains a basic Ant build file and an example Page Flow controller.  To create the
+                tutorial's project, we'll copy and then rename the <a href="site:netui-blank">netui-blank</a> project using these steps:
+                </p>
+                <ol>
+                <li>Create a directory <code>/beehive_projects</code> (on Windows, this would be <code>C:\beehive_projects</code>).</li>
+                <li>Run this Ant target to create a new NetUI project:
+                    <code>ant -f &lt;beehive-root>/beehive-imports.xml new.netui.webapp</code> and provide a fully-qualified web project root directory
+                    named <code>netui-tutorial</code>.  Note, <code>&lt;beehive-root></code> is the directory that contains a 
+                    Beehive distribution; a typical value might be <code>/apache/apache-beehive-1.0</code>.</li>
+                <li>Before continuing, confirm that the following directory structure exists:</li>
+                </ol>
+                <source>
+    beehive_projects/
+        netui-tutorial/
+            src/
+                Controller.java
+            web/
+                index.jsp
+                resources/
+                WEB-INF/
+            build.properties
+            build.xml
+</source>
+                <p>
+                Note, this directory structure is just an example; you are free to put the <code>netui-tutorial</code> 
+                directory anywhere on disk.  In the remainder of this tutorial, the directory <code>beehive_projects/netui-tutorial</code> 
+                will simply be referred to as <code>netui-tutorial</code>.
+                </p>
+            </section>
+            <section id="setup_configure_properties">
+                <title>Configure Build Properties</title>
+                <p>
+                The <code>build.properties</code> file contains several project-related properties that must 
+                be set in order to build the web application.  Specifically, the paths to your Beehive distribution and 
+                to the JSP / Servlet API JARs for your application container must be set.  The following steps will set these properties
+                for the <code>netui-tutorial</code> webapp.
+                </p>
+                <ol>
+                <li>Open the file <code>netui-tutorial/build.properties</code> in a text editor.</li>
+                <li>Edit the <code>beehive.home</code> property so it points to the top-level directory of your Beehive distribution.</li>  
+                <li>Edit the <code>context.path</code> to use the value <code>netui-tutorial</code>.</li>
+                </ol>
+                <note>
+                The <code>context.path</code> property determines both (1) the name of the application WAR file and (2) the application URL.  
+                <br/><br/>
+                If <code>context.path=netui-tutorial</code>, then the following WAR file will be produced:
+                <br/><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<strong><code>netui-tutorial</code></strong><code>.war</code>
+                <br/><br/>
+                and the following URL will invoke the web application:
+                <br/><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<code>http://&lt;some server&gt;/</code><strong><code>netui-tutorial</code></strong>
+                </note>
+                <p>For example, if your Beehive distribution is located in <code>/apache/apache-beehive-1.0</code>, 
+                then your <code>build.properties</code> file would appear as follows.</p>
+                <source>
+beehive.home=<strong>/apache/apache-beehive-1.0</strong>
+
+servlet-api.jar=${os.CATALINA_HOME}/common/lib/servlet-api.jar
+jsp-api.jar=${os.CATALINA_HOME}/common/lib/jsp-api.jar
+
+context.path=<strong>netui-tutorial</strong></source>
+                <note>Properties files should use the '/' character to separate drive, directory, and file names.</note>
+                <p>
+                If you are using an application container other than Tomcat, be sure to set the <code>servlet-api.jar</code> and 
+                <code>jsp-api.jar</code> properties to reference the JAR your server provides which contains the JSP and Servlet 
+                API classes.
+                </p>
+            </section>
+            <section id="setup_start_server">
+                <title>Start the Server</title>
+                <p>If you are using Tomcat, enter the following at the command prompt:</p>
+                <source>$CATALINA_HOME/bin/startup.bat</source>
+                <p>If you aren't using Tomcat, start your application container as per its directions.</p>
+            </section>
+            <section id="setup_urls">
+                <title>Using URLs in the Examples</title>
+                <p>
+                In the Beehive tutorials, you will often encounter URLs like <code>http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</code>.
+                When you see these URLs, they are meant to be accessed via your web browser to demonstrate functionality built in the 
+                tutorial.  These URLs are set up to run on Tomcat, so if you are unable to run these URLs, be sure that they are appropriate 
+                for your application server.  Specifically, check the port numbers to make sure that your server is running on the 
+                referenced port.
+                </p>
+            </section>
+        </section>
+        <section id="ceate">
+            <title>Step 2: Create your First Page Flow Controller</title>
+            <section id="create_overview">
+                <title>Overview</title>
+                <p>
+                    In this step you will create a controller class and a JSP.  These are the basic files in 
+                    a Beehive NetUI web application.  Each page flow contains one controller class and any 
+                    number of pages -- JSPs in this case. A controller class is a Java class that 
+                    controls how your web application functions and what it does. The methods and annotations in the 
+                    controller class determine how users navigate from page 
+                    to page, how user requests are handled, and how the web application accesses back-end 
+                    resources. The JSPs determine what a visitor to the web application sees in the browser.  
+                </p>
+                <p>
+                    In terms of the Model-View-Controller paradigm for web applications, the Controller.java
+                    file is the Controller (naturally) and the JSPs are the View.  The web application's
+                    Model in this tutorial is very simple: it consists of a JavaBean with three fields that represent the
+                    user's name, age and selected sport activity.
+                        <!--[tbd: more, explain]-->
+                </p>
+                <p>    
+                    Controller classes contain <strong>actions</strong>, which are methods or annotations. An action may do
+                    something simple, such as forward a user from one JSP to another; or it may do a complex set of tasks,
+                    such as receive user input from a JSP, interact with back-end resources based on the
+                    user input, and forward the user to a JSP where the results are displayed. 
+                        <!--[tbd: diagram, etc.]-->
+                </p>
+                <p>
+                The controller class in this step contains one action. This simple navigational action forwards users
+                to the <code>index.jsp</code> page. In the next step, you will create a more complex action.
+                </p>
+            </section>
+            <section id="create_examine">
+                <title>Create the Page Flow Files</title>
+                <p>
+                    You will create two files in a new page flow: <code>Controller.java</code> and <code>index.jsp</code>.
+                    First, create a directory called <code>myFlow</code> under the <code>src</code> directory.  Then add
+                    the following page flow controller class:
+                </p>
+                <p><strong><code>src/myFlow/Controller.java</code></strong></p> 
+                <source>
+package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp")
+    }
+)
+public class Controller 
+    extends PageFlowController
+{
+}</source>
+                <p>Every Page Flow controller class must extend 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/PageFlowController.html">
+                        <code>PageFlowController</code>
+                    </a>
+                    and be decorated by the annotation
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html">
+                        <code>@Jpf.Controller</code></a>.
+                    The class you created is the simplest controller possible; it has a single <code>begin</code> action that
+                    forwards to <code>index.jsp</code>.
+                </p>
+                <p>The controller class is activated when a user hits it via the URL:</p>
+                <source>http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</source>
+                <p>The URL above means this: "Run the <code>begin</code> action of the <code>Controller</code> class 
+                   in the <code>myFlow</code> directory of the <code>netui-tutorial</code> web application."</p>
+                <p>
+                    Now, create a directory called <code>myFlow</code> under the <code>web</code> directory.
+                    Then, create the <code>index.jsp</code> that will be shown when you hit the page flow:
+                </p>
+                <p><strong><code>web/myFlow/index.jsp</code></strong></p>
+<source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+  <head>
+    <title>Web Application Page</title>
+    <netui:base/>
+  </head>
+  <netui:body>
+    <p>
+      New Web Application Page
+    </p>
+  </netui:body>
+</netui:html>
+]]></source>
+            <!--<p>[todo: what is this code doing?]</p>-->
+                <note>
+                    Note, we placed the pages in a <strong>parallel web content directory</strong>. NetUI assumes that the pages in <code>web/myFlow</code> go with the controller class in <code>src/myFlow</code>.
+                </note>
+            </section>
+            <section id="create_build_deploy">
+                <title>Compile and Deploy the Web Application</title>
+                <p>You are now ready to compile the page flow and deploy it to Tomcat.</p>
+                <p>The following Ant command assumes that you are in the <code>netui-tutorial/</code> directory.  At the command prompt, enter:</p>
+                <source>
+ant clean build war
+</source>
+                <p>
+                This will build the webapp by running the Beehive annotation processors and will produce class files in <code>WEB-INF/classes</code>.  
+                Now, the application is ready to deploy to your server.  On Tomcat, copy the WAR file into Tomcat's <code>$CATALINA_HOME/webapps</code> 
+                directory.</p>
+                <p>On Windows:</p>
+                <source>
+copy netui-tutorial.war %CATALINA_HOME%\webapps /Y</source>
+                <note>
+                    On Windows, there are file-locking issues that Tomcat versions 5.5.x and above are sensitive to.
+                    In particular, any web application that uses Struts will <strong>fail to redeploy</strong> if you
+                    copy in a new .war file as described here.  The Commons Digester team is adding a workaround for the
+                    issue (see
+                    <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=37034">this bug</a>), but in the meantime,
+                    you can work around it with the <code>antiResourceLocking</code> option in Tomcat.  Just add a file
+                    called <code>context.xml</code> in a directory called <code>META-INF</code> inside the
+                    <code>web</code> directory before building (so it will end up as <code>META-INF/context.xml</code>
+                    in your <code>netui-tutorial.war</code>):
+                    <br/>
+                    <br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;?xml version="1.0" encoding="UTF-8"?></code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Context antiResourceLocking="true"></code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Context></code>
+                </note>
+                <p>Everywhere else:</p>
+                <source>
+cp netui-tutorial.war $CATALINA_HOME/webapps
+</source>
+                <p>If you are asked to overwrite the old WAR file, enter 'yes'.  Note, when doing redeployment, you may have to wait a few seconds 
+                   for Tomcat to redeploy the WAR file.  Once deployment or redeployment has completed, the webapp can be accessed through a browser.</p>
+                <p>If you are not using Tomcat, follow your server's web application deployment instructions to deploy the webapp.</p>
+</section>
+            <section id="create_test">
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following address:</p> 
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+            </section>
+        </section>
+        <section id="navigate">
+            <title>Step 3: Navigation</title>
+            <section id="navigate_create_page">
+                <title>Create a Destination JSP</title>
+                <p>In the directory <code>web/myFlow</code>, create a file named <code>page2.jsp</code>:</p>
+                <p><strong><code>web/myFlow/page2.jsp</code></strong></p>                
+                <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+  <head>
+    <title>page2.jsp</title>
+    <netui:base/>
+  </head>
+  <netui:body>
+    <p>
+      Welcome to page2.jsp!
+    </p>
+  </netui:body>
+</netui:html>
+]]></source>
+            <p>Save <code>page2.jsp</code>.</p>
+            </section>
+            <section id="navigate_create_link"> 
+                <title>Create a Link to the Destination Page</title>
+                <p>
+                    In this step you will create a link from the JSP, <code>index.jsp</code> to a new Simple Action that
+                    you will add to the controller class.  The new action will forward to <code>page2.jsp</code>.
+                </p>
+                <p>Open the file <code>web/myFlow/index.jsp</code>.</p>
+                <p>Edit <code>index.jsp</code> so it appears as follows.  The code to add appears in bold type.</p>
+        <p><strong><code>index.jsp</code></strong></p>
+        <source>
+&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>Web Application Page&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      New Web Application Page
+    &lt;/p>
+    <strong>&lt;p>
+      &lt;netui:anchor action="toPage2">Link to page2.jsp&lt;/netui:anchor>
+    &lt;/p></strong>
+  &lt;/netui:body>
+&lt;/netui:html></source>
+            <p>Save <code>index.jsp</code>.</p>            
+            </section>
+            <section id="navigate_add_action">
+                <title>Add a Simple Action to Handle the Link</title>
+                <p>Open the file <code>src/myFlow/Controller.java</code>.</p>
+                <p>Edit <code>Controller.java</code> so it appears as follows.  Don't forget the comma after the first <code>Jpf.SimpleAction(...)</code> element!</p>
+                <p><strong><code>Controller.java</code></strong></p>                
+                <source>
+package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp")<strong>,
+        @Jpf.SimpleAction(name="toPage2", path="page2.jsp")</strong>
+    }
+)
+public class Controller 
+    extends PageFlowController 
+{
+}</source>
+            <p>Save <code>Controller.java</code>.</p>
+            </section>
+            <section id="navigate_build_deploy">
+                <title>Compile and Redeploy the Web Application</title>
+<p>Compile and deploy the page flow using the same Ant and copy commands used in <a href="#create_build_deploy">step 2</a>.</p>
+<p>If you are asked to overwrite the old WAR file, enter 'Yes'.</p>
+<p>Wait a few seconds for Tomcat to redeploy the WAR file, then move on to the next step.</p>
+            </section>
+            <section id="navigate_run">
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following link: 
+                </p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the link.  You will be directed to page2.jsp.</p>
+            </section>
+        </section>
+        <section id="forms">
+            <title>Step 4: Submitting Data</title>
+            <section id="forms_create">
+                <title>Create a Submission Form</title>
+                <p>
+                    This step illustrates the use of NetUI tags to render an HTML form tag and link it to a Page Flow action.
+                    In a later step, the new action (<code>processData</code>) will be added to the controller class to handle the data submission.
+                </p>
+                <p>Edit the file <code>web/myFlow/page2.jsp</code> so it appears as follows.</p>
+                <p><strong><code>page2.jsp</code></strong></p>                
+                <source>
+&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>page2.jsp&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      Welcome to page2.jsp!
+    &lt;/p>
+    <strong>&lt;p>
+      &lt;netui:form action="processData">
+        Name: &lt;netui:textBox dataSource="actionForm.name"/>
+        &lt;br/>
+        Age: &lt;netui:textBox dataSource="actionForm.age"/>
+        &lt;br/>
+        &lt;netui:button type="submit" value="Submit"/>
+      &lt;/netui:form>
+    &lt;/p></strong>
+  &lt;/netui:body>
+&lt;/netui:html></source>
+<p>Save <code>page2.jsp</code>.</p>
+            </section>
+            <section id="forms_create_formbean">
+                <title>Create a Server Side Representation of the Submission Form (a.k.a. Create a Form Bean)</title>
+                <p>In this step you will create a Java class that accepts data from the JSP submission form created in the previous task.  When the form data is submitted, the Java class will be instantiated, and the form data will be loaded into the JavaBean properties of the new instance.</p>
+                <p>In the directory <code>src</code> create a directory named <strong><code>forms</code></strong>.</p>
+                <p>In the directory <code>src/forms</code> create a JAVA file named <strong><code>ProfileForm.java</code></strong>.</p>
+                <p>
+                    Edit <code>src/forms/ProfileForm.java</code> so it contains getters and setters for
+                    two JavaBean properties (<code>name</code> and <code>age</code>), as follows.
+                </p>
+                
+                <p><strong><code>ProfileForm.java</code></strong></p>
+                    <source>
+package forms;
+
+public class ProfileForm 
+    implements java.io.Serializable {
+
+    private int age;
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+}</source>
+<p>Save and close <code>ProfileForm.java</code>.</p>
+            </section>
+            <section id="forms_edit_controller">
+                <title>Edit the Controller Class to Handle the Submitted Data</title>
+                <p>Now you will add a new action and use your new form bean to handle the data
+                submitted from the HTML form.</p>
+                <p>Open the file <code>src/myFlow/Controller.java</code>
+                </p>
+                <p>Edit <code>Controller.java</code> so it appears as follows.  Code to add appears in bold type.</p>
+                
+                <p><strong><code>Controller.java</code></strong></p>
+                    <source>
+package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+<strong>import org.apache.beehive.netui.pageflow.Forward;</strong>
+<strong>import forms.ProfileForm;</strong>
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="toPage2", path="page2.jsp")
+    }
+)
+public class Controller 
+    extends PageFlowController 
+{
+
+    <strong>@Jpf.Action(
+        forwards = { 
+            @Jpf.Forward(name="success", path="page2.jsp")
+        }
+    )
+    public Forward processData(ProfileForm form) {
+        System.out.println("Name: " + form.getName());
+        System.out.println("Age: " + form.getAge());
+
+        Forward fwd = new Forward("success");
+        return fwd;
+    }</strong>
+}
+</source>
+            <p>Save <code>Controller.java</code>.</p>
+            </section>
+            <section id="forms_build_deploy">
+                <title>Recompile and Redeploy the Web Application</title>
+                <p>Compile and (re)deploy the web application using the same steps as described <a href="#create_build_deploy">here</a>.</p>
+           </section>
+           <section id="forms_test">
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following link: 
+                </p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the link.</p>
+                <p>You will be directed to page2.jsp.</p>
+                <p>Enter values in the Name and Age fields, and click Submit.</p>
+                <p>Notice the name and age values you entered are displayed in the Tomcat console.</p>
+            </section>
+        </section>
+        <section id="forms_display_data">
+            <title>Step 5: Processing and Displaying Data</title>
+            <section id="create_jsp">
+                <title>Create a JSP to Display Submitted Data</title>
+                <p>In this step you will create a new JSP to present the results from processing the data submission.</p>
+                <p>In the directory <code>web/myFlow</code> create a file named 
+                    <strong><code>displayData.jsp</code></strong>. </p>
+                <p>
+                    Edit <code>displayData.jsp</code> so it appears as follows.  The "page inputs" that are being
+                    displayed will come from the action in your page flow (next step).
+                </p>
+                
+                <p><strong><code>displayData.jsp</code></strong></p>
+                    <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+  <head>
+    <title>displayData.jsp</title>
+    <netui:base/>
+  </head>
+  <netui:body>
+    <p>
+      You submitted the following information:
+    </p>
+    <p>
+      Name: ${pageInput.name}
+      <br/>
+      Age: ${pageInput.age}
+    </p>
+  </netui:body>
+</netui:html>
+]]></source>
+            <p>Save and close <code>displayData.jsp</code>.</p>
+            </section>            
+            <section id="forms_process_action">
+                <title>Process the Submitted Data</title>
+                <p>
+                    Edit the <code>processData</code> method in the <code>Controller.java</code> file so it appears as follows. Code to add appears in bold.
+                    Change the value of the path attribute in the Forward annotation to <code>displayData.jsp</code>.
+                    Note that the "action outputs" you are adding here will be read as "page inputs" on the page.
+                </p>
+                
+                <p><strong><code>Controller.java</code></strong></p>
+                    <source>
+    ...
+                        
+    @Jpf.Action(
+        forwards = { 
+            @Jpf.Forward(name="success", path="<strong>displayData.jsp</strong>")
+        }
+    )
+    public Forward processData(ProfileForm form) {
+        System.out.println("Name: " + form.getName());
+        System.out.println("Age: " + form.getAge());    
+
+        Forward fwd = new Forward("success");
+        <strong>fwd.addActionOutput("name", form.getName());
+        fwd.addActionOutput("age", form.getAge());</strong>
+        return fwd;
+    }
+    
+    ...
+</source>
+            <p>Save <code>Controller.java</code>.</p>
+            </section>
+            <section id="forms_build_deploy_again">
+                <title>Recompile and Redeploy the Web Application</title>
+                <p>Compile and (re)deploy the web application using the same steps as described <a href="#create_build_deploy">here</a>.</p>
+            </section>
+            <section>
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following link: 
+                </p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the link.</p>
+                <p>You will be directed to page2.jsp.</p>
+                <p>Enter values in the Name and Age fields. Click the Submit button.</p>
+                <p>You will be forwarded to the <code>displayData.jsp</code> page.  Notice the values you entered are displayed.</p>
+                <note>
+                    In this step, you used "action outputs" and "page inputs" to get data from your page flow controller
+                    to your JSP.  You can get more formal about both by declaring expected types and whether the values
+                    are required; to do this, you use annnotations and JSP tags as described 
+                    <a href="site:docs/pageflow/netuiBasic/databinding/pageInput">here</a>.
+                </note>
+            </section>
+        </section>
+        <section id="addControl">
+            <title>Step 6: Add a Control</title>
+            <p>In this step you will add a simple 'Hello World' control to your web application.</p>
+            <p>You will edit the web application to become a client of the control.  The web app will pass the user submitted 
+            name to the control, and the control will return a simple 'Hello World' message back to the web app.
+            For more details on how this control works see the <a href="site:docs/tutorials/control">control tutorial</a>.</p>
+                <section>
+                <title>Create the HelloWorld Control</title>
+                    <p>Inside the <code>netui-tutorial/src</code> directory, create a new directory named <code>controls</code>.</p>
+                    <p>Inside the directory <code>netui-tutorial/src/controls</code>, create a new file named <code>HelloWorldImpl.java</code></p>
+                    <p>Edit <code>HelloWorldImpl.java</code> so it appears as follows:</p>
+                    <source>package controls;
+
+import org.apache.beehive.controls.api.bean.ControlImplementation;
+
+@ControlImplementation(isTransient=true)
+public class HelloWorldImpl implements HelloWorld {
+
+    public String hello() {
+        return "hello!";
+    }
+
+    public String helloParam(String name) {
+        return "Hello, " + name + "!";
+    }
+}</source>
+                    <p>Inside the directory <code>netui-tutorial/src/controls</code>, create a new file named <code>HelloWorld.java</code></p>
+                    <p>Edit <code>HelloWorld.java</code> so it appears as follows:</p>
+                    <source>package controls;
+
+import org.apache.beehive.controls.api.bean.ControlInterface;
+
+@ControlInterface
+public interface HelloWorld {
+
+    String hello();
+
+    String helloParam(String name);
+}</source>
+                </section>
+                <section>
+                    <title>Edit the Page Flow Controller</title>    
+                    <p>Edit the page flow Controller file so it appears as follows.  Code to add appears in bold:</p>
+                    <source>package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import forms.ProfileForm;
+
+<strong>import org.apache.beehive.controls.api.bean.Control;
+import controls.HelloWorld;</strong>
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="toPage2", path="page2.jsp")
+    }
+)
+public class Controller 
+    extends PageFlowController
+{
+    <strong>@Control
+    private HelloWorld helloWorld;</strong>
+	
+    @Jpf.Action(
+        forwards = { 
+            @Jpf.Forward(name="success", path="displayData.jsp")
+        }
+    )
+    public Forward processData(ProfileForm form) {
+        System.out.println("Name: " + form.getName());
+        System.out.println("Age: " + form.getAge());
+        
+        Forward fwd = new Forward("success");
+        fwd.addActionOutput("name", form.getName());
+        fwd.addActionOutput("age", form.getAge());
+        <strong>fwd.addActionOutput("message", helloWorld.helloParam(form.getName()));</strong>
+        return fwd;
+    }	  
+}</source>
+                </section>
+                <section>
+                    <title>Add a New pageInput</title>
+                    <p>Add new pageinput to displayData.jsp.  Code to add appears in bold:</p>
+                    <source>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>displayData.jsp&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      You submitted the following information:
+    &lt;/p>
+    &lt;p>
+      Name: ${pageInput.name}
+      &lt;br/>
+      Age: ${pageInput.age}
+      <strong>&lt;br/>
+      Message: ${pageInput.message}</strong>
+    &lt;/p>
+  &lt;/netui:body>
+&lt;/netui:html>
+                    </source>
+                </section>
+            <section>
+                <title>Recompile and Redeploy the Web Application</title>
+                <p>Compile and (re)deploy the web application using the same steps as described <a href="#create_build_deploy">here</a>.</p>
+            </section>
+            <section>
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following link: 
+                </p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the link.</p>
+                <p>You will be directed to page2.jsp.</p>
+                <p>Enter values in the Name and Age fields. Click the Submit button.</p>
+                <p>You will be forwarded to the <code>displayData.jsp</code> page.  Notice the values you entered are displayed along with a 'Hello World' message based on the name you submitted.</p>
+            </section>
+        </section>
+        <section id="validation">
+            <title>Step 7: Input Validation</title>
+            <section id="validation_add">
+                <title>Add Declarative Validation to the Form Bean</title>
+                <p>In this step you will use declarative validation to define the set of rules for each
+                    field, to be applied during input validation. You will add a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ValidatableProperty.html">
+                        <code>ValidatableProperty</code>
+                    </a>
+                    annotation for the <code>name</code> property of the form so that it will (1) be required, and 
+                    (2) have a maximum length of 30 characters. The <code>age</code> property 
+                    must have a value in the range 1 to 130.</p>
+                <p>Open the file <code>src/forms/ProfileForm.java</code></p>
+                <p>
+                    Add validation annotations.  Code to add appears in bold (notice the additional <code>import</code> statement and the <code>FormBean</code> annotation).
+                </p>
+                <p><strong><code>src/forms/ProfileForm.java</code></strong></p>
+                <source>package forms;
+
+<strong>import org.apache.beehive.netui.pageflow.annotations.Jpf;</strong>
+
+<strong>@Jpf.FormBean()</strong>
+public class ProfileForm 
+    implements java.io.Serializable {
+
+    private int age;
+    private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    <strong>@Jpf.ValidatableProperty(
+        displayName = "Name",
+        validateRequired = @Jpf.ValidateRequired(),
+        validateMaxLength = @Jpf.ValidateMaxLength(chars = 30)</strong>
+    )
+    public String getName() {
+        return this.name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    <strong>@Jpf.ValidatableProperty(
+        displayName = "Age",
+        validateRange = @Jpf.ValidateRange(minInt = 1, maxInt = 130)</strong>
+    )
+    public int getAge() {
+        return this.age;
+    }
+}</source>
+                <p>Save and close <code>ProfileForm.java</code>.</p>
+                <note>
+                    The validation annotations above do <strong>not</strong> produce localized messages.  If you want
+                    your messages to be localizable, you would do two things: (1) add the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.FormBean.html#messageBundle()">
+                        <code>messageBundle</code>
+                    </a>
+                    attribute to the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.FormBean.html">
+                        <code>@Jpf.FormBean</code>
+                    </a>
+                    annotation on the <code>ProfileForm</code> class, with its
+                    value set to a valid message bundle, and (2) use the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ValidatableProperty.html#displayNameKey()">
+                        <code>displayNameKey</code>
+                    </a>
+                    attribute instead of
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ValidatableProperty.html#displayName()">
+                        <code>displayName</code>
+                    </a>
+                    on your validation annotations.
+                    <br/>
+                    <br/>
+                    If you don't want to use the default validation messages provided by NetUI, you can use the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ValidateRequired.html#message()">
+                        <code>message</code>
+                    </a>
+                    or
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ValidateRequired.html#messageKey()">
+                        <code>messageKey</code>
+                    </a>
+                    attributes on any of the validation annotations.
+                </note>
+
+                <p>
+                    Next, add a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html#validationErrorForward()">
+                        <code>validationErrorForward</code>
+                    </a>
+                    to the <code>processData</code> action in <code>src/myFlow/Controller.java</code>. Code to add appears in bold. Don't forget the comma after the <code>forwards={...}</code> element!
+                </p>
+                <p><strong><code>src/myFlow/Controller.java</code></strong></p>
+                <source>package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import forms.ProfileForm;
+
+import org.apache.beehive.controls.api.bean.Control;
+import controls.HelloWorld;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="toPage2", path="page2.jsp")
+    }
+)
+public class Controller
+    extends PageFlowController
+{
+    @Control
+    private HelloWorld helloWorld;
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(name="success", path="displayData.jsp")
+        }<strong>,
+        validationErrorForward=@Jpf.Forward(name="fail", path="page2.jsp")</strong>
+    )
+    public Forward processData(ProfileForm form) {
+        System.out.println("Name: " + form.getName());
+        System.out.println("Age: " + form.getAge());
+
+        Forward fwd = new Forward("success");
+        fwd.addActionOutput("name", form.getName());
+        fwd.addActionOutput("age", form.getAge());
+        fwd.addActionOutput("message", helloWorld.helloParam(form.getName()));
+        return fwd;
+    }
+}</source>
+                <p>Save <code>Controller.java</code>.</p>
+                <p>
+                    The annotation you just added causes navigation to flow back to <code>page2.jsp</code> if any
+                    validation error occurs in the form bean for action <code>processData</code>.
+                </p>
+            </section>
+            <section id="validation_display_errors">
+                <title>Modify the JSP to Display Validation Errors</title>
+                <p>Add the <code>&lt;netui:error></code> tag to display validation error messages on the page.</p>
+                <p>Edit the file <code>web/myFlow/page2.jsp</code> so it appears as follows.</p>
+                <p><strong><code>web/myFlow/page2.jsp</code></strong></p>
+                <source>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>page2.jsp&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      Welcome to page2.jsp!
+    &lt;/p>
+    &lt;p>
+      &lt;netui:form action="processData">
+        Name: &lt;netui:textBox dataSource="actionForm.name"/>
+        <strong>&lt;netui:error key="name"/></strong>
+        &lt;br/>
+        Age: &lt;netui:textBox dataSource="actionForm.age"/>
+        <strong>&lt;netui:error key="age"/></strong>
+        &lt;br/>
+        &lt;netui:button type="submit" value="Submit"/>
+      &lt;/netui:form>
+    &lt;/p>
+  &lt;/netui:body>
+&lt;/netui:html></source>
+                <p>Save and close <code>page2.jsp</code>.</p>
+                <p>
+                    Now, any validation error that happens for the <code>name</code> property will appear next to the
+                    "Name:" input field.  Likewise for the <code>age</code> property.
+                </p>
+            </section>
+            <section id="validation_build_deploy">
+                <title>Recompile and Redeploy the Web Application</title>
+                <p>Compile and (re)deploy the web application using the same steps as described <a href="#create_build_deploy">here</a>.</p>
+            </section>
+            <section id="validation_run">
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following link:</p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the link.</p>
+                <p>You will be directed to page2.jsp.</p>
+                <p>Leave the Name field empty and enter a negative integer value in the Age field. Click the Submit button.</p>
+                <p>You will be returned to the <code>page2.jsp</code> page.  Notice the error messages for the values you entered.</p>
+            </section>
+        </section>
+        <section id="nested">
+            <title>Step 8: Collect Data from a Nested Page Flow</title>
+            <p>
+                <a href="site:docs/pageflow/netuiBasic/nestedPageFlow">Nested page flows</a> allow you to insert
+                <em>entire flows</em> in the middle of the current flow.  One use for this is to collect data in another
+                flow, but still come back to the current flow to use the data.
+            </p>
+            <section id="nested_link">
+                <title>Link to the Nested Page Flow</title>
+                <p>
+                    In this task you will modify the HTML form tag to (1) add a new data field and (2) add a button that
+                    launches a nested page flow. (Later you will create the nested page flow to handle the data
+                    collection.)
+                </p>
+                <p>
+                    Edit the file <code>web/myFlow/page2.jsp</code> so it appears as follows. Code to add appears in bold.
+                </p>
+                <p><strong><code>web/myflow/page2.jsp</code></strong></p>
+                <source>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>page2.jsp&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      Welcome to page2.jsp!
+    &lt;/p>
+    &lt;p>
+      &lt;netui:form action="processData">
+        Name: &lt;netui:textBox dataSource="actionForm.name"/>
+        &lt;netui:error key="name"/>
+        &lt;br/>
+        Age: &lt;netui:textBox dataSource="actionForm.age"/>
+        &lt;netui:error key="age"/>
+        &lt;br/>
+        <strong>Sport: &lt;netui:textBox dataSource="actionForm.sport"/>
+        &lt;br/>
+        &lt;netui:button type="submit" action="getSport" value="Select Sport"/></strong>
+        &lt;netui:button type="submit" value="Submit"/>
+      &lt;/netui:form>
+    &lt;/p>
+  &lt;/netui:body>
+&lt;/netui:html></source>
+                <p>Save <code>page2.jsp</code>.</p>
+            </section>
+            <section id="nested_update_formbean">
+                <title>Update the Form Bean</title>
+                <p>
+                In this task you will update the Java class that represents the submission form with the
+                additional data field created in the previous task.  When the nested page flow returns,
+                the new member of the Form Bean class instance can be loaded with the value collected.
+                </p>
+                <p>
+                Edit <code>src/forms/ProfileForm.java</code> and add the following member variable and methods.
+                </p>
+                <p><strong><code>ProfileForm.java</code></strong></p>
+                <source>
+    ...
+
+    private String sport;
+
+    public void setSport(String sport) {
+        this.sport = sport;
+    }
+
+    public String getSport() {
+        return this.sport;
+    }
+
+    ...
+</source>
+                <p>Save and close <code>ProfileForm.java</code>.</p>
+            </section>
+            <section id="nested_update_controller">
+                <title>To Launch and Return from the Nested Page Flow</title>
+                <p>In this task you will add Action methods: one to handle forwarding to the nested page flow and another to
+                    implement the return Action when the nested page flow completes.</p>
+                <p>Open the file <code>src/myFlow/Controller.java</code></p>
+                <p>Edit <code>Controller.java</code> so it appears as follows.  Code to add appears
+                    in bold type. Don't forget to add the <code>useFormBean</code> property to the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">
+                        <code>@Jpf.Action</code>
+                    </a>
+                    annotation of the <code>processData</code> method. The
+                    ProfileForm is page flow-scoped for this example, using the same Form Bean
+                    instance in multiple Action methods.</p>
+                <p><strong><code>src/myFlow/Controller.java</code></strong></p>
+                <source>
+package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import forms.ProfileForm;
+
+import org.apache.beehive.controls.api.bean.Control;
+import controls.HelloWorld;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="toPage2", path="page2.jsp")
+    }
+)
+public class Controller
+    extends PageFlowController 
+{
+
+    @Control
+    private HelloWorld helloWorld;
+
+    <strong>private ProfileForm profileForm;
+
+    /**
+     * This action forwards to the nested page flow to collect the sport
+     * name.  Note that it takes a ProfileForm so we can update the form
+     * with the sport name returned from the nested page flow, but we've
+     * explicitly turned validation off for this action, since the form
+     * may be incomplete.
+     */
+    @Jpf.Action(
+        useFormBean="profileForm",
+        forwards={
+            @Jpf.Forward(name="getSportFlow", path="sports/SportsController.jpf")
+        },
+        doValidation=false
+    )
+    protected Forward getSport(ProfileForm form) {
+        return new Forward("getSportFlow");
+    }
+
+    /**
+     * This action takes the sport name returned from the nested page flow
+     * and updates the field in the form and returns to the original page.
+     */
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", navigateTo=Jpf.NavigateTo.currentPage)
+        }
+    )
+    protected Forward sportSelected(String sport) {
+        profileForm.setSport(sport);
+        Forward success = new Forward("success", profileForm);
+        return success;
+    }</strong>
+
+    @Jpf.Action(
+        <strong>useFormBean="profileForm",</strong>
+        forwards = {
+            @Jpf.Forward(name="success", path="displayData.jsp")
+        },
+        validationErrorForward = @Jpf.Forward(name="fail", path="page2.jsp")
+    )
+    public Forward processData(ProfileForm form) {
+        System.out.println("Name: " + form.getName());
+        System.out.println("Age: " + form.getAge());
+
+        Forward fwd = new Forward("success");
+        fwd.addActionOutput("name", form.getName());
+        fwd.addActionOutput("age", form.getAge());
+        fwd.addActionOutput("message", helloWorld.helloParam(form.getName()));
+        <strong>fwd.addActionOutput("sport", form.getSport());</strong>
+        return fwd;
+    }
+}
+</source>
+                <p>Save <code>Controller.java</code>.</p>
+            </section>
+            <section id="nested_create_nested">
+                <title>Create a Nested Page Flow</title>
+                <p>In this task you will create a nested page flow with actions to select and confirm
+                    the data to return to the main ("nesting") page flow. The new nested controller class
+                    contains an inner Form Bean classs for the data collection. It has only a single
+                    field for the user's choice of sport activity. The options to be displayed are
+                    declared as member data of this nested page flow. After the user confirms the
+                    data, the nested page flow returns a <code>String</code> to the main page flow.</p>
+                <p>
+                In the directory <code>src/myFlow</code> create a directory named <strong><code>sports</code></strong>.
+                </p>
+                <p>
+                In the directory <code>src/myFlow/sports</code> create a Java file named 
+                <strong><code>SportsController.java</code></strong>.
+                </p>
+                <p>Edit <code>src/myFlow/sports/SportsController.java</code> so it appears as follows.</p>
+
+                <p><strong><code>SportsController.java</code></strong></p>
+                <source>
+package myFlow.sports;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+
+@Jpf.Controller(
+    nested = true,
+    simpleActions = {
+        @Jpf.SimpleAction(name="begin", path="index.jsp")
+    }
+)
+public class SportsController
+    extends PageFlowController {
+
+    private String selectedSport;
+    private String[] sports = {"sailing", "surfing", "diving", "volleyball", "bicycling"};
+
+    public String[] getSports() {
+        return sports;
+    }
+
+    public String getSelectedSport() {
+        return selectedSport;
+    }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(name="confirm", path="confirm.jsp")
+        }
+    )
+    public Forward selectSport(SportForm form) {
+        selectedSport = form.getSport();
+        return new Forward("confirm");
+    }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name="success",
+                returnAction="sportSelected",
+                outputFormBeanType=String.class)
+        }
+    )
+    public Forward confirm() {
+        return new Forward("success", selectedSport);
+    }
+
+    public static class SportForm 
+        implements java.io.Serializable {
+
+        private String sport;
+
+        public void setSport(String sport) {
+            this.sport = sport;
+        }
+
+        public String getSport() {
+            return this.sport;
+        }
+    }
+}
+</source>
+                <p>Save and close <code>SportsController.java</code>.</p>
+            </section>
+            <section id="nested_collect_data">
+                <title>To Present and Collect Data using a Form</title>
+                <p>This task illustrates the use of custom tags to render a radio button group in an HTML form and 
+                   link it to the nested page flow <code>selectSport</code> Action method.</p>
+                <p>In the directory <code>web/myFlow</code> create a directory named <strong><code>sports</code></strong>.</p>
+                <p>In the directory <code>web/myFlow/sports</code>, create a file named <code>index.jsp</code>.</p>
+                <p>Edit index.jsp so it appears as follows.</p>
+                <p><strong><code>index.jsp</code></strong></p>
+                <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+  <head>
+    <title>Select Sport</title>
+    <netui:base/>
+  </head>
+  <netui:body>
+    <p>
+      Select Sport Activity
+    </p>
+    <p>
+      <netui:form action="selectSport">
+        <table>
+          <tr>
+            <td>Sports:</td>
+            <td>
+              <netui:radioButtonGroup dataSource="actionForm.sport"
+                      optionsDataSource="${pageFlow.sports}"/>
+            </td>
+          </tr>
+        </table>
+        <netui:button type="submit">Submit</netui:button>
+      </netui:form>
+    </p>
+  </netui:body>
+</netui:html>]]>
+</source>
+                <p>Save <code>index.jsp</code>.</p>
+            </section>
+            <section id="nested_confirm_data">
+                <title>Confirm the Selected Data</title>
+                <p>In the directory <code>web/myFlow/sports</code>, create a file named <code>confirm.jsp</code>.</p>
+                <p>Edit confirm.jsp so it appears as follows.</p>
+                <p><strong><code>confirm.jsp</code></strong></p>
+                <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+  <head>
+    <title>Confirm Sport Activity</title>
+    <netui:base/>
+  </head>
+  <netui:body>
+    <p>
+      Confirm Sport Activity
+    </p>
+    <p>
+      Sport: ${pageFlow.selectedSport}
+    </p>
+    <netui:form action="confirm">
+        <netui:button type="submit" value="Confirm"/>
+    </netui:form>
+  </netui:body>
+</netui:html>
+]]></source>
+                <p>Save <code>confirm.jsp</code>.</p>
+            </section>
+            <section id="nested_display_data">
+                <title>Update the JSP to Display Submitted Data</title>
+                <p>In this step you will update the JSP to present the results from processing the data submission.</p>
+                <p>In the directory <code>web/myFlow</code> update the file named
+                    <strong><code>displayData.jsp</code></strong> and add code to display the additional data.
+                    The code to add appears in bold type.</p>
+                <p>Edit <code>displayData.jsp</code> so it appears as follows.</p>
+
+                <p><strong><code>displayData.jsp</code></strong></p>
+                <source>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>displayData.jsp&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      You submitted the following information:
+    &lt;/p>
+    &lt;p>
+      Name: ${pageInput.name}
+      &lt;br/>
+      Age: ${pageInput.age}
+      &lt;br/>
+      Message: ${pageInput.message}      
+      <strong>&lt;br/>
+      Sport: ${pageInput.sport}</strong>
+    &lt;/p>
+  &lt;/netui:body>
+&lt;/netui:html></source>
+            <p>Save and close <code>displayData.jsp</code>.</p>
+            </section>
+            <section id="nested_build_deploy_again">
+                <title>Recompile and Redeploy the Web Application</title>
+                <p>Compile and (re)deploy the web application using the same steps as described <a href="#create_build_deploy">here</a>.</p>
+            </section>
+            <section id="nested_run_again">
+                <title>To Test the NetUI Web Application</title>
+                <p>Visit the following link:</p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the link.</p>
+                <p>You will be directed to page2.jsp.</p>
+                <p>Click the "Select Sport" button.</p>
+                <p>You will be directed to sports/index.jsp in the nested page flow.</p>
+                <p>Click a radio button and then the Submit button.</p>
+                <p>You will be directed to sports/confirm.jsp in the nested page flow.</p>
+                <p>Click the Confirm button.</p>
+                <p>You will be returned to the page2<code>.jsp</code> page. Notice that the value you selected is
+                   displayed in the Sport field.</p>
+            </section>
+        </section>
+        <section id="sharedflow">
+            <title>Step 9: Adding Actions to a Shared Flow</title>
+            <section id="sharedflow_page">
+                <title>To Create a Common Destination JSP</title>
+                <p>In the directory <code>web</code>, create a file named <code>help.jsp</code>.</p>
+                <p>Edit help.jsp so it appears as follows.</p>
+                <p><strong><code>help.jsp</code></strong></p>
+                <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+  <head>
+    <title>Help Page</title>
+    <netui:base/>
+  </head>
+  <netui:body>
+    <p>
+      Welcome to the Help Page
+    </p>
+  </netui:body>
+</netui:html>]]>
+</source>
+                <p>Save <code>help.jsp</code>.</p>
+            </section>
+            <section id="sharedflow_action">
+                <title>Make an Action available to multiple Page Flows</title>
+                <p>In this task you will add a Simple Action to the existing Shared Flow.  The Action forwards to the 
+                    help page created in the previous task and will be available to multiple page flows in the application.</p>
+                <p>Open the existing Shared Flow file <code>src/shared/SharedFlow.java</code></p>
+                <p>
+                    Edit the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html">
+                        <code>@Jpf.Controller</code>
+                    </a>
+                    annotation for the Shared Flow controller class, <code>SharedFlow</code>, in the <code>SharedFlow.java</code> file and add the <code>simpleActions</code> property. Code to add appears in bold. Don't forget the comma after the <code>catches={...}</code> element!</p>
+                <p><strong><code>SharedFlow.java</code></strong></p>
+                <source>
+...
+
+@Jpf.Controller(
+    catches={
+       @Jpf.Catch(type=PageFlowException.class, method="handlePageFlowException"),
+       @Jpf.Catch(type=Exception.class, method="handleException")
+    }<strong>,
+    simpleActions={
+        @Jpf.SimpleAction(name="showHelp", path="/help.jsp")
+    }</strong>
+)
+public class SharedFlow
+    extends SharedFlowController {
+    ...
+}
+</source>
+                <p>Save <code>SharedFlow.java</code>.</p>
+            </section>
+            <section id="sharedflow_reference">
+                <title>Reference the Shared Flow from the Page Flow</title>
+                <p>
+                    Declare a shared flow reference in the page flow controller class, using the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SharedFlowRef.html">
+                        <code>@Jpf.SharedFlowRef</code>
+                    </a>
+                    annotation. The declaration assigns a name to the referenced shared flow. This name can be used throughout the page flow to reference shared actions and state.
+                </p>
+                <p>Open the file <code>src/myFlow/Controller.java</code>.</p>
+                <p>Edit <code>Controller.java</code> so it appears as follows.  The code to add appears in bold type.</p>
+                <p><strong><code>Controller.java</code></strong></p>
+                <source>
+package myFlow;
+
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import forms.ProfileForm;
+
+import org.apache.beehive.controls.api.bean.Control;
+import controls.HelloWorld;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="toPage2", path="page2.jsp")
+    }<strong>,
+    sharedFlowRefs={
+        @Jpf.SharedFlowRef(name="shared", type=shared.SharedFlow.class)
+    }</strong>
+)
+public class Controller
+    extends PageFlowController
+{
+    ...
+}
+</source>
+                <p>Save <code>Controller.java</code>.</p>
+            </section>
+            <section id="sharedflow_link">
+                <title>Link a Page to the Shared Flow Action</title>
+                <p>In this task you will create a link from the JSP, <code>index.jsp</code> to the
+                    Shared Flow Action.</p>
+                <p>Open the file <code>web/myFlow/index.jsp</code>.</p>
+                <p>Edit <code>index.jsp</code> so it appears as follows.  The code to add appears in bold type.</p>
+                <p><strong><code>index.jsp</code></strong></p>
+                <source>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%>
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+&lt;netui:html>
+  &lt;head>
+    &lt;title>Web Application Page&lt;/title>
+    &lt;netui:base/>
+  &lt;/head>
+  &lt;netui:body>
+    &lt;p>
+      New Web Application Page
+    &lt;/p>
+    &lt;p>
+      &lt;netui:anchor action="toPage2">Link to page2.jsp&lt;/netui:anchor>
+    &lt;/p>
+    <strong>&lt;netui:anchor action="shared.showHelp" popup="true">Help
+      &lt;netui:configurePopup location="false" width="550" height="150">
+      &lt;/netui:configurePopup>
+    &lt;/netui:anchor></strong>
+  &lt;/netui:body>
+&lt;/netui:html></source>
+                <p>Save <code>index.jsp</code>.</p>
+            </section>
+            <section id="sharedflow_build_deploy">
+                <title>Recompile and Redeploy the Web Application</title>
+                <p>Compile and (re)deploy the web application using the same steps as described <a href="#create_build_deploy">here</a>.</p>
+            </section>
+            <section id="sharedflow_run">
+                <title>Test the NetUI Web Application</title>
+                <p>Visit the following link:</p>
+                <p><a class="fork" href="http://localhost:8080/netui-tutorial/myFlow/Controller.jpf">http://localhost:8080/netui-tutorial/myFlow/Controller.jpf</a></p>
+                <p>You will be directed to the <code>index.jsp</code> page.</p>
+                <p>Click the help link.</p>
+                <p>A popup window with the <code>help.jsp</code> page will be displayed.</p>
+            </section>
+        </section>
+    </body>
+    <footer>
+        <legal>Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+    &copy; 2005, Apache Software Foundation
+        </legal>
+    </footer>
+</document>

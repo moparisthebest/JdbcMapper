@@ -1,0 +1,2 @@
+This is a text resource file used for junit testing of the ControlBeanContextSupport class.
+xxx

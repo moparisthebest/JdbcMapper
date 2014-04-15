@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>B14781</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Feb 2005, 06:15:56.264 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b14781/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3B1389F34BE03E93E7116508D9E28135</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=3B1389F34BE03E93E7116508D9E28135; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7ddf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Select Binding to PageFlow</title>
+</head>
+<body>
+<h4>Select Binding to PageFlow</h4>
+<p style="color:green">
+This is a test of the select binding directly to the page flow.  The
+dataSource, optionsDataSource and defaultValue all come from the page flow.
+This page then posts the form in a postback to the same page.  You should
+option selected below the form.
+</p>
+<form action="/coreWeb/bugs/b14781/postback.do" method="post">
+Select Box: <input type="hidden" name="wlw-select_key:{pageFlow.selected}OldValue" value="true">
+<select name="wlw-select_key:{pageFlow.selected}">
+<option value="Option 1">Option 1</option>
+<option value="Option 2">Option 2</option>
+<option value="Option 3" selected>Option 3</option>
+<option value="Option 4">Option 4</option></select>
+ <br>
+<input type="submit" value="Submit">
+</form><br>
+Selected: <span></span>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b14781/postback.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/bugs/b14781/Begin.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.selected}</ses:name>
+                  <ses:value>Option 3</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3B1389F34BE03E93E7116508D9E28135</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>82</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=3B1389F34BE03E93E7116508D9E28135; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7ddf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Select Binding to PageFlow</title>
+</head>
+<body>
+<h4>Select Binding to PageFlow</h4>
+<p style="color:green">
+This is a test of the select binding directly to the page flow.  The
+dataSource, optionsDataSource and defaultValue all come from the page flow.
+This page then posts the form in a postback to the same page.  You should
+option selected below the form.
+</p>
+<form action="/coreWeb/bugs/b14781/postback.do" method="post">
+Select Box: <input type="hidden" name="wlw-select_key:{pageFlow.selected}OldValue" value="true">
+<select name="wlw-select_key:{pageFlow.selected}">
+<option value="Option 1">Option 1</option>
+<option value="Option 2">Option 2</option>
+<option value="Option 3" selected>Option 3</option>
+<option value="Option 4">Option 4</option></select>
+ <br>
+<input type="submit" value="Submit">
+</form><br>
+Selected: <span>Option 3</span>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b14781/postback.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/bugs/b14781/Begin.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.selected}</ses:name>
+                  <ses:value>Option 1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3B1389F34BE03E93E7116508D9E28135</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>82</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=3B1389F34BE03E93E7116508D9E28135; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7ddf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Select Binding to PageFlow</title>
+</head>
+<body>
+<h4>Select Binding to PageFlow</h4>
+<p style="color:green">
+This is a test of the select binding directly to the page flow.  The
+dataSource, optionsDataSource and defaultValue all come from the page flow.
+This page then posts the form in a postback to the same page.  You should
+option selected below the form.
+</p>
+<form action="/coreWeb/bugs/b14781/postback.do" method="post">
+Select Box: <input type="hidden" name="wlw-select_key:{pageFlow.selected}OldValue" value="true">
+<select name="wlw-select_key:{pageFlow.selected}">
+<option value="Option 1" selected>Option 1</option>
+<option value="Option 2">Option 2</option>
+<option value="Option 3">Option 3</option>
+<option value="Option 4">Option 4</option></select>
+ <br>
+<input type="submit" value="Submit">
+</form><br>
+Selected: <span>Option 1</span>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 06:15:56.354 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>3</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

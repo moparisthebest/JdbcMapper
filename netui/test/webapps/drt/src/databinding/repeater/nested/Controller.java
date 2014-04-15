@@ -1,0 +1,79 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * $Header:$
+ */
+package databinding.repeater.nested;
+
+// java imports
+
+// internal imports
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+// external imports
+
+/**
+ *
+ */
+@Jpf.Controller
+public class Controller
+    extends PageFlowController
+{
+    private Data[] dataArray = null;
+
+    /**
+     * @jpf:action
+     * @jpf:forward name="success" path="index.jsp"
+     */
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "index.jsp") 
+        })
+    public Forward begin()
+    {
+        dataArray = new Data[5];
+        for(int i = 0; i < dataArray.length; i++)
+        {
+            dataArray[i] = new Data(i);
+        }
+
+        return new Forward("success", "data", dataArray);
+    }
+
+    public static class Data
+        implements java.io.Serializable
+    {
+        private String _name = null;
+        private int[] _vals;
+        
+        public Data(int index)
+        {
+            _name = "Name: " + index;
+            _vals = new int[5];
+            for(int i = 0; i < 5; i++)
+            {
+                _vals[i] = index*10 + index;
+            }
+        }
+
+        public String getName() {return _name;}
+        public int[] getNumbers() {return _vals;}
+    }
+}

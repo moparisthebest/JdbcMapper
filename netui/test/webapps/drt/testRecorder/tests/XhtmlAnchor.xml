@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>XhtmlAnchor</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>14 Apr 2005, 04:13:29.699 PM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/xhtml/goAnchorTest.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>396B51E38820AE6BE77EF0E7E0EEB45C</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=396B51E38820AE6BE77EF0E7E0EEB45C; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>a7debe4:10342bbf21a:-753d</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title>Anchor Tests</title>
+        <style type="text/css">
+        .normal {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        li {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalError {color: #ff0033;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalHead {color: #000099;font-family:Verdana; font-size:8pt;font-weight: strong;margin:0,0,0,0;}
+        .title {color: #000099;font-family:Verdana; font-size:12pt;margin:2,0,5,0;}
+        .resultDiv {border: thin solid;height: 400px;}
+        </style>
+        <base href="http://localhost:8080/coreWeb/xhtml/anchorTest.jsp" />
+    </head>        
+  <body>
+    <h1 class="normalHead">Anchor Tests</h1>
+    <a href="/coreWeb/xhtml/begin.do" class="normal" hreflang="en" type="text/html" title="Link to the Contents" rel="contents" charset="iso-8859-1" rev="chapter">Test Main</a>
+    <ul>
+    <li><a href="/coreWeb/xhtml/goAnchorTarget.do#bottom" class="normal">Goto Target Page # bottom</a></li>
+    <li><a href="/coreWeb/xhtml/goAnchorTarget.do#top" class="normal">Goto Target Page # top</a></li>
+    <li>Image Map with Anchors (only works in Netscape)<br/>
+    <img src="redblue.gif" alt="pick a color" usemap="#map1" width="200" height="100" />
+        <map id="map1" name="map1">
+            <table width="200"><tr><td width="50%" align="center"> 
+                <a href="/coreWeb/xhtml/goAnchorTarget.do?color=red" class="normal" shape="rect" coords="10, 10, 90, 90" style="color:#ff0033;">Red</a>
+            </td><td width="50%" align="center">
+                <a href="/coreWeb/xhtml/goAnchorTarget.do?color=blue" class="normal" shape="rect" coords="110, 10, 190, 90" style="color:#0000cc;">Blue</a>
+            </td></tr></table>
+        </map>
+    </li>
+    </ul>
+    <a href="/coreWeb/xhtml/begin.do?color=red&amp;color=blue" class="normal" hreflang="en" type="text/html" title="Link to the Contents" rel="contents" charset="iso-8859-1" rev="chapter">Multiple Parameters</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/xhtml/goAnchorTarget.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>396B51E38820AE6BE77EF0E7E0EEB45C</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=396B51E38820AE6BE77EF0E7E0EEB45C; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>a7debe4:10342bbf21a:-753d</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title>Anchor Target Page</title>
+        <style type="text/css">
+        .normal {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalError {color: #ff0033;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalHead {color: #000099;font-family:Verdana; font-size:10pt;font-weight: strong;margin:0,0,0,0;}
+        .title {color: #000099;font-family:Verdana; font-size:12pt;margin:2,0,5,0;}
+        .resultDiv {border: thin solid;height: 400px;}
+        </style>
+    </head>        
+  <body>
+    <a id="top" name="top"></a>
+    <table width="400pt"><tr><td valign="middle" align="left"><p class="normalHead">Anchor Target Page</p></td>
+    <td valign="middle" align="right"><a href="/coreWeb/xhtml/goAnchorTest.do" class="normal">Anchor Tests</a></td>
+    </tr></table>
+    <p class="normal">Targets for the anchor tests</p>
+    <p class="normal">Color: <span></span></p>
+    <p><a href="#bottomP" class="normal">Go to Bottom</a></p>
+    <div style="height:300pt;width:200pt;border:thin solid;">
+    </div>
+    <a id="bottom" name="bottom"></a>
+    <p id="bottomP" class="normal"><a href="#top">Bottom of the page...</a></p>
+  <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/xhtml/goAnchorTest.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>396B51E38820AE6BE77EF0E7E0EEB45C</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=396B51E38820AE6BE77EF0E7E0EEB45C; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>a7debe4:10342bbf21a:-753d</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title>Anchor Tests</title>
+        <style type="text/css">
+        .normal {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        li {color: #000099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalError {color: #ff0033;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normalHead {color: #000099;font-family:Verdana; font-size:8pt;font-weight: strong;margin:0,0,0,0;}
+        .title {color: #000099;font-family:Verdana; font-size:12pt;margin:2,0,5,0;}
+        .resultDiv {border: thin solid;height: 400px;}
+        </style>
+        <base href="http://localhost:8080/coreWeb/xhtml/anchorTest.jsp" />
+    </head>        
+  <body>
+    <h1 class="normalHead">Anchor Tests</h1>
+    <a href="/coreWeb/xhtml/begin.do" class="normal" hreflang="en" type="text/html" title="Link to the Contents" rel="contents" charset="iso-8859-1" rev="chapter">Test Main</a>
+    <ul>
+    <li><a href="/coreWeb/xhtml/goAnchorTarget.do#bottom" class="normal">Goto Target Page # bottom</a></li>
+    <li><a href="/coreWeb/xhtml/goAnchorTarget.do#top" class="normal">Goto Target Page # top</a></li>
+    <li>Image Map with Anchors (only works in Netscape)<br/>
+    <img src="redblue.gif" alt="pick a color" usemap="#map1" width="200" height="100" />
+        <map id="map1" name="map1">
+            <table width="200"><tr><td width="50%" align="center"> 
+                <a href="/coreWeb/xhtml/goAnchorTarget.do?color=red" class="normal" shape="rect" coords="10, 10, 90, 90" style="color:#ff0033;">Red</a>
+            </td><td width="50%" align="center">
+                <a href="/coreWeb/xhtml/goAnchorTarget.do?color=blue" class="normal" shape="rect" coords="110, 10, 190, 90" style="color:#0000cc;">Blue</a>
+            </td></tr></table>
+        </map>
+    </li>
+    </ul>
+    <a href="/coreWeb/xhtml/begin.do?color=red&amp;color=blue" class="normal" hreflang="en" type="text/html" title="Link to the Contents" rel="contents" charset="iso-8859-1" rev="chapter">Multiple Parameters</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>14 Apr 2005, 04:13:31.261 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>3</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>3</ses:failedCount>
+</ses:recorderSession>

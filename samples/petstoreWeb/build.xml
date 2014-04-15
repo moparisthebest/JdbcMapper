@@ -1,0 +1,190 @@
+<?xml version="1.0" ?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ -->
+<project name="Beehive/Samples/PetstoreWeb" default="build" basedir=".">
+
+    <property environment="os"/>
+    <property file="build.properties"/>
+    <import file="${beehive.home}/beehive-imports.xml"/>
+
+    <property name="tmp.sourcegen.dir" value=".tmpbeansrc"/>
+
+    <property name="build.dir" location="build"/>
+    <property name="web.dir" location="web"/>
+    <property name="src.dir" location="src"/>
+
+    <property name="testclasses.dir" location="classes/test"/>
+    <property name="testsrc.dir" location="test-src"/>
+  
+    <path id="webapp.classpath">
+        <path refid="velocity.dependency.path"/>
+        <path refid="netui-compiler.dependency.path"/>
+
+        <pathelement location="${jsp-api.jar}"/>
+        <pathelement location="${servlet-api.jar}"/>
+        <fileset dir="${build.dir}/WEB-INF/lib" includes="*.jar"/>
+        <pathelement location="${build.dir}/WEB-INF/classes"/>
+    </path>    
+
+    <path id="webapptest.classpath">
+        <path refid="webapp.classpath"/>
+        <pathelement location="${testclasses.dir}"/>
+        <fileset dir="${httpunit.dir}/lib" includes="*.jar"/>
+        <fileset dir="${httpunit.dir}/jars" includes="*.jar"/>
+    </path>    
+
+    <!-- ================================================== -->
+    <!-- deploy the Beehive framework JARs into WEB-INF/lib -->
+    <!-- ================================================== -->
+    <target name="deploy-beehive" description="Copy the Beehive webapp rutime into the petstoreWeb webapp">
+        <mkdir dir="${build.dir}"/>
+
+        <available file="${derby.jar}" property="derby.present"/>
+        <fail unless="derby.present" 
+              message="Unable to locate ${derby.jar}.  Please download Derby from http://db.apache.org/derby/derby_downloads.html and set the derby.jar property in build.properties."/>
+
+        <copy todir="${build.dir}/WEB-INF/lib" file="${derby.jar}"/>
+        <copy todir="${build.dir}/WEB-INF/lib" file="${jdbc-control.jar}"/>
+
+        <deploy-netui webappDir="${build.dir}"/>
+    </target>
+
+    <!-- ========================================= -->
+    <!-- build - build the webapp                  -->
+    <!-- ========================================= -->
+
+    <target name="build" depends="deploy-beehive" description="Build the webapp">
+        <copy todir="${build.dir}/">
+            <fileset dir="${web.dir}"/>
+        </copy>
+
+        <copy todir="${build.dir}/WEB-INF/classes">
+            <fileset dir="${src.dir}/">
+                <include name="sql/**"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+
+        <taskdef name="apt" 
+                 classname="org.apache.beehive.controls.runtime.generator.AptTask" 
+                 classpathref="webapp.classpath"
+                 onerror="fail"/>
+
+        <apt srcdir="${src.dir}"
+             destdir="${build.dir}/WEB-INF/classes"
+             gendir="${build.dir}/WEB-INF/${tmp.sourcegen.dir}"
+             classpathref="webapp.classpath"
+             srcExtensions="*.java"
+             debug="true"
+             processorOptions="web.content.root=${web.dir}"
+             nocompile="false"/>
+    </target>
+  
+    <target name="copy.jsps" 
+            description="When deploying an exploded webapp, this target copies changed JSPs into the deployed directory">
+        <copy todir="${build.dir}/">
+            <fileset dir="${web.dir}">
+                <exclude name="WEB-INF/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- ========================================= -->
+    <!-- clean - clean the webapp                  -->
+    <!-- ========================================= -->
+    <target name="scrub" description="Scrub the webapp">
+        <delete dir="${build.dir}"/>
+        <antcall target="test.clean"/>
+    </target>
+
+    <target name="clean" description="Clean the webapp">
+        <delete dir="${testclasses.dir}"/>
+        <delete dir="${build.dir}/WEB-INF/classes"/>
+        <delete dir="${build.dir}/WEB-INF/jspc-src"/>
+        <delete dir="${build.dir}/WEB-INF/${tmp.sourcegen.dir}"/>
+    </target>
+  
+    <!-- =========================================== -->
+    <!-- create a compressed WAR file for deployment -->
+    <!-- =========================================== -->
+    <target name="war" description="Build a compressed WAR file that can be deployed to an application container">
+        <property name="archive.dir" location="${basedir}"/>
+
+        <!-- this does *not* exclude source from the archive -->
+        <war destfile="${archive.dir}/${context.path}.war" webxml="${build.dir}/WEB-INF/web.xml">
+            <fileset dir="${build.dir}">
+                <exclude name="WEB-INF/web.xml"/>
+            </fileset>
+        </war>
+    </target>
+
+    <!-- =========================================== -->
+    <!-- build / run HTTPUnit tests                  -->
+    <!-- =========================================== -->
+    <target name="test.build" depends="ensure.httpunit" description="Build the HTTPUnit tests for the petstore">
+        <mkdir dir="${testclasses.dir}"/>
+        <javac srcdir="${testsrc.dir}" 
+               destdir="${testclasses.dir}" 
+               classpathref="webapptest.classpath"
+               debug="true"/>
+    </target>
+
+    <target name="test.clean" description="Clean the HTTPUnit tests for the petstore">
+        <delete dir="${testclasses.dir}"/>
+    </target>
+
+    <target name="test.run" depends="ensure.httpunit,test.build" 
+            description="Run the HTTPUnit tests against the petstore">
+        <junit fork="yes" haltonfailure="yes" printsummary="yes">
+            <formatter type="plain" usefile="false"/>
+            <classpath>
+                <path refid="webapptest.classpath"/>
+            </classpath>
+            <test name="org.apache.beehive.samples.petstore.test.AllTests"/>
+        </junit>
+    </target>
+
+    <target name="ensure.httpunit">
+        <available file="${httpunit.dir}" type="dir" property="httpunit.present"/>
+        <fail unless="httpunit.present" 
+              message="Unable to locate HTTPUnit 1.6.  Please download HTTPUnit from http://httpunit.sourceforge.net"/>
+    </target>
+
+    <!-- =========================================== -->
+    <!-- utility targets                             -->
+    <!-- =========================================== -->
+
+    <target name="usage" description="Print usage information for this build file">
+        <echo>
+Welcome to the Beehive petstoreWeb sample webapp!  
+
+To build the petstore, run:
+ant deploy-beehive
+ant build
+ant war
+
+Once the .war archive is built, it's ready to deploy to an application container.
+        </echo>
+
+        <java fork="no" classname="org.apache.tools.ant.Main">
+            <arg line="-f ${ant.file} -projecthelp"/>
+        </java>
+    </target>
+
+</project>

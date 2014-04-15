@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<!--
+    A build file that needs to be imported by all beehive distribution test modules.             
+-->
+<project name="distribution-test-imports" default="" basedir=".">
+
+    <property environment="os"/>
+    <dirname property="test.home" file="${ant.file.distribution-test-imports}"/>
+
+    <property name="build.dir" location="${test.home}/build"/>
+    <property name="test.result.root" location="${build.dir}/testResults"/>
+    <property name="test.webapp.root" location="${build.dir}/webapps"/>
+
+    <property name="servlet.runtime" value="tomcat"/>
+    <property name="server.root.url" value="http://localhost:8080"/>
+    <property name="tomcat.dir" location="${os.CATALINA_HOME}"/>
+    <property name="ant-junit.jar" location="${os.ANT_HOME}/lib/ant-junit.jar"/>
+    <property name="servlet24.jar" location="${tomcat.dir}/common/lib/servlet-api.jar"/>
+    <property name="jsp20.jar" location="${tomcat.dir}/common/lib/jsp-api.jar"/>
+
+    <!-- define commons-logging location -->
+    <patternset id="commons-logging.patternset">
+        <include name="commons-logging-1.0.4.jar" />
+    </patternset>
+
+    <fileset id="commons-logging.fileset" dir="${dist.home}/lib/common">
+        <patternset refid="commons-logging.patternset" />
+    </fileset>
+
+    <path id="commons-logging.dependency.path">
+        <fileset refid="commons-logging.fileset"/>
+    </path>
+
+    <!-- ======================================================================== -->
+    <!-- Common Beehive Distribution Test Ant macros                              -->
+    <!-- ======================================================================== -->
+
+    <macrodef name="build-webapp">
+        <attribute name="webappDir"/>
+        <sequential>
+            <echo>Build webapp ${webapp.dir}</echo>
+            <ant dir="${test.home}/ant" antfile="testdist-buildWebapp.xml" target="build" inheritAll="false">
+                <property name="dist.home" location="${dist.home}"/>
+                <property name="webapp.dir" location="@{webappDir}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="clean-webapp">
+        <attribute name="webappDir"/>
+        <sequential>
+            <echo>Clean webapp ${webapp.dir}</echo>
+            <ant dir="${test.home}/ant" antfile="testdist-buildWebapp.xml" target="clean" inheritAll="false">
+                <property name="dist.home" location="${dist.home}"/>
+                <property name="webapp.dir" location="@{webappDir}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="deploy-netui">
+        <attribute name="webappDir"/>
+        <sequential>
+            <echo>Deploy NetUI to webapp ${webapp.dir}</echo>
+            <ant dir="${dist.home}/ant" antfile="beehive-runtime.xml" 
+                 target="deploy.beehive.webapp.runtime" inheritAll="false">
+                <property name="webapp.dir" location="@{webappDir}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="deploy-wsm">
+        <attribute name="webappDir"/>
+        <sequential>
+            <echo>Deploy WSM to webapp ${webapp.dir}</echo>
+            <ant dir="${dist.home}/ant" antfile="beehive-runtime.xml" 
+                 target="deploy.wsm.webapp.runtime" inheritAll="false">
+                <property name="webapp.dir" location="@{webappDir}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="deploy-webapp">
+        <attribute name="webappDir"/>
+        <attribute name="contextPath"/>
+        <sequential>
+            <ant dir="${test.home}/ant" antfile="${servlet.runtime}-imports.xml" target="deploy" inheritAll="false">
+                <property name="webapp.dir" location="@{webappDir}"/>
+                <property name="context.path" value="@{contextPath}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="undeploy-webapp">
+        <attribute name="contextPath"/>
+        <sequential>
+            <ant dir="${test.home}/ant" antfile="${servlet.runtime}-imports.xml" target="undeploy" inheritAll="false">
+                <property name="context.path" value="@{contextPath}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="redeploy-webapp">
+        <attribute name="contextPath"/>
+        <sequential>
+            <ant dir="${test.home}/ant" antfile="${servlet.runtime}-imports.xml" target="redeploy" inheritAll="false">
+                <property name="context.path" value="@{contextPath}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="start-server">
+        <attribute name="shmem"/>
+        <attribute name="javaOptions"/>
+        <sequential>
+            <!-- if shmem, set target to "start.shmem" -->
+            <condition property="start.target" value="start.with.shmem">
+                 <istrue value="@{shmem}"/>
+            </condition>
+            <condition property="start.target" value="start">
+                 <isfalse value="@{shmem}"/>
+            </condition>
+
+            <ant dir="${test.home}/ant" antfile="${servlet.runtime}-imports.xml" 
+                 target="${start.target}" inheritAll="false">
+                <property name="java.options" value="@{javaOptions}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="stop-server">
+        <sequential>
+            <ant dir="${test.home}/ant" antfile="${servlet.runtime}-imports.xml" target="stop" inheritAll="false"/>
+        </sequential>
+    </macrodef>
+</project>

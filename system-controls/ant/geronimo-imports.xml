@@ -1,0 +1,143 @@
+<?xml version="1.0" ?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+<project name="Beehive/SystemControls/GeronimoUtils" default="check.geronimo" basedir=".">
+
+    <!--
+    -->
+    <target name="check.cactus" description="Verify that CACTUS_HOME has been defined.">
+        <condition property="cactus.home.set.and.valid">
+            <and>
+                <isset property="os.CACTUS_HOME"/>
+                <available file="${os.CACTUS_HOME}"/>
+            </and>
+        </condition>
+        <fail unless="cactus.home.set.and.valid" message="CACTUS_HOME environment variable not set or invalid!"/>
+    </target>
+
+
+    <!--
+    -->
+    <target name="check.geronimo" description="Verify that GERONIMO_HOME has been defined.">
+        <condition property="geronimo.home.set.and.valid">
+            <and>
+                <isset property="os.GERONIMO_HOME"/>
+                <available file="${os.GERONIMO_HOME}"/>
+            </and>
+        </condition>
+        <fail unless="geronimo.home.set.and.valid" message="GERONIMO_HOME environment variable not set or invalid!"/>
+    </target>
+
+    <!--
+    -->
+    <target name="deploy.ear">
+        <fail unless="waitfor.url" description="URL of the deployed application. Required"/>
+        <fail unless="ear.to.deploy" description="ear file to deploy. Required"/>
+
+        <echo>Ensuring that the webapp is deployed on a running server at the url ${waitfor.url}</echo>
+
+        <waitfor maxwait="5" maxwaitunit="second" timeoutproperty="unavailable">
+            <http url="${waitfor.url}"/>
+        </waitfor>
+
+        <antcall target="do.deploy"/>
+        <antcall target="do.redeploy"/>
+        <fail if="still.unavailable" message="Couldn't find webapp with path ${waitfor.url}"/>
+
+    </target>
+
+    <!--
+    -->
+    <target name="do.deploy" if="unavailable">
+        <echo>Webapp is not deployed; deploying</echo>
+
+        <antcall target="deploy.ear.file"/>
+        <echo>...deploy complete</echo>
+
+        <waitfor maxwait="120" maxwaitunit="second" timeoutproperty="still.unavailable">
+            <http url="${waitfor.url}"/>
+        </waitfor>
+    </target>
+
+    <!--
+    -->
+    <target name="do.redeploy" unless="unavailable">
+        <echo>Webapp is deployed; undeploy and redeploy</echo>
+
+        <antcall target="undeploy.ear"/>
+        <echo>...undeploy complete</echo>
+
+        <antcall target="deploy.ear.file"/>
+        <echo>...deploy complete</echo>
+
+        <waitfor maxwait="120" maxwaitunit="second" timeoutproperty="still.unavailable">
+            <http url="${waitfor.url}"/>
+        </waitfor>
+    </target>
+
+    <!--
+    -->
+    <target name="deploy.ear.file" description="deploy and ear file to the server.">
+        <echo message="** deploying ${ear.to.deploy} **"/>
+        <deploy-webapp webappDir="${ear.to.deploy}" contextPath=""/>
+    </target>
+
+    <!--
+    -->
+    <target name="undeploy.ear" description="Undeploy webapp">
+        <fail unless="target.module.id" description="Target module id of the application to undeploy. Required"/>
+        <undeploy-webapp contextPath="${target.module.id}"/>
+    </target>
+
+    <!--
+    -->
+    <target name="deploy.jms.configuration"
+            description="Deploy an JMS Broker configuration to a running Geronimo server">
+
+        <fail unless="broker.config.file"
+              message="Can't configure the JMS brokerd; the value broker.config.file was unspecified"/>
+        <fail unless="broker.rar" message="Can't configure the JMS brokerd; the value broker.rar was unspecified"/>
+        <fail unless="geronimo.username" message="Can't configure the JMS brokerd; the value geronimo.username was unspecified"/>
+        <fail unless="geronimo.password" message="Can't configure the JMS brokerd; the value geronimo.password was unspecified"/>
+
+        <antcall target="undeploy.ear"/>
+
+        <property name="_url" value="file://${broker.config.file}"/>
+        <echo>Configuring the JMS broker from ${_url}</echo>
+        <java fork="true" jar="${geronimo.home}/bin/deployer.jar">
+            <arg value="--user"/>
+            <arg value="${geronimo.username}"/>
+            <arg value="--password"/>
+            <arg value="${geronimo.password}"/>
+            <arg value="deploy"/>
+            <arg value="${broker.config.file}"/>
+            <arg value="${broker.rar}"/>
+        </java>
+        <sleep seconds="5"/>
+    </target>
+
+    <target name="start.geronimo">
+        <start-server shmem="false" javaOptions=""/>
+    </target>
+
+    <target name="stop.geronimo">
+        <stop-server/>
+    </target>
+</project>

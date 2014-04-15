@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_MissingBegin\Controller.java:17: There is no begin action defined for this PageFlowController.
+public class Controller extends PageFlowController
+       ^
+1 error

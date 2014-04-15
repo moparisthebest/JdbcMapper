@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>RichTreeEncodeContent</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Apr 2005, 11:02:26.915 AM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/richTree/encodeContent.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-77f6</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>encodeContent.jsp</title>
+        <link href="style.css" rel="stylesheet" type="text/css">
+        <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+        <style type="text/css">
+        .alien {
+            position: absolute;
+            left: 170pt;
+        }
+        .leaf {
+            font-family: "new century schoolbook", serif ; 
+            font-size: 10pt;
+            color: #c90000;
+        }
+        .container {
+            font-family: "new century schoolbook", serif ; 
+            font-size: 12pt;
+            color: #990000;
+        }
+        </style>
+        <base href="http://localhost:8080/coreWeb/richTree/encodeContent.jsp">
+    </head>
+    <body>
+        <h4 class="title"><a href="/coreWeb/richTree/begin.do" class="homeAnchor">Home</a>encodeContent.jsp [goEncodeContent.do] </h4>
+        <!-- Attribute Information -->
+        <div style='float:left;width:300px'>
+        <table cellpadding="2" cellspacing="0" border="1" width="300px">
+        <tr><th>Creation</th><td>Static</td></tr>
+        <tr><th>tree</th><td>{pageFlow.tree20}</td></tr>
+        <tr><th>action</th><td>postback</td></tr>
+        <tr><th>runAtClient</th><td>false</td></tr>
+        </table>
+        </div>
+        <!-- Postback information -->
+        <div style='float:right;width:250px;border:solid 1pt gray;margin:2 4;'>
+        <p style="font-weight:bold;text-align:center;margin: 0;padding:0;">Tree Postback Information</p>
+        <table cellpadding='0' cellspacing='2' width="100%">
+        <tr><th style="text-align:right" width="100pt">Expand:</th><td>&nbsp;</td></tr>
+        <tr><th style="text-align:right" width="100pt">Selection:</th><td>&nbsp;</td></tr>
+        </table>
+        </div>
+	Verify that both the content and label may be encoded for HTML during tree
+	processing.  In the tree node below both the label and content contains JavaScript
+	which will causes an alert in the browser if not encoded.
+        <hr style="clear:left">
+        <div class="content">
+        <div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/richTree/postback.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Tree Node">&nbsp;JavaScript:
+	        &lt;script language=&quot;JavaScript&quot; type=&quot;text/JavaScript&quot;&gt;
+		  alert(&quot;Label Script&quot;);
+                &lt;/script&gt;&nbsp;</a>
+      Content with JavaScript:
+	        &lt;script language=&quot;JavaScript&quot; type=&quot;text/JavaScript&quot;&gt;
+		  alert(&quot;Content Script&quot;);
+                &lt;/script&gt;
+   </div>
+</div>
+
+        </div>
+    <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+-->
+</script></body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Apr 2005, 11:02:27.546 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

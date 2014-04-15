@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Page Flow Controllers</title>
+  </header>
+  <body>
+
+  <section id="introduction">
+    <title>Introduction</title>
+
+    <p>
+    This topic explains the basics behind implementing <strong>controller</strong> files and 
+	<strong>actions</strong>.
+	As introduced in the previous topic (<a href="site:pageflow_overview">NetUI Overview</a>) the
+    following web application schematic will be used.
+    </p>
+
+    <p>
+      <img src="images/impl-flow-1.png" alt="implementation page flow"/>
+    </p>
+    
+  </section>
+
+  <section id="starting_the_controller">
+    <title>Starting the Controller Class</title>
+    <p>
+    The first step to writing a controller class is to create a new basic class
+    named <code>Controller.java</code>.  
+    </p>
+
+<source><strong>public class Controller 
+{
+}</strong></source>
+
+
+<source><strong>import org.apache.beehive.netui.pageflow.PageFlowController;</strong>
+
+public class Controller 
+    <strong>extends PageFlowController</strong>
+{
+}</source>
+
+    <p>
+    Additionally, Beehive weaves magic into controller classes using metadata annotations.
+    The
+    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html">
+        <code>@Jpf.Controller</code>
+    </a>
+    annotation is a required marker on any NetUI controller class.  The <code>@Jpf.Controller</code>
+    annotation alerts the compiler that this class is a special Page Flow controller class, instead
+    of a typical Java class. 
+    </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.PageFlowController;
+<strong>import org.apache.beehive.netui.pageflow.annotations.Jpf;</strong>
+
+<strong>@Jpf.Controller</strong>
+public class Controller 
+    extends PageFlowController
+{
+}
+</source>
+<p></p>
+    <p>
+    Now we have the beginnings of a controller implementation.
+    </p>
+
+  </section>
+
+  <section id="fleshing_out_the_controller">
+    <title>Fleshing Out the Controller</title>
+
+    <p>
+    Now that the boilerplate <code>Controller.java</code> is in place, we can begin
+    to implement the actions that determine which JSP should actually be displayed.  
+	In the above
+    model, there are 5 actions, plus one more action required by all Controller classes, the 
+	<code>begin</code> method.  (Details about the <code>begin</code> method appear below.)  
+    </p>
+
+    <ul>
+      <li><code>begin</code></li>
+      <li><code>login</code></li>
+      <li><code>myPage</code></li>
+      <li><code>signUp</code></li>
+      <li><code>processLogin</code></li>
+      <li><code>processSignUp</code></li>
+    </ul>
+
+
+    <p>There are two basic ways to implement actions: you can implement an action either as a 
+		(1) <strong><em>simple action</em></strong> 
+		or as an
+	(2) <strong><em>action method</em></strong>.</p>
+	
+    <p><strong>Simple Actions</strong> are class-level annotations, that is, annotations that decorate the 
+	controller class.  (You can also think of simple actions as <em>configurations</em>
+	of the controller class.  If you are familiar with Struts, it might help you to know that
+	simple actions turn into <code>&lt;action></code> elements in the struts-config.xml file that is 
+	automatically generated when a controller class is compiled.)  Syntactically they appear as follows:</p>
+	
+	<source>@Jpf.Controller(
+    <strong>simpleActions={
+        @Jpf.SimpleAction( name="someName", path="somePage.jsp", <em>[...other properties...]</em> )
+    }</strong>
+)
+public class Controller
+{
+...
+}</source>
+	
+	<p>Simple actions can handle navigation, form submission, and form validation.  
+		If that is all your action needs to accomplish, you should implement the action as 
+		a simple action.  What simple actions <em>can't</em> do is handle decision logic.  If your action
+		needs to make a decision and conditionally execute code based on that decision, you should 
+		implement the action as an <em>action method</em>.</p>
+		
+	<p><strong>Action Methods</strong> are Java methods that have been endowed with all of the magic of 
+		actions: that is, they can navigate users around the page flow, handle form submissions, validate form 
+		data, handle decision logic, etc.  (You can also think of the action methods as 
+		<em>configurations</em> of individual methods, in contrast to simple actions, which configure the
+		entire class. Again, if you are familiar with Struts, know that
+        action methods, just like simple actions, are complied as <code>&lt;action></code> elements in the 
+		struts-config.xml file.)  Syntactically speaking, an action method is a Java method that 
+		(1) returns the type
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">
+            <code>Forward</code>
+        </a>
+        and (2) is 
+		decorated with the
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">
+            <code>@Jpf.Action</code>
+        </a>
+        annotation:
+    </p>
+	<source><strong>@Jpf.Action</strong>(
+        forwards = {
+            <strong>@Jpf.Forward( name="someName", path="somePath.jsp", <em>[...other properties...]</em> )</strong>
+        }
+    )
+    public <strong>Forward</strong> someMethod()
+    {
+        ...
+    }</source>
+<section>
+	<title>Simple Actions</title>
+    <p>
+    Three of our five actions are purely navigational, and, as such,
+	implementable as simple actions.
+	Those actions are <code>begin</code>, <code>login</code>, and <code>signUp</code>.  
+	The remaining actions require object oriented programming, 
+	so they will be implemented as action methods. 
+	</p>
+
+		<p>The simple action implementations appear below. The following 
+            <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SimpleAction.html">
+                <code>@Jpf.SimpleAction</code>
+            </a>
+            annotations define a set of mappings between action names
+			and JSP destinations.  When a particular action is invoked,
+			the user is carried to the corresponding JSP.</p>
+	<note>Each Controller class requires a simple action or action method named 
+		<code>begin</code>--without it the class will not compile.  The begin action
+		functions as the entry-point into the page flow.  In this case the begin action
+		simply navigates the user to the <code>index.jsp</code> page.</note>
+	<source>
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(
+    <strong>simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="login", path="login.jsp"),
+        @Jpf.SimpleAction(name="signUp", path="signup.jsp"),
+    }</strong>
+)
+public class Controller 
+    extends PageFlowController
+{
+}
+</source>
+	
+</section>
+
+
+    <section id="action_methods">
+      <title>Action Methods</title>
+
+      <p>
+	  Now it is time to re-implement the three action methods: <code>login</code>, 
+		<code>processLogin</code>, and <code>processSignUp</code>.
+      </p>
+      <p>
+	  The <code>myPage</code> action
+      must determine if the user has already authenicated himself or not and the action must
+	  behave differently depending on the 
+	  result of that determination.  If the user
+	  has already been authenticated, then the page <code>myPage.jsp</code> will be displayed;
+	  if the user has not been authenticated yet, then the page <code>login.jsp</code> will
+	  be displayed.
+      </p>
+
+	  <p>We will implement this behavior in two steps: (1) first will implement a <strong>rudimentary action
+		method</strong>, (2) second we will add the <strong>conditional navigational behavior</strong> to the method.</p>
+ 
+	  <section>
+		<title>Rudimentary Action Methods: Constant Forwards</title>
+ 
+      <p>
+        An action method must have two features:
+		(1) it must the type
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">
+            <code>Forward</code>
+        </a>
+        and (2) must be decorated with the
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">
+            <code>@Jpf.Action</code>
+        </a>
+        annotation.
+      </p>
+	      <p>
+            The first step in the re-implementation process is to remove the simple action named
+			<code>mypage</code> and replace it with a method named <code>myPage()</code>. By returning a 
+            <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">
+                <code>Forward</code>
+            </a>
+            object, the method indicates which page to
+            display to the user.  
+          </p>
+
+<source><strong>import org.apache.beehive.netui.pageflow.Forward;</strong>
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp"),
+        @Jpf.SimpleAction(name="login", path="login.jsp"),
+        @Jpf.SimpleAction(name="signUp", path="signup.jsp"),
+        @Jpf.SimpleAction(name="processLogin", path="mypage.jsp"),
+        @Jpf.SimpleAction(name="processSignUp", path="thanks.jsp")
+    }
+)
+public class Controller 
+    extends PageFlowController
+{
+    <strong>
+    public Forward myPage()
+    {
+        ...
+    }
+    </strong>
+}
+</source>
+
+      <p>
+      To help with configuration and to avoid having JSP
+      names within the body of a controller method, Beehive once
+      again uses annotations.  The <code>Jpf.Action</code> and
+      <code>Jpf.Forward</code> annotations are used on each action method to
+      build a <strong>mapping</strong> between <strong>forward names</strong> and 
+	  <strong>JSPs</strong>.  The method
+      then works only in terms of the forward name, and doesn't
+      directly refer to the JSP path.
+      </p>
+
+      <p>
+      The general form the of <code>Jpf.Action</code>/<code>Jpf.Forward</code> annotations are:
+      </p>
+
+<source>
+@Jpf.Action(
+  forwards = {
+    @Jpf.Forward( <strong>name="...", path="..."</strong> ),
+    @Jpf.Forward( <strong>name="...", path="..."</strong> ),
+    @Jpf.Forward( <strong>name="...", path="..."</strong> )
+  }
+)
+</source>
+
+      <p>
+	  By convention, forward names such as <strong>success</strong> and <strong>failure</strong>
+      are used, but by no means are required.  It is good practice, though, to avoid naming the
+      forward based upon the JSP name since doing so would remove some of the decoupling that
+      Beehive applications attempt to achieve.
+      </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(
+   ...
+)
+public class Controller 
+    extends PageFlowController
+{
+    <strong>@Jpf.Action(
+        forwards = {
+            @Jpf.Forward( name="success", path="mypage.jsp" )
+        }
+    )</strong>
+    public Forward myPage()
+    {
+        ...
+    }
+}
+</source>
+
+      <p>
+      All that is left is a <code>return</code>
+      statement to return the appropriate <code>Forward</code> object.  This is accomplished
+      simply by constructing a new <code>Forward</code> with the appropriate name.
+      </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(
+   ...
+)
+public class Controller 
+    extends PageFlowController
+{
+    <strong>@Jpf.Action(
+        forwards = {
+            @Jpf.Forward( name="success", path="mypage.jsp" )
+        }
+    )</strong>
+    public Forward myPage()
+    {
+        <strong>return new Forward( "success" );</strong>
+    }
+}
+</source>
+<p>Now we have re-implemented one of our simple actions as an action method.  However, our new action method 
+doesn't do anything more than the original simple action.  The new action method remains a purely navigational
+action: it is not yet capable of any decision logic and conditional execution.  In the next section we will
+endow the action method with conditional navigational behavior.
+</p>
+
+	  </section>
+	  
+<section>
+	<title>Advanced Action Methods: Conditional Forwards</title>
+	
+</section>
+      <p>
+      The first step in adding conditional navigational behavior is to define <em>two</em> forwards 
+	  named <strong>authenticated</strong> and <strong>not_authenticated</strong>,
+      which are mapped to <code>mypage.jsp</code> and <code>login.do</code> respectively.
+	  
+      </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(
+    ...
+)
+public class Controller 
+    extends PageFlowController
+{
+    @Jpf.Action(
+        forwards = {
+            <strong>@Jpf.Forward( name="authenticated",     path="mypage.jsp" ),
+            @Jpf.Forward( name="not_authenticated", path="login.do" )</strong>
+        }
+    )
+    public Forward myPage()
+    {
+        ...
+    }
+}
+</source>
+
+<p>But how does the method decide which forward to invoke?       
+	In this case, the determination of authentication is performed by checking a 
+	  <strong>session attribute</strong>
+      to see if the <code>authenticated_user</code> attribute has been set.</p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+<strong>import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;</strong>
+
+@Jpf.Controller(
+    ...
+)
+public class Controller 
+    extends PageFlowController
+{
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward( name="authenticated",     path="mypage.jsp" ),
+            @Jpf.Forward( name="not_authenticated", path="login.do" )
+        }
+    )
+    public Forward myPage()
+    {
+        <strong>HttpServletRequest request = getRequest();
+        HttpSession session = request.getSession();
+
+        if ( session.getAttribute( "authenticated_user" ) != null )
+        {
+            return new Forward( "authenticated" );
+        }
+
+        return new Forward( "not_authenticated" );</strong>
+    }
+}
+</source>
+	  <p>
+	  Now that we have a method with two possible navigation outcomes, the flow diagram 
+	  appears as follows.  Notice the two named arrows exiting the <code>myPage()</code> method.
+	  </p>
+	  <p><img src="images/impl-flow-1-conditional-forward.png" alt="conditional forwards"/></p>
+      <p>
+      You may notice that the body of <code>myPage()</code> has no particular logic regarding
+      the JSP "myPage.jsp" itself.  It simply operates in terms of authentication and generically
+      named <code>Forward</code> objects.  This presents a possibility of sharing this logic
+      with other controller methods that are concerned with authentication.  
+	<!-- Comment out for v1, document does not yet exist. For more ideas along these lines, please see -->
+		<!--<link href="controller_patterns.html">--><!--Controller Patterns [todo: forthcoming document]--><!--</link>-->.
+      </p>
+    </section>
+    <section id="handling_forms">
+      <title>Handling Forms</title>
+
+      <p>
+      Handling form data works similar to other controller methods.  By providing a parameter
+      to the controller method the HTML form data is made available to the controller method.  In the above model, controller methods that process forms have been named
+      with the <code>processXXX(..)</code> convention.
+      </p>
+
+      <ul>
+        <li><code>processLogin(...)</code></li>
+        <li><code>processSignUp(...)</code></li>
+      </ul>
+
+      <p>
+      First, define a JavaBean to represent the HTML form to be submitted.  This JavaBean can be of 
+	  any Java type, as long as it conforms to standard JavaBean syntax.  
+    </p>
+    <p>The JavaBean may be defined (1) as a <code>static</code> inner class of the controller itself 
+		(see example below) or (2) as a stand-alone Java class in a separate file.  The 
+		JavaBean class follows normal JavaBean conventions and requires no special annotations.   
+      </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+@Jpf.Controller
+public class Controller 
+    extends PageFlowController
+{
+    ...
+    ...
+
+    <strong>public static class LoginForm implements java.io.Serializable
+    {
+        private String username;
+        private String password;
+
+        public void setUsername(String username)
+        {
+            this.username = username;
+        }
+
+        public String getUsername()
+        {
+            return this.username;
+        }
+
+        public void setPassword(String password)
+        {
+            this.password = password;
+        }
+
+        public String getPassword()
+        {
+            return this.password;
+        }
+    }</strong>
+}
+</source>
+
+        <p>
+        Defining the <code>processLogin(...)</code> method to take a <code>LoginForm</code>
+        parameter is all that is required to have a controller method that can
+        operate upon the submitted form.
+        </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+@Jpf.Controller
+public class Controller 
+    extends PageFlowController
+{
+    ...
+    ...
+
+    <strong>public Forward processLogin(LoginForm form)
+    {
+        ...
+    }</strong>
+
+
+    public static class LoginForm
+    {   
+        ...
+        ...
+    }
+}
+</source>
+
+      <p>
+      Once again, <code>processLogin(...)</code> is a conditional forward controller method.
+      If a user has entered a correct username and password, then they should be directed
+      to <code>mypage.jsp</code>, otherwise they will be returned back to the <code>login.jsp</code>
+      for another attempt.  Checking username and password is outside of the scope of Page Flow, 
+      and in this example, we rely upon a mythical <code>MyAppUtils</code> class to perform
+      this logic.
+      </p>
+
+<source>
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+@Jpf.Controller
+public class Controller 
+    extends PageFlowController
+{
+    ...
+    ...
+
+    <strong>@Jpf.Action(
+        forwards = {
+            @Jpf.Forward( name="login_success",     path="mypage.jsp" ),
+            @Jpf.Forward( name="login_failure", path="login.jsp" )
+        }
+    )</strong>
+    public Forward processLogin(LoginForm form)
+    {
+        if ( MyAppUtils.authenticate( form.getUsername(),
+                                      form.getPassword() ) )
+        {
+            HttpServletRequest request = getRequest();
+            HttpSession        session = request.getSession();
+
+            session.setAttribute( "authenticated_user", 
+                                  form.getUsername() );
+        
+            return new Forward( "login_success" );
+        }
+
+        return new Forward( "login_failure" );
+    }
+}
+</source>
+<p>Having fleshed out the <code>processLogin()</code> action method, the diagram appears as follows.</p>
+<p><img src="images/impl-flow-1-login-form.png" alt="implementation page flow"/></p>
+      <p>
+      Similar implementation would be done for <code>processSignUp(...)</code>, involving another
+      form class such as <code>SignUpForm</code>.
+	   
+      </p>
+
+    </section>
+
+
+<section>
+	<title>Handling Exceptions</title>
+    <p>
+	Suppose a new user completes the signup form and submits her user profile.  But when the profile is processed,
+	it is discovered that the username has already been taken by another user.  What then?</p> 
+	<p>A natural design choice would be to have the 
+	<code>processSignUp</code> action throw an exception and then have the controller class handle the 
+	exception by returning the user to
+	the original signup page. 
+	The following diagram shows how you can interweave exception handling into the page flow to 
+	further refine the paths through the flow.
+    </p>
+  	<p>
+      <img src="images/impl-flow-1-exception-handling.png" alt="page flow exception handling"/>
+	</p>
+	<p>
+        You can implement exception handling using the
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html">
+            <code>@Jpf.Catch</code>
+        </a>
+		and
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ExceptionHandler.html">
+            <code>@Jpf.ExceptionHandler</code>
+        </a>
+        annotations.  The
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html">
+            <code>@Jpf.Catch</code>
+        </a>
+        defines some exception to handle should it arise within the controller class.  
+        <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ExceptionHandler.html">
+            <code>@Jpf.ExceptionHandler</code>
+        </a>
+		annotation is used to define a dedicated method for handling the exception.</p>
+	<source>@Jpf.Controller(
+    <strong>catches={
+        @Jpf.Catch(type=AccountAlreadyExistsException.class, method="handleAccountAlreadyExistsException")
+    }</strong>,
+    simpleActions={
+        ...
+    }
+)
+public class Controller 
+    extends PageFlowController
+{
+    ...
+    ...
+
+    <strong>@Jpf.ExceptionHandler(
+        forwards={
+            @Jpf.Forward(name="signup", path="signup.jsp")
+        }
+    )</strong>
+    protected Forward handleAccountAlreadyExistsException(AccountAlreadyExistsException ex, String actionName, String message, Object form)
+    {
+        return new Forward("signup");
+    }
+
+}	
+	</source>
+<p>To protect a method with this error handling system, you only need to specify that the method throws the 
+	appropriate sort of exception, in this case, <code>AccountAlreadyExistsException</code>.</p>
+
+	<source>@Jpf.Controller(
+    catches={
+        @Jpf.Catch(method="handleAccountAlreadyExistsException", type=AccountAlreadyExistsException.class)
+    },
+    simpleActions={
+        ...
+    }
+)
+public class Controller 
+    extends PageFlowController
+{
+    ...
+    ...
+	
+    public Forward processSignUp(SignUpForm form)
+	    <strong>throws AccountAlreadyExistsException</strong>
+    {
+        ...
+    }	
+	
+    @Jpf.ExceptionHandler(
+        forwards={
+            @Jpf.Forward(name="signup", path="signup.jsp")
+        }
+    )
+    protected Forward handleAccountAlreadyExistsException(AccountAlreadyExistsException ex, String actionName, String message, Object form)
+    {
+        return new Forward("signup");
+    }
+
+}	
+	</source>	
+</section>
+  </section>
+<section><title>Form Validation</title>
+    <p>
+        For details on form validation see the topic
+        <a href="site:docs/pageflow/netuiBasic/validation">Data Validation</a>
+    </p>
+	
+	</section>
+  <section id="next">
+    <title>Next...</title>
+    
+    <p>
+    Next, learn about linking this controller class to the JSPs to allow for
+    the interception to occur.
+    </p>
+
+    <ul>
+      <li><a href="site:pageflow_jsp">JSP Files</a></li>
+    </ul>
+  </section>
+
+
+  </body>
+  <footer>
+    <legal>
+      Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+      &copy; 2004, Apache Software Foundation 
+    </legal>
+  </footer>
+</document>

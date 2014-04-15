@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>OnRestore</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>24 Jun 2005, 03:43:48.312 PM MDT</ses:startDate>
+   <ses:description>Test to ensure that onRestore() is called before restoring a page through Jpf.NavigateTo.{currentPage,previousPage}, and that page inputs are updated and available during onRestore().</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/onRestore/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>4E0AF9E04566C080FF5A16A7C744A4C1</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>nde-textsize</ses:name>
+                  <ses:value>16px</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=4E0AF9E04566C080FF5A16A7C744A4C1; nde-textsize=16px</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF / NavigateTo</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF / NavigateTo: page 1</h3>
+    
+        <form id="_id0" name="_id0" method="post" action="/jsfWeb/onRestore/page1.faces" enctype="application/x-www-form-urlencoded">
+            <table><tbody><tr><td><span style="font-style: italic">This test ensures that onRestore() is called before restoring a page through Jpf.NavigateTo.{currentPage,previousPage}, and that page inputs are updated and available during onRestore().</span></td></tr>
+<tr><td>Messages:</td></tr>
+<tr><td><ul><li>Got action output from begin().</li></ul></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrentNoNewMessage';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrentNoNewMessage">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage, with no new page inputs</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrent';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrent">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:go2';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:go2">go to page 2</a></td></tr>
+</tbody></table>
+        <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+    
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/onRestore/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value>_id0:goCurrentNoNewMessage</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>4E0AF9E04566C080FF5A16A7C744A4C1</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>nde-textsize</ses:name>
+                  <ses:value>16px</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>63</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=4E0AF9E04566C080FF5A16A7C744A4C1; nde-textsize=16px</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/onRestore/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF / NavigateTo</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF / NavigateTo: page 1</h3>
+    
+        <form id="_id0" name="_id0" method="post" action="/jsfWeb/onRestore/page1.faces" enctype="application/x-www-form-urlencoded">
+            <table><tbody><tr><td><span style="font-style: italic">This test ensures that onRestore() is called before restoring a page through Jpf.NavigateTo.{currentPage,previousPage}, and that page inputs are updated and available during onRestore().</span></td></tr>
+<tr><td>Messages:</td></tr>
+<tr><td><ul><li>Got action output from begin().</li></ul></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrentNoNewMessage';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrentNoNewMessage">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage, with no new page inputs</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrent';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrent">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:go2';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:go2">go to page 2</a></td></tr>
+</tbody></table>
+        <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+    
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/onRestore/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value>_id0:goCurrent</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>4E0AF9E04566C080FF5A16A7C744A4C1</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>nde-textsize</ses:name>
+                  <ses:value>16px</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>51</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=4E0AF9E04566C080FF5A16A7C744A4C1; nde-textsize=16px</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/onRestore/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF / NavigateTo</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF / NavigateTo: page 1</h3>
+    
+        <form id="_id0" name="_id0" method="post" action="/jsfWeb/onRestore/page1.faces" enctype="application/x-www-form-urlencoded">
+            <table><tbody><tr><td><span style="font-style: italic">This test ensures that onRestore() is called before restoring a page through Jpf.NavigateTo.{currentPage,previousPage}, and that page inputs are updated and available during onRestore().</span></td></tr>
+<tr><td>Messages:</td></tr>
+<tr><td><ul><li>Got action output from goCurrent().</li></ul></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrentNoNewMessage';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrentNoNewMessage">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage, with no new page inputs</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrent';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrent">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:go2';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:go2">go to page 2</a></td></tr>
+</tbody></table>
+        <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+    
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/onRestore/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value>_id0:go2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>4E0AF9E04566C080FF5A16A7C744A4C1</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>nde-textsize</ses:name>
+                  <ses:value>16px</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>45</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=4E0AF9E04566C080FF5A16A7C744A4C1; nde-textsize=16px</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/onRestore/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;html>
+    &lt;head> &lt;title>Page Flow / JSF / NavigateTo&lt;/title> &lt;/head>
+    &lt;body bgcolor="white">
+    &lt;h3>Page Flow / JSF / NavigateTo: page 2&lt;/h3>
+    
+        &lt;form id="_id0" name="_id0" method="post" action="/jsfWeb/onRestore/page2.faces" enctype="application/x-www-form-urlencoded">
+            &lt;a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goPrev';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goPrev">go to previous page via navigateTo=Jpf.NavigateTo.previousPage&lt;/a>
+        &lt;input type="hidden" name="_id0_SUBMIT" value="1"/>&lt;input type="hidden" name="_id0:_link_hidden_"/>&lt;script type="text/javascript">
+&lt;!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+&lt;/script>&lt;/form>
+    
+&lt;/HTML></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/onRestore/page2.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value>_id0:goPrev</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>4E0AF9E04566C080FF5A16A7C744A4C1</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>nde-textsize</ses:name>
+                  <ses:value>16px</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>48</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=4E0AF9E04566C080FF5A16A7C744A4C1; nde-textsize=16px</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/onRestore/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF / NavigateTo</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF / NavigateTo: page 1</h3>
+    
+        <form id="_id0" name="_id0" method="post" action="/jsfWeb/onRestore/page1.faces" enctype="application/x-www-form-urlencoded">
+            <table><tbody><tr><td><span style="font-style: italic">This test ensures that onRestore() is called before restoring a page through Jpf.NavigateTo.{currentPage,previousPage}, and that page inputs are updated and available during onRestore().</span></td></tr>
+<tr><td>Messages:</td></tr>
+<tr><td><ul><li>Got action output from goPrev().</li></ul></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrentNoNewMessage';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrentNoNewMessage">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage, with no new page inputs</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrent';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrent">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:go2';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:go2">go to page 2</a></td></tr>
+</tbody></table>
+        <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+    
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/onRestore/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value>_id0:goCurrentNoNewMessage</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>4E0AF9E04566C080FF5A16A7C744A4C1</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>nde-textsize</ses:name>
+                  <ses:value>16px</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>63</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=4E0AF9E04566C080FF5A16A7C744A4C1; nde-textsize=16px</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/onRestore/page2.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF / NavigateTo</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF / NavigateTo: page 1</h3>
+    
+        <form id="_id0" name="_id0" method="post" action="/jsfWeb/onRestore/page1.faces" enctype="application/x-www-form-urlencoded">
+            <table><tbody><tr><td><span style="font-style: italic">This test ensures that onRestore() is called before restoring a page through Jpf.NavigateTo.{currentPage,previousPage}, and that page inputs are updated and available during onRestore().</span></td></tr>
+<tr><td>Messages:</td></tr>
+<tr><td><ul><li>Got action output from begin().</li></ul></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrentNoNewMessage';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrentNoNewMessage">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage, with no new page inputs</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:goCurrent';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:goCurrent">stay on the current page, via navigateTo=Jpf.NavigateTo.currentPage</a></td></tr>
+<tr><td><a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:go2';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:go2">go to page 2</a></td></tr>
+</tbody></table>
+        <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+    
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>24 Jun 2005, 03:44:19.767 PM MDT</ses:endDate>
+   <ses:testCount>6</ses:testCount>
+</ses:recorderSession>

@@ -1,0 +1,42 @@
+package PI_Abstract;
+
+import javax.servlet.http.HttpSession;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ * This is the default controller for a blank web application.
+ */
+@Jpf.Controller
+public abstract class AbstractFlowController extends PageFlowController
+{
+    protected String message;
+
+    @Jpf.Action(
+        forwards={
+           @Jpf.Forward(name="success", path="index.jsp")
+        }
+    )
+     protected abstract Forward implAction();
+
+    public String getMessage(){
+        return message;
+    }
+    
+
+    /**
+     * Callback that is invoked when this controller instance is created.
+     */
+    protected void onCreate()
+    {
+    }
+
+    /**
+     * Callback that is invoked when this controller instance is destroyed.
+     */
+    protected void onDestroy(HttpSession session)
+    {
+    }
+}
+

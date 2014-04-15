@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>BugTest26856</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>26 Jan 2005, 09:15:59.421 PM MST</ses:startDate>
+   <ses:description>Test data-binding for resource bundles.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miscJpf/bug26856/Jpf1.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>MiscJpf Bug 26856 test</title>
+    </head>
+    <body>
+        <h3 align="center">MiscJpf Bug 26856 test - Jsp1.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+         <center>
+            <a href="/coreWeb/miscJpf/bug26856/Jsp2.jsp">Explicitly declared resource bundle Tests</a>
+            <br/><br/>
+            <a href="/coreWeb/miscJpf/bug26856/Jsp3.jsp">Resource bundles declared in JPF Tests</a>
+         </center>
+   </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miscJpf/bug26856/Jsp2.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miscJpf/bug26856/Jpf1.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+   <head>
+      <title>MiscJpf Bug 26856 test</title>
+   </head>
+   <body>
+      <h3 align="center">MiscJpf Bug 26856 test - Jsp1.jsp</h3>
+      <hr width="95%"/>
+      <br/>
+      
+      
+
+      <h3>Test 1</h3>
+      <em>Print a message from bundle1.</em>
+      <br/>
+      <span>This is message (1) from resource bundle (bundle1.properties).</span>
+
+      <hr width="95%"/><br/>
+      <h3>Test 2</h3>
+      <em>Print a message from bundle2.</em>
+      <br/>
+      <span>This is message (1) from resource bundle (bundle2.properties).</span>
+
+      <hr width="95%"/><br/>
+      <h3>Test 3</h3>
+      <em>Print a message from and nonexistant bundle An error is expected.</em>
+      <br/>
+      
+      The bundle named "xtheBundle1" was not found in the list of registered bundles with names [theBundle2, theBundle1] or implicit bundle names [default, myMessages/miscJpf/bug26856, myBundle1/miscJpf/bug26856, _defaultMsgs/miscJpf/bug26856].
+
+      <hr width="95%"/><br/>
+      <h3>Test 4</h3>
+      <em>Print a nonexistant message from bundle An error is expected.</em>
+      <br/>
+      
+      Can't find resource for bundle java.util.PropertyResourceBundle, key message1x
+
+      <hr width="95%"/><br/>
+      <h3>Test 5</h3>
+      <em>Declare a bundle with the reserved name "default" An error is expected.</em>
+      <br/>
+      <span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>DeclareBundle</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">The name "default" is not a valid name for a declared bundle; it is reserved for reference to the default message-resources file for the current page flow.</td></tr>
+</table></span>
+
+
+      <hr width="95%"/><br/><br/>
+      <center>
+         <a href="/coreWeb/miscJpf/bug26856/done.do">Done</a>
+      </center>
+   </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miscJpf/bug26856/done.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miscJpf/bug26856/Jsp2.jsp</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>MiscJpf Bug 26856 test</title>
+    </head>
+    <body>
+        <h3 align="center">MiscJpf Bug 26856 test - Jsp1.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+         <center>
+            <a href="/coreWeb/miscJpf/bug26856/Jsp2.jsp">Explicitly declared resource bundle Tests</a>
+            <br/><br/>
+            <a href="/coreWeb/miscJpf/bug26856/Jsp3.jsp">Resource bundles declared in JPF Tests</a>
+         </center>
+   </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miscJpf/bug26856/Jsp3.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=ECD75D33F4E745E52095285AAC0D2391</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miscJpf/bug26856/done.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>MiscJpf Bug 26856 test</title>
+    </head>
+    <body>
+        <h3 align="center">MiscJpf Bug 26856 test - Jsp1.jsp</h3>
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 1</h3>
+        <em>Message from default resource bundle.</em>
+        <br/>
+        <span>This is message (1) from the default resource bundle (StrutsMessages.properties).</span>
+
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 2</h3>
+        <em>Message from named resource bundle, using quotes.</em>
+        <br/>
+        <span>This is message (1) from resource bundle (NamedStrutsMessages.properties).</span>
+
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 3</h3>
+        <em>Message from named resource bundle, using single quotes.</em>
+        <br/>
+        <span>This is message (1) from resource bundle (NamedStrutsMessages.properties).</span>
+
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 4</h3>
+        <em>Non-existant message from default resource bundle.  An error is expected.</em>
+        <br/>
+         
+        The bundle property name "nonExistentMessage" could not be found in the properties bundle "default".
+
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 5</h3>
+        <em>Message from non-existant resource bundle.  An error is expected.</em>
+        <br/>
+         
+        The bundle named "missingBundle" was not found in the list of registered bundles with names [] or implicit bundle names [default, myMessages/miscJpf/bug26856, myBundle1/miscJpf/bug26856, _defaultMsgs/miscJpf/bug26856].
+
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 6</h3>
+        <em>"Overloaded" bundle name.</em>
+        <br/>
+        
+        <span>This is message (2) from resource bundle (bundle1.properties).</span>
+        <br/>
+        <span>This is message (2) from resource bundle (bundle2.properties).</span>
+
+        <hr width="95%"/>
+        <br/>
+        <h3>Test 7</h3>
+        <em>Message with value substitution. SubTest 7 will give an error.</em>
+        <br/>
+        <ol>
+            <li> <!-- Test 1 -->
+                
+                <span>This is message (3) from resource bundle (bundle2.properties). Param 0: (Arg0), Param 1: (Arg1), Param 2: (Arg2)</span>
+            </li>
+            <li> <!-- Test 2 -->
+                
+                <span>This is message (3) from resource bundle (bundle2.properties). Param 0: (Arg0), Param 1: (Arg1), Param 2: ({2})</span>
+            </li>
+            <li> <!-- Test 3 -->
+                
+                <span>This is message (3) from resource bundle (bundle2.properties). Param 0: (Arg0), Param 1: (Arg1), Param 2: (Arg2)</span>
+            </li>
+            <li> <!-- Test 4 -->
+                
+                <span>This is message (4) from resource bundle (bundle2.properties). Param 1: (Arg1), Param 0: (Arg0), Param 2: (Arg2)</span>
+            </li>
+            <li> <!-- Test 5 -->
+                
+                <span>This is message (5) from resource bundle (bundle2.properties). Param 2: (Arg2), Param 1: (Arg1), Param 0: (Arg0)</span>
+            </li>
+            <li> <!-- Test 6 -->
+                
+                <span>This is message (6) from resource bundle (bundle2.properties). Param 2: (Arg1), Param 1: (Arg1), Param 0: (Arg1)</span>
+            </li>
+            <li> <!-- Test 7 -->
+                <span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>Message</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Error formatting message "This is message (7) from resource bundle (bundle2.properties). Param 2: ({0}), Param 1: ({-1}), Param 0: ({2})".  Cause: negative argument number -1</td></tr>
+</table></span>
+
+                <span></span>
+            </li>
+        </ol>
+        <hr width="95%"/><br/><br/>
+        <center>
+            <a href="/coreWeb/miscJpf/bug26856/done.do">Done</a>
+        </center>
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>26 Jan 2005, 09:16:21.743 PM MST</ses:endDate>
+   <ses:testCount>4</ses:testCount>
+</ses:recorderSession>

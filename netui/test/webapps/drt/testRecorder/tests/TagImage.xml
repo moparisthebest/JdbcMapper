@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>TagImage</sessionName>
+  <tester>Daryl</tester>
+  <startDate>20 Mar 2004, 09:59:00.536 AM MST</startDate>
+  <description>Errors in the Image tag</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/errors/tagImage/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>Ac1i45LQ9pa21drbh37feKCOCZC94et5nINgqFzSnZ2JelUnFYv5!-1017168403</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=Ac1i45LQ9pa21drbh37feKCOCZC94et5nINgqFzSnZ2JelUnFYv5!-1017168403</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>-189e36e1:fb692b5d8a:-7b71</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>1</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Image Errors</title>
+</head>
+<body>
+<h4>Image Errors</h4>
+Image specifying both a page and url: <span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>Image</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Image tag with both a Page and URL specified, page "foo", url "bar"</td></tr>
+</table></span>
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>20 Mar 2004, 09:59:01.787 AM MST</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>1</testCount>
+  <passedCount>0</passedCount>
+  <failedCount>1</failedCount>
+</recorderSession>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Page Flow Annotations</title>
+  </header>
+  <body>
+
+  <section id="toc">
+    <title>Table of Contents</title>
+    <ul>
+      <li><a href="#jpf_action">Jpf.Action</a>
+        <ul>
+          <li><a href="#jpf_catch">Jpf.Action with Jpf.Forward</a></li>
+          <li><a href="#jpf_catch">Jpf.Action with Jpf.Catch and Jpf.ExceptionHandler</a></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section id="jpf_action">
+    <title>Jpf.Action</title>
+
+    <ul>
+      <li><a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">Jpf.Action Javadoc</a></li>
+    </ul>
+
+    <p>
+    The
+    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">
+        <code>@Jpf.Action</code>
+    </a>
+    annotation adorns action methods of the <code>Controller</code>
+    class.  It serves as a container for further configuration annotations and properties.
+    </p>
+
+    <table>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td><code>loginRequired</code></td>
+        <td><code>boolean</code></td>
+        <td>Checks user authentication and possibly throws <a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/NotLoggedInException.html">NotLoggedInException</a></td>
+      </tr>
+      <tr>
+        <td><code>readOnly</code></td>
+        <td><code>boolean</code></td>
+        <td>Flag to indicate this action does not modify state</td>
+      </tr>
+      <tr>
+        <td><code>rolesAllowed</code></td>
+        <td><code>String[]</code></td>
+        <td>List of roles allowed to invoke this action.  Implies <code>loginRequired=true</code>.</td>
+      </tr>
+      <tr>
+        <td><code>useFormBean</code></td>
+        <td><code>String</code></td>
+        <td>Name of a member to use as multi-page form</td>
+      </tr>
+    </table>
+
+    <p>
+    In this example, the <code>collectBasicUserInformation</code> action is called
+    on one page of a multi-page form flow.  For each form page submitted, the same
+    <code>NewUserForm</code> is used, to allow for collection of data across several
+    pages into a single usable form.  The data is stored in the <code>NewUserForm</code>
+    member variable named <code>newUserForm</code>.
+    </p>
+
+    <p>
+    The <code>rolesAllowed</code> property specifies that only users with the <code>admin</code>
+    role can invoke this action.  
+    </p>
+
+<source>
+@Jpf.Controller
+public class Controller
+{
+    <strong>private NewUserForm newUserForm;</strong>
+
+    <strong>@Jpf.Action {
+        rolesAllowed = { "admin" },
+        useFormBean = "newUserForm"; 
+    }</strong>
+    public Forward collectBasicUserInformation(NewUserForm form)
+    {
+        ..
+    }
+}
+</source>
+
+    <section id="jpf_forward">
+      <title>Jpf.Action with Jpf.Forward</title>
+
+      <ul>
+        <li><a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Forward.html">Jpf.Forward Javadoc</a></li>
+      </ul>
+
+<source>
+@Jpf.Controller 
+public class Controller 
+{
+    @Jpf.Action {
+        <strong>forwards = { 
+            @Jpf.Forward{ name="success", path="/mypage.jsp" } 
+        }</strong>
+    }
+    public Forward login(LoginForm form)
+    {
+        ...
+        return new Forward( "success" );
+    }
+}
+</source>
+
+    </section>
+
+    <section id="jpf_catch">
+      <title>Jpf.Action with Jpf.Catch and Jpf.ExceptionHandler</title>
+
+      <ul>
+        <li><a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html">Jpf.Catch Javadoc</a></li>
+        <li><a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ExceptionHandler.html">Jpf.ExceptionHandler Javadoc</a></li>
+      </ul>
+
+<source>
+@Jpf.Controller 
+public class Controller 
+{
+    @Jpf.Action {
+        <strong>catches = { 
+            type=com.myco.FailedLoginException.class, method="failedLoginHandler" 
+        }</strong>
+    }
+    public Forward login(LoginForm form)
+        throws FailedLoginException
+    {
+        ...
+    }
+
+    <strong>@Jpf.ExceptionHandler {
+        forwards = @Jpf.Forward( name="try_again", path="/try_again.jps" }
+    }</strong>
+    protected Forward failedLoginHandler(FailedLoginException e, 
+                                         String actionName,
+                                         String message, 
+                                         LoginForm form)
+    {
+        ...
+        return new Forward( "try_again" );
+    }
+}
+</source>
+
+
+    </section>
+
+  </section>
+
+
+
+  </body>
+  <footer>
+    <legal>
+      Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+      &copy; 2004, Apache Software Foundation 
+    </legal>
+  </footer>
+</document>

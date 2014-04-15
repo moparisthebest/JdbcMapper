@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://beehive.apache.org/netui/2004/server/url-template-config"
+           xmlns:netui="http://beehive.apache.org/netui/2004/server/url-template-config"
+           elementFormDefault="qualified">
+
+
+    <xs:element name="url-template-config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="netui:url-template" maxOccurs="unbounded"/>
+                <xs:element ref="netui:url-template-ref-group" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="url-template">
+        <xs:annotation>
+            <xs:documentation>
+                The url-template element specifies URL templates.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="url-template-ref-group">
+        <xs:annotation>
+            <xs:documentation>
+                A group of references to url-template elements.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="netui:url-template-ref" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="url-template-ref">
+        <xs:annotation>
+            <xs:documentation>
+                The url-template-ref element declares references to URL templates.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="template-name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

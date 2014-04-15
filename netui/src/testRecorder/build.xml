@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<project name="Beehive/NetUI/TestRecorder" default="build" basedir=".">
+
+    <import file="../../netui-imports.xml"/>
+
+    <property name="module.name" value="testRecorder"/>
+    <property name="module.dir" location="${src.dir}/${module.name}"/>
+    <property name="module.classes.dir" location="${classes.dir}/${module.name}"/>
+    <property name="module.jar.name" value="testRecorder.jar"/>
+    <property name="module.jar" location="${testRecorder.dir}/lib/${module.jar.name}"/>
+
+    <path id="module.classpath">
+        <path refid="servlet.dependency.path"/>
+        <path refid="log4j.dependency.path"/>
+        <path refid="junit.dependency.path"/>
+        <path refid="testrecorder.build.dependency.path"/>
+    </path>
+
+    <target name="build">
+        <echo>compile module: ${module.name}</echo>
+        <echo>debug: ${compile.debug}</echo>
+
+        <mkdir dir="${module.classes.dir}"/>
+
+        <javac srcdir="${module.dir}"
+               destdir="${module.classes.dir}"
+               classpathref="module.classpath"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               source="${compile.source}"
+               target="${compile.target}"
+               optimize="${compile.optimize}">
+               <include name="**/*.java"/>
+        </javac>
+
+        <copy todir="${module.classes.dir}">
+            <fileset dir="${module.dir}" includes="org/**/*.xsd"/>
+        </copy>
+
+        <mkdir dir="${testRecorder.dir}"/>
+        <mkdir dir="${testRecorder.dir}/lib"/>
+
+        <jar jarfile="${module.jar}" basedir="${module.classes.dir}">
+            <manifest>
+                <attribute name="Extension-Name" value="Beehive NetUI Test Recorder"/>
+                <attribute name="Specification-Title" value="Beehive NetUI Test Recorder"/>
+                <attribute name="Specification-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Specification-Version" value="${beehive.version}"/>
+                <attribute name="Implementation-Title" value="Beehive NetUI Test Recorder"/>
+                <attribute name="Implementation-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Implementation-Version" value="${beehive.version}"/>
+                <attribute name="Beehive-Version" value="${beehive.version}"/>
+            </manifest>
+        </jar>
+
+        <!-- make testRecorder output directory -->
+        <copy todir="${testRecorder.dir}/jsp">
+            <fileset dir="${module.dir}/jsp"/>
+        </copy>
+
+        <copy-junit todir="${testRecorder.dir}/lib"/>
+        <copy-testrecorder-deps todir="${testRecorder.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${module.classes.dir}"/>
+        <delete dir="${testRecorder.dir}"/>
+    </target>
+
+</project>
+

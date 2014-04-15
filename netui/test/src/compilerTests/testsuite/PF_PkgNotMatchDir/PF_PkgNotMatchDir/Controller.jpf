@@ -1,0 +1,40 @@
+package newName;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains a PageFlowController that specifies a
+ * package name that is not the same name as the directory where the
+ * PageFlowController source file resides.  This is invalid.
+ *
+ * @result: The compiler should catch this error and issue an error message.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    }

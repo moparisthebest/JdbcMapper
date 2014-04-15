@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://complex.web.doclitwrap" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://complex.web.doclitwrap" xmlns:intf="http://complex.web.doclitwrap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.2
+Built on May 03, 2005 (02:20:24 EDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://complex.web.doclitwrap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="returnAddressFromBody">
+    <complexType>
+     <sequence>
+      <element name="in_param_body" type="impl:Address"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Phone">
+    <sequence>
+     <element name="areaCode" nillable="true" type="xsd:int"/>
+     <element name="exchange" nillable="true" type="xsd:string"/>
+     <element name="number" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="StateType">
+    <sequence>
+     <element name="state" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Address">
+    <sequence>
+     <element name="city" nillable="true" type="xsd:string"/>
+     <element name="phoneNumber" nillable="true" type="impl:Phone"/>
+     <element name="state" nillable="true" type="impl:StateType"/>
+     <element name="streetName" nillable="true" type="xsd:string"/>
+     <element name="streetNum" nillable="true" type="xsd:int"/>
+     <element name="zip" nillable="true" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <element name="returnAddressFromBodyResponse">
+    <complexType>
+     <sequence>
+      <element name="ReturnAddressFromBodyResult" type="impl:Address"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="in_param_header" type="impl:Address"/>
+   <element name="returnAddressFromHeader">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="returnAddressFromHeaderResponse">
+    <complexType>
+     <sequence>
+      <element name="ReturnAddressFromHeaderResult" type="impl:Address"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createAddressInBody">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="createAddressInBodyResponse">
+    <complexType>
+     <sequence>
+      <element name="ReturnCreateAddressInBodyResult" type="xsd:int"/>
+      <element name="out_param_body" type="impl:Address"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createAddressInHeader">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="out_param_header" type="impl:Address"/>
+   <element name="createAddressInHeaderResponse">
+    <complexType>
+     <sequence>
+      <element name="ReturnCreateAddressInHeaderResult" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="changeAddressInBody">
+    <complexType>
+     <sequence>
+      <element name="inout_param_body" type="impl:Address"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="changeAddressInBodyResponse">
+    <complexType>
+     <sequence>
+      <element name="ChangeAddressInBodyResult" type="xsd:int"/>
+      <element name="inout_param_body" type="impl:Address"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="inout_param_header" type="impl:Address"/>
+   <element name="changeAddressInHeader">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="inout_param_header1" type="impl:Address"/>
+   <element name="changeAddressInHeaderResponse">
+    <complexType>
+     <sequence>
+      <element name="ChangeAddressInHeaderResult" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="throwAddressException">
+    <complexType>
+     <sequence>
+      <element name="in_param" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="throwAddressExceptionResponse">
+    <complexType>
+     <sequence>
+      <element name="ThrowAddressExceptionResult" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="AddressException">
+    <sequence/>
+   </complexType>
+   <element name="fault" type="impl:AddressException"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="returnAddressFromBodyResponse">
+
+      <wsdl:part element="impl:returnAddressFromBodyResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="returnAddressFromBodyRequest">
+
+      <wsdl:part element="impl:returnAddressFromBody" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="returnAddressFromHeaderRequest">
+
+      <wsdl:part element="impl:in_param_header" name="in_param_header"/>
+
+      <wsdl:part element="impl:returnAddressFromHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAddressInHeaderRequest">
+
+      <wsdl:part element="impl:createAddressInHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeAddressInBodyRequest">
+
+      <wsdl:part element="impl:changeAddressInBody" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="returnAddressFromHeaderResponse">
+
+      <wsdl:part element="impl:returnAddressFromHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeAddressInBodyResponse">
+
+      <wsdl:part element="impl:changeAddressInBodyResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="throwAddressExceptionResponse">
+
+      <wsdl:part element="impl:throwAddressExceptionResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="AddressException">
+
+      <wsdl:part element="impl:fault" name="fault"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAddressInBodyRequest">
+
+      <wsdl:part element="impl:createAddressInBody" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeAddressInHeaderRequest">
+
+      <wsdl:part element="impl:inout_param_header" name="inout_param_header"/>
+
+      <wsdl:part element="impl:changeAddressInHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="throwAddressExceptionRequest">
+
+      <wsdl:part element="impl:throwAddressException" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAddressInHeaderResponse">
+
+      <wsdl:part element="impl:out_param_header" name="out_param_header"/>
+
+      <wsdl:part element="impl:createAddressInHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="createAddressInBodyResponse">
+
+      <wsdl:part element="impl:createAddressInBodyResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeAddressInHeaderResponse">
+
+      <wsdl:part element="impl:inout_param_header1" name="inout_param_header"/>
+
+      <wsdl:part element="impl:changeAddressInHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="DocumentLiteralWrappedSample">
+
+      <wsdl:operation name="returnAddressFromBody">
+
+         <wsdl:input message="impl:returnAddressFromBodyRequest" name="returnAddressFromBodyRequest"/>
+
+         <wsdl:output message="impl:returnAddressFromBodyResponse" name="returnAddressFromBodyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="returnAddressFromHeader">
+
+         <wsdl:input message="impl:returnAddressFromHeaderRequest" name="returnAddressFromHeaderRequest"/>
+
+         <wsdl:output message="impl:returnAddressFromHeaderResponse" name="returnAddressFromHeaderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAddressInBody">
+
+         <wsdl:input message="impl:createAddressInBodyRequest" name="createAddressInBodyRequest"/>
+
+         <wsdl:output message="impl:createAddressInBodyResponse" name="createAddressInBodyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAddressInHeader">
+
+         <wsdl:input message="impl:createAddressInHeaderRequest" name="createAddressInHeaderRequest"/>
+
+         <wsdl:output message="impl:createAddressInHeaderResponse" name="createAddressInHeaderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeAddressInBody">
+
+         <wsdl:input message="impl:changeAddressInBodyRequest" name="changeAddressInBodyRequest"/>
+
+         <wsdl:output message="impl:changeAddressInBodyResponse" name="changeAddressInBodyResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeAddressInHeader">
+
+         <wsdl:input message="impl:changeAddressInHeaderRequest" name="changeAddressInHeaderRequest"/>
+
+         <wsdl:output message="impl:changeAddressInHeaderResponse" name="changeAddressInHeaderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="throwAddressException">
+
+         <wsdl:input message="impl:throwAddressExceptionRequest" name="throwAddressExceptionRequest"/>
+
+         <wsdl:output message="impl:throwAddressExceptionResponse" name="throwAddressExceptionResponse"/>
+
+         <wsdl:fault message="impl:AddressException" name="AddressException"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="DocumentLiteralWrappedSampleSoapBinding" type="impl:DocumentLiteralWrappedSample">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="returnAddressFromBody">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="returnAddressFromBodyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="returnAddressFromBodyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="returnAddressFromHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="returnAddressFromHeaderRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:returnAddressFromHeaderRequest" namespace="http://complex.web.doclitwrap" part="in_param_header" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="returnAddressFromHeaderResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAddressInBody">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createAddressInBodyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createAddressInBodyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createAddressInHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createAddressInHeaderRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createAddressInHeaderResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:createAddressInHeaderResponse" namespace="http://complex.web.doclitwrap" part="out_param_header" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeAddressInBody">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeAddressInBodyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeAddressInBodyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeAddressInHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeAddressInHeaderRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:changeAddressInHeaderRequest" namespace="http://complex.web.doclitwrap" part="inout_param_header" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeAddressInHeaderResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:changeAddressInHeaderResponse" namespace="http://complex.web.doclitwrap" part="inout_param_header" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="throwAddressException">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="throwAddressExceptionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="throwAddressExceptionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="AddressException">
+
+            <wsdlsoap:fault name="AddressException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="DocumentLiteralWrappedSampleService">
+
+      <wsdl:port binding="impl:DocumentLiteralWrappedSampleSoapBinding" name="DocumentLiteralWrappedSample">
+
+         <wsdlsoap:address location="http://localhost:8080/wsm-samplesWS/web/complex/DocumentLiteralWrappedSample.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

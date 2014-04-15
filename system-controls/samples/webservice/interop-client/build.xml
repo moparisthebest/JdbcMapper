@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+   $Header:$
+ -->
+<project name="wsc-interop-sample" default="usage" basedir=".">
+
+    <property environment="os"/>
+    <property file="build.properties"/>
+    <import file="${beehive.home}/beehive-imports.xml"/>
+    <import file="${beehive.home}/ant/beehive-tools.xml"/>
+    <import file="../ant/beehive-wsc-tools.xml"/>
+
+    <!-- URL to webservice WSDL used to generate the web service control,
+         defined the the build.properties file. -->
+    <property name="wsdl.src" value="${webservice.wsdl.url}"/>
+
+    <property name="build.dir" location="${basedir}/build"/>
+    <property name="source.dir" location="${build.dir}/src"/>
+    <property name="junit.source.dir" location="${basedir}/junit"/>
+    <property name="build.classes" location="${build.dir}/classes"/>
+    <property name="build.beansrc" location="${build.dir}/beansrc"/>
+    <property name="build.typesrc" location="${build.dir}/typesrc"/>
+    <property name="build.jar" value="mycontrols.jar"/>
+
+    <path id="build.classpath">
+        <pathelement path="${build.classes}"/>
+        <path refid="controls.dependency.path"/>
+        <!-- TODO: for final form <path refid="wsc.dependency.path"/> -->
+        <pathelement location="../../../build/jars/beehive-webservice-control.jar"/>
+
+    </path>
+
+    <target name="clean" description="Delete all generated files">
+        <delete dir="${build.dir}"/>
+        <delete file="velocity.log"/>
+    </target>
+
+    <target name="build" depends="init.dirs, gen.wsdl.types" description="Generate a WSC and build control sources.">
+
+        <!-- Generates the WSC from the specified wsdl, then builds the generated WSC,
+             the WSDL is copied into the same location as the WSC class. NOTE: WSDL type->class
+             generation needs to happen before this call in order for the WSC to be generated
+             correctly.
+        -->
+        <generate-wsc wsdlsrc="${wsdl.src}" wscgendir="${source.dir}"
+                      tempdir="${build.beansrc}" destdir="${build.classes}"
+                      packagename="mssoapinterop" copywsdl="true"
+                      serviceport="Round4XSDTestSoap" classpathref="build.classpath"/>
+
+        <!-- Build the JUnit test. -->
+        <build-controls srcdir="${junit.source.dir}"
+                        destdir="${build.classes}"
+                        tempdir="${build.beansrc}"
+                        classpathref="build.classpath"/>
+
+        <control-jar destfile="${build.dir}/${build.jar}" basedir="${build.classes}"/>
+    </target>
+
+    <target name="junit.test" depends="build" description="Run the JUnit tests for this project.">
+
+        <!-- setup the runtime classpath for the junit tests. -->
+        <fileset id="axis.jars" dir="${axis.home}">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <fileset id="commons.jars" dir="${beehive.home}/lib/common">
+            <include name="**/*.jar"/>
+        </fileset>
+
+        <path id="_test.classpath">
+            <path refid="build.classpath"/>
+            <pathelement location="${junit.home}/junit.jar"/>
+            <fileset refid="axis.jars"/>
+            <fileset refid="commons.jars"/>
+        </path>
+
+        <junit printsummary="yes" showOutput="true" failureproperty="controls.junit.failure"
+               errorproperty="controls.junit.error">
+            <classpath refid="_test.classpath"/>
+            <formatter type="plain"/>
+            <batchtest fork="yes" todir="${build.dir}/junit-logs">
+                <fileset dir="${build.classes}">
+                    <include name="**/*Test.class"/>
+                    <exclude name="**/Round4XSDTest.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <fail if="controls.junit.failure" message="Controls JUnit tests had a failure"/>
+        <fail if="controls.junit.error" message="Controls JUnit tests had an error"/>
+    </target>
+
+    <!--
+       Generate Java classes from the WSDL's complex types.
+       As implemented it is self-contained and could be swapped out to
+       use another type of class generation (such as XMLBeans). The AxisTypeGeneratorTask
+       is included as part of the web service control's distribution jar.
+    -->
+    <target name="gen.wsdl.types" description="Generate and compile java classes from WSDL types.">
+
+        <path id="_typegen.classpath">
+            <path refid="build.classpath"/>
+            <fileset refid="axis.jars"/>
+            <fileset refid="commons.jars"/>
+        </path>
+
+        <taskdef name="axisbeanbuild"
+                 classname="org.apache.beehive.controls.system.jaxrpc.AxisTypeGeneratorTask"
+                 classpathref="_typegen.classpath"/>
+
+        <axisbeanbuild wsdlsrc="${wsdl.src}" outputdir="${build.beansrc}"/>
+        <javac srcdir="${build.typesrc}" destdir="${build.classes}" classpathref="_typegen.classpath" debug="true"/>
+    </target>
+
+
+    <target name="init.dirs">
+        <mkdir dir="${source.dir}"/>
+        <mkdir dir="${build.classes}"/>
+        <mkdir dir="${build.beansrc}"/>
+        <mkdir dir="${build.typesrc}"/>
+        <mkdir dir="${build.dir}/junit-logs"/>
+    </target>
+</project>

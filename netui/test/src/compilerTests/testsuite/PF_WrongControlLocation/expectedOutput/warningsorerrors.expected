@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_WrongControlLocation\Controller.java:37: annotation type not applicable to this kind of declaration
+			@org.apache.beehive.controls.api.bean.Control()
+                                                             ^
+1 error

@@ -1,0 +1,1303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Reference Documentation: beehive-netui-config.xml File</title>
+    </header>
+    <body>
+        <section id="desc">
+            <title>Description</title>
+            <p>
+            The <code>beehive-netui-config.xml</code> file configures the runtime behavior of your
+            NetUI web application.  It lives under the WEB-INF directory.
+            </p>
+            <p>
+            Use <code>beehive-netui-config.xml</code> to declare interceptor classes, override the
+            default handler classes, etc.
+            </p>
+            <note>
+                Currently, when you want to add your own settings, you cannot
+                simply create the <code>beehive-netui-config.xml</code> file in WEB-INF.  You need to
+                create a file that includes the default settings.  See
+                <a href="#defaultSettings">Default Settings</a>.
+            </note>
+        </section>
+        <section id="defaultSettings">
+            <title>Default Settings</title>
+            <p>
+                To start with a file that includes the default settings, use 
+                <a href="http://svn.apache.org/repos/asf/beehive/trunk/netui/src/util/org/apache/beehive/netui/util/config/internal/beehive-netui-config-default.xml">this version</a>.
+            </p>
+        </section>
+		<section id="structure">
+			<title>General Structure</title>
+<source><a href="#netui-config">&lt;netui-config></a>
+  <a href="#expression-languages">&lt;expression-languages></a>
+    <a href="#default-language">&lt;default-language></a>
+    <a href="#expression-language">&lt;expression-language></a>
+      <a href="#name">&lt;name></a>
+      <a href="#factory-class">&lt;factory-class></a>
+      <a href="#binding-contexts">&lt;binding-contexts></a>
+        <a href="#binding-context">&lt;binding-context></a>
+          <a href="#name">&lt;name></a>
+          <a href="#factory-class">&lt;factory-class></a>    
+  <a href="#pageflow-action-interceptors">&lt;pageflow-action-interceptors></a>
+    <a href="#global">&lt;global></a>
+      <a href="#simple-action-interceptor">&lt;simple-action-interceptor></a>
+        <a href="#intercept-path">&lt;intercept-path></a>
+        <a href="#after-action">&lt;after-action></a>
+      <a href="#action-interceptor">&lt;action-interceptor></a>
+        <a href="#interceptor-class">&lt;interceptor-class></a>
+        <a href="#custom-property">&lt;custom-property></a>
+          <a href="#name">&lt;name></a>
+          <a href="#value">&lt;value></a>
+    <a href="#per-pageflow">&lt;per-pageflow></a>
+      <a href="#pageflow-uri">&lt;pageflow-uri></a>
+      <a href="#simple-action-interceptor">&lt;simple-action-interceptor></a>
+        <a href="#intercept-path">&lt;intercept-path></a>
+        <a href="#after-action">&lt;after-action></a>
+      <a href="#action-interceptor">&lt;action-interceptor></a>
+        <a href="#interceptor-class">&lt;interceptor-class></a>
+        <a href="#custom-property">&lt;custom-property></a>
+      <a href="#per-action">&lt;per-action></a>
+        <a href="#action-name">&lt;action-name></a>
+        <a href="#simple-action-interceptor">&lt;simple-action-interceptor></a>
+          <a href="#intercept-path">&lt;intercept-path></a>
+          <a href="#after-action">&lt;after-action></a>
+        <a href="#action-interceptor">&lt;action-interceptor></a>
+          <a href="#interceptor-class">&lt;interceptor-class></a>
+          <a href="#custom-property">&lt;custom-property></a>
+  <a href="#pageflow-handlers">&lt;pageflow-handlers></a>
+    <a href="#action-forward-handler">&lt;action-forward-handler></a>
+      <a href="#handler-class">&lt;handler-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+    <a href="#exceptions-handler">&lt;exceptions-handler></a>
+      <a href="#handler-class">&lt;handler-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+    <a href="#forward-redirect-handler">&lt;forward-redirect-handler></a>
+      <a href="#handler-class">&lt;handler-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+    <a href="#login-handler">&lt;login-handler></a>
+      <a href="#handler-class">&lt;handler-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+    <a href="#reloadable-class-handler">&lt;reloadable-class-handler></a>
+      <a href="#handler-class">&lt;handler-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+  <a href="#pageflow-config">&lt;pageflow-config></a>
+    <a href="#enable-self-nesting">&lt;enable-self-nesting></a>
+    <a href="#max-forwards-per-request">&lt;max-forwards-per-request></a>
+    <a href="#max-nesting-stack-depth">&lt;max-nesting-stack-depth></a>
+    <a href="#ensure-secure-forwards">&lt;ensure-secure-forwards></a>
+    <a href="#throw-session-expired-exception">&lt;throw-session-expired-exception></a>
+    <a href="#multipart-handler">&lt;multipart-handler></a>
+    <a href="#prevent-cache">&lt;prevent-cache></a>
+    <a href="#module-config-locators">&lt;module-config-locators></a>
+      <a href="#module-config-locator">&lt;module-config-locator></a>
+        <a href="#description">&lt;description></a>
+        <a href="#locator-class">&lt;locator-class></a>
+  <a href="#pageflow-factories">&lt;pageflow-factories></a>
+    <a href="#flowcontroller-factory">&lt;flowcontroller-factory></a>
+      <a href="#factory-class">&lt;factory-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+    <a href="#faces-backing-bean-factory">&lt;faces-backing-bean-factory></a>
+      <a href="#factory-class">&lt;factory-class></a>
+      <a href="#custom-property">&lt;custom-property></a>
+  <a href="#default-shared-flow-refs">&lt;default-shared-flow-refs></a>
+    <a href="#shared-flow-ref">&lt;shared-flow-ref></a>
+      <a href="#name">&lt;name></a>
+      <a href="#type">&lt;type></a>
+  <a href="#type-converters">&lt;type-converters></a>
+    <a href="#type-converter">&lt;type-converter></a>
+      <a href="#type">&lt;type></a>
+      <a href="#converter-class">&lt;converter-class></a>
+  <a href="#jsp-tag-config">&lt;jsp-tag-config></a>
+    <a href="#doctype">&lt;doctype></a>
+    <a href="#id-javascript">&lt;id-javascript></a>
+    <a href="#tree-image-location">&lt;tree-image-location></a>
+    <a href="#tree-renderer-class">&lt;tree-renderer-class></a>
+  <a href="#url-config">&lt;url-config></a>
+    <a href="#url-encode-urls">&lt;url-encode-urls></a>
+    <a href="#html-amp-entity">&lt;html-amp-entity></a>
+    <a href="#templated-url-formatter-class">&lt;templated-url-formatter-class></a>
+  <a href="#iterator-factories">&lt;iterator-factories></a>
+    <a href="#iterator-factory">&lt;iterator-factory></a>
+      <a href="#name">&lt;name></a>
+      <a href="#factory-class">&lt;factory-class></a>
+  <a href="#request-interceptors">&lt;request-interceptors></a>
+    <a href="#global">&lt;global></a>
+      <a href="#request-interceptor">&lt;request-interceptor></a>
+        <a href="#interceptor-class">&lt;interceptor-class></a>
+        <a href="#custom-property">&lt;custom-property></a>
+  <a href="#prefix-handlers">&lt;prefix-handlers></a>
+    <a href="#prefix-handler">&lt;prefix-handler></a>
+      <a href="#name">&lt;name></a>
+      <a href="#handler-class">&lt;handler-class></a>
+		</source></section>
+        <section id="elements">
+            <title>Elements</title>
+
+        <section id="action-forward-handler"><title>&lt;action-forward-handler&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;action-forward-handler>
+  &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/action-forward-handler></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-handlers">&lt;pageflow-handlers></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#handler-class">&lt;handler-class></a>,
+					<a href="#custom-property">&lt;custom-property></a></p></section>
+
+            <section id="action-interceptor"><title>&lt;action-interceptor&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;action-interceptor>
+  &lt;interceptor-class> xsd:string &lt;/interceptor-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/action-interceptor></source>
+				<p><strong>Parents:</strong></p>
+				<p><a href="#global">&lt;global></a>, 
+					<a href="#per-pageflow">&lt;per-pageflow></a>, 
+					<a href="#per-action">&lt;per-action></a></p>
+				<p><strong>Children:</strong></p>
+				<p>
+        <a href="#interceptor-class">&lt;interceptor-class></a>,
+        <a href="#custom-property">&lt;custom-property></a></p>
+				</section>
+        <section id="action-name"><title>&lt;action-name&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;action-name> xsd:string &lt;action-name> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#per-action">&lt;per-action></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+        <section id="after-action"><title>&lt;after-action&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source> &lt;after-action> xsd:boolean &lt;after-action> [occurrences: 0-1] </source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#simple-action-interceptor">&lt;simple-action-interceptor></a>
+					   </p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+				
+        <section id="binding-context"><title>&lt;binding-context&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;binding-context> [occurrences: 0-*]
+  &lt;name> xsd:string &lt;/name> [occurrences: 1]
+  &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+&lt;/binding-context></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#binding-contexts">&lt;binding-contexts></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#name">&lt;name></a>,
+                   <a href="#factory-class">&lt;factory-class></a></p></section>
+        <section id="binding-contexts"><title>&lt;binding-contexts&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;/binding-contexts> [occurrences: 0-1]
+  &lt;binding-context> [occurrences: 0-*]
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+  &lt;/binding-context>
+&lt;/binding-contexts></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#expression-language">&lt;expression-language></a></p>
+				<p><strong>Children:</strong></p>
+					<p><a href="#binding-context">&lt;binding-context></a></p></section>
+        <section id="converter-class"><title>&lt;converter-class&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;converter-class> xsd:string &lt;/converter-class> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#type-converter">&lt;type-converter></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="custom-property"><title>&lt;custom-property&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;custom-property>
+  &lt;name> xsd:string &lt;/name> [occurrences: 1]
+  &lt;value> xsd:string &lt;/value> [occurrences: 1]
+&lt;/custom-property></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#action-interceptor">&lt;action-interceptor></a>,
+					<a href="#request-interceptor">&lt;request-interceptor></a>,
+					<a href="#action-forward-handler">&lt;action-forward-handler></a>,
+					<a href="#exceptions-handler">&lt;exceptions-handler></a>,
+					<a href="#forward-redirect-handler">&lt;forward-redirect-handler></a>,
+					<a href="#login-handler">&lt;login-handler></a>,
+					<a href="#reloadable-class-handler">&lt;reloadable-class-handler></a>
+					<a href="#flowcontroller-factory">&lt;flowcontroller-factory></a>
+					<a href="#faces-backing-bean-factory">&lt;faces-backing-bean-factory></a>
+                    </p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#name">&lt;name></a>, 
+				   <a href="#value">&lt;value></a></p></section>
+
+        <section id="default-language"><title>&lt;default-language&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;default-language> xsd:string &lt;/default-language> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#expression-language">&lt;expression-language></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+        <section id="default-shared-flow-refs"><title>&lt;default-shared-flow-refs&gt;</title>
+			<p>Allows JSPs to access shared flows even when there is no page flow that 
+				declares the shared flow.  This configuration element declares
+				default shared flow references that can be used across the web app.</p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;default-shared-flow-refs>
+  &lt;shared-flow-ref>
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;type> xsd:string &lt;/type> [occurrences: 1]  
+  &lt;/shared-flow-ref> [occurrences: 0-*]
+&lt;/default-shared-flow-refs></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#shared-flow-ref">&lt;shared-flow-ref></a></p></section>
+
+        <section id="description"><title>&lt;description&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;description> xsd:string &lt;/description> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#module-config-locator">&lt;module-config-locator></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+        <section id="doctype"><title>&lt;doctype></title>
+                <p> Sets the WebApp default HTML format.  The currently supported formats are
+                    HTML 4.01 Transitional DTD (Loose), HTML 4.01 Transitional DTD with Quirks mode on,
+                    and XHTML 1.0 Transitional.  The default value is <em>html4-loose-quirks</em>.
+                </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;doctype> [ html4-loose | html4-loose-quirks | xhtml1-transitional ] &lt;/doctype> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#jsp-tag-config">&lt;jsp-tag-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+        <section id="enable-self-nesting"><title>&lt;enable-self-nesting&gt;</title>
+                <p>
+                    When this value is set to <code>false</code> (the default), a nested page flow that is
+                    <em>anywhere</em> on the nesting stack will be <em>reactivated</em> if one of its actions is hit,
+                    and all page flows higher up the stack will be destroyed.  When this value is set to
+                    <code>true</code>, a <em>new</em> instance of the nested page flow will end up at the top of the
+                    stack.  As an example, consider the following stack of page flows:
+                </p>
+                        <source>A, B, C <sup>(top)</sup></source>
+                <p>
+                    When an action in B is hit, one of two things will happen:
+                </p>
+                <ul>
+                    <li>If <code>enable-self-nesting</code> is set to <code>false</code>, then B will be
+                        reactivated and C will be destroyed.  The nesting stack will look like this:
+                        <source>A, B <sup>(top)</sup></source>
+                    </li>
+                    <li>If <code>enable-self-nesting</code> is set to <code>true</code>, then a new instance of B
+                        will be at the top of the stack, which will look like this:
+                        <source>A, B, C, B <sup>(top)</sup></source>
+                    </li>
+                </ul>
+                <p>
+                    Note that setting this value to <code>true</code> is <strong>not back-button-friendly</strong>.
+                    Hitting a Page Flow action after using the browser back button can often end up executing an
+                    action on a nested page flow in the middle of the nesting stack.
+                </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;enable-self-nesting> xsd:boolean &lt;/enable-self-nesting> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+        <section id="ensure-secure-forwards"><title>&lt;ensure-secure-forwards&gt;</title>
+			    <p>For some server implementations, security checks are executed only when an URL is called 
+					directly, while security checks for server forwards are ignored.</p>
+				<p>When this element is set to <code>true</code>, server forwards are guaranteed to be checked.</p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;ensure-secure-forwards> xsd:boolean &lt;/ensure-secure-forwards> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="exceptions-handler"><title>&lt;exceptions-handler&gt;</title>
+			    <p>Typically, exceptions thrown by the controller class are delivered in a wrapper exception
+					class.  The class named here, can be used to unwrap these exceptions and handle
+					the underlying exception in a more fine-grained manner.</p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;exceptions-handler>
+  &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/exceptions-handler></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-handlers">&lt;pageflow-handlers></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#handler-class">&lt;handler-class></a>,
+					<a href="#custom-property">&lt;custom-property></a></p></section>
+
+        <section id="expression-language"><title>&lt;expression-language&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>  &lt;expression-language> [occurrences: 1-*]
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+    &lt;binding-contexts> binding-contexts &lt;/binding-contexts> [occurrences: 0-1]
+  &lt;/expression-language></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-handlers">&lt;pageflow-handlers></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#name">&lt;name></a>,
+					<a href="#factory-class">&lt;factory-class></a>,
+					<a href="#binding-contexts">&lt;binding-contexts></a></p></section>
+        <section id="expression-languages"><title>&lt;expression-languages&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;expression-languages> [occurrences: 1]
+  &lt;default-language> xsd:string &lt;/default-language> [occurrences: 1]
+  &lt;expression-language> [occurrences: 1-*]
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+    &lt;binding-contexts> binding-contexts &lt;/binding-contexts> [occurrences: 0-1]
+  &lt;/expression-language> 
+&lt;/expression-languages></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#default-language">&lt;default-language></a>,
+					<a href="#expression-language">&lt;expression-language></a>
+					</p></section>
+
+
+    <section id="faces-backing-bean-factory">
+        <title>&lt;faces-backing-bean-factory&gt;</title>
+        <p>
+            This setting configures a factory for creating "backing beans" for
+            JavaServer Faces pages.  The referenced class must extend
+            <a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/FacesBackingBeanFactory.html">
+                org.apache.beehive.netui.pageflow.FacesBackingBeanFactory
+            </a>
+        </p>
+
+        <p><strong>Syntax</strong></p>
+        <source>
+            &lt;faces-backing-bean-factory> [occurrences: 0-*]
+                &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+                &lt;custom-property> [occurrences: 0-*]
+                    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+                    &lt;value> xsd:string &lt;/value> [occurrences: 1]
+                &lt;/custom-property>
+            &lt;/faces-backing-bean-factory>
+        </source>
+        <p><strong>Parents:</strong></p>
+        <p><a href="#pageflow-factories">&lt;pageflow-factories&gt;</a></p>
+        <p><strong>Children:</strong></p>
+        <p>
+            <a href="#factory-class">&lt;factory-class&gt;</a>,
+            <a href="#custom-property">&lt;custom-property&gt;</a>
+        </p>
+    </section>
+
+    <section id="factory-class">
+        <title>&lt;factory-class&gt;</title>
+        <p>
+            This setting configures a factory class and its custom properties.
+        </p>
+
+        <p><strong>Syntax</strong></p>
+        <source>
+            &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+        </source>
+        <p><strong>Parents:</strong></p>
+        <p>
+            <a href="#binding-contexts">&lt;binding-contexts></a>,
+            <a href="#expression-language">&lt;expression-language></a>,
+            <a href="#iterator-factory">&lt;iterator-factory></a>
+            <a href="#flowcontroller-factory">&lt;flowcontroller-factory&gt;</a>,
+            <a href="#faces-backing-bean-factory">&lt;faces-backing-bean-factory&gt;</a>
+        </p>
+        <p><strong>Children:</strong></p>
+        <p>
+            None.
+        </p>
+    </section>
+
+
+
+<section id="flowcontroller-factory">
+        <title>&lt;flowcontroller-factory&gt;</title>
+        <p>
+            This setting configures a factory for creating page flows and shared flows.
+            The referenced class must extend
+            <a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/FlowControllerFactory.html">
+                org.apache.beehive.netui.pageflow.FlowControllerFactory
+            </a>
+        </p>
+
+        <p><strong>Syntax</strong></p>
+        <source>
+            &lt;flowcontroller-factory> [occurrences: 0-*]
+                &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+                &lt;custom-property> [occurrences: 0-*]
+                    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+                    &lt;value> xsd:string &lt;/value> [occurrences: 1]
+                &lt;/custom-property>
+            &lt;/flowcontroller-factory>
+        </source>
+        <p><strong>Parents:</strong></p>
+        <p><a href="#pageflow-factories">&lt;pageflow-factories&gt;</a></p>
+        <p><strong>Children:</strong></p>
+        <p>
+            <a href="#factory-class">&lt;factory-class&gt;</a>,
+            <a href="#custom-property">&lt;custom-property&gt;</a>
+        </p>
+    </section>
+
+
+        <section id="forward-redirect-handler"><title>&lt;forward-redirect-handler&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;forward-redirect-handler>
+  &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/forward-redirect-handler></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-handlers">&lt;pageflow-handlers></a></p>
+				<p><strong>Children:</strong></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#handler-class">&lt;handler-class></a>,
+					<a href="#custom-property">&lt;custom-property></a></p></section>
+
+        <section id="global"><title>&lt;global&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;global> [occurrences: 0-1]
+  &lt;simple-action-interceptor> 
+    &lt;intercept-path> xsd:string &lt;/intercept-path> [occurrences: 1]
+    &lt;after-action> xsd:boolean &lt;/after-action> [occurrences: 0-1]  
+  &lt;/simple-action-interceptor> [occurrences: 0-*]
+  &lt;action-interceptor> 
+    &lt;interceptor-class> xsd:string &lt;/interceptor-class> [occurrences: 1]
+    &lt;custom-property> 
+      &lt;name> xsd:string &lt;/name> [occurrences: 1]
+      &lt;value> xsd:string &lt;/value> [occurrences: 1]
+    &lt;/custom-property> [occurrences: 0-*]
+  &lt;/action-interceptor> [occurrences: 0-*]
+&lt;/global>
+
+&lt;global>
+  &lt;request-interceptor>
+    &lt;interceptor-class> xsd:string &lt;/interceptor-class> [occurrences: 1]
+    &lt;custom-property> 
+      &lt;name> xsd:string &lt;/name> [occurrences: 1]
+      &lt;value> xsd:string &lt;/value> [occurrences: 1]
+    &lt;/custom-property> [occurrences: 0-*]
+  &lt;/request-interceptor> [occurrences: 0-*]
+&lt;/global></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-action-interceptors">&lt;pageflow-action-interceptors></a>,
+					<a href="#request-interceptors">&lt;request-interceptors></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#simple-action-interceptor">&lt;simple-action-interceptor></a>,
+					<a href="#action-interceptor">&lt;action-interceptor></a>,
+					<a href="#request-interceptor">&lt;request-interceptor></a></p></section>
+
+        <section id="handler-class"><title>&lt;handler-class&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#action-forward-handler">&lt;action-forward-handler></a>,
+						<a href="#exceptions-handler">&lt;exceptions-handler></a>,
+						<a href="#forward-redirect-handler">&lt;forward-redirect-handler></a>,
+						<a href="#login-handler">&lt;login-handler></a>,
+						<a href="#reloadable-class-handler">&lt;reloadable-class-handler></a>,
+						<a href="#prefix-handler">&lt;prefix-handler></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+
+        <section id="html-amp-entity"><title>&lt;html-amp-entity&gt;</title>
+<p>
+The url parameter separators of &amp; (single amphersand) are encoded to &amp;amp; (ampersand followed by amp;) by default 
+according to the html 401 specifications set forth by W3C. This item 
+can be set to false and the parameter separators will not be encoded.
+</p>
+
+				<p><strong>Syntax</strong></p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;html-amp-entity> xsd:boolean &lt;/html-amp-entity> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#url-config">&lt;url-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+
+
+
+        <section id="id-javascript"><title>&lt;id-javascript&gt;</title>
+                <p> This configuration setting will change the type of support for JavaScript.  The default is
+                    to output only the Beehive NetUI JavaScript support.  There are two legacy mode options that output
+                    pre-Beehive JavaScript support.  When <em>id-javaScript</em> is set to <strong>legacy</strong>
+                    the pre-Beehive lookup methods are written out along with the current Beehive lookup methods.
+                    When the value is set to <strong>legacyOnly</strong>
+                    only the pre-beehive lookup methods are written out.  This is a pure backward compatibility mode
+                    for pre-beehive NetUI behavior.
+                </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;id-javascript> [ default | legacy | legacyOnly ] &lt;/id-javascript> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#jsp-tag-config">&lt;jsp-tag-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="interceptor-class"><title>&lt;interceptor-class&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;interceptor-class> xsd:string &lt;interceptor-class> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#action-interceptor">&lt;action-interceptor></a>,
+					<a href="#request-interceptor">&lt;request-interceptor></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="intercept-path"><title>&lt;intercept-path&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;intercept-path> xsd:string &lt;/intercept-path> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#simple-action-interceptor">&lt;simple-action-interceptor></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="iterator-factories"><title>&lt;iterator-factories&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;iterator-factories>
+  &lt;iterator-factory> [occurrences: 0-*]
+    ...
+  &lt;/iterator-factory>
+&lt;/iterator-factories></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#iterator-factory">&lt;iterator-factory></a></p></section>
+
+        <section id="iterator-factory"><title>&lt;iterator-factory&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;iterator-factory> [occurrences: 0-*]
+  &lt;name> xsd:string &lt;/name> [occurrences: 1]
+  &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+&lt;/iterator-factory></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#iterator-factories">&lt;iterator-factories></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#name">&lt;name></a>,
+					<a href="#factory-class">&lt;factory-class></a></p></section>
+
+        <section id="jsp-tag-config"><title>&lt;jsp-tag-config&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;jsp-tag-config>
+  &lt;doctype> xsd:string &lt;/doctype> [occurrences: 0-1]
+  &lt;id-javascript> [ default | legacy | legacyOnly ] &lt;/id-javascript> [occurrences: 0-1]
+  &lt;tree-image-location> xsd:string &lt;/tree-image-location> [occurrences: 0-1]
+&lt;/jsp-tag-config></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#doctype">&lt;doctype></a>,
+					<a href="#id-javascript">&lt;id-javascript></a>,
+					<a href="#tree-image-location">&lt;tree-image-location></a>,</p></section>
+
+        <section id="locator-class"><title>&lt;locator-class&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;locator-class> xsd:string &lt;/locator-class> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#module-config-locator">&lt;module-config-locator></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="login-handler"><title>&lt;login-handler&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;login-handler>
+  &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/login-handler></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-handlers">&lt;pageflow-handlers></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#handler-class">&lt;handler-class></a>,
+					<a href="#custom-property">&lt;custom-property></a></p></section>
+    
+        <section id="max-forwards-per-request"><title>&lt;max-forwards-per-request&gt;</title>
+				<p>If the number of server 
+        forwards exceeds the given count, an error is written to the response and no further 
+        forwarding is excuted. This is mainly to prevent infinite loops of server forwards. 
+        To reproduce the error, invoke this action in a page flow:</p>
+<source>
+<![CDATA[    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="self", path="overflow.do")
+        }
+    )
+    public Forward overflow()
+    {
+        return new Forward( "self" );
+    }]]></source>
+
+<p>If this element is omitted, the error will be written to the response after 25 server forwards within a single request.
+</p>
+<p>When an application is in development, a descriptive error is sent; for deployed applications, a 500 response is sent.</p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;max-forwards-per-request> xsd:int &lt;/max-forwards-per-request> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p>
+</section>
+
+        <section id="max-nesting-stack-depth"><title>&lt;max-nesting-stack-depth&gt;</title>
+		<p>
+        This parameter sets the maximum size of the Page Flow nesting stack. 
+        If page flows are repeatedly nested until the stack size exceeds the specified value, 
+        an error is written to the response object and any further nesting is not allowed. 
+        This helps prevent the nesting stack from consuming large amounts of resources.</p>
+<p>When an application is in development, a descriptive error is sent; for deployed applications, a 500 response is sent.</p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;max-nesting-stack-depth> xsd:int &lt;/max-nesting-stack-depth> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p>
+        </section>
+
+        <section id="module-config-locator"><title>&lt;module-config-locator&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;module-config-locator> [occurrences: 0-*]
+  &lt;description> xsd:string &lt;/description> [occurrences: 0-1]
+  &lt;locator-class> xsd:string &lt;/locator-class> [occurrences: 1]
+&lt;/module-config-locator></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#module-config-locators">&lt;module-config-locators></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#description">&lt;description></a>,
+					<a href="#locator-class">&lt;locator-class></a></p></section>
+
+        <section id="module-config-locators"><title>&lt;module-config-locators&gt;</title>
+			<p>Names a class or group of classes that know the location of the web application's 
+				Struts module configuration files.  By default these configuation files are saved to 
+				<code>WEB-INF/classes/_pageflow/</code>.  In cases where this default location
+				has been overridden or augmented by a custom compilation process, use
+                <code>&lt;module-config-locators></code> to point to a Java class that knows the
+				new location.  </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;module-config-locators> [occurrences: 0-1]
+  &lt;module-config-locator> [occurrences: 0-*]
+    &lt;description> xsd:string &lt;/description> [occurrences: 0-1]
+    &lt;locator-class> xsd:string &lt;/locator-class> [occurrences: 1]
+  &lt;/module-config-locator>
+&lt;/module-config-locators></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#module-config-locator">&lt;module-config-locator></a></p></section>
+
+        <section id="multipart-handler"><title>&lt;multipart-handler&gt;</title>
+			    <p>By default multi-part file uploading is disabled for NetUI web applications.
+					To turn it on, you must (1) explicitly set this element to <code>memory</code>
+					or <code>disk</code>, or (2) set the <code>multipartHandler</code> attribute on
+                    a page flow's <code>&#64;Jpf.Controller</code> annotation.  Doing (1) will enable file uploading across 
+					the entire web applcation; doing (2) enables file uploading on a
+					controller-by-controller basis.</p>
+                <p><strong>Also see:</strong></p>
+                    <p>
+                        <a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html#multipartHandler()">
+                            Attribute multipartHandler on annotation interface org.apache.beehive.netui.pageflow.annotations.Jpf
+                        </a>
+                    </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;multipart-handler> [ disabled | memory | disk ] &lt;/multipart-handler> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="name"><title>&lt;name&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;name> xsd:string &lt;/name> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#expression-language">&lt;expression-language></a>,
+						<a href="#iterator-factory">&lt;iterator-factory></a>,
+						<a href="#binding-context">&lt;binding-context></a>,
+						<a href="#custom-property">&lt;custom-property></a>,
+						<a href="#shared-flow-ref">&lt;shared-flow-ref></a>,
+						<a href="#prefix-handler">&lt;prefix-handler></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="netui-config">
+                <title>&lt;netui-config&gt;</title>
+				<p>
+        The top-level element in the <code>beehive-netui-config.xml</code> file.</p>				
+				<p><strong>Syntax</strong></p>
+				<source>&lt;netui-config>
+  &lt;expression-languages> ... &lt;/expression-languages> [occurrences: 1]
+  &lt;pageflow-action-interceptors> ... &lt;/pageflow-action-interceptors> [occurrences: 0-1]
+  &lt;pageflow-handlers> ... &lt;/pageflow-handlers> [occurrences: 0-1]
+  &lt;pageflow-factories> ... &lt;/pageflow-factories> [occurrences: 0-1]
+  &lt;pageflow-config> ... &lt;/pageflow-config> [occurrences: 0-1]
+  &lt;default-shared-flow-refs> ... &lt;/default-shared-flow-refs> [occurrences: 0-1]
+  &lt;type-converters> ... &lt;/type-converters> [occurrences: 0-1]
+  &lt;jsp-tag-config> ... &lt;/jsp-tag-config> [occurrences: 0-1]
+  &lt;url-config> ... &lt;/url-config> [occurrences: 0-1]
+  &lt;iterator-factories> ... &lt;/iterator-factories> [occurrences: 0-1]
+  &lt;request-interceptors> ... &lt;/request-interceptors> [occurrences: 0-1]
+  &lt;prefix-handlers> ... &lt;/prefix-handlers> [occurrences: 0-1]
+&lt;/netui-config></source>
+				<p><strong>Parents:</strong></p>
+					<p></p>
+				<p><strong>Children:</strong></p>
+				<p>  <a href="#expression-languages">&lt;expression-languages&gt;</a>,
+  <a href="#pageflow-action-interceptors">&lt;pageflow-action-interceptors&gt;</a>,
+  <a href="#pageflow-handlers">&lt;pageflow-handlers&gt;</a>,
+  <a href="#pageflow-factories">&lt;pageflow-factories&gt;</a>,
+  <a href="#pageflow-config">&lt;pageflow-config&gt;</a>,
+  <a href="#default-shared-flow-refs">&lt;default-shared-flow-refs&gt;</a>,
+  <a href="#type-converters">&lt;type-converters&gt;</a>,
+  <a href="#jsp-tag-config">&lt;jsp-tag-config&gt;</a>,
+  <a href="#url-config">&lt;url-config&gt;</a>,
+  <a href="#iterator-factories">&lt;iterator-factories&gt;</a>,
+  <a href="#request-interceptors">&lt;request-interceptors&gt;</a>,
+  <a href="#prefix-handlers">&lt;prefix-handlers&gt;</a></p>
+            </section>
+ 
+            <section id="pageflow-action-interceptors">
+			<title>&lt;pageflow-action-interceptors&gt;</title>
+            <p>To run code before or after Page Flow actions,
+you configure a &lt;pageflow-action-interceptor&gt; group. 
+A simple example of this would be a monitoring infrastructure 
+that keeps track of the number of actions raised.  To keep track of the number of actions raised, 
+register an interceptor 
+that runs the counting code before going to any action. A more complex example 
+is an interceptor that "injects" a page flow before allowing you 
+to go to the current one; for instance, it might decide (on the fly) to take you to a nested page flow 
+that asks you to fill out a "satisfaction survey" before sending you to the 
+destination page flow. </p>
+<p>
+    The action-intercepting class is run twice: both before <em>and</em> after the execution of the
+    action.  When run before an action, it can do three things:
+</p>
+      <ul>
+          <li>change the destination URI and thus prevent the action from running, or,</li>
+          <li>set the destination URI to <code>null</code> (no forwarding) and thus prevent the action from running, or,</li>
+          <li>
+              "inject" an entire nested page flow to run before the action is invoked.  If the override forward URI
+              is a nested page flow, then it will run until it raises one of its return actions.  At that point,
+              <code>afterNestedIntercept</code> is called on <em>this interceptor</em>, which can again choose to override
+              the forward or allow the original action to run.
+          </li>
+      </ul>
+ <p>When run after an action, it can do two things:</p>
+      <ul>
+          <li>change the destination URI that was returned by the action, or,</li>
+          <li>set the destination URI to <code>null</code> (no forwarding).</li>
+      </ul>
+ <p><strong>Also see:</strong></p>
+ <p><a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/interceptor/ActionInterceptor.html">Interface org.apache.beehive.netui.pageflow.interceptor.ActionInterceptor</a></p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;pageflow-action-interceptors>
+	&lt;global> [occurrences: 0-1]
+		&lt;simple-action-interceptor> ... &lt;/simple-action-interceptor> [occurrences: 0-*]
+		&lt;action-interceptor> ... &lt;/action-interceptor> [occurrences: 0-*]
+	&lt;/global>
+	&lt;per-pageflow> [occurrences: 0-*]
+		&lt;pageflow-uri> xsd:string &lt;/pageflow-uri> [occurrences: 1]
+		&lt;simple-action-interceptor> ... &lt;/simple-action-interceptor> [occurrences: 0-*]
+		&lt;action-interceptor> ... &lt;/action-interceptor> [occurrences: 0-*]
+		&lt;per-action> [occurrences: 0-*]
+			&lt;action-name> xsd:string &lt;/action-name> [occurrences: 1]
+			&lt;simple-action-interceptor> ... &lt;/simple-action-interceptor> [occurrences: 0-*]
+			&lt;action-interceptor> ... &lt;/action-interceptor> [occurrences: 0-*]
+		&lt;/per-action>
+	&lt;/per-pageflow>
+&lt;/pageflow-action-interceptors></source>
+				<p><strong>Parents</strong></p>
+				<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children</strong></p>
+				<p><a href="#global">&lt;global&gt;</a>, <a href="#per-pageflow">&lt;per-pageflow&gt;</a> </p>				
+            </section>
+
+            <section id="pageflow-config">
+                <title>&lt;pageflow-config&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;pageflow-config>
+	&lt;enable-self-nesting> xsd:boolean &lt;/enable-self-nesting> [occurrences: 0-1]
+	&lt;max-forwards-per-request> xsd:int &lt;/max-forwards-per-request> [occurrences: 0-1]
+	&lt;max-nesting-stack-depth> xsd:int &lt;/max-nesting-stack-depth> [occurrences: 0-1]
+	&lt;ensure-secure-forwards> xsd:boolean &lt;/ensure-secure-forwards> [occurrences: 0-1]
+	&lt;throw-session-expired-exception> xsd:boolean &lt;/throw-session-expired-exception> [occurrences: 0-1]
+	&lt;multipart-handler> [ disabled | memory | disk ] &lt;/multipart-handler> [occurrences: 0-1]
+	&lt;prevent-cache> [ default | always | inDevMode ] &lt;/prevent-cache> [occurrences: 0-1]
+	&lt;module-config-locators> ... &lt;/module-config-locators> [occurrences: 0-1]
+&lt;/pageflow-config></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#enable-self-nesting">&lt;enable-self-nesting&gt;</a>, 
+					<a href="#max-forwards-per-request">&lt;max-forwards-per-request&gt;</a>, 
+					<a href="#max-nesting-stack-depth">&lt;max-nesting-stack-depth&gt;</a>,
+					<a href="#ensure-secure-forwards">&lt;ensure-secure-forwards&gt;</a>,
+					<a href="#throw-session-expired-exception">&lt;throw-session-expired-exception&gt;</a>,
+					<a href="#multipart-handler">&lt;multipart-handler&gt;</a>,
+					<a href="#prevent-cache">&lt;prevent-cache&gt;</a>,
+					<a href="#module-config-locators">&lt;module-config-locators&gt;</a>
+					</p>
+				<p>
+Configures the NetUI
+runtime across the webapp. If you want to disable file-upload, for instance, 
+you set the multipart-handler to "disabled".</p></section>
+            
+			<section id="pageflow-handlers">
+                <title>&lt;pageflow-handlers&gt;</title>
+				<p>
+These settings let you override base framework behavior. 
+A good example is the LoginHandler. By default, standard Servlet 
+APIs are used to determine whether a user is logged in, and
+server-specific APIs are used to actually log in a user when
+<code>login()</code> is called inside a page flow. 
+If you want to replace this behavior with your own login scheme 
+(which may look at a User database table for login information), 
+you can provide your own LoginHandler that defines methods like
+<code>login()</code> and <code>isUserInRole()</code>.
+</p>
+
+				<p><strong>Syntax</strong></p>
+				<source>&lt;pageflow-handlers&gt;
+	&lt;action-forward-handler> [occurrences: 0-*]
+		&lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+		&lt;custom-property> [occurrences: 0-*]
+            &lt;name> xsd:string &lt;/name> [occurrences: 1]
+            &lt;value> xsd:string &lt;/value> [occurrences: 1]
+        &lt;/custom-property>
+	&lt;/action-forward-handler>
+	&lt;exceptions-handler> [occurrences: 0-*]
+		&lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+		&lt;custom-property> [occurrences: 0-*]
+            &lt;name> xsd:string &lt;/name> [occurrences: 1]
+            &lt;value> xsd:string &lt;/value> [occurrences: 1]
+        &lt;/custom-property>
+	&lt;/exceptions-handler>
+	&lt;forward-redirect-handler> [occurrences: 0-*]
+		&lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+		&lt;custom-property> [occurrences: 0-*]
+            &lt;name> xsd:string &lt;/name> [occurrences: 1]
+            &lt;value> xsd:string &lt;/value> [occurrences: 1]
+        &lt;/custom-property>
+	&lt;/forward-redirect-handler>
+	&lt;login-handler> [occurrences: 0-*]
+		&lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+		&lt;custom-property> [occurrences: 0-*]
+            &lt;name> xsd:string &lt;/name> [occurrences: 1]
+            &lt;value> xsd:string &lt;/value> [occurrences: 1]
+        &lt;/custom-property>
+	&lt;/login-handler>
+	&lt;reloadable-class-handler> [occurrences: 0-*]
+		&lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+		&lt;custom-property> [occurrences: 0-*]
+            &lt;name> xsd:string &lt;/name> [occurrences: 1]
+            &lt;value> xsd:string &lt;/value> [occurrences: 1]
+        &lt;/custom-property>
+	&lt;/reloadable-class-handler>
+&lt;/pageflow-handlers&gt;</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#action-forward-handler">&lt;action-forward-handler&gt;</a>,
+					<a href="#exceptions-handler">&lt;exceptions-handler&gt;</a>,
+					<a href="#forward-redirect-handler">&lt;forward-redirect-handler&gt;</a>,
+					<a href="#login-handler">&lt;login-handler&gt;</a>, 
+					<a href="#reloadable-class-handler">&lt;reloadable-class-handler&gt;</a></p></section>
+            
+    <section id="pageflow-factories">
+        <title>&lt;pageflow-factories&gt;</title>
+        <p>
+            These settings let you override the default factories for creating
+            page flows, shared flows, and JavaServer Faces backing beans.
+        </p>
+
+        <p><strong>Syntax</strong></p>
+        <source>
+            &lt;pageflow-factories&gt;
+                &lt;flowcontroller-factory> [occurrences: 0-*]
+                    &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+                    &lt;custom-property> [occurrences: 0-*]
+                        &lt;name> xsd:string &lt;/name> [occurrences: 1]
+                        &lt;value> xsd:string &lt;/value> [occurrences: 1]
+                    &lt;/custom-property>
+                &lt;/flowcontroller-factory>
+                &lt;faces-backing-bean-factory> [occurrences: 0-*]
+                    &lt;factory-class> xsd:string &lt;/factory-class> [occurrences: 1]
+                    &lt;custom-property> [occurrences: 0-*]
+                        &lt;name> xsd:string &lt;/name> [occurrences: 1]
+                        &lt;value> xsd:string &lt;/value> [occurrences: 1]
+                    &lt;/custom-property>
+                &lt;/faces-backing-bean-factory>
+            &lt;/pageflow-factories&gt;
+        </source>
+        <p><strong>Parents:</strong></p>
+        <p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+        <p><strong>Children:</strong></p>
+        <p>
+            <a href="#flowcontroller-factory">&lt;flowcontroller-factory&gt;</a>,
+            <a href="#faces-backing-bean-factory">&lt;faces-backing-bean-factory&gt;</a>
+        </p>
+    </section>
+
+    
+    	<section id="pageflow-uri"><title>&lt;pageflow-uri&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;pageflow-uri> xsd:string &lt;/pageflow-uri> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#per-pageflow">&lt;per-pageflow&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+	<section id="per-action"><title>&lt;per-action&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;per-action> [occurrences: 0-*]
+	&lt;action-name> xsd:string &lt;/action-name> [occurrences: 1]
+	&lt;simple-action-interceptor> netui:simple-action-interceptor &lt;/simple-action-interceptor> [occurrences: 0-*]
+	&lt;action-interceptor> netui:action-interceptor &lt;/action-interceptor> [occurrences: 0-*]
+&lt;/per-action></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#global">&lt;global&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#action-name">&lt;action-name&gt;</a>,
+					<a href="#simple-action-interceptor">&lt;simple-action-interceptor&gt;</a>,
+					<a href="#action-interceptor">&lt;action-interceptor&gt;</a></p></section>
+
+	<section id="per-pageflow"><title>&lt;per-pageflow&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;per-pageflow> [occurrences: 0-*]
+	&lt;pageflow-uri> xsd:string &lt;/pageflow-uri> [occurrences: 1]
+	&lt;simple-action-interceptor> netui:simple-action-interceptor &lt;/simple-action-interceptor> [occurrences: 0-*]
+	&lt;action-interceptor> netui:action-interceptor &lt;/action-interceptor> [occurrences: 0-*]
+	&lt;per-action> [occurrences: 0-*]
+		&lt;action-name> xsd:string &lt;/action-name> [occurrences: 1]
+		&lt;simple-action-interceptor> netui:simple-action-interceptor &lt;/simple-action-interceptor> [occurrences: 0-*]
+		&lt;action-interceptor> netui:action-interceptor &lt;/action-interceptor> [occurrences: 0-*]
+	&lt;/per-action>
+&lt;/per-pageflow></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#global">&lt;global&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#pageflow-uri">&lt;pageflow-uri&gt;</a>,
+					<a href="#simple-action-interceptor">&lt;simple-action-interceptor&gt;</a>,
+					<a href="#action-interceptor">&lt;action-interceptor&gt;</a>,
+					<a href="#per-action">&lt;per-action&gt;</a></p></section>
+
+
+	<section id="prefix-handler"><title>&lt;prefix-handler&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;prefix-handler>
+  &lt;name> xsd:string &lt;/name> [occurrences: 1]
+  &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+&lt;/prefix-handler></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#prefix-handlers">&lt;prefix-handlers&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#name">&lt;name&gt;</a>,
+					<a href="#handler-class">&lt;handler-class&gt;</a></p></section>
+
+	<section id="prefix-handlers"><title>&lt;prefix-handlers&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;prefix-handlers>
+  &lt;prefix-handler> [occurrences: 0-*]
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+  &lt;/prefix-handler>
+&lt;/prefix-handlers></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#prefix-handler">&lt;prefix-handler&gt;</a></p></section>
+
+
+
+
+
+        <section id="prevent-cache"><title>&lt;prevent-cache&gt;</title>
+                <p>
+                    This setting configures browser caching behavior for pages returned from Page Flow actions.
+                    Setting it to <code>always</code> causes no-cache headers to be added to the HTTP response,
+                    specifying that pages are <strong>never</strong> cached.  Setting it to <code>inDevMode</code>
+                    means that pages may be cached only when the server is in production mode.
+                </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;prevent-cache> [ default | always | inDevMode ] &lt;/prevent-cache> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+	<section id="reloadable-class-handler"><title>&lt;reloadable-class-handler&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;reloadable-class-handler>
+  &lt;handler-class> xsd:string &lt;/handler-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/reloadable-class-handler></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-handlers">&lt;pageflow-handlers></a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#handler-class">&lt;handler-class></a>,
+					<a href="#custom-property">&lt;custom-property></a></p></section>
+
+	<section id="request-interceptor">
+				<title>&lt;request-interceptor&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;request-interceptor>
+  &lt;interceptor-class> xsd:string &lt;/interceptor-class> [occurrences: 1]
+  &lt;custom-property> 
+    &lt;name> xsd:string &lt;/name> [occurrences: 1]
+    &lt;value> xsd:string &lt;/value> [occurrences: 1]  
+  &lt;/custom-property> [occurrences: 0-*]
+&lt;/request-interceptor></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#global">&lt;global&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#interceptor-class">&lt;interceptor-class&gt;</a>,
+				<a href="#custom-property">&lt;custom-property&gt;</a></p></section>
+
+	<section id="request-interceptors">
+				<title>&lt;request-interceptors&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;request-interceptors>
+  &lt;global> [occurrences: 0-1]
+    &lt;request-interceptor> [occurrences: 0-*] 
+      &lt;interceptor-class> xsd:string &lt;/interceptor-class> [occurrences: 1]
+      &lt;custom-property> ... &lt;/custom-property> [occurrences: 0-*]
+    &lt;/request-interceptor>
+  &lt;/global>
+&lt;/request-interceptors></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#global">&lt;global&gt;</a></p></section>
+
+	<section id="shared-flow-ref">
+				<title>&lt;shared-flow-ref&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;shared-flow-ref>
+  &lt;name> xsd:string &lt;/name> [occurrences: 1]
+  &lt;type> xsd:string &lt;/type> [occurrences: 1]
+&lt;/shared-flow-ref></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#default-shared-flow-refs">&lt;default-shared-flow-refs&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#name">&lt;name&gt;</a>,
+				<a href="#type">&lt;type&gt;</a></p></section>
+
+	<section id="simple-action-interceptor"><title>&lt;simple-action-interceptor&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;simple-action-interceptor>
+  &lt;intercept-path> xsd:string &lt;/intercept-path> [occurrences: 1]
+  &lt;after-action> xsd:boolean &lt;/after-action> [occurrences: 0-1]
+&lt;/simple-action-interceptor></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="templated-url-formatter-class"><title>&lt;templated-url-formatter-class&gt;</title>
+<p>
+This setting allows you to override the default url formatting class.
+The default value is <em>org.apache.beehive.netui.pageflow.internal.DefaultTemplatedUrlFormatter</em>.
+</p>
+                                <p><strong>Syntax</strong></p>
+                                <source>&lt;templated-url-formatter-class> xsd:string &lt;/templated-url-fomatter-class> [occurrences: 0-1]</source>
+                                <p><strong>Parents:</strong></p>
+                                        <p><a href="#url-config">&lt;url-config&gt;</a></p>
+                                <p><strong>Children:</strong></p>
+                                <p>none</p></section>
+                                                                                                                                                         
+	<section id="throw-session-expired-exception"><title>&lt;throw-session-expired-exception&gt;</title>
+                <p>
+                    When set to <code>true</code> (the default), this causes a <code>SessionExpiredException</code> to
+                    be thrown in place of some other Page Flow exceptions when the root cause is most likely the
+                    expiration of the user session.
+                </p>
+                <p><strong>Also see:</strong></p>
+                    <p>
+                        <a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/SessionExpiredException.html">
+                            Class org.apache.beehive.netui.pageflow.SessionExpiredException
+                        </a>
+                    </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;throw-session-expired-exception> xsd:boolean &lt;/throw-session-expired-exception> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#pageflow-config">&lt;pageflow-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+	<section id="tree-image-location"><title>&lt;tree-image-location&gt;</title>
+                <p> This configuration sets a path for looking up the default images used by the tree tags.
+                    The default location of resources changed in Beehive NetUI from pre-Beehive NetUI.  This
+                    element allows you to set an absolute path to these image resources.
+                </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;tree-image-location> xsd:string &lt;/tree-image-location> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#jsp-tag-config">&lt;jsp-tag-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+	<section id="tree-renderer-class"><title>&lt;tree-renderer-class&gt;</title>
+                <p> Refers to a custom tree renderer class that overrides the default TreeRenderer.
+                </p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;tree-renderer-class> xsd:string &lt;/tree-renderer-class> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#jsp-tag-config">&lt;jsp-tag-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+                 
+	<section id="type"><title>&lt;type&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;type> xsd:string &lt;/type> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#type-converter">&lt;type-converter&gt;</a>,
+					<a href="#shared-flow-ref">&lt;shared-flow-ref></a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+	<section id="type-converter"><title>&lt;type-converter&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;type-converter> [occurrences: 0-*]
+  &lt;type> xsd:string &lt;/type> [occurrences: 1]
+  &lt;converter-class> xsd:string &lt;/converter-class> [occurrences: 1]
+&lt;/type-converter></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#type-converters">&lt;type-converters&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#type">&lt;type></a>,
+					<a href="#converter-class">&lt;converter-class></a></p></section>
+
+	<section id="type-converters"><title>&lt;type-converters&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;type-converters>
+  &lt;type-converter> [occurrences: 0-*]
+    &lt;type> xsd:string &lt;/type> [occurrences: 1]
+    &lt;converter-class> xsd:string &lt;/converter-class> [occurrences: 1]
+  &lt;/type-converter>
+&lt;/type-converters></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#type-converter">&lt;type-converter&gt;</a></p></section>
+
+	<section id="url-config"><title>&lt;url-config&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;url-config>
+  &lt;url-encode-urls> xsd:boolean &lt;/url-encode-urls> [occurrences: 0-1]
+  &lt;html-amp-entity> xsd:boolean &lt;/html-amp-entity> [occurrences: 0-1]
+  &lt;templated-url-formatter-class> xsd:string &lt;/templated-url-formatter-class> [occurrences: 0-1]
+&lt;/url-config></source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#netui-config">&lt;netui-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p><a href="#url-encode-urls">&lt;url-encode-urls&gt;</a>,
+				<a href="#html-amp-entity">&lt;html-amp-entity&gt;</a>,
+				<a href="#templated-url-formatter-class">&lt;templated-url-formatter-class&gt;</a></p></section>
+
+        <section id="url-encode-urls"><title>&lt;url-encode-urls&gt;</title>
+<p>
+This setting allows you to override the default of encoding the urls for 
+tags with href attributes so that already encoded urls will not be re-encoded.
+</p>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;url-encode-urls> xsd:boolean &lt;/url-encode-urls> [occurrences: 0-1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#url-config">&lt;url-config&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+
+        <section id="value"><title>&lt;value&gt;</title>
+				<p><strong>Syntax</strong></p>
+				<source>&lt;value> xsd:string &lt;/value> [occurrences: 1]</source>
+				<p><strong>Parents:</strong></p>
+					<p><a href="#custom-propert ">&lt;custom-property&gt;</a></p>
+				<p><strong>Children:</strong></p>
+				<p>none</p></section>
+        </section>
+        <section id="example">
+            <title>Example</title>
+            <p>
+        Use the following example <code>netui-config.xsd</code> file as a guide.</p>
+            <source><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+
+<netui-config xmlns="http://beehive.apache.org/netui/2004/server/config">
+
+    <expression-languages>
+        <default-language>netuiel</default-language>
+        <expression-language>
+            <name>netuiel</name>
+            <factory-class>org.apache.beehive.netui.script.el.ExpressionEvaluatorImpl$NetUIELEngineFactory</factory-class>
+        </expression-language>
+    </expression-languages>
+
+    <pageflow-action-interceptors>
+        <global>
+            <action-interceptor>
+                <!-- This interceptor is run before/after ALL page flow actions. -->
+                <interceptor-class>example.GlobalInterceptor</interceptor-class>
+                <custom-property>
+                    <name>someCustomProperty</name>
+                    <value>someValue</value>
+                </custom-property>
+            </action-interceptor>
+        </global>
+        <per-pageflow>
+            <pageflow-uri>/example/intercepted1/Controller.java</pageflow-uri>
+            <!-- This simple interceptor is run before any action in /example/nested/SomeNestedController.java.
+                 It "injects" a nested page flow before allowing the original action to run. -->
+            <simple-action-interceptor>
+                <intercept-path>/example/nested/SomeNestedController.java</intercept-path>
+            </simple-action-interceptor>
+        </per-pageflow>
+    </pageflow-action-interceptors>
+
+    <pageflow-handlers>
+        <login-handler>
+            <handler-class>example.CustomLoginHandler</handler-class>
+        </login-handler>
+    </pageflow-handlers>
+
+    <pageflow-config>
+        <multipart-handler>memory</multipart-handler>
+    </pageflow-config>
+
+    <jsp-tag-config>
+       <doctype>html4-loose</doctype>
+       <id-javascript>Legacy-JavaScript-Only</id-javascript>
+    </jsp-tag-config>
+
+    <iterator-factories>
+    </iterator-factories>
+
+</netui-config>
+            
+        ]]></source>
+        </section>
+        <section id="related_topics">
+        	<title>Related Topics</title>
+<p><a href="../apidocs/javadoc/org/apache/beehive/netui/util/config/ConfigUtil.html">Class org.apache.beehive.netui.util.config.ConfigUtil</a></p>
+<p><a href="../apidocs/javadoc/org/apache/beehive/netui/pageflow/interceptor/ActionInterceptor.html">Interface org.apache.beehive.netui.pageflow.interceptor.ActionInterceptor</a></p>
+        </section>
+        
+    </body>
+</document>

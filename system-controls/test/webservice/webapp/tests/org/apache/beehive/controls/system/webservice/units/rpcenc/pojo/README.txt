@@ -1,0 +1,1 @@
+The web service control does not support pojo's for rpc/encoded services.

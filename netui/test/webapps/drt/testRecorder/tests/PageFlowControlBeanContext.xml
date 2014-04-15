@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>PageFlowControlBeanContext</sessionName>
+<tester>ekoneil</tester>
+<startDate>06 Apr 2006, 02:31:56.468 PM MDT</startDate>
+<description>Test to ensure that the PageFlowController service is available at the correct times and is the correct value inside of a Control hosted in the PageFlowBeanContext Control container.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/controls/pfbeancontext/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>D028CB81586CF05985BE298778FA358B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=D028CB81586CF05985BE298778FA358B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+  <head><title>PageFlowBeanContext Test</title></head>
+  <body>
+  Page Flow and Control's Context Page Flow match: true
+  <br/>
+  <br/>
+  <a href="/coreWeb">Home</a>
+  </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/controls/pfbeancontext/index.jsp</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>D028CB81586CF05985BE298778FA358B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=D028CB81586CF05985BE298778FA358B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+  <head><title>PageFlowBeanContext Test</title></head>
+  <body>
+  Page Flow and Control's Context Page Flow match: true
+  <br/>
+  <br/>
+  <a href="/coreWeb">Home</a>
+  </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/controls/pfbeancontext/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>D028CB81586CF05985BE298778FA358B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=D028CB81586CF05985BE298778FA358B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111 Firefox/1.5.0.1</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+  <head><title>PageFlowBeanContext Test</title></head>
+  <body>
+  Page Flow and Control's Context Page Flow match: true
+  <br/>
+  <br/>
+  <a href="/coreWeb">Home</a>
+  </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>06 Apr 2006, 02:32:08.546 PM MDT</endDate>
+<testCount>3</testCount>
+</recorderSession>

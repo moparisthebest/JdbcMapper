@@ -1,0 +1,265 @@
+<?xml version="1.0" ?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+<project name="Beehive/Controls" default="usage" basedir=".">
+
+    <property environment="os"/>
+    <import file="../beehive-imports.xml"/>
+
+    <property name="build.dir" location="build"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <property name="jars.dir" location="${build.dir}/jars"/>
+    <property name="docs.dir" location="${build.dir}/docs"/>
+    <property name="api.dir" location="src/api"/>
+    <property name="api.classes" location="${classes.dir}/api"/>
+    <property name="spi.dir" location="src/spi"/>
+    <property name="runtime.dir" location="src/runtime"/>
+    <property name="runtime.classes" location="${classes.dir}/runtime"/>
+    <property name="test-container.dir" location="src/test-container"/>
+    <property name="test-container.classes" location="${classes.dir}/test-container"/>
+
+    <property name="controls.jar" location="${jars.dir}/beehive-controls.jar"/>
+
+    <path id="api.classpath">
+        <path refid="commons-discovery.dependency.path"/>
+    </path>
+
+    <path id="spi.classpath">
+        <pathelement location="${api.classes}"/>
+    </path>
+
+    <path id="runtime.classpath">
+        <path refid="ant-all.dependency.path"/>
+        <path refid="servlet.dependency.path"/>
+        <path refid="velocity.dependency.path"/>
+        <path refid="tools.dependency.path"/> 
+        <path refid="api.classpath"/>
+        <pathelement location="${api.classes}"/>
+    </path>
+
+    <path id="test-container.classpath">
+        <path refid="junit.dependency.path"/>
+        <path refid="runtime.classpath"/>
+        <pathelement location="${runtime.classes}"/>
+    </path>
+
+    <!-- ==================================================================== -->
+    <!-- usage - output usage   -->
+    <!-- ==================================================================== -->
+    <target name="usage">
+        <echo message=""/>
+        <echo message=""/>
+        <echo message="Controls Build file"/>
+        <echo message="================================================================"/>
+        <echo message="|                          Usage                               |"/>
+        <echo message="================================================================"/>
+        <echo message=""/>
+        <echo message="----------------------------------------------------------------"/>
+        <echo message="|                      Standard Targets                        |"/>
+        <echo message="----------------------------------------------------------------"/>
+        <echo message="build       - build java classes and jar files"/>
+        <echo message="clean       - remove build files"/>
+        <echo message="deploy      - does nothing for this project"/>
+        <echo message="redeploy    - do an &quot;clean&quot;, &quot;, &quot;build&quot; and &quot;deploy&quot;."/>
+        <echo message="docs        - build the java docs"/>
+        <echo message="drt         - runs the DRT (developer regression test)"/>
+        <echo message=""/>
+        <echo message="----------------------------------------------------------------"/>
+        <echo message="|                  Project-Specific Targets                    |"/>
+        <echo message="----------------------------------------------------------------"/>
+        <echo message="dirs        - Creates the output directories of the build."/>
+        <echo message="classes     - Compiles the source code of the project."/>
+        <echo message="================================================================"/>
+        <echo message="|      NOTE: THE WSM PROJECT ONLY BUILDS ON JDK5 AND LATER     |"/>
+        <echo message="================================================================"/>
+        <echo message=""/>
+        <echo message=""/>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- Creates the output directories of the build. -->
+    <!-- ==================================================================== -->
+    <target name="dirs">
+        <mkdir dir="${api.classes}"/>
+        <mkdir dir="${runtime.classes}"/>
+        <mkdir dir="${test-container.classes}"/>
+        <mkdir dir="${jars.dir}"/>
+        <mkdir dir="${docs.dir}"/>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- Compiles the source code of the project. -->
+    <!-- ==================================================================== -->
+    <target name="classes" depends="dirs">
+        <!-- Build the API and SPI classes -->
+        <!-- These are built together because there are some cross-depencies  -->
+        <!-- where API classes reference SPI interfaces                       -->
+        <javac destdir="${api.classes}" classpathref="api.classpath" debug="on">
+            <src path="${api.dir}"/>
+            <src path="${spi.dir}"/>
+        </javac>
+
+        <!-- Build the runtime classes -->
+        <javac destdir="${runtime.classes}" classpathref="runtime.classpath" debug="on">
+            <src path="${runtime.dir}"/>
+        </javac>
+
+        <!-- Build the test container classes -->
+        <javac destdir="${test-container.classes}" classpathref="test-container.classpath" debug="on">
+            <src path="${test-container.dir}"/>
+        </javac>
+
+        <!-- Copy property files into the build -->
+        <copy todir="${runtime.classes}" overwrite="true">
+            <fileset dir="${runtime.dir}" includes="**/*.properties"/>
+            <fileset dir="${runtime.dir}" includes="**/*.template,**/*.vm,META-INF/**"/>
+        </copy>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- Jars up the classes, libraries, and resources. -->
+    <!-- ==================================================================== -->
+    <target name="build" depends="classes">
+        <echo message="--------------------------------------------------"/>
+        <echo message="|      controls build starting                    |"/>
+        <echo message="--------------------------------------------------"/>
+        <jar jarfile="${controls.jar}">
+            <metainf dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </metainf>
+            <fileset dir="${api.classes}"/>
+            <fileset dir="${runtime.classes}"/>
+            <fileset dir="${test-container.classes}"/>
+            <manifest>
+                <attribute name="Extension-Name" value="Beehive Controls Runtime"/>
+                <attribute name="Specification-Title" value="Beehive Controls Runtime"/>
+                <attribute name="Specification-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Specification-Version" value="${beehive.version}"/>
+                <attribute name="Implementation-Title" value="Beehive Controls Runtime"/>
+                <attribute name="Implementation-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Implementation-Version" value="${beehive.version}"/>
+                <attribute name="Beehive-Version" value="${beehive.version}"/>
+            </manifest>
+        </jar>
+        <echo message="--------------------------------------------------"/>
+        <echo message="|      controls build ending                      |"/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- clean  -->
+    <!-- ==================================================================== -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <ant dir="./test" target="clean" inheritAll="false"/>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- deploy -->
+    <!-- ==================================================================== -->
+    <target name="deploy" depends="build">
+        <echo message="--------------------------------------------------"/>
+        <echo message="|       controls deploy starting                 |"/>
+        <echo message="--------------------------------------------------"/>
+        <!-- Copy build output to client locations (lib dir of servers etc) -->
+        <echo message="--------------------------------------------------"/>
+        <echo message="|       controls deploy ending                   |"/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- deploy.controls.runtime -->
+    <!-- ==================================================================== -->
+    <target name="deploy.controls.runtime"
+            description="Deploy the controls runtime to a fully-qualified webapp directory specified with the property 'dest.dir'">
+        <available property="dir.available" file="${dest.dir}" type="dir"/>
+        <fail unless="dir.available" message="Can't find the destination directory ${dest.dir}"/>
+
+        <echo message="Deploy Controls JARs to ${dest.dir}"/>
+
+        <copy todir="${dest.dir}" failOnError="true">
+            <fileset refid="controls.fileset"/>
+            <fileset refid="commons-discovery.fileset"/>
+        </copy>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- docs -->
+    <!-- ==================================================================== -->
+    <target name="docs">
+        <javadoc destdir="${docs.dir}/apidocs/" 
+                 maxmemory="256M" 
+                 windowtitle="Apache Beehive Controls API Documentation (Version ${beehive.version})" 
+                 doctitle="Apache Beehive Controls API Documentation (Version ${beehive.version})" 
+                 version="true" 
+                 author="false" 
+                 use="true" 
+                 additionalparam="-breakiterator -noqualifier all -notimestamp" 
+                 useexternalfile="true" 
+                 classpathref="runtime.classpath">
+            <packageset dir="${api.dir}" defaultexcludes="yes">
+                <include name="org/apache/beehive/controls/**/*"/>
+            </packageset>
+            <packageset dir="${runtime.dir}" defaultexcludes="yes">
+                <include name="org/apache/beehive/controls/**/*"/>
+            </packageset>
+            <packageset dir="${spi.dir}" defaultexcludes="yes">
+                <include name="org/apache/beehive/controls/**/*"/>
+            </packageset>
+            <packageset dir="${test-container.dir}" defaultexcludes="yes">
+                <include name="org/apache/beehive/controls/**/*"/>
+            </packageset>
+        </javadoc>
+        <fixcrlf srcDir="${build.dir}/docs/apidocs" includes="**/*.html"/>        
+    </target>
+
+    <target name="deploy.m2">
+        <copy todir="${build.m2.dir}/beehive-controls/${beehive.version}">
+            <mapper type="glob" from="*.jar" to="*-${beehive.version}.jar"/>
+            <fileset dir="build/jars">
+                <include name="beehive-controls.jar"/>
+            </fileset>
+        </copy>
+        <filter token="beehive.version" value="${beehive.version}"/>
+        <copy todir="${build.m2.dir}/beehive-controls/${beehive.version}" filtering="true">
+            <mapper type="glob" from="*.pom" to="*-${beehive.version}.pom"/>
+            <fileset dir="src" includes="beehive-controls.pom"/>
+        </copy>
+        <jar destfile="${build.m2.dir}/beehive-controls/${beehive.version}/beehive-controls-${beehive.version}-sources.jar">
+            <fileset dir="src/api"/>
+            <fileset dir="src/runtime"/>
+            <fileset dir="src/spi"/>
+            <fileset dir="src/test-container"/>
+        </jar>
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- drt -->
+    <!-- ==================================================================== -->
+    <target name="drt">
+        <ant dir="test" target="drt" inheritAll="false"/>
+    </target>
+
+    <target name="bvt">
+        <ant dir="test" target="bvt" inheritAll="false"/>
+    </target>
+
+</project>

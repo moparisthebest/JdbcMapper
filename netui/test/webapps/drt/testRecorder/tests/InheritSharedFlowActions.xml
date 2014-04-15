@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>InheritSharedFlowActions</sessionName>
+<tester>crogers</tester>
+<startDate>24 Jan 2006, 02:17:38.485 PM MST</startDate>
+<description>Test the delegating action mappings for inherited actions and simple actions in shared flows.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/sharedFlow/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/index.jsp">
+    </head>
+    <body>
+        <h1>Shared Flow Action Inheritance</h1>
+
+        <p>
+            This test checks that delegating action mappings for actions and
+            simple actions in shared flows behave correctly.
+        </p>
+
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/toSimpleSharedFlowAction.do">forward to a shared flow simple action</a>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/toSharedFlowAction.do">forward to a shared flow action</a>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/toSimpleSuperSharedFlowAction.do">forward to an inherited shared flow simple action</a>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/toSuperSharedFlowAction.do">forward to an inherited shared flow action</a>
+        <br/>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/sharedFlow/toSimpleSharedFlowAction.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/success.jsp">
+    </head>
+    <body>
+        <h1>Shared Flow Action Inheritance</h1>
+        <h3>/pageFlowCore/inheritance/sharedFlow/Controller.jpf</h3>
+        Success!
+        <br/>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/begin.do">go back</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/sharedFlow/toSharedFlowAction.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/success.jsp">
+    </head>
+    <body>
+        <h1>Shared Flow Action Inheritance</h1>
+        <h3>/pageFlowCore/inheritance/sharedFlow/Controller.jpf</h3>
+        Success!
+        <br/>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/begin.do">go back</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/sharedFlow/toSimpleSuperSharedFlowAction.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/supersf/done.jsp">
+    </head>
+    <body>
+        <h1>Shared Flow Action Inheritance</h1>
+        <h3>/pageFlowCore/inheritance/sharedFlow/Controller.jpf</h3>
+        supersf/done.jsp - Success!
+        <br/>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/supersf/../begin.do">go back</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/sharedFlow/toSuperSharedFlowAction.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/pageFlowCore/inheritance/sharedFlow/supersf/done.jsp">
+    </head>
+    <body>
+        <h1>Shared Flow Action Inheritance</h1>
+        <h3>/pageFlowCore/inheritance/sharedFlow/Controller.jpf</h3>
+        supersf/done.jsp - Success!
+        <br/>
+        <br/>
+        <a href="/coreWeb/pageFlowCore/inheritance/sharedFlow/supersf/../begin.do">go back</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>24 Jan 2006, 02:18:37.960 PM MST</endDate>
+<testCount>5</testCount>
+</recorderSession>

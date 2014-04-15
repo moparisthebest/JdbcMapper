@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PI_StrutsMerge\parent\Controller.java:12: File "struts4merge.xml" (reference inherited from a Jpf.Controller annotation on PI_StrutsMerge.parent.Controller) could not be found.  To inherit local paths automatically, set inheritLocalPaths to true on @Jpf.Controller.
+public class Controller extends PageFlowController
+       ^
+1 error

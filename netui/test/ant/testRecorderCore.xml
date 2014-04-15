@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/TestRecorderCoreTasks" default="" basedir=".">
+
+    <!-- need to import this when running tests on the distribution -->
+    <import file="${dist.home}/beehive-imports.xml" optional="true" />
+
+    <property name="_report.root.dir" location="${_testRecorder.base.dir}/junit"/>
+    <property name="_testRecorder.config.dir" location="${_testRecorder.base.dir}/config"/>
+    <property name="_testRecorder.scratch.dir" location="${_testRecorder.base.dir}/scratch"/>
+    <property name="_ant-junit.jar" location="${os.ANT_HOME}/lib/ant-junit.jar"/>
+
+    <patternset id="testrecorder.jars">
+        <include name="commons-httpclient-2.0.jar"/>
+        <include name="junit.jar"/>
+        <include name="testRecorder.jar"/>
+    </patternset>
+
+    <path id="testrecorder.dependency.path">
+        <fileset dir="${testRecorder.dir}/lib">
+            <patternset id="testrecorder.jars"/>
+        </fileset>
+        <path refid="commons-logging.dependency.path"/>
+    </path>
+
+    <path id="test.recorder.classpath">
+        <path refid="junit.dependency.path"/>
+        <path refid="ant-all.dependency.path"/>
+        <path refid="servlet.dependency.path"/>
+        <path refid="xbean.dependency.path"/>
+        <path refid="testrecorder.dependency.path"/>
+        <path refid="log4j.dependency.path"/>
+        <pathelement path="${_test.config.dir}"/>
+    </path>
+
+    <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+        <classpath>
+            <pathelement path="${_ant-junit.jar}"/>
+        </classpath>
+    </taskdef>
+
+    <!-- Run a single suite of tests against a server 
+        drt.mode
+        drt.cc.mode
+        formatter.type
+        formatter.usefile
+        playback.categories
+      -->
+    <target name="run.suite">
+        <echo message="--------------------------------------------------"/>
+        <echo message=" Test Recorder running test suite '${playback.categories}'"/>
+        <echo message="--------------------------------------------------"/>
+
+        <echo>drt.mode: ${drt.mode}</echo>
+        <echo>drt.cc.mode: ${drt.cc.mode}</echo>
+
+        <condition property="cc.mode" value="true">
+                 <istrue value="${drt.cc.mode}"/>
+        </condition>
+
+
+        <!-- set the output flags according to whether the tests are running in DRT mode -->
+        <condition property="formatter.type" value="plain">
+            <and>
+                 <istrue value="${drt.mode}"/>
+                 <isfalse value="${drt.cc.mode}"/>
+            </and>
+        </condition>
+        <condition property="formatter.usefile" value="false">
+            <and>
+                 <istrue value="${drt.mode}"/>
+                 <isfalse value="${drt.cc.mode}"/>
+            </and>
+        </condition>
+        <condition property="formatter.type" value="xml">
+            <not><isset property="${formatter.type}"/></not>
+        </condition>
+        <condition property="formatter.usefile" value="true">
+            <not><isset property="${formatter.usefile}"/></not>
+        </condition>
+
+        <echo>formatter.type: ${formatter.type}</echo>
+        <echo>formatter.usefile: ${formatter.usefile}</echo>
+
+        <echo>Server ready...start playback of tests</echo>
+
+        <antcall target="playback.tests">
+            <param name="playback.categories" value="${playback.categories}"/>
+            <param name="formatter.type" value="${formatter.type}"/>
+            <param name="formatter.usefile" value="${formatter.usefile}"/>
+        </antcall>
+
+        <echo message="--------------------------------------------------"/>
+        <echo message=" Test Recorder completed test suite '${playback.categories}'"/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <!--
+        Server Test target.  Used for DRTs and BVTs.  Starts the server, waits for a response
+        from the server, and upon success starts the client-side test harneess.
+
+        Param:
+            waitfor.url == the URL at which to check to see if the server has started.
+                           This should typically be the server's root url.
+            formatter.type == type of formatter to use when writing reslts.
+            formatter.usefile == whether to write results to an output file.
+            drt.mode == flag describing whether running the tests in DRT mode.  
+                        In DRT mode, the server does not stop on failure.
+            app.build.file == the build file to use for cleaning and deploying the
+                              application and starting and stopping the server.
+            playback.target == 
+     -->
+    <target name="server.test" description="Runs Test Recorder regression tests">
+        <echo>Start a NetUI test recorder tests</echo>
+
+        <condition property="_app.build.file" value="${app.build.file}">
+            <isset property="app.build.file"/>
+        </condition>
+        <condition property="_app.build.file" value="build.xml">
+            <not><isset property="app.build.file"/></not>
+        </condition>
+
+        <echo>Run callbacks to application build file ${app.build.dir}/${_app.build.file}</echo>
+
+        <parallel>
+            <ant dir="${app.build.dir}" antfile="${_app.build.file}" target="start" inheritAll="false"/>
+            <sequential>
+                <echo>Wait ${_server.maxWait} seconds for server to start at URL: ${waitfor.url}</echo>
+
+                <waitfor maxwait="300" maxwaitunit="second" timeoutproperty="server.timedOut" checkevery="500">
+                    <http url="${waitfor.url}"/>
+                </waitfor>
+ 
+                <!-- 
+                     callback to the application build file to give the application an opportunity to 
+                     ensure that it has been deployed before starting to run tests against it 
+                  -->
+                <ant dir="${app.build.dir}" antfile="${_app.build.file}" target="ensure.deployed" inheritAll="false"/>
+
+                <echo>Start Playback with playback target: ${playback.target}</echo>
+
+                <antcall target="_default.callback"/>
+                <antcall target="_override.callback"/>
+
+                <echo>stopping server...</echo>
+                <ant dir="${app.build.dir}" antfile="${_app.build.file}" target="stop" inheritAll="false"/>
+                <echo>...server stopped</echo>
+            </sequential>
+        </parallel>
+
+        <fail if="failedjUnitDRT">Test Recorder JUnit tests FAILED</fail>
+        <fail if="playback.drt.failure">Test Recorder JUnit tests FAILED</fail>
+    </target>
+
+    <!-- Stop the server and then fail because the DRTs failed -->
+    <target name="drt.errors" if="drt.errors.stop">
+        <echo>!!!!! Errors or failures occurred running test recorder tests !!!!!</echo>
+        <antcall target="stop.server"/>
+        <fail message="NetUI Server Tests Failed"/>
+    </target>
+
+    <!-- 
+        When running the DRTs in CruiseControl mode, the server instance 
+        needs to be stopped whether or not the tests passed.
+ 
+        app.build.file == 
+      -->
+    <target name="stop.server" if="cc.mode">
+        <echo>Stop the server with the 'stop' target in this build file: ${_app.build.file}</echo>
+        <ant dir="${app.build.dir}" antfile="${_app.build.file}" target="stop"/>
+    </target>
+
+    <!--
+        One of these:
+          playback.list
+          playback.categories
+
+        playback.webapps
+        log4j.quiet: 
+        drt.mode:
+        drt.cc.mode:
+      -->
+    <target name="playback.tests" unless="server.timedOut" description="Plays back a list of pre-recorded tests.">
+        <condition property="_playback.fail" value="set">
+            <not>
+                <or>
+                    <isset property="playback.list"/>
+                    <isset property="playback.categories"/>
+                    <isset property="playback.webapps"/>
+                </or>
+            </not>
+        </condition>
+        <fail if="_playback.fail">
+ERROR: to run playback set playback.webapps to a list of webapps to test against or 'all' for all webapps and
+set some combination of the following: 'playback.list', 'playback.categories' to a list of tests,
+or categories, respectively.  The keyword 'all' can be used for 'playback.categories' to include tests for
+all categories.
+        </fail>
+
+        <condition property="_log4j.config" value="${_log4j.config.verbose}">
+            <not>
+                <isset property="log4j.quiet"/>
+            </not>
+        </condition>
+        <condition property="_log4j.config" value="${_log4j.config}">
+            <and>
+                <isset property="log4j.quiet"/>
+            </and>
+        </condition>
+
+        <condition property="_list" value="">
+            <not>
+                <isset property="playback.list"/>
+            </not>
+        </condition>
+        <condition property="_list" value="${playback.list}">
+            <and>
+                <isset property="playback.list"/>
+            </and>
+        </condition>
+        <condition property="_categories" value="">
+            <not>
+                <isset property="playback.categories"/>
+            </not>
+        </condition>
+        <condition property="_categories" value="${playback.categories}">
+            <and>
+                <isset property="playback.categories"/>
+            </and>
+        </condition>
+        <condition property="_results.delete" value="true">
+            <or>
+                <istrue value="${drt.mode}"/>
+                <istrue value="${drt.cc.mode}"/>
+            </or>
+        </condition>
+
+        <condition property="_report.dir" value="${_report.root.dir}/${_categories}">
+            <not>
+                <isset property="report.name"/>
+            </not>
+        </condition>
+        <condition property="_report.dir" value="${_report.root.dir}/${report.name}">
+            <and>
+                <isset property="report.name"/>
+            </and>
+        </condition>
+
+        <echo>report.name: ${report.name}</echo>
+
+<!--        <property name="_report.dir" location="${_report.root.dir}/${_categories}"/> -->
+
+        <!-- remove old JUnit report output -->
+        <delete failOnError="false">
+            <fileset dir="${_report.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+        </delete>
+
+        <mkdir dir="${_report.dir}"/>
+
+        <echo>playback list: ${_list}</echo>
+        <echo>playback categories: ${_categories}</echo>
+        <echo>playback webapps: ${playback.webapps}</echo>
+        <echo>delete results: ${_results.delete}</echo>
+        <echo>JUnit report directory: ${_report.dir}</echo>
+
+        <junit dir="${netui.ant.dir}" 
+               fork="true" 
+               errorproperty="playback.drt.error" 
+               failureproperty="playback.drt.failure" 
+               showoutput="true">
+            <classpath refid="test.recorder.classpath"/>
+
+            <formatter type="${formatter.type}" usefile="${formatter.usefile}"/>
+
+            <sysproperty key="test.recorder.run.webapps" value="${playback.webapps}"/>
+            <sysproperty key="test.recorder.run.tests" value="${_list}"/>
+            <sysproperty key="test.recorder.run.categories" value="${_categories}"/>
+            <sysproperty key="test.recorder.run.results.delete" value="${_results.delete}"/>
+            <sysproperty key="netuidrt.logdir" path="${_testRecorder.base.dir}"/>
+
+            <test name="org.apache.beehive.netui.tools.testrecorder.client.MasterTestRecorderJUnitTest" 
+                  todir="${_report.dir}"/>
+        </junit>
+
+        <mkdir dir="${_report.dir}/html"/>
+
+        <antcall target="generate.report">
+            <param name="report.dir" location="${_report.dir}"/>
+        </antcall>
+
+        <!-- Determine if the tests have an error or failure -->
+        <condition property="drt.errors.found">
+            <or>
+                <isset property="playback.drt.error"/>
+                <isset property="playback.drt.failure"/>
+            </or>
+        </condition>
+
+        <echo>drt.errors.found: ${drt.errors.found}</echo>
+
+        <!-- 
+             Given whether the tests failed (or not), decide whether to stop the server.  This
+             value is also coupled with the drt.cc.mode value to stop the server when
+             running the tests in "cruisecontrol" mode.
+          -->
+        <condition property="drt.errors.stop">
+            <and>
+                <isset property="drt.cc.mode"/>
+                <isset property="drt.errors.found"/>
+            </and>
+        </condition>
+
+        <echo>drt.errors.stop: ${drt.errors.stop}</echo>
+
+        <!-- Stop the server as necessary given the value of "drt.errors.stop" -->
+        <antcall target="drt.errors"/>
+    </target>
+
+    <!--
+      -->
+    <target name="playback" description="Plays back a list of pre-recorded tests, set the 'playback.list' property to specify a list of tests.">
+        <antcall target="playback.tests">
+            <param name="formatter.type" value="plain"/>
+            <param name="formatter.usefile" value="false"/>
+        </antcall>
+    </target>
+
+    <!-- Deploy the Test Recorder to the given webapp
+
+         Params:
+             webapp.dir: the webapp into which to deploy the testRecorder
+             testRecorder.config.name: the name to use when building the test recorder configuration JAR
+       -->
+    <target name="deployTestRecorder" description="Deploy the Test Recorder artifacts to the specified web app">
+        <echo>webapp.dir: ${webapp.dir}</echo>
+        <echo>testRecorder.config.name: ${testRecorder.config.name}</echo>
+
+        <fail unless="testRecorder.config.name" message="No test recorder config name specified"/>
+        <property name="_config.jar" location="${_testRecorder.config.dir}/${testRecorder.config.name}.jar"/>
+
+        <available property="config.jar.available" file="${_config.jar}"/>
+        <fail unless="config.jar.available" message="Can't find a test recorder config JAR at ${_config.jar} to copy"/>
+
+        <echo>config jar: ${_config.jar}</echo>
+
+        <copy todir="${webapp.dir}/WEB-INF/lib">
+            <fileset dir="${testRecorder.dir}/lib">
+                <patternset id="testrecorder.jars"/>
+            </fileset>
+        </copy>
+
+        <copy file="${_config.jar}" toDir="${webapp.dir}/WEB-INF/lib"/>
+        <copy todir="${webapp.dir}/testRecorder" overwrite="true">
+            <fileset dir="${testRecorder.dir}/jsp">
+                <include name="**/*.jsp"/>
+                <include name="**/*.inc"/>
+            </fileset>
+        </copy>
+  </target>
+
+    <!-- Undeploy the Test Recorder from the specified web app
+
+         Params:
+             webapp.dir == the webapp into which to deploy the testRecorder
+     -->
+    <target name="undeploy.testrecorder" description="Undeploy the Test Recorder artifacts from the specified webapp">
+        <echo>Undeploy testRecorder from: ${webapp.dir}</echo>
+
+        <delete quiet="true">
+            <fileset dir="${webapp.dir}/WEB-INF/lib">
+                <patternset refid="testrecorder.jars"/>
+                <!--
+                <patternset refid="commons-logging.patternset" />
+                -->
+            </fileset>
+        </delete>
+        <delete quiet="true">
+            <fileset dir="${webapp.dir}/testRecorder">
+                <include name="*.jsp"/>
+                <include name="*.inc"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <!--
+        Internal target used to build a config JAR in the format expected by the test recorder
+      -->
+    <target name="build.config.jar">
+        <echo>Build Test Recorder config JAR</echo>
+
+        <available property="test.file.available" file="${test.file}"/>
+        <fail unless="test.file.available" message="Can't build Test Recorder config JAR; the test file ${test.file} is not available"/>
+        <available property="config.file.available" file="${config.file}"/>
+        <fail unless="config.file.available" message="Can't build Test Recorder config JAR; the webapp file ${config.file} is not available"/>
+        <available property="webapp.file.available" file="${webapp.file}"/>
+        <fail unless="webapp.file.available" message="Can't build Test Recorder config JAR; the config file ${webapp.file} is not available"/>
+
+        <mkdir dir="${_testRecorder.config.dir}"/>
+        <delete dir="${_testRecorder.scratch.dir}"/>
+        <property name="_scratch.dir" location="${_testRecorder.scratch.dir}/${testRecorder.config.name}"/>
+        <echo>scratch.dir: ${_scratch.dir}</echo>
+        <mkdir dir="${_scratch.dir}"/>
+
+        <copy todir="${_scratch.dir}" overwrite="true">
+            <fileset file="${config.file}"/>
+            <fileset file="${test.file}"/>
+            <filterset>
+                <filter token="BASE_DIR" value="${_testRecorder.base.dir}"/>
+            </filterset>
+        </copy>
+        <copy file="${webapp.file}" tofile="${_scratch.dir}/testRecorder-webapp.xml" overwrite="true">
+            <filterset>
+                <filter token="DOMAIN_DIR" value="${app.dir}"/>
+            </filterset>
+        </copy>
+
+        <jar jarfile="${_testRecorder.config.dir}/${testRecorder.config.name}.jar">
+            <fileset dir="${_testRecorder.scratch.dir}/${testRecorder.config.name}"/>
+        </jar>
+    </target>
+
+    <!--
+        The default playback target for a test recorder suite.  This target simply
+        runs the "suite.callback" target with the provided parameters.  It runs
+        only the suite that was specified.
+      -->
+    <target name="_default.callback" unless="playback.target">
+        <antcall target="suite.callback"/>
+    </target>
+
+    <!--
+        A playback target that allows an application to provide a target to callback
+        when the tests should be executed.  This allows the application to 
+        override the default behavior of the test suite execution.  For example,
+        the application may compose many test suites into a single callback target.
+
+        app.build.file:
+        playback.target:
+      -->
+    <target name="_override.callback" if="playback.target">
+        <echo>app.build.dir: ${app.build.dir}</echo>
+        <echo>app.build.file: ${_app.build.file}</echo>
+        <echo>playback.target: ${playback.target}</echo>
+        <ant dir="${app.build.dir}" antfile="${_app.build.file}" target="${playback.target}"/>
+    </target>
+
+    <!-- 
+        The default callback to run a test suite.
+
+        This target expects to be passed a suite.name property which is the name of the 
+        suite of tests to execute.
+
+        suite.name:
+        waitfor.url:
+        playback.webapps:
+      -->
+    <target name="suite.callback" description="Run a Test Recorder test suite">
+        <fail unless="suite.name" message="No test suite name specified, set the -Dsuite.name=&lt;name&gt; property"/>
+
+        <!-- ensure that the application is running where it is supposed to be given the provided "waitfor.url" -->
+        <waitfor maxwait="5" maxwaitunit="second" timeoutproperty="unavailable">
+            <http url="${waitfor.url}"/>
+        </waitfor>
+        <fail if="unavailable" message="Could not reach webapp at ${waitfor.url} to run the suite ${suite.name}"/>
+
+        <echo>Running suite: ${suite.name}</echo>
+
+        <antcall target="run.suite">
+            <param name="playback.categories" value="${suite.name}"/>
+            <param name="playback.webapps" value="${playback.webapps}"/>
+        </antcall>
+    </target>
+
+    <macrodef name="testrecorder-deploy" description="Deploy the test recorder runtime">
+        <attribute name="webappdir" description="The root directory of a standard J2EE webapp"/>
+        <sequential> 
+            <echo>Deploy the test recorder runtime to @{webappdir}</echo>
+            <copy todir="@{webappdir}/WEB-INF/lib">
+                <fileset dir="${testRecorder.dir}/lib">
+                    <patternset id="testrecorder.jars"/>
+                </fileset>
+            </copy>
+
+            <copy todir="@{webappdir}/testRecorder" overwrite="true">
+                <fileset dir="${testRecorder.dir}/jsp">
+                    <include name="**/*.jsp"/>
+                    <include name="**/*.inc"/>
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="testrecorder-config" description="Build the test recorder's configuration JAR">
+        <attribute name="testfile" description="The test recorder test definition file"/>
+        <attribute name="configfile" description="The test recorder config file"/>
+        <attribute name="webappfile" description="The test recorder webapp config file"/>
+        <attribute name="appdir" description="The test recorder application directory"/>
+        <attribute name="outputdir" description="The root directory of a standard J2EE webapp"/>
+        <sequential> 
+            <available property="test.file.available" file="@{testfile}"/>
+            <fail unless="test.file.available" message="Can't build Test Recorder config JAR; the test file @{test.file} is not available"/>
+            <available property="config.file.available" file="@{configfile}"/>
+            <fail unless="config.file.available" message="Can't build Test Recorder config JAR; the webapp file @{config.file} is not available"/>
+            <available property="webapp.file.available" file="@{webappfile}"/>
+            <fail unless="webapp.file.available" message="Can't build Test Recorder config JAR; the config file @{webapp.file} is not available"/>
+
+            <copy todir="@{outputdir}" overwrite="true">
+                <fileset file="@{configfile}"/>
+                <fileset file="@{testfile}"/>
+                <filterset>
+                    <filter token="BASE_DIR" value="${_testRecorder.base.dir}"/>
+                </filterset>
+            </copy>
+            <copy file="@{webappfile}" tofile="@{outputdir}/testRecorder-webapp.xml" overwrite="true">
+                <filterset>
+                    <filter token="DOMAIN_DIR" value="@{appdir}"/>
+                </filterset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+</project>

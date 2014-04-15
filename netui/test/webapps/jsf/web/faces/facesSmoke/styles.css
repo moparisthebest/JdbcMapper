@@ -1,0 +1,143 @@
+.normal {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:8pt;
+    margin:5,5,5,5;
+}
+
+.titleBar {
+    color: #000099;
+    background-color:#babaff;
+    font-family:Verdana;
+    font-size:12pt;
+    font-weight: bold;
+    text-align: center;
+    margin:5,5,0,5;
+}
+
+.sectionTitle {
+    color: #000099;
+    font-family:Verdana;
+    font-size:12pt;
+    font-weight: bold;
+}
+.footerBar {
+    color: #000099;
+    background-color:#cacaff;
+    font-family:Verdana;
+    font-size:10pt;
+    margin:5,5,0,5;
+}
+
+.rowOne {
+    background-color:#c0ffc0;
+}
+
+.rowTwo {
+    background-color:#c0c0ff;
+}
+
+.validationMessage {
+    color: red;
+}
+
+.imageBorder {
+    border: 1pt solid red;
+}
+
+.normalLeft {
+    color: #ff0099;
+    font-family:Verdana; 
+    font-size:8pt;
+    margin:0,0,5,0;
+    text-align: left;
+}
+
+.topAlign {
+    vertical-align: top;
+}
+
+.dataColumnOne {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:8pt;
+    margin:0,0,0,0;
+    text-align: center;
+    width: 60pt;
+}
+
+.dataColumnTwo {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:8pt;
+    margin:0,0,0,0;
+    text-align: left;
+    width: 200pt;
+}
+
+
+.columnLeft {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:8pt;
+    font-weight: bold;
+    margin:0,0,0,0;
+    text-align:left;
+    vertical-align: top;
+}
+
+.columnRight {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:10pt;
+    font-weight: bold;
+    text-align:right;
+    vertical-align: top;
+}
+
+.innerColumnRight {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:10pt;
+    font-weight: bold;
+    width: 100pt;
+    text-align:right;
+    vertical-align: top;
+}
+
+.dataHeaders {
+    color: #000099;
+    background-color:#babaff;
+    font-family:Verdana; 
+    font-size:10pt;
+    font-weight: bold;
+    margin:0,0,0,0;
+    text-align: center;
+}
+
+.titleBar {
+    color: #000099;
+    background-color:#babaff;
+    font-family:Verdana;
+    font-size:12pt;
+    font-weight: bold;
+    text-align: center;
+    margin:5,5,0,5;
+}
+
+.home {
+    color: #000099;
+    font-family:Verdana; 
+    font-size:8pt;
+    margin:0,5,5,5;
+    text-align: left;
+}
+
+.title {
+    color: #000099;
+    background-color:#babaff;
+    font-family:Verdana;
+    font-size:12pt;
+    margin:2,10,0,10;
+    text-align: center;
+}

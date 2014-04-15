@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<server xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <name>jsf-RI-test</name>
+    <hostname>localhost</hostname>
+    <port>8080</port>
+
+    <webapps>
+        <webapp>
+            <name>jsfWeb</name>
+            <description>NetUI / JSF web application (using JSF Reference Implementation)</description>
+            <testMode>true</testMode>
+            <contextRoot>/jsfWeb</contextRoot>
+            <testDefinitionsDirectory>@DOMAIN_DIR@/testRecorder/tests-jsf-ri</testDefinitionsDirectory>
+        </webapp>
+    </webapps>
+</server>

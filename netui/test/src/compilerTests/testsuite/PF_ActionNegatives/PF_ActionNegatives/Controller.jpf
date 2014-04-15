@@ -1,0 +1,46 @@
+package PF_ActionNegatives;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains several syntax errors.
+ *  - There is a jpf:action annotation at the class level and this is invalid.
+ *  - The jpf:action annotation on ActionForward method "page1" has a "name"
+ *    attribute which is invalid.
+ *
+ * @result: The compiler should catch these errors and issue error messages.
+ *
+ *
+ ******************************************************************************/
+    @Jpf.Action(
+        )
+    @Jpf.Controller(
+        )
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        name="InvalidHere"
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    }

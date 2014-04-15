@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN"
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>NetUI Form Control Tags</title>
+    </header>
+    <body>
+        <section id="Intro">
+            <title>Introduction</title>
+            <p> 
+                The following table summarizes the basic NetUI tags which render as form controls.  There
+                are basic types, simple controls and group controls.  The simple controls map directly
+                to a single HTML element.  The group controls map to more than one HTML element, for example
+                the <code>&lt;select></code> and <code>&lt;option></code> elements represent a select box.
+            </p>
+            <p>    
+                The table summarizes the natural data type the control is usually bound to.
+                Typically, a form will post to an action that receives a subclass of <code>FormData</code>
+                which is populated with the values from the form by the framework before the action is called.
+            </p>
+            <table>
+                <tr><th>NetUI Form Control</th><th>Binding Data Type</th>
+                </tr>
+                <tr><td>&lt;netui:anchor></td><td>None</td></tr>
+                <tr><td>&lt;netui:button></td><td>None</td></tr>
+                <tr><td>&lt;netui:checkBox></td><td><code>boolean</code> or <code>java.lang.Boolean</code> or
+                    <code>java.lang.String</code></td></tr>
+                <tr><td>&lt;netui:checkBoxGroup></td><td><code>java.lang.String[]</code></td></tr>
+                <tr><td>&lt;netui:checkBoxOption></td><td>None, See the <code>checkBoxGroup</code> tag</td></tr>
+                <tr><td>&lt;netui:fileUpload></td><td>org.apache.struts.upload.FormFile</td></tr>
+                <tr><td>&lt;netui:form></td><td>None</td></tr>
+                <tr><td>&lt;netui:hidden></td><td><code>java.lang.String</code> or <code>java.lang.String[]</code></td></tr>
+                <tr><td>&lt;netui:imageButton></td><td>None</td></tr>
+                <tr><td>&lt;netui:radioButtonGroup></td><td><code>java.lang.String</code></td></tr>
+                <tr><td>&lt;netui:radioButtonOption></td><td>None, See the <code>radioButtonGroup</code> tag</td></tr>
+                <tr><td>&lt;netui:select></td><td><code>java.lang.String</code> or <code>java.lang.String[]</code></td></tr>
+                <tr><td>&lt;netui:selectOption></td><td>None, See the <code>select</code> tag</td></tr>
+                <tr><td>&lt;netui:textArea></td><td><code>java.lang.String[]</code></td></tr>
+                <tr><td>&lt;netui:textBox></td><td><code>java.lang.String[]</code></td></tr>
+            </table>
+        </section>
+        <section id="ExampleLink">
+            <title>NetUI Form Controls Example</title>
+             <p>All of the code fragments in this topic come from a single example.  The example
+                source can be found in the <a href="site:pageflow_tag_formControls_example">Form Controls Example</a>.
+            </p>
+        </section>
+        <section id="Anchor">
+            <title>Anchor</title>
+            <p> Though not technically a form control, the <code>&lt;netui:anchor></code> can be used to
+                submit a form.  It does this through a JavaScript function that is dynamically added to the page.
+                In the following example the anchor is found inside of the <code>&lt;netui:form></code>, which
+                is a requirement for using a anchor to submit a form.  In order to submit a form, the
+                <code>formSubmit</code> attribute is set to <code>true</code>.  In addition, there
+                is no requirement to set an <code>action</code> or <code>href</code> on the anchor.  It is possible
+                to submit a form when the anchor appears outside of the form.  This requires setting the
+                <code>getJavaScript</code> attribute on the <code>&lt;netui:form></code> tag.  Then you need
+                to add the following code to the anchor <code>onClick="anchor_submit_form(name-of-form, action);return false;"</code>.
+            </p>
+            <p> The anchor does not bind to a <code>dataSource</code> of any type.
+            </p>
+            <source>
+&lt;netui:form>
+   ...
+   &lt;netui:anchor  <strong>formSubmit="true"</strong>>Submit Form Through a Link&lt;/netui:anchor>
+&lt;/netui:form></source>
+                <p> There is a bit of generated JavaScript in the rendered page that will submit the form.
+                    See <a href="site:pageflow_tag_javascript">Tags Support for JavaScript</a> for details
+                    on how the framework generated JavaScript is supported.  Below is the rendered
+                    HTML <code>&lt;a></code> tag, which calls the framework
+                    <code>generated anchor_submit_form</code> function.
+                </p>
+                <source>
+&lt;a href="/dev/formControls/submit.do"
+    <strong>onclick="anchor_submit_form('Netui_Form_0','/dev/formControls/submit.do');return false;"</strong>>Submit Form Through a Link&lt;/a></source>
+            </section>
+            <section id="Button">
+                <title>Button</title>
+                <p>The <code>&lt;netui:button></code> tag acts as the standard button used to submit a form.
+                    As a default the button acts as an HTML <code>type="submit"</code> button.  (The <code>type</code> 
+                    attribute may also have a value of <code>reset</code> or <code>button</code>.)
+                    In the example below, when the users presses the generated button it will cause the form
+                    to be submitted.  The button must appear within the <code>&lt;netui:form></code>
+                </p>
+                <p> The button does not bind to a <code>dataSource</code> of any type.
+                </p>
+                <source>
+&lt;netui:form>
+   ...
+   &lt;netui:button type="submit">Submit the Form&lt;/netui:button>
+&lt;/netui:form></source>
+        </section>
+        <section id="CheckBox">
+            <title>CheckBox</title>
+            <p> The <code>&lt;netui:checkBox></code> binds a boolean value to a <code>dataSource</code>.
+                The <code>&lt;netui:checkBox></code> will generate an <code>&lt;input type="checkbox"></code> HTML element.
+                The natural data binding type for the <code>dataSource</code> is a
+                <code>boolean</code> or <code>java.lang.Boolean</code>.  In addition, it is possible
+                to bind to a <code>java.lang.String</code>.
+            </p>
+            <p>
+                In the following example, there are three checkboxes which are bound to a <code>boolean</code>,
+                <code>java.lang.Boolean</code> and a <code>java.lang.String</code>.
+            </p>
+            <source><![CDATA[
+<table>
+    <tr><th align="right">CheckBox [boolean]</th>
+        <td><netui:checkBox dataSource="actionForm.checkBox"/></td></tr>
+    <tr><th align="right">CheckBox [java.lang.Boolean]</th>
+        <td><netui:checkBox dataSource="actionForm.checkBoxBoolean"/></td></tr>
+    <tr><th align="right">CheckBox [java.lang.String]</th>
+        <td><netui:checkBox dataSource="actionForm.checkBoxString"/></td></tr>
+</table>
+]]></source>
+            <p> The NetUI tags above bind to the following three FormData properties.
+            </p>
+            <source>
+        private boolean checkBox;
+        private Boolean checkBoxBoolean;
+        private String  checkBoxString;
+
+        public boolean isCheckBox() {
+            return checkBox;
+        }
+        public void setCheckBox(boolean checkBox) {
+            this.checkBox = checkBox;
+        }
+
+        public Boolean getCheckBoxBoolean() {
+            return checkBoxBoolean;
+        }
+        public void setCheckBoxBoolean(Boolean checkBoxBoolean) {
+            this.checkBoxBoolean = checkBoxBoolean;
+        }
+
+        public String getCheckBoxString() {
+            return checkBoxString;
+        }
+        public void setCheckBoxString(String checkBoxString) {
+            this.checkBoxString = checkBoxString;
+        }
+</source>
+        </section>
+        <section id="CheckBoxGroup">
+            <title>CheckBoxGroup</title>
+            <p> The <code>&lt;netui:checkBoxGroup></code> creates a group of boolean values.  Multiple
+                values may be selected at one time.  The natural type for the <code>dataSource</code>
+                is a <code>java.lang.String[]</code>.  Each <code>&lt;netui:checkBoxOption></code> contains a
+                value that will be posted back if the item is selected.  See the <a href="#checkBoxOption">
+                CheckBoxOption</a> for more information on how options are specified. In addition,
+                the repeating version of the &lt;netui:checkBoxGroup> is covered in the advanced topic
+                on <a href="site:pageflow_tag_repeating_checkboxgroup">Repeating CheckBoxGroup</a>.
+            </p>
+            <p> There are two methods for creating the options which create the items inside of the
+                group.  The body of the tag may contain <code>&lt;netui:checkBoxOption></code> tags or
+                the <code>optionsDataSource</code> may bind to an array of values.  When using the
+                <code>optionsDataSource</code> this tag may act as a
+                <a href="site:pageflow_tag_repeating">repeater</a>.  This allows for
+                control of both the layout and the presentation of the options.
+            </p>
+            <p> In the following example, a &lt;netui:checkBoxGroup> contains four children defined
+                through &lt;netui:checkBoxOptions>.  When the form is posted, all of the values that are selected
+                (checked) will be posted back to an array in the <code>FormData</code>.
+            </p>
+            <source><![CDATA[
+<netui:checkBoxGroup dataSource="actionForm.checkBoxGroup" orientation="vertical">
+    <netui:checkBoxOption value="Check One"/>
+    <netui:checkBoxOption value="Check Two"/>
+    <netui:checkBoxOption value="Check Three"/>
+    <netui:checkBoxOption value="Check Four"/>
+</netui:checkBoxGroup>
+]]></source>
+            <p> The following property in the <code>FormData</code> will recieve the results of the
+                posted CheckBoxGroup.
+            </p>
+            <source>
+private String[] checkBoxGroup;
+
+public String[] getCheckBoxGroup() {
+    return checkBoxGroup;
+}
+public void setCheckBoxGroup(String[] checkBoxGroup) {
+    this.checkBoxGroup = checkBoxGroup;
+}
+            </source>
+        </section>
+        <section id="CheckBoxOption">
+            <title>CheckBoxOption</title>
+            <p>The <code>&lt;netui:checkBoxOption></code> is a tag that defines an item within a
+                <code>&lt;netui:checkBoxGroup></code>.  The tag has a required <code>value</code> attribute
+                which defines the value that will be posted back when the generated checkbox is
+                selected.  There is also an optional <code>label</code> attribute that defines
+                a text label for the checkbox.  If the <code>label</code> is not specified the
+                <code>value</code> attributes value will be used.
+            </p>
+            <p> In the CheckBoxGroup defined below, there are four <code>&lt;netui:checkBoxOption></code>
+                tags.  All of them specify just the <code>value</code> attribute which is used for both
+                the value and label in the generated HTML.
+            </p>
+            <source><![CDATA[
+<netui:checkBoxGroup dataSource="actionForm.checkBoxGroup" orientation="vertical">
+    <netui:checkBoxOption value="Check One"/>
+    <netui:checkBoxOption value="Check Two"/>
+    <netui:checkBoxOption value="Check Three"/>
+    <netui:checkBoxOption value="Check Four"/>
+</netui:checkBoxGroup>
+]]></source>
+        </section>
+        <section id="FileUpload">
+            <title>FileUpload</title>
+            <p> The <code>&lt;netui:fileUpload></code> tag allows a file to be uploaded to the server.  By
+                default, this tag is not enabled because multipart request handling is disabled.
+                The only supported
+                data type that can be bound to is <code>org.apache.struts.upload.FormFile</code>.  If
+                multipart handling is enabled, when the form is submitted, the contents of the file
+                will be posted to the server.
+            </p>
+            <p> By default, multipart request handling is disabled.  There are two ways to enable
+                handling: (1) you may turn it on for the WebApp by setting a configuration option in the
+                <code>beehive-netui-config.xml</code> file or (2) you may turn it on for a page flow
+                by setting the Jpf.MultipartHandler annotation. (These two options are detailed below.)
+            </p>
+            <p> In the example below, the <code>&lt;netui:fileUpload></code> tag is used to upload
+                a file to the server.  In order to use the file upload tag you must set the
+                <code>enctype</code> on the <code>&lt;netui:form></code> to <code>multipart/form-data</code>.
+                This is required to enable multipart data.  The <code>dataSource</code> is bound
+                to a property of type <code>org.apache.struts.upload.FormFile</code>.
+            </p>
+            <source>
+&lt;netui:form action="submit"  <strong>enctype="multipart/form-data"</strong>>
+   ...
+   &lt;netui:fileUpload dataSource="actionForm.fileUpload"/>
+&lt;/netui:form>
+            </source>
+            <p> The following <code>FormData</code> properties will receive the
+                information and data associated with the uploaded file.
+            </p>
+            <source>
+private FormFile fileUpload;
+
+public FormFile getFileUpload() {
+    return fileUpload;
+}
+public void setFileUpload(FormFile fileUpload) {
+    this.fileUpload = fileUpload;
+}
+            </source>
+            <p> In this example, multipart handling was enabled for in-memory support using
+                an annotation on the page flow.
+            </p>
+            <source>
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="formTest.jsp")
+    },
+    <strong>multipartHandler=Jpf.MultipartHandler.memory</strong>
+)
+            </source>
+            <p> The following modification to the <code>beehive-netui-config.xml</code> file will
+                turn on in-memory processing of multipart requests for the entire WebApp.  See
+                the <a href="site:config_description">beehive-netui-config.xml File Reference</a>
+                for information on creating an initial <code>beehive-netui-config.xml</code>.
+            </p>
+            <source>
+&lt;pageflow-config>
+    &lt;multipart-handler>memory&lt;/multipart-handler>
+&lt;/pageflow-config>
+        </source>
+        </section>
+        <section id="Form">
+            <title>Form</title>
+            <p>The <code>&lt;netui:form></code> tag creates the HTML <code>&lt;form></code> element.
+                It specifies the action to run in the page flow.  If the action specifies a
+                parameter that is a
+                subclass of <code>FormData</code> a bean will be populated by the page flow framework
+                with values posted by the controls contained in the form.  In the example below,
+                the form will call the page flow's <code>submit</code> action.
+            </p>
+            <source>
+&lt;netui:form <strong>action="submit"</strong>>
+   ...
+&lt;/netui:form>
+            </source>
+            <p> <strong>NOTE:</strong> the <code>enctype="multipart/form-data"</code> from the
+                FileUpload example is present because the <code>&lt;netui:fileUpload></code> tag is
+                being used
+                and requires multipart request handling.  This is typically not used for simple
+                form posting.
+            </p>
+            <p> The following action defined in the page flow controller will be called when the
+                form is submitted.  An instance of <code>FormBean</code> is created and populated
+                by the contents of the request.
+            </p>
+            <source>
+@Jpf.Action(
+    forwards={@Jpf.Forward(name="success",
+           path="results.jsp",
+           actionOutputs={@Jpf.ActionOutput(name="bean", type=FormBean.class, required=true)}
+          )
+    }
+)
+public Forward submit(FormBean formBean) {
+    Forward fwd = new Forward("success", "bean", formBean);
+    return fwd;
+}
+            </source>
+        </section>
+        <section id="Hidden">
+            <title>Hidden</title>
+            <p> The <code>&lt;netui:hidden></code> tag creates the HTML <code>&lt;input type="hidden"></code>
+                element.  There is no visual representation of a hidden field, but it's <code>value</code>
+                will be posted to the server when the form is posted.  The <code>&lt;netui:hidden></code>
+                is a bit different than other form controls.  It contains both a <code>dataInput</code>
+                and a <code>dataSource</code> attribute.  This allows binding a value from a source
+                that differs from what is posted back to the server.  If the <code>dataInput</code> is
+                not set, the <code>dataSource</code> is used as a read/write binding.
+            </p>
+            <p> In the example below, there are a number of hidden fields defined.  All of them bind
+                values out of the <code>pageFlow</code> implicit object (see the
+                <a href="site:databinding">Data binding to NetUI Implicit Objects</a> for more
+                information.)  In the example, the hidden fields bind to different types of data objects.
+                The first simply binds the value back to a <code>java.lang.String</code>
+                value.  The second and third hidden fields bind to the same array of
+                <code>java.lang.String</code>s.  The final hidden field binds to a boolean value.
+            </p>
+            <source><![CDATA[
+<table>
+    <tr><th align="right">Hidden</th>
+        <td><netui:hidden dataInput="${pageFlow.hidden}" dataSource="actionForm.hidden"/></td></tr>
+    <tr><th align="right">Hidden Array[0]</th>
+        <td><netui:hidden dataInput="${pageFlow.hiddenArray[0]}" dataSource="actionForm.hiddenArray"/></td></tr>
+    <tr><th align="right">Hidden Array[1]</th>
+        <td><netui:hidden dataInput="${pageFlow.hiddenArray[1]}" dataSource="actionForm.hiddenArray"/></td></tr>
+    <tr><th align="right">Hidden</th>
+        <td><netui:hidden dataInput="${pageFlow.hiddenBoolean}" dataSource="actionForm.hiddenBoolean"/></td></tr>
+</table>
+]]></source>
+            <p> The following properties are defined in the <code>FormData</code> and are set
+                by the above hidden elements when the form is submitted.
+            </p>
+            <source>
+// hidden
+private String hidden;
+private String[] hiddenArray;
+private boolean hiddenBoolean;
+
+public String getHidden() {
+    return hidden;
+}
+public void setHidden(String hidden) {
+    this.hidden = hidden;
+}
+
+public String[] getHiddenArray() {
+    return hiddenArray;
+}
+public void setHiddenArray(String hiddenArray[]) {
+    this.hiddenArray = hiddenArray;
+}
+
+public boolean isHiddenBoolean() {
+    return hiddenBoolean;
+}
+public void setHiddenBoolean(boolean hiddenBoolean) {
+    this.hiddenBoolean = hiddenBoolean;
+}
+            </source>
+        </section>
+        <section id="ImageButton">
+            <title>ImageButton</title>
+            <p> The <code>&lt;netui:imageButton></code> creates the HMTL <code>&lt;input type="image"></code>
+                element.  The result is an image used to submit the form.  The source of the image
+                is specified in the <code>src</code> attribute.  The <code>&lt;netui:imageButton></code> does not bind to any
+                data.  In addition, it must appear inside of the form.
+            </p>
+            <source>
+&lt;netui:form>
+   ...
+   &lt;netui:imageButton  src="insert.gif"/>
+&lt;/netui:form>
+            </source>
+        </section>
+        <section id="RadioButtonGroup">
+            <title>RadioButtonGroup</title>
+            <p> The <code>&lt;netui:radioButtonGroup></code> is similar to the
+                <a href="#CheckBoxGroup"><code>&lt;netui:checkBoxGroup></code></a>.  It binds to
+                a group of boolean values, but instead of allowing multiple selection it only allows
+                a single selection.  The underlying HTML produced is a set of HTML
+                <code>&lt;input type="radio"></code> elements where the name is the same value for each option,
+                thus creating
+                a group of radio buttons, of which only one may be selected at a time.  The natural
+                binding for the <code>&lt;netui:radioButtonGroup></code> is a <code>java.lang.String</code>.  See the
+                <a href="#RadioButtonOption">RadioButtonOption</a> topic for information on creating
+                the options. In addition,
+                the repeating version of the <code>&lt;netui:radioButtonGroup></code> is covered in the advanced topic
+                on <a href="site:pageflow_tag_repeating_radiobuttongroup">Repeating RadioButtonGroup</a>.
+
+            </p>
+            <p> There are two methods for creating the options which render the radio buttons
+                inside of the group.  The body of the tag may contain <code>&lt;netui:RadioButtonOptions></code>
+                tags or the <code>optionsDataSource</code> my bind to an array of values.  When using the
+                <code>optionsDataSource</code>, this tag may act as a
+                <a href="site:pageflow_tag_repeating">repeater</a>.  This allows for control of both
+                the layout and presentation of the options.
+            </p>
+            <p> In the following example, the <code>&lt;netui:radioButtonGroup></code> contains four options defined through
+                the <code>&lt;netui:radioButtonOption></code> tags.  When the form is posted, if one of the options
+                is selected, its <code>value</code> will be posted back.
+            </p>
+            <source><![CDATA[
+<netui:radioButtonGroup dataSource="actionForm.radioButtonGroup" orientation="vertical">
+    <netui:radioButtonOption value="Radio One"/>
+    <netui:radioButtonOption value="Radio Two"/>
+    <netui:radioButtonOption value="Radio Three"/>
+    <netui:radioButtonOption value="Radio Four"/>
+</netui:radioButtonGroup>
+]]></source>
+            <p> The natural binding for a <code>&lt;netui:radioButtonGroup></code> is a
+                <code>java.lang.String</code>.  The following property defined in the <code>FormData</code>
+                receives the results of posting the form.
+            </p>
+            <source>
+private String radioButtonGroup;
+
+public String getRadioButtonGroup() {
+    return radioButtonGroup;
+}
+public void setRadioButtonGroup(String radioButtonGroup) {
+    this.radioButtonGroup = radioButtonGroup;
+}
+            </source>
+        </section>
+        <section id="RadioButtonOption">
+            <title>RadioButtonOption</title>
+            <p>The <code>&lt;netui:radioButtonOption></code> is a tag that defines an item within
+                a <code>&lt;netui:radioButtonGroup></code>.  The tag has a required <code>value</code>
+                attribute which defines the value that will be posted back when the radio button
+                option is selected.
+            </p>
+            <p> In the RadioButtonGroup defined below, there are four <code>&lt;netui:radioButtonOption</code>
+                tags. All of them specify just the value attribute which is used for both the value and label
+                in the generated HTML.
+            </p>
+            <source><![CDATA[
+<netui:radioButtonGroup dataSource="actionForm.radioButtonGroup" orientation="vertical">
+    <netui:radioButtonOption value="Radio One">Radio One</netui:radioButtonOption>
+    <netui:radioButtonOption value="Radio Two">Radio Two</netui:radioButtonOption>
+    <netui:radioButtonOption value="Radio Three">Radio Three</netui:radioButtonOption>
+    <netui:radioButtonOption value="Radio Four">Radio Four</netui:radioButtonOption>
+</netui:radioButtonGroup>]]></source>
+           </section>
+        <section id="Select">
+            <title>Select</title>
+            <p> The <code>&lt;netui:select></code> is a control allowing a user to select one
+                or more items from a list of items.  There
+                are two primary modes, single selection and multiple selections.  There are two ways to
+                specify the items of the select control, you may use <code>&lt;netui:selectOption></code> tags
+                or the <code>optionsDataSource</code> attribute.  For more information on using <code>&lt;netui:selectOption></code> tags
+                see the <a href="#SelectOption">SelectOption</a> topic. In addition, the select supports a
+                repeating mode that allows control over the order of the options when using the
+                <code>optionsDataSource</code>.  For more information see the
+                <a href="site:pageflow_tag_repeating_select">Repeating Select</a> topic.
+            </p>
+            <section id="SingleSelect">
+                <title>Single Selection</title>
+                <p>Single selection is the default behavior for a select control.  It allows a single
+                    value from the list to be selected.  The natural data type that is bound to is
+                    a <code>java.lang.String</code>.
+                </p>
+                <p> In the example below, a select box contains four options.
+                </p>
+                <source><![CDATA[
+<netui:select dataSource="actionForm.singleSelect">
+    <netui:selectOption value="SelectOne">Select One</netui:selectOption>
+    <netui:selectOption value="SelectTwo">Select Two</netui:selectOption>
+    <netui:selectOption value="SelectThree">Select Three</netui:selectOption>
+    <netui:selectOption value="SelectFour">Select Four</netui:selectOption>
+</netui:select>
+]]></source>
+            <p> When the above select control is posted it is bound to a <code>java.lang.String</code>
+                property on the <code>FormData</code>.
+            </p>
+            <source>
+private String singleSelect;
+
+public String getSingleSelect() {
+    return singleSelect;
+}
+public void setSingleSelect(String singleSelect) {
+    this.singleSelect = singleSelect;
+}
+            </source>
+            </section>
+            <section id="MultipleSelect">
+                <title>Multiple Selection</title>
+                <p> To create a multiple select control you specify <code>multiple="true"</code> in
+                    the <code>&lt;netui:select></code> tag.  A multiple select control allows zero or
+                    more items to be selected and posted back to the server.  The natural binding type
+                    is <code>java.lang.String[]</code>.
+                </p>
+                <p> The example below defines a multiple select control by setting the
+                    <code>multiple</code> attribute to <code>true</code>.  This selection
+                    has four options.
+                </p>
+                <source><![CDATA[
+<netui:select multiple="true"  dataSource="actionForm.multiSelect">
+    <netui:selectOption value="SelectOne">Select One</netui:selectOption>
+    <netui:selectOption value="SelectTwo">Select Two</netui:selectOption>
+    <netui:selectOption value="SelectThree">Select Three</netui:selectOption>
+    <netui:selectOption value="SelectFour">Select Four</netui:selectOption>
+</netui:select>
+]]></source>
+            <p> The above select control will post zero or more values into the following
+                property on the <code>FormData</code>.
+            </p>
+            <source>
+private String[] multiSelect;
+
+public String[] getMultiSelect() {
+    return multiSelect;
+}
+public void setMultiSelect(String[] multiSelect) {
+    this.multiSelect = multiSelect;
+}
+            </source>
+            </section>
+        </section>
+        <section id="SelectOption">
+            <title>SelectOption</title>
+            <p> The <code>&lt;netui:selectOption></code> is used to create statically defined options
+                for a <code>&lt;netui:select></code> control.  The <code>value</code> attribute is required
+                and specifies the value that will be posted if the option is selected.  In addition,
+                the body of the tag may contain a value that will be used to display the option in
+                the select control.  If the body is empty, then the <code>value</code> will be used.
+            </p>
+            <source><![CDATA[
+<netui:select multiple="true"  dataSource="actionForm.multiSelect">
+    <netui:selectOption value="SelectOne">Select One</netui:selectOption>
+    <netui:selectOption value="SelectTwo">Select Two</netui:selectOption>
+    <netui:selectOption value="SelectThree">Select Three</netui:selectOption>
+    <netui:selectOption value="SelectFour">Select Four</netui:selectOption>
+</netui:select>
+]]></source>
+        </section>
+        <section id="TextArea">
+            <title>TextArea</title>
+            <p> The <code>&lt;netui:textArea></code> creates a multiple line text entry control.  It maps
+                to the HTML <code>&lt;textArea></code> element.  It is very common to set the <code>rows</code>
+                and <code>cols</code> attributes to set the size of the text area on the page.  The natural
+                data type that is bound to is <code>java.lang.String</code>.  In the code below a text area
+                is defined and binds to a property in the <code>actionForm</code>.
+            </p>
+            <source>
+&lt;netui:textArea dataSource="actionForm.textArea" />
+            </source>
+            <p> The following property of the <code>FormData</code> receives the posted value:
+            </p>
+            <source>
+private String textArea;
+
+public String getTextArea() {
+    return textArea;
+}
+public void setTextArea(String textArea) {
+    this.textArea = textArea;
+}
+            </source>
+        </section>
+        <section id="TextBox">
+            <title>TextBox</title>
+            <p> The <code>&lt;netui:textBox></code> creates a single line text entry control.  The
+                tag supports
+                either <code>text</code> or <code>password</code> by setting the <code>type</code> attribute.
+                The default is <code>text</code>.  The natural
+                data type bound to by a text box is <code>java.lang.String</code>.  The code below creates
+                a text box and binds it to a property in the <code>actionForm</code>
+            </p>
+            <source>
+&lt;netui:textBox dataSource="actionForm.textBox" />
+            </source>
+            <p> The following property of the <code>FormData</code> receives the posted value:
+            </p>
+            <source>
+private String textBox;
+
+public String getTextBox() {
+    return textBox;
+}
+public void setTextBox(String textBox) {
+    this.textBox = textBox;
+}
+            </source>
+        </section>
+     </body>
+</document>

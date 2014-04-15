@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>NetUI JSP Overview</title>
+    </header>
+    <body>
+    <section id="introduction">
+        <title>Introduction</title>
+        <p> NetUI adds three tag libraries to normal JSP usage to assist with the
+            binding of the JSPs to the controller class.  These tag libraries add a number of features such
+            as HTML form controls, data grids, and trees.  For a detailed overview of the tag libraries
+            and their usage see the <a href="site:pageflow_tag_overview">NetUI Tag Library Overview</a>.  The
+            <a href="apidocs/taglib/taglib-overview-summary.html">tag library API documentation</a>
+            describes all of the details.
+        </p>
+        <p> The tag libraries provided by NetUI are:
+        </p>
+        <ul>
+            <li><a href="apidocs/taglib/taglib-overview-summary.html#netui"><code>&lt;netui:xxx></code></a> --
+                This is the primary tag library supporting HTML, including the form controls.  In addition,
+                it contains the Tree support.</li>
+            <li><a href="apidocs/taglib/taglib-overview-summary.html#netui-data"><code>&lt;netui-data:xxx></code></a> --
+                This tag library provides binding to relational data, providing the Data Grid.</li>
+            <li><a href="apidocs/taglib/taglib-overview-summary.html#netui-template"><code>&lt;netui-template:xxx></code></a> --
+                This tag library provides a very simple templating facility, allowing common elements such
+                as headers, footers, etc.</li>
+        </ul>
+        <p> NetUI also makes extensive use of <strong><em>data binding expressions</em></strong>
+            to bind the JSPs to data in the controller class.  For a detailed explanation
+            of databinding expressions see
+            <a href="site:databinding">Databinding: Passing Data Between Controller Classes and JSPs</a>
+        </p>
+    </section>
+    <section id="StartingJSP">
+        <title>Starting a NetUI JSP</title>
+        <p> NetUI JSPs that act as stand alone HTML pages, can use the following template as the basis
+            for a new page.  Using this template will insure that the structure of the HTML page is valid
+            and that all of the features in the tag library are enabled.
+        </p>
+        <p><strong>Simple NetUI JSP Template</strong></p>
+        <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib prefix="netui" uri="http://beehive.apache.org/netui/tags-html-1.0"%>
+<netui:html>
+    <head>
+        <title>Page Title</title>
+        <netui:base/>
+    </head>
+    <netui:body>
+    </netui:body>
+</netui:html>]]></source>
+
+        <p>
+        As with <a href="site:pageflow_controllers">Page Flow Controllers</a>, a certain amount
+        of common boilerplate text is required in each page.  The first two lines should set
+        the content-type, the encoding, and import the base NetUI tag library.  The <code>taglib</code>
+        binds the NetUI tags to the <code>netui</code> prefix.
+        </p>
+        <source>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%&gt;
+&lt;%@ taglib prefix="netui" uri="http://beehive.apache.org/netui/tags-html-1.0"%></source>
+
+        <p> After the common prolog, the JSP can be written like most any other JSPs. The NetUI HTML tags can
+            be configured to support both the HTML 4.01 spec and XHTML.  See the <a href="site:pageflow_tag_htmlMapping">
+            HTML to NetUI Tag</a> topic to see how the NetUI tags relate to HTML. In addition to the prolog and
+            using the HTML tags to represent the HTML structure, <code>&lt;netui:base&gt;</code>
+            should be present within the <code>&lt;head&gt;</code> element.  This will ensure that relative URIs are
+            resolved correctly.
+        </p>
+        <p> The resulting general
+            form of a NetUI JSP is as follows:
+        </p>
+        <source><strong>&lt;%@ page language="java" contentType="text/html;charset=UTF-8"%&gt;
+&lt;%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%&gt;
+&lt;netui:html&gt;</strong>
+  &lt;head&gt;
+    &lt;title&gt;...&lt;/title&gt;
+    <strong>&lt;netui:base/&gt;</strong>
+  &lt;/head&gt;
+  <strong>&lt;netui:body&gt;</strong>
+    ..
+    ..
+    ..
+  <strong>&lt;/netui:body&gt;
+&lt;/netui:html&gt;</strong></source>
+    </section>
+
+    <section id="SimpleLinking">
+        <title>Simple Linking</title>
+        <p>
+            The <code>&lt;netui:anchor&gt;</code> tag replaces the normal <code>&lt;a&gt;</code>
+            HTML anchor tag.  A plain HTML <code>&lt;a&gt;</code> links directly from one URL to
+            another and doesn't provid the controller an opportunity to perform any conditional
+            logic.  Using the <code>&lt;netui:anchor&gt;</code> tag you can specify an action in a
+            Page Flow controller which will run when the link is pressed.
+        </p>
+        <p> While it may seem silly to use NetUI tags for simple
+            <em>constant forward methods</em>, the advantage is that if a page
+            gets renamed or you wish to change the flow through an application,
+            the destination only needs to be changed once, within the controller.
+            Otherwise, you may have to edit a handful of JSPs manually
+            changing the URLs inside normal <code>&lt;a&gt;</code> tags.
+        </p>
+        <p> In addition, the &lt;netui:anchor> tag supports many additional features such as submitting
+            forms and popup windows.
+        </p>
+        <section id="LinkingExample">
+            <title>Linking Example</title>
+            <p> Initially, we will examine simple linking through a controller to another JSP using the
+                Page Flow controller introduced earlier.
+            </p>
+            <p><img src="images/impl-flow-1.png" alt="implementation page flow"/>
+            </p>
+            <p> If your application changes and you desire to show a
+                terms-of-service before allowing login, you can simply alter the <code>login()</code>
+                controller method to send a user to <code>terms_of_service.jsp</code> before
+                further sending him to the actual login screen. Instead of specifying the URL to another
+                page using the HTML &lt;a> tag, we use the &lt;netui:anchor> and specify the name of the action
+                on the controller to call.
+            </p>
+            <p> Instead of using <code>&lt;a&gt;</code>
+            </p>
+            
+            <source>&lt;<strong>a href="login.jsp"</strong>&gt;Login!&lt;/a&gt;</source>
+            
+            <p> Use <code>&lt;netui:anchor&gt;</code>
+            </p>
+            
+            <source>&lt;<strong>netui:anchor action="login"</strong>&gt;Login!&lt;/netui:anchor&gt;</source>
+            
+            <p> When the link is displayed on-screen, clicking it will cause control to
+                go through the <code>Controller</code>'s <code>login()</code> method,
+                which will return the correct forward to select the actual next page to
+                display.
+            </p>
+            <p> If you want to add the term-of-service page, you can simply modify the action in the
+                Page Flow controller to go to the newly created JSP.  The advantage is that the
+                flow of control is stored in the Page Flow controller and not in the pages themselves.
+            </p>
+        </section>
+    </section>
+
+      <section id="HandlingForms">
+        <title>Handling Forms</title>
+        <p> To post data from forms to Page Flow controller's action handling the form post,
+            the <code>&lt;netui:form&gt;</code> container tag, along with
+            specialized NetUI form control tags that replace the normal form elements are used within
+            a JSP.  Similar to how <code>&lt;netui:anchor&gt;</code> replaces
+            normal HTML <code>&lt;a&gt;</code> tags, the <code>&lt;netui:form&gt;</code>
+            tag replaces the typical HTML <code>&lt;form&gt;</code> tag.  In addition,
+            the NetUI form control tags replace the typical HTML form controls.
+        </p>
+
+        <section id="FormExample">
+            <title>Form Example</title>
+            <p> Instead of using <code>&lt;form&gt;</code>
+            </p>
+            
+            <source>&lt;<strong>form action="LoginServlet"</strong> method="POST"&gt;</source>
+            
+            <p> Use <code>&lt;netui:form&gt;</code>
+            </p>
+            
+            <source>&lt;<strong>netui:form action="processLogin"</strong> method="POST"&gt;</source>
+            
+            <p> The other tags typically used with a <code>&lt;form&gt;</code> also have
+                replacements from the NetUI tag library.
+            </p>
+            <p> For the <code>processLogin(...)</code> form-processing method, the matching JSP form would be:
+            </p>
+            
+            <source>
+&lt;netui:form action="processLogin" method="POST"&gt;
+    &lt;netui:textBox dataSource="actionForm.username" size="20"/&gt;
+    &lt;netui:textBox dataSource="actionForm.password" size="20" password="true"/&gt;
+    &lt;netui:button  type="submit" value="Login"/&gt;
+&lt;/netui:form&gt;</source>
+
+            <p> When the user submits the form by clicking upon the <code>Login</code> button, an instance of
+                the <code>LoginForm</code> subclass of <code>FormData</code> is created and passed to the
+                <code>processLogin(LoginForm form)</code> method of the controller class.
+            </p>
+        </section>
+    </section>
+
+  <section id="next">
+    <title>Next...</title>
+
+    <p>
+    Next, learn about how to compile and package up a complete web project.
+    </p>
+
+    <ul>
+      <li><a href="site:netuiProjects">NetUI Project Model</a></li>
+    </ul>
+  </section>
+
+
+  </body>
+  <footer>
+    <legal>
+      Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+      &copy; 2004, Apache Software Foundation
+    </legal>
+  </footer>
+</document>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>Expression</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>28 Apr 2005, 09:19:16.887 AM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/errors/expression/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>E2DA6F1025691D9293A348B105B91352</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=E2DA6F1025691D9293A348B105B91352; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-68d4ba9b:103894858b6:-7beb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testnumber</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>In-line Expression Errors</title>
+</head>
+<body>
+<h4>In-line Expression Errors</h4>
+<p style="color:green">
+This test verifies that report binding errors to all dataSource attributes.  The errors are reported in-line.
+This test is dupicated by HtmlExpression which reports the errors at the end of the page.
+You only need to hit this page to see the errors.
+</p>
+<hr>
+<form action="/coreWeb/errors/expression/postback.do" method="post">
+<table>
+<tr><td>Hidden</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>Hidden</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.hidden}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.hidden}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "hidden" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+<tr><td>TextBox</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>TextBox</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.tbDataSource}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.tbDataSource}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "tbDataSource" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+<tr><td>TextArea</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>TextArea</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.taDataSource}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.taDataSource}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "taDataSource" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+<tr><td>Checkbox</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>CheckBox</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.cbDataSource}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.cbDataSource}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "cbDataSource" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+<tr><td>Checkbox Group</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>CheckBoxGroup</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.cbgDataSource}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.cbgDataSource}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "cbgDataSource" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+<tr><td>Radio Group</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>RadioButtonGroup</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.rgDataSource}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.rgDataSource}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "rgDataSource" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+<tr><td>Select</td><td><span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>Select</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Expression Error</th><th>Attribute</th><td>dataSource</td>
+ <th>Expression</th><td>{pageFlow.sDataSource}</td></tr>
+ <tr><th valign="top">Message</th><td colspan="4">Caught exception when evaluating expression "{pageFlow.sDataSource}" with available binding contexts [actionForm, pageFlow, globalApp, request, session, application, pageContext, bundle, container, url, pageInput]. Root cause: java.lang.RuntimeException: Could not find JavaBean property named "sDataSource" on object of type "class errors.expression.Controller"</td></tr>
+</table></span>
+</td></tr>
+</table>
+</form>
+<hr />
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>28 Apr 2005, 09:19:18.650 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

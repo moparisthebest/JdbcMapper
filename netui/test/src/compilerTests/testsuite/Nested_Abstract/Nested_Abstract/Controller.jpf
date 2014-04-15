@@ -1,0 +1,12 @@
+package Nested_Abstract;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller(nested=true)
+public abstract class Controller extends PageFlowController
+{
+}

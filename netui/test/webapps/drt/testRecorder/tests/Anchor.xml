@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>Anchor</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>02 Jul 2004, 07:31:54.294 AM MDT</ses:startDate>
+   <ses:description>Test of Anchors</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Test of Anchor</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/Begin.jsp">
+</head>
+<body>
+<a id="Top" name="Top"></a>
+<h4>Anchor Tests</h4>
+<p style="color:green">
+This is a set of tests of anchors.  The following anchors will navigate to a target page.  At the
+top and the bottom of the page are anchors which use the <b>linkName</b> attribute.
+<br>
+Anchor supports <b>action</b> and <b>href</b> as the primary means of navigation.  In addition
+<b>linkName</b> can also be used to navigate within a page.  To create a named anchor, you simply
+set the <b>tagId</b> attribute and nothing else.  This creates an anchor that can be a target
+of another anchor.  Finally, the <b>location</b> attribute many be used with the <b>href</b>
+attribute to create an anchor of the form of href#location.  The <b>location</b> attribute does
+not work with an <b>action</b> attribute.
+</p>
+<ul>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>action</b></li>
+<li><a href="/coreWeb/tags/anchor/simpleAction.do">Navigate</a> --
+        Navigation through a <b>Simple Action</b></li>
+<li><a href="/coreWeb/tags/anchor/myForward.jsp">Navigate</a> --
+        Navigation through an <b>href</b> directly to the JSP</li>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>href</b> to the action</li>
+<li><a href="#Label">Navigate</a> --
+        Navigate to a link on this page through an <b>linkName</b></li>
+</ul>
+<p>There is a bunch of blank space to create a target on the bottom of the page</p>
+<hr />
+<div style="height: 500px">
+<p>Spacer Div</p>
+</div>
+<hr />
+<p>
+This is a named location 'Label'.  The link will take you back to the top of the page<br>
+<a id="Label" name="Label"></a>
+<a href="#Top">Go To Top</a>
+</p>
+<p>
+And test an opaque URI in an href...
+<a href="mailto:qrs@tuv.wxyz.com">mailto anchor</a>
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/navigate.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Forward Target</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/myForward.jsp">
+</head>
+<body>
+<a href="#Top"></a>
+<h4>Forward Target</h4>
+<p>
+<a href="/coreWeb/tags/anchor/begin.do">Home</a> Use an explicit <b>href</b> contain action<br>
+<a href="/coreWeb/tags/anchor/Begin.jsp#Label">Home</a>
+        Go to the bottom of the Home page using the <b>location</b><br />
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/navigate.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Test of Anchor</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/Begin.jsp">
+</head>
+<body>
+<a id="Top" name="Top"></a>
+<h4>Anchor Tests</h4>
+<p style="color:green">
+This is a set of tests of anchors.  The following anchors will navigate to a target page.  At the
+top and the bottom of the page are anchors which use the <b>linkName</b> attribute.
+<br>
+Anchor supports <b>action</b> and <b>href</b> as the primary means of navigation.  In addition
+<b>linkName</b> can also be used to navigate within a page.  To create a named anchor, you simply
+set the <b>tagId</b> attribute and nothing else.  This creates an anchor that can be a target
+of another anchor.  Finally, the <b>location</b> attribute many be used with the <b>href</b>
+attribute to create an anchor of the form of href#location.  The <b>location</b> attribute does
+not work with an <b>action</b> attribute.
+</p>
+<ul>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>action</b></li>
+<li><a href="/coreWeb/tags/anchor/simpleAction.do">Navigate</a> --
+        Navigation through a <b>Simple Action</b></li>
+<li><a href="/coreWeb/tags/anchor/myForward.jsp">Navigate</a> --
+        Navigation through an <b>href</b> directly to the JSP</li>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>href</b> to the action</li>
+<li><a href="#Label">Navigate</a> --
+        Navigate to a link on this page through an <b>linkName</b></li>
+</ul>
+<p>There is a bunch of blank space to create a target on the bottom of the page</p>
+<hr />
+<div style="height: 500px">
+<p>Spacer Div</p>
+</div>
+<hr />
+<p>
+This is a named location 'Label'.  The link will take you back to the top of the page<br>
+<a id="Label" name="Label"></a>
+<a href="#Top">Go To Top</a>
+</p>
+<p>
+And test an opaque URI in an href...
+<a href="mailto:qrs@tuv.wxyz.com">mailto anchor</a>
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/simpleAction.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/begin.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Forward Target</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/myForward.jsp">
+</head>
+<body>
+<a href="#Top"></a>
+<h4>Forward Target</h4>
+<p>
+<a href="/coreWeb/tags/anchor/begin.do">Home</a> Use an explicit <b>href</b> contain action<br>
+<a href="/coreWeb/tags/anchor/Begin.jsp#Label">Home</a>
+        Go to the bottom of the Home page using the <b>location</b><br />
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/simpleAction.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Test of Anchor</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/Begin.jsp">
+</head>
+<body>
+<a id="Top" name="Top"></a>
+<h4>Anchor Tests</h4>
+<p style="color:green">
+This is a set of tests of anchors.  The following anchors will navigate to a target page.  At the
+top and the bottom of the page are anchors which use the <b>linkName</b> attribute.
+<br>
+Anchor supports <b>action</b> and <b>href</b> as the primary means of navigation.  In addition
+<b>linkName</b> can also be used to navigate within a page.  To create a named anchor, you simply
+set the <b>tagId</b> attribute and nothing else.  This creates an anchor that can be a target
+of another anchor.  Finally, the <b>location</b> attribute many be used with the <b>href</b>
+attribute to create an anchor of the form of href#location.  The <b>location</b> attribute does
+not work with an <b>action</b> attribute.
+</p>
+<ul>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>action</b></li>
+<li><a href="/coreWeb/tags/anchor/simpleAction.do">Navigate</a> --
+        Navigation through a <b>Simple Action</b></li>
+<li><a href="/coreWeb/tags/anchor/myForward.jsp">Navigate</a> --
+        Navigation through an <b>href</b> directly to the JSP</li>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>href</b> to the action</li>
+<li><a href="#Label">Navigate</a> --
+        Navigate to a link on this page through an <b>linkName</b></li>
+</ul>
+<p>There is a bunch of blank space to create a target on the bottom of the page</p>
+<hr />
+<div style="height: 500px">
+<p>Spacer Div</p>
+</div>
+<hr />
+<p>
+This is a named location 'Label'.  The link will take you back to the top of the page<br>
+<a id="Label" name="Label"></a>
+<a href="#Top">Go To Top</a>
+</p>
+<p>
+And test an opaque URI in an href...
+<a href="mailto:qrs@tuv.wxyz.com">mailto anchor</a>
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/myForward.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/begin.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Forward Target</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/myForward.jsp">
+</head>
+<body>
+<a href="#Top"></a>
+<h4>Forward Target</h4>
+<p>
+<a href="/coreWeb/tags/anchor/begin.do">Home</a> Use an explicit <b>href</b> contain action<br>
+<a href="/coreWeb/tags/anchor/Begin.jsp#Label">Home</a>
+        Go to the bottom of the Home page using the <b>location</b><br />
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/myForward.jsp</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Test of Anchor</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/Begin.jsp">
+</head>
+<body>
+<a id="Top" name="Top"></a>
+<h4>Anchor Tests</h4>
+<p style="color:green">
+This is a set of tests of anchors.  The following anchors will navigate to a target page.  At the
+top and the bottom of the page are anchors which use the <b>linkName</b> attribute.
+<br>
+Anchor supports <b>action</b> and <b>href</b> as the primary means of navigation.  In addition
+<b>linkName</b> can also be used to navigate within a page.  To create a named anchor, you simply
+set the <b>tagId</b> attribute and nothing else.  This creates an anchor that can be a target
+of another anchor.  Finally, the <b>location</b> attribute many be used with the <b>href</b>
+attribute to create an anchor of the form of href#location.  The <b>location</b> attribute does
+not work with an <b>action</b> attribute.
+</p>
+<ul>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>action</b></li>
+<li><a href="/coreWeb/tags/anchor/simpleAction.do">Navigate</a> --
+        Navigation through a <b>Simple Action</b></li>
+<li><a href="/coreWeb/tags/anchor/myForward.jsp">Navigate</a> --
+        Navigation through an <b>href</b> directly to the JSP</li>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>href</b> to the action</li>
+<li><a href="#Label">Navigate</a> --
+        Navigate to a link on this page through an <b>linkName</b></li>
+</ul>
+<p>There is a bunch of blank space to create a target on the bottom of the page</p>
+<hr />
+<div style="height: 500px">
+<p>Spacer Div</p>
+</div>
+<hr />
+<p>
+This is a named location 'Label'.  The link will take you back to the top of the page<br>
+<a id="Label" name="Label"></a>
+<a href="#Top">Go To Top</a>
+</p>
+<p>
+And test an opaque URI in an href...
+<a href="mailto:qrs@tuv.wxyz.com">mailto anchor</a>
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>8</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/navigate.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/begin.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Forward Target</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/myForward.jsp">
+</head>
+<body>
+<a href="#Top"></a>
+<h4>Forward Target</h4>
+<p>
+<a href="/coreWeb/tags/anchor/begin.do">Home</a> Use an explicit <b>href</b> contain action<br>
+<a href="/coreWeb/tags/anchor/Begin.jsp#Label">Home</a>
+        Go to the bottom of the Home page using the <b>location</b><br />
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>9</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/anchor/Begin.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=809D07A7D8BDF8303287DC0931D83B52</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/tags/anchor/navigate.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.8</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Test of Anchor</title>
+<base href="http://localhost:8080/coreWeb/tags/anchor/Begin.jsp">
+</head>
+<body>
+<a id="Top" name="Top"></a>
+<h4>Anchor Tests</h4>
+<p style="color:green">
+This is a set of tests of anchors.  The following anchors will navigate to a target page.  At the
+top and the bottom of the page are anchors which use the <b>linkName</b> attribute.
+<br>
+Anchor supports <b>action</b> and <b>href</b> as the primary means of navigation.  In addition
+<b>linkName</b> can also be used to navigate within a page.  To create a named anchor, you simply
+set the <b>tagId</b> attribute and nothing else.  This creates an anchor that can be a target
+of another anchor.  Finally, the <b>location</b> attribute many be used with the <b>href</b>
+attribute to create an anchor of the form of href#location.  The <b>location</b> attribute does
+not work with an <b>action</b> attribute.
+</p>
+<ul>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>action</b></li>
+<li><a href="/coreWeb/tags/anchor/simpleAction.do">Navigate</a> --
+        Navigation through a <b>Simple Action</b></li>
+<li><a href="/coreWeb/tags/anchor/myForward.jsp">Navigate</a> --
+        Navigation through an <b>href</b> directly to the JSP</li>
+<li><a href="/coreWeb/tags/anchor/navigate.do">Navigate</a> --
+        Navigation through an <b>href</b> to the action</li>
+<li><a href="#Label">Navigate</a> --
+        Navigate to a link on this page through an <b>linkName</b></li>
+</ul>
+<p>There is a bunch of blank space to create a target on the bottom of the page</p>
+<hr />
+<div style="height: 500px">
+<p>Spacer Div</p>
+</div>
+<hr />
+<p>
+This is a named location 'Label'.  The link will take you back to the top of the page<br>
+<a id="Label" name="Label"></a>
+<a href="#Top">Go To Top</a>
+</p>
+<p>
+And test an opaque URI in an href...
+<a href="mailto:qrs@tuv.wxyz.com">mailto anchor</a>
+</p>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>02 Jul 2004, 07:32:40.230 AM MDT</ses:endDate>
+   <ses:testCount>9</ses:testCount>
+</ses:recorderSession>

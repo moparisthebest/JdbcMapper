@@ -1,0 +1,42 @@
+package PF_DuplicateActionForwards;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains an ActionForward method named "page1"
+ * that declares two forwards of the same name.
+ *
+ * @result: The compiler should catch this and report an error or at least a warning.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp") 
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp"),
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp") 
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    }

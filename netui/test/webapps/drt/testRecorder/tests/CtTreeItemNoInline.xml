@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>CtTreeItemNoInline</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Apr 2005, 10:56:26.237 AM MDT</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/coretags/treeitem/noinline/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>----- -------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, application/x-shockwave-flash, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-7d6b</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 2.0.40607)</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+        <base href="http://localhost:8080/coreWeb/coretags/treeitem/noinline/index.jsp">
+    </head>
+    <body>
+    <h4>Null Binding to the TreeItem tag</h4>
+    <p style="color:green">This is a duplicate of the nullbinding error test except that errors are not 
+    reported inline.  This means they should be reported by the tree tag.
+    <br>
+    This is a single page test.
+    </p>
+    <p>
+    </p>
+    <span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>TreeItem</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Attribute 'action' is required to have a value.  The value "" is illegal.  This is often caused by binding to an object with a null value.</td></tr>
+</table></span>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>TreeItem</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Attribute 'clientAction' is required to have a value.  The value "" is illegal.  This is often caused by binding to an object with a null value.</td></tr>
+</table></span>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>TreeItem</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Attribute 'href' is required to have a value.  The value "" is illegal.  This is often caused by binding to an object with a null value.</td></tr>
+</table></span>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>TreeItem</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">Attribute 'tagId' is required to have a value.  The value "" is illegal.  This is often caused by binding to an object with a null value.</td></tr>
+</table></span>
+<div>
+   <div>
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treenode=0&amp;netui_treeid=t1"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treeselected=0&amp;netui_treeid=t1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Null Bindings">&nbsp;Null Bindings&nbsp;</a>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treenode=0.0&amp;netui_treeid=t1"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treeselected=0.0&amp;netui_treeid=t1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="Errors">&nbsp;Errors&nbsp;</a>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treeselected=0.0.0&amp;netui_treeid=t1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="action">&nbsp;action&nbsp;</a>
+      <span style='color:red'>An error occurred in a tree item that cannot be reported inline.  See above.</span>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treeselected=0.0.1&amp;netui_treeid=t1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="clientAction">&nbsp;clientAction&nbsp;</a>
+      <span style='color:red'>An error occurred in a tree item that cannot be reported inline.  See above.</span>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treeselected=0.0.2&amp;netui_treeid=t1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="href">&nbsp;href&nbsp;</a>
+      <span style='color:red'>An error occurred in a tree item that cannot be reported inline.  See above.</span>
+   </div>
+   <div>
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/coretags/treeitem/noinline/begin.do?netui_treeselected=0.0.3&amp;netui_treeid=t1" style="text-decoration: none">&nbsp;<img src="/coreWeb/resources/beehive/version1/images/folder.gif" style="vertical-align:text-top" border="0" alt="tagId">&nbsp;tagId&nbsp;</a>
+      <span style='color:red'>An error occurred in a tree item that cannot be reported inline.  See above.</span>
+   </div>
+</div>
+
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Apr 2005, 10:56:27.378 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

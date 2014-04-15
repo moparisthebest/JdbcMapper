@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+    <header>
+        <title>Building Controls</title>
+    </header>
+    <body>
+        <section id="overview">
+            <title>Overview</title>
+            <p>
+            Beehive Controls are a JavaBean resource abstraction layer for enterprise Java applications.  
+            The source artifacts for Controls are simply .java files that can be built along with an 
+            enterprise Java module / project or as part of a standalone JAR file.  This document describes
+            how to build Controls in each of these project types.  
+            </p>
+            <p>
+            Because Controls use Java annotations as a metadata model, Controls require the 
+            <a href="site:annotationprocessing">annotation processing</a> features available in J2SE 5.0.  As such, a special Ant
+            build <a href="site:ant16/macros">macro</a> is used to process annotations and produce any build-time configuration
+            artifacts (such as XML files and deployment descriptors) and binary class files.  The API for 
+            the Controls annotation processor is described <a href="site:antMacrosBuildControls">here</a>.  This build macro
+            can be used to compile Control sources for a project.  It can be used in an Ant build file as:
+            </p>
+            <source><![CDATA[
+                <import file="${beehive.home}/ant/beehive-tools.xml"/>
+
+                <build-controls srcdir="src/"
+                                destdir="classes/"
+                                tempdir="tmp/"
+                                classpathref="project.classpath"/>
+            ]]>
+            </source>
+            <p>
+            This will build the Control sources from <code>src/</code> into <code>classes/</code> and perform code generation of
+            Control beans into <code>tmp/</code> using the classpath <code>project.classpath</code>.  The resulting .class files
+            can then be used in your Java projects just as any other .class files.
+            </p>
+        </section>
+        <section id="jar-project">
+            <title>JAR Projects</title>
+            <p>
+            It is often useful to build Beehive Controls into a standalone JAR that can be copied into or shared among many 
+            Java projects.  This can be done by first building the controls and then JAR-ing them into a standard <code>.jar</code>
+            file.  The Controls runtime also provides an Ant 
+            <a href="apidocs/javadoc/org/apache/beehive/controls/runtime/packaging/ControlJarTask.html">task</a> that 
+            is used to perform additional processing for JARs that contain Controls.  The Control JAR task can be used like this
+            example:
+            </p>
+            <source><![CDATA[
+                <taskdef name="control-jar" 
+                         classname="org.apache.beehive.controls.runtime.packaging.ControlJarTask" 
+                         classpath="${beehive.home}/lib/controls/beehive-controls.jar" onerror="fail"/>
+
+                <control-jar destfile="foo-controls.jar" basedir="classes/">
+                  <manifest>
+                    <attribute name="Extension-Name" value="Foo Control"/>
+                    <attribute name="Specification-Title" value="Foo Control"/>
+                    <attribute name="Specification-Vendor" value="AnyCorp"/>
+                    <attribute name="Specification-Version" value="1.0.1"/>
+                     <attribute name="Implementation-Title" value="Foo Control"/>
+                    <attribute name="Implementation-Vendor" value="AnyCorp"/>
+                    <attribute name="Implementation-Version" value="1.0.1"/>
+                  </manifest>
+                </control-jar>
+            ]]>
+            </source>
+            <p>
+            The <code>&lt;coontrol-jar></code> task also merges any <code>.manifest</code> files that were generated while
+            processing control annotations.  Use of this Ant task is not required, but it should be used any time Control 
+            manifest attributes need to be merted into a <code>META-INF/MANIFEST.MF</code> file.
+            </p>
+        </section>
+        <section id="integrated-project">
+            <title>Integrating into Existing Projects</title>
+            <p>
+            Controls can also be used in existing Java projects by adding both the <code>&lt;build-controls></code> call to 
+            build Control sources.  Optionally, the <code>&lt;control-jar></code> can be used to build the result into a 
+            JAR file; while this is best practice, it is not required.  If Beehive Controls are added to existing Java
+            projects, take care to resolve source file dependencies correctly.  Because Controls perform code generation 
+            of Control Bean classes, clients of Control Bean classes need to be compiled <strong>after</strong> Controls
+            have been built.
+            </p>
+        </section>
+        <section id="sourceControl">
+            <title>Source Control</title>
+            <p>
+            In order to correctly add a Controls project to source control, several resources need to be checked in.  Both required
+            and optional resources are listed in the table below:
+            </p>
+            <table>
+                <tr><th>Name</th><th>JAR file</th><th>Version</th><th>Required</th></tr>
+                <tr>
+                    <td>Beehive Controls</td>
+                    <td>beehive-controls.jar</td>
+                    <td><em>distribution</em></td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Beehive EJB Control</td>
+                    <td>beehive-ejb-control.jar</td>
+                    <td><em>distribution</em></td>
+                    <td>Yes; if using EJB control functionality</td>
+                </tr>
+                <tr>
+                    <td>Beehive JDBC Control</td>
+                    <td>beehive-jdbc-control.jar</td>
+                    <td><em>distribution</em></td>
+                    <td>Yes; if using JDBC control functionality</td>
+                </tr>
+                <tr>
+                    <td>Beehive JMS Control</td>
+                    <td>beehive-jms-control.jar</td>
+                    <td><em>distribution</em></td>
+                    <td>Yes; if using JMS control functionality</td>
+                </tr>
+                <tr>
+                    <td>Commons Codec</td>
+                    <td>commons-codec-1.3.jar</td>
+                    <td><em>distribution</em></td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Jakarta Velocity-dep</td>
+                    <td>velocity-dep-1.4.jar</td>
+                    <td><em>distribution</em></td>
+                    <td>Yes; required at build time</td>
+                </tr>
+            </table>
+            <p>
+            The Velocity JARs are used by Controls for code-generation and do not need to be committed to SCM if they are
+            referenced from a Beehive distribution.  They are not required at runtime.  The system control JARs are needed
+            only if they are used in an application.
+            </p>
+        </section>
+    </body>
+</document>

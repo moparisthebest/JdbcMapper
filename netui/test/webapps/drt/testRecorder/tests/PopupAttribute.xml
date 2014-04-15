@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>PopupAttribute</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>11 Apr 2005, 11:01:20.800 AM MDT</ses:startDate>
+   <ses:description>rich</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/popup/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>FE2E701A5A9EE372A6924F4082C642DC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=FE2E701A5A9EE372A6924F4082C642DC; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-56c9d423:103322d5ed1:-790b</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/tags/popup/index.jsp">
+    &lt;/head>
+    &lt;body>
+        &lt;h3>/tags/popup/Controller.jpf&lt;/h3>
+
+        anchor:
+        &lt;a href="/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" onclick="Netui_Popup('/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=200,height=100',false,'Netui_Window',null);return false;">goNested&lt;/a>
+
+        &lt;br/>
+        imageAnchor: 
+        &lt;a href="/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" onclick="Netui_Popup('/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=200,height=100',false,'Netui_Window',null);return false;">&lt;img src="/coreWeb/tags/popup/cool.gif">&lt;/a>
+
+        &lt;br/>
+        area: 
+        &lt;img src="cool.gif" usemap="#map1"/>
+        &lt;map name="map1">
+            &lt;area href="/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" shape="rect" coords="0,0,25,25" onclick="Netui_Popup('/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=200,height=100',false,'Netui_Window',null);return false;">
+        &lt;/map>
+
+        &lt;form action="/coreWeb/tags/popup/goNested.do" method="post">
+            button (uses form's action):
+            &lt;input type="submit" value="goNested" onclick="Netui_Popup('/coreWeb/tags/popup/goNested.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=200,height=100',false,'Netui_Window',null);return false;">
+
+            &lt;br/>
+            button (overrides action):
+            &lt;input type="submit" name="actionOverride:goNested2?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" value="goNested2" onclick="Netui_Popup('/coreWeb/tags/popup/goNested2.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=200,height=100',false,'Netui_Window',null);return false;">
+        &lt;/form>
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+if (!window_netui_popup) {
+  var window_netui_popup = new Array();
+}
+
+// Parse the field names and values from a Form and return
+// them as a string of parameters to add to a url query
+function get_form_query(formNode)
+{
+  var params = "";
+
+  if (formNode != null)
+  {
+    var sep = "";
+    for (var i = 0; i &lt; formNode.elements.length; i++) {
+      switch (formNode[i].type) {
+        case "radio":
+        case "checkbox":        // input type=checkbox
+          if (!formNode[i].checked)
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&amp;";
+          break;
+        case "file":            // input type=file
+        case "hidden":          // input type=hidden
+        case "text":            // input type=text
+        case "textArea":        // textarea
+        case "select-one":      // select
+        case "select-multiple": // select multiple
+          if (formNode[i].value == "")
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&amp;";
+          break;
+        // ignore these...
+        case "submit":          // input type=submit
+        case "reset":           // input type=reset
+        case "button":          // input type=button
+        case "password":        // input type=password
+          break;
+      }
+    }
+  }
+
+  return params;
+}
+
+function Netui_Popup(url, name, features, replace, popup, formName)
+{
+  if (window_netui_popup[popup] != null &amp;&amp; ! window_netui_popup[popup].closed)
+  {
+    window_netui_popup[popup].focus();
+    return;
+  }
+
+  if (formName != null &amp;&amp; formName.length > 0) {
+    var formNode = null;
+    for (var i = 0; i &lt; document.forms.length; i++) {
+      if (document.forms[i].name == formName) {
+          formNode = document.forms[i];
+          break;
+      }
+    }
+
+    if (formNode != null) {
+      var sep = "?";
+      if (url != null &amp;&amp; url.length != 0 &amp;&amp; url.indexOf("?") > 0) {
+          sep = "&amp;";
+      }
+      url += sep + get_form_query(formNode);
+    }
+  }
+
+  window_netui_popup[popup]=open(url, name, features, replace);
+  if (window_netui_popup[popup].opener == null) window_netui_popup[popup].opener=self;
+}
+
+function Netui_OnPopupDone(map)
+{
+  for (var i in map)
+  {
+    var element = document.getElementById(i);
+    if (element != null)
+    {
+      element.value=map[i];
+    }
+  }
+}
+
+window_netui_popup["Netui_Window"] = null;
+
+window_netui_popup["Netui_Window"] = null;
+
+window_netui_popup["Netui_Window"] = null;
+
+window_netui_popup["Netui_Window"] = null;
+
+window_netui_popup["Netui_Window"] = null;
+-->
+&lt;/script>&lt;/body>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Apr 2005, 11:01:21.421 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

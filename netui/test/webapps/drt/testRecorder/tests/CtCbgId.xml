@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>CtCbgId</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>29 Mar 2005, 09:39:52.283 AM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/coretags/cbg/id/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7dcc</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="html">
+
+  <head>
+    <title>Repeating Checkbox/RadioButton Group with Id</title>
+        <style type="text/css">
+        .normalAttr {color: #cc0099;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normal {color: #cc9999;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normal2 {color: #00cc99;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        .normal3 {color: #99cc99;font-family:Verdana; font-size:8pt;margin:0,0,0,0;}
+        </style>
+  </head>
+  <body>
+    <h4>Repeating Checkbox/RadioButton Groups with Id</h4>
+        <form action="/coreWeb/coretags/cbg/id/post.do" method="post">
+        <table>
+        <tr><td>
+            <table width="200pt">
+            <caption class="normalAttr">CheckBox Group</caption>
+            
+                <tr align="center"><td align="right" width="25%">
+                  <input type="checkbox" name="wlw-checkbox_group_key:{pageFlow.resultsOne}" id="html.id1" value="opt-1"><input type="hidden" name="wlw-checkbox_group_key:{pageFlow.resultsOne}OldValue" value="true"></td>
+                <td align="left"><span class="normal">Option One</span>
+                </td></tr>
+            
+                <tr align="center"><td align="right" width="25%">
+                  <input type="checkbox" name="wlw-checkbox_group_key:{pageFlow.resultsOne}" id="html.id2" value="opt-2"></td>
+                <td align="left"><span class="normal2">Option Two</span>
+                </td></tr>
+            
+                <tr align="center"><td align="right" width="25%">
+                  <input type="checkbox" name="wlw-checkbox_group_key:{pageFlow.resultsOne}" id="html.id3" value="opt-3"></td>
+                <td align="left"><span class="normal3">Option Three</span>
+                </td></tr>
+            
+            </table>
+        </td></tr>
+        <tr><td>
+            <table width="200pt">
+            <caption class="normalAttr">RadioButton Group</caption>
+            
+                <tr align="center"><td align="right" width="25%">
+                  <input type="radio" name="wlw-radio_button_group_key:{pageFlow.resultsTwo}" id="html.Rid1" value="opt-1"></td>
+                <td align="left"><span class="normal">Option One</span>
+                </td></tr>
+            
+                <tr align="center"><td align="right" width="25%">
+                  <input type="radio" name="wlw-radio_button_group_key:{pageFlow.resultsTwo}" id="html.Rid2" value="opt-2"></td>
+                <td align="left"><span class="normal2">Option Two</span>
+                </td></tr>
+            
+                <tr align="center"><td align="right" width="25%">
+                  <input type="radio" name="wlw-radio_button_group_key:{pageFlow.resultsTwo}" id="html.Rid3" value="opt-3"></td>
+                <td align="left"><span class="normal3">Option Three</span>
+                </td></tr>
+            
+            </table>
+        </td></tr>
+        <tr><td><input type="submit" value="Post"></td></tr>
+        </table>
+        </form>
+  </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.html___id1="wlw-checkbox_group_key:{pageFlow.resultsOne}"
+netui_tagIdNameMap.html___id3="wlw-checkbox_group_key:{pageFlow.resultsOne}"
+netui_tagIdNameMap.html___Rid1="wlw-radio_button_group_key:{pageFlow.resultsTwo}"
+netui_tagIdNameMap.html___Rid3="wlw-radio_button_group_key:{pageFlow.resultsTwo}"
+netui_tagIdNameMap.html___id2="wlw-checkbox_group_key:{pageFlow.resultsOne}"
+netui_tagIdNameMap.html___Rid2="wlw-radio_button_group_key:{pageFlow.resultsTwo}"
+
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/coretags/cbg/id/post.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{pageFlow.resultsOne}</ses:name>
+                  <ses:value>opt-1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{pageFlow.resultsOne}</ses:name>
+                  <ses:value>opt-2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{pageFlow.resultsOne}</ses:name>
+                  <ses:value>opt-3</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-checkbox_group_key:{pageFlow.resultsOne}OldValue</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{pageFlow.resultsTwo}</ses:name>
+                  <ses:value>opt-1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>295</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7dcc</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        <h4>Results One</h4>
+        <a href="/coreWeb/coretags/cbg/id/begin.do">Home</a>
+        <ul>
+        
+            <li><span>opt-1</span></li>
+        
+            <li><span>opt-2</span></li>
+        
+            <li><span>opt-3</span></li>
+        
+        </ul>
+        <br/>
+        <h4>Results Two:</h4>
+        <ul>
+        
+            <li><span>opt-1</span></li>
+        
+        </ul>
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>29 Mar 2005, 09:39:53.615 AM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>2</ses:testCount>
+   <ses:passedCount>1</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

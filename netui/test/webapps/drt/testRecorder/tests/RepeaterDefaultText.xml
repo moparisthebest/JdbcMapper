@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>RepeaterDefaultText</sessionName>
+  <tester>ekoneil</tester>
+  <startDate>30 Oct 2003, 11:25:32.703 AM MST</startDate>
+  <description>Test of setting the defaultText attribute of the repeater.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/databinding/repeater/simple/defaultText.jsp</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1hVOMrKnM0CuC8GH61BuTIPI4UrfmXYuKyCbKGVsy5Q21glE7360!362237642</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>*/*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1hVOMrKnM0CuC8GH61BuTIPI4UrfmXYuKyCbKGVsy5Q21glE7360!362237642</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/databindingTests.jsp</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader; .NET CLR 1.1.4322)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Default Text Test</title>
+  </head>
+  <body>
+    <h1>Default Text Test</h1>
+<br/>
+<b>defaultText attribute; null dataSource</b><br/>
+<b>No Data To Display</b>
+<br/>
+<br/>
+<b>defaultText attribute; emptyArray (zero length) dataSource</b><br/>
+<b>No Data To Display</b>
+<br/>
+<br/>
+<b>defaultText attribute; tenArrayAllNull (10 length all null) dataSource</b><br/>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+  <li><span></span></li>
+
+<br/>
+<br/>
+<b>defaultText attribute; tenArrayAllNull (10 length all null) dataSource, ignoreNulls</b><br/>
+<b>No Data To Display</b>
+<br/>
+<br/>
+<b>defaultText attribute; header; item; footer; non-null, empty dataSource</b><br/>
+<b>No Data To Display</b>
+<br/>
+<br/>
+<b>defaultText attribute; non-null (5 length String[]) dataSource</b><br/>
+
+  <li><span>This is String [0]</span></li>
+
+  <li><span>This is String [1]</span></li>
+
+  <li><span>This is String [2]</span></li>
+
+  <li><span>This is String [3]</span></li>
+
+  <li><span>This is String [4]</span></li>
+
+<br/>
+<br/>
+<b>defaultText attribute; emptyArray (zero length) dataSource, header/item/footer</b><br/>
+<b>No Data To Display</b>
+<br/>
+<br/>
+<b>defaultText attribute; tenArrayAllNull (10 length all null) dataSource, header/item/footer</b><br/>
+HEADER<br/><ul><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li><li><span></span></li></ul>FOOTER<br/>
+<br/>
+<br/>
+<b>defaultText attribute; tenArrayAllNull (10 length all null) dataSource, ignoreNulls</b><br/>
+<b>No Data To Display</b>
+<br/>
+<br/>
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>30 Oct 2003, 11:25:53.253 AM MST</endDate>
+  <testCount>1</testCount>
+
+</recorderSession>

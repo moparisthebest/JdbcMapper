@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Actions in NetUI</title>
+	</header>
+	<body>
+		<section id="intro">
+			<title>Introduction</title>
+            <p>
+                Actions are a core piece of the NetUI framework.  They are Page Flow methods or
+                annotations which <em>make navigational decisions</em> and <em>execute controller
+                logic</em>. This document shows how to create and invoke actions.
+            </p>
+        </section>
+        <section id="creating">
+            <title>Creating Actions</title>
+            <p>
+                There are two ways to create an action in a Page Flow (or Shared Flow) 
+                <a href="site:pageflow_controllers">controller</a>:
+            </p>
+            <ul>
+                <li>through an annotation, or</li>
+                <li>through a method.</li>
+            </ul>
+
+            <section id="creatingThroughAnnotation">
+                <title>Creating an action through an annotation</title>
+                <p>
+                    The simplest way to create an action is through the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SimpleAction.html">
+                        <code>@Jpf.SimpleAction</code>
+                    </a>
+                    annotation at the class level of a Page Flow or Shared Flow controller:
+                </p>
+                <source>
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="someAction", path="somePage.jsp")
+    }
+)               </source>
+                <p>
+                    In the above example, the action <code>someAction</code> will navigate to
+                    <code>somePage.jsp</code> when it is invoked. As you can imagine, this simple
+                    form of the annotation is useful when an action only needs to navigate
+                    somewhere, without running complex logic.
+                </p>
+                <p>
+                    The <code>@Jpf.SimpleAction</code> annotation also has a more powerful form that
+                    lets you define <em>conditions</em> that cause navigation do different places. 
+                    The conditions are defined using JSP 2.0-style expressions. Consider the
+                    following annotation:
+                </p>
+                <source>
+@Jpf.SimpleAction(
+    name="someAction",
+    path="default.jsp",
+    conditionalForwards={
+        @Jpf.ConditionalForward(condition="${pageFlow.advancedMode}", path="advanced.jsp"),
+        @Jpf.ConditionalForward(condition="${param.alternate=='yes'}", path="alternate.jsp")
+    }
+)               </source>
+                <p>
+                    Here, if the page flow's <code>advancedMode</code> property is
+                    <code>true</code> (i.e., it has a public method <code>getAdvancedMode</code>
+                    which returns <code>true</code>), then <code>someAction</code> will navigate to
+                    <code>advanced.jsp</code>.  If there is a request URL parameter "alternate" set
+                    to "yes", then <code>alternate.jsp</code> will be the destination. Finally, if
+                    neither of these conditions is true, then the default destination
+                    <code>default.jsp</code> is used.
+                </p>
+                <p>
+                    For a list of implicit objects available for these expressions, see
+                    <a href="http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JSPIntro7.html">
+                        JSP Implicit Objects
+                    </a>
+                    and
+                    <a href="site:databinding_implicitObjectsNetui">NetUI Implicit Objects</a>.
+                    Note that page-related implicit objects <code>pageContext</code>, 
+                    <code>pageScope</code>, and <code>pageInput</code> are not available here.
+                </p>
+            </section>
+            <section id="creatingThroughMethod">
+                <title>Creating an action through a method</title>
+                <p>
+                    To create an action through a method, you make a method that returns
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">
+                        <code>Forward</code>
+                    </a>
+                    and which is annotated with
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">
+                        <code>@Jpf.Action</code>
+                    </a>, e.g.,
+                </p>
+                <source>
+@Jpf.Action(
+    forwards={
+        @Jpf.Forward(name="somePage", path="somePage.jsp")
+    }
+)
+public Forward someAction()
+{
+    return new Forward("somePage");
+}               </source>
+                <p>
+                    This action <code>someAction</code> forwards to <code>somePage.jsp</code>.  The method has access to
+                    any member state in the controller class, and it can of course perform any other logic it needs to
+                    perform.
+                </p>
+                <note>
+                    You do not <em>have</em> to return a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">
+                        <code>Forward</code>
+                    </a>
+                    object. If your action returns <code>null</code>, then no navigation will occur.
+                    As an example, the following action method writes out "hello" to the response
+                    without navigating to another page:
+                    <br/>
+                    <br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;@Jpf.Action</code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;public Forward writeResponse()</code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;{</code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;getResponse().getWriter().print("hello");</code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return null;</code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;}</code>
+                </note>
+                <p>
+                    To create an action that accepts a <em>form bean</em>, simply add a single form
+                    bean argument:
+                </p>
+                <source>
+@Jpf.Action(
+    forwards={
+        @Jpf.Forward(name="somePage", path="somePage.jsp")
+    }
+)
+public Forward submitForm(MyFormBean bean)
+{
+    // perform logic that uses the form bean
+    return new Forward("somePage");
+}               </source>
+                <p>
+                    Here, <code>MyFormBean</code> is just any JavaBean class; there are no particular
+                    requirements on it.  For information on how to post data to a form bean from a JSP,
+                    see <a href="site:pageflow_jsp">NetUI JSP Overview</a>.
+                </p>
+            </section>
+        </section>
+        <section id="raising">
+            <title>Raising Actions</title>
+            <p>
+                You can raise actions through NetUI JSP tags, through components/command-handlers in
+                JavaServer Faces pages, from other actions in the same page flow, or, in
+                general, through URLs.
+            </p>
+            <section id="raisingFromTags">
+                <title>Raising actions through NetUI JSP tags</title>
+                <p>
+                    The following tags all support the <code>action</code> attribute:
+                </p>
+                <ul>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Anchor.html">
+                            <code>Anchor</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/datagrid/AnchorCell.html">
+                            <code>AnchorCell</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Area.html">
+                            <code>Area</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Button.html">
+                            <code>Button</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Form.html">
+                            <code>Form</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/ImageAnchor.html">
+                            <code>ImageAnchor</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/datagrid/ImageAnchorCell.html">
+                            <code>ImageAnchorCell</code>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="apidocs/javadoc/org/apache/beehive/netui/tags/tree/TreeItem.html">
+                            <code>TreeItem</code>
+                        </a>
+                    </li>
+                </ul>
+                <p>
+                    In general, you set the <code>action</code> attribute to the desired action, which will be raised
+                    when you click the link, submit the form, etc.
+                </p>
+                <source>
+&lt;netui:anchor action="someAction">Click me to run someAction&lt;netui:anchor></source>
+            </section>
+            <section id="raisingFromJSF">
+                <title>Raising actions from JavaServer Faces components/command-handlers</title>
+                <p>
+                    If you have NetUI/JSF integration enabled according to instructions
+                    <a href="site:pageflow_jsf">here</a>, you can simply raise actions using the <code>action</code>
+                    attribute on JSF command* components, e.g.,
+                </p>
+                <source>
+&lt;h:commandLink action="someAction" value="Raise action someAction"/&gt;</source>
+                <p>
+                    You can even raise a Page Flow action from a <em>command handler</em>.  Say you
+                    have a JSF <code>commandLink</code> component that binds to method <code>myCommandHandler</code>
+                    in the page's backing bean:
+                </p>
+                <source xml:space="preserve">
+&lt;h:commandLink action="#{backing.myCommandHandler}" value="Raise an action"/&gt;</source>
+                <p>
+                    Now, your command handler method can choose which Page Flow action to raise:
+                </p>
+                <source xml:space="preserve">
+private SearchForm searchForm = ...;
+
+@Jpf.CommandHandler(
+    raiseActions = {
+        @Jpf.RaiseAction(action="actionOne"),
+        @Jpf.RaiseAction(action="actionTwo", outputFormBean="searchForm")
+    }
+)
+public String myCommandHandler()
+{
+    if (...)
+        return "actionOne";
+    else
+        return "actionTwo";
+}               </source>
+                <p>
+                    For more information on NetUI/JSF integration, see the <a href="site:pageflow_jsf">documentation</a>
+                    and the <a href="site:netui-jsf">sample</a>.
+                </p>
+            </section>
+            <section id="raisingFromOtherActions">
+                <title>Raising actions from other actions</title>
+                <p>
+                    To raise an action from another action in the <em>same</em> controller class ("action chaining"),
+                    simply use the <code>action</code> attribute on a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Forward.html">
+                        <code>@Jpf.Forward</code>
+                    </a>
+                    or a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SimpleAction.html">
+                        <code>@Jpf.SimpleAction</code>
+                    </a>
+                    annotation, e.g.,
+                </p>
+                <source xml:space="preserve">
+@Jpf.Forward(name="toAnotherAction", action="anotherAction")</source>
+                <p>
+                    or,
+                </p>
+                <source xml:space="preserve">
+@Jpf.SimleAction(name="chain", action="anotherAction")</source>
+            </section>
+            <section id="raisingFromURLs">
+                <title>Raising actions through URLs</title>
+                <p>
+                    In general, you can raise an action through a URL of the following pattern:
+                </p>
+                <source xml:space="preserve">
+http://myserver/mywebapp/<strong><em>page-flow-directory</em></strong>/<strong><em>action-name</em></strong>.do</source>
+                <p>
+                    For example, if your page flow is in directory <code>/foo/bar</code> within the webapp, an action
+                    URL for <code>someAction</code> would look like this:
+                </p>
+                <source xml:space="preserve">
+http://myserver/mywebapp/foo/bar/someAction.do</source>
+                <p>
+                    Of course, if your browser URL bar is already on a page in <code>/foo/bar</code>, then an action
+                    URL for <code>someAction</code> would simply be:
+                </p>
+                <source xml:space="preserve">
+someAction.do </source>
+            </section>
+        </section>
+    </body>
+</document>

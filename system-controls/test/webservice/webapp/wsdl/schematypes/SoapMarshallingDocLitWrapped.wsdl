@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://soapMarshalling" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://soapMarshalling" xmlns:intf="http://soapMarshalling" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://soapMarshalling" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="echoboolean">
+    <complexType>
+     <sequence>
+      <element name="inputboolean" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echobooleanResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoBoolean">
+    <complexType>
+     <sequence>
+      <element name="inputBoolean" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoBooleanResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echobyte">
+    <complexType>
+     <sequence>
+      <element name="inputbyte" type="xsd:byte"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echobyteResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:byte"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoByte">
+    <complexType>
+     <sequence>
+      <element name="inputByte" type="xsd:byte"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoByteResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:byte"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoshort">
+    <complexType>
+     <sequence>
+      <element name="inputshort" type="xsd:short"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoshortResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:short"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoShort">
+    <complexType>
+     <sequence>
+      <element name="inputShort" type="xsd:short"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoShortResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:short"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoint">
+    <complexType>
+     <sequence>
+      <element name="inputint" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echointResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoInteger">
+    <complexType>
+     <sequence>
+      <element name="inputInteger" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoIntegerResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echolong">
+    <complexType>
+     <sequence>
+      <element name="inputlong" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echolongResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoLong">
+    <complexType>
+     <sequence>
+      <element name="inputLong" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoLongResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoBigInteger">
+    <complexType>
+     <sequence>
+      <element name="inputBigInteger" type="xsd:integer"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoBigIntegerResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:integer"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echofloat">
+    <complexType>
+     <sequence>
+      <element name="inputfloat" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echofloatResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoFloat">
+    <complexType>
+     <sequence>
+      <element name="inputFloat" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoFloatResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:float"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echodouble">
+    <complexType>
+     <sequence>
+      <element name="inputdouble" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echodoubleResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoDouble">
+    <complexType>
+     <sequence>
+      <element name="inputDouble" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoDoubleResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoBigDecimal">
+    <complexType>
+     <sequence>
+      <element name="inputBigDecimal" type="xsd:decimal"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoBigDecimalResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:decimal"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoString">
+    <complexType>
+     <sequence>
+      <element name="inputString" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoStringResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoDate">
+    <complexType>
+     <sequence>
+      <element name="inputDate" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoDateResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoCalendar">
+    <complexType>
+     <sequence>
+      <element name="inputCalendar" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoCalendarResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoQName">
+    <complexType>
+     <sequence>
+      <element name="inputQName" type="xsd:QName"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoQNameResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:QName"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="echoDoubleResponse">
+
+      <wsdl:part element="impl:echoDoubleResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echolongRequest">
+
+      <wsdl:part element="impl:echolong" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoBigDecimalRequest">
+
+      <wsdl:part element="impl:echoBigDecimal" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoshortResponse">
+
+      <wsdl:part element="impl:echoshortResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoLongResponse">
+
+      <wsdl:part element="impl:echoLongResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoByteResponse">
+
+      <wsdl:part element="impl:echoByteResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoCalendarResponse">
+
+      <wsdl:part element="impl:echoCalendarResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoIntegerRequest">
+
+      <wsdl:part element="impl:echoInteger" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoIntegerResponse">
+
+      <wsdl:part element="impl:echoIntegerResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoStringResponse">
+
+      <wsdl:part element="impl:echoStringResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoDoubleRequest">
+
+      <wsdl:part element="impl:echoDouble" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echobyteRequest">
+
+      <wsdl:part element="impl:echobyte" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echofloatRequest">
+
+      <wsdl:part element="impl:echofloat" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoQNameResponse">
+
+      <wsdl:part element="impl:echoQNameResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoBooleanRequest">
+
+      <wsdl:part element="impl:echoBoolean" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoBooleanResponse">
+
+      <wsdl:part element="impl:echoBooleanResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echolongResponse">
+
+      <wsdl:part element="impl:echolongResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoStringRequest">
+
+      <wsdl:part element="impl:echoString" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoBigDecimalResponse">
+
+      <wsdl:part element="impl:echoBigDecimalResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoBigIntegerResponse">
+
+      <wsdl:part element="impl:echoBigIntegerResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echointRequest">
+
+      <wsdl:part element="impl:echoint" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echobooleanResponse">
+
+      <wsdl:part element="impl:echobooleanResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echointResponse">
+
+      <wsdl:part element="impl:echointResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echodoubleRequest">
+
+      <wsdl:part element="impl:echodouble" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoShortRequest">
+
+      <wsdl:part element="impl:echoShort" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoFloatRequest">
+
+      <wsdl:part element="impl:echoFloat" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoQNameRequest">
+
+      <wsdl:part element="impl:echoQName" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echofloatResponse">
+
+      <wsdl:part element="impl:echofloatResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoshortRequest">
+
+      <wsdl:part element="impl:echoshort" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoCalendarRequest">
+
+      <wsdl:part element="impl:echoCalendar" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoDateResponse">
+
+      <wsdl:part element="impl:echoDateResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoLongRequest">
+
+      <wsdl:part element="impl:echoLong" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoBigIntegerRequest">
+
+      <wsdl:part element="impl:echoBigInteger" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echobyteResponse">
+
+      <wsdl:part element="impl:echobyteResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoDateRequest">
+
+      <wsdl:part element="impl:echoDate" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echodoubleResponse">
+
+      <wsdl:part element="impl:echodoubleResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoFloatResponse">
+
+      <wsdl:part element="impl:echoFloatResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoByteRequest">
+
+      <wsdl:part element="impl:echoByte" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoShortResponse">
+
+      <wsdl:part element="impl:echoShortResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echobooleanRequest">
+
+      <wsdl:part element="impl:echoboolean" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="SoapMarshallingDocLitWrapped">
+
+      <wsdl:operation name="echoboolean">
+
+         <wsdl:input message="impl:echobooleanRequest" name="echobooleanRequest"/>
+
+         <wsdl:output message="impl:echobooleanResponse" name="echobooleanResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoBoolean">
+
+         <wsdl:input message="impl:echoBooleanRequest" name="echoBooleanRequest"/>
+
+         <wsdl:output message="impl:echoBooleanResponse" name="echoBooleanResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echobyte">
+
+         <wsdl:input message="impl:echobyteRequest" name="echobyteRequest"/>
+
+         <wsdl:output message="impl:echobyteResponse" name="echobyteResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoByte">
+
+         <wsdl:input message="impl:echoByteRequest" name="echoByteRequest"/>
+
+         <wsdl:output message="impl:echoByteResponse" name="echoByteResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoshort">
+
+         <wsdl:input message="impl:echoshortRequest" name="echoshortRequest"/>
+
+         <wsdl:output message="impl:echoshortResponse" name="echoshortResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoShort">
+
+         <wsdl:input message="impl:echoShortRequest" name="echoShortRequest"/>
+
+         <wsdl:output message="impl:echoShortResponse" name="echoShortResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoint">
+
+         <wsdl:input message="impl:echointRequest" name="echointRequest"/>
+
+         <wsdl:output message="impl:echointResponse" name="echointResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoInteger">
+
+         <wsdl:input message="impl:echoIntegerRequest" name="echoIntegerRequest"/>
+
+         <wsdl:output message="impl:echoIntegerResponse" name="echoIntegerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echolong">
+
+         <wsdl:input message="impl:echolongRequest" name="echolongRequest"/>
+
+         <wsdl:output message="impl:echolongResponse" name="echolongResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoLong">
+
+         <wsdl:input message="impl:echoLongRequest" name="echoLongRequest"/>
+
+         <wsdl:output message="impl:echoLongResponse" name="echoLongResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoBigInteger">
+
+         <wsdl:input message="impl:echoBigIntegerRequest" name="echoBigIntegerRequest"/>
+
+         <wsdl:output message="impl:echoBigIntegerResponse" name="echoBigIntegerResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echofloat">
+
+         <wsdl:input message="impl:echofloatRequest" name="echofloatRequest"/>
+
+         <wsdl:output message="impl:echofloatResponse" name="echofloatResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoFloat">
+
+         <wsdl:input message="impl:echoFloatRequest" name="echoFloatRequest"/>
+
+         <wsdl:output message="impl:echoFloatResponse" name="echoFloatResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echodouble">
+
+         <wsdl:input message="impl:echodoubleRequest" name="echodoubleRequest"/>
+
+         <wsdl:output message="impl:echodoubleResponse" name="echodoubleResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoDouble">
+
+         <wsdl:input message="impl:echoDoubleRequest" name="echoDoubleRequest"/>
+
+         <wsdl:output message="impl:echoDoubleResponse" name="echoDoubleResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoBigDecimal">
+
+         <wsdl:input message="impl:echoBigDecimalRequest" name="echoBigDecimalRequest"/>
+
+         <wsdl:output message="impl:echoBigDecimalResponse" name="echoBigDecimalResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoString">
+
+         <wsdl:input message="impl:echoStringRequest" name="echoStringRequest"/>
+
+         <wsdl:output message="impl:echoStringResponse" name="echoStringResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoDate">
+
+         <wsdl:input message="impl:echoDateRequest" name="echoDateRequest"/>
+
+         <wsdl:output message="impl:echoDateResponse" name="echoDateResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoCalendar">
+
+         <wsdl:input message="impl:echoCalendarRequest" name="echoCalendarRequest"/>
+
+         <wsdl:output message="impl:echoCalendarResponse" name="echoCalendarResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoQName">
+
+         <wsdl:input message="impl:echoQNameRequest" name="echoQNameRequest"/>
+
+         <wsdl:output message="impl:echoQNameResponse" name="echoQNameResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="SoapMarshallingDocLitWrappedSoapBinding" type="impl:SoapMarshallingDocLitWrapped">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoboolean">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echobooleanRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echobooleanResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoBoolean">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoBooleanRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoBooleanResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echobyte">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echobyteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echobyteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoByte">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoByteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoByteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoshort">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoshortRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoshortResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoShort">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoShortRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoShortResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoint">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echointRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echointResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoInteger">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoIntegerRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoIntegerResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echolong">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echolongRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echolongResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoLong">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoLongRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoLongResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoBigInteger">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoBigIntegerRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoBigIntegerResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echofloat">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echofloatRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echofloatResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoFloat">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoFloatRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoFloatResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echodouble">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echodoubleRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echodoubleResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoDouble">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoDoubleRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoDoubleResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoBigDecimal">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoBigDecimalRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoBigDecimalResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoString">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoStringRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoStringResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoDateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoDateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoCalendar">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoCalendarRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoCalendarResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoQName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoQNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoQNameResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="SoapMarshallingDocLitWrappedService">
+
+      <wsdl:port binding="impl:SoapMarshallingDocLitWrappedSoapBinding" name="SoapMarshallingDocLitWrapped">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/soapMarshalling/SoapMarshallingDocLitWrapped.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

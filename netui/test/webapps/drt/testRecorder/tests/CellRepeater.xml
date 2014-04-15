@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>CellRepeater</sessionName>
+  <tester>Daryl</tester>
+  <startDate>14 Jan 2003, 08:25:39.975 AM MST</startDate>
+  <description>Simple tests of the cell repeater</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/miniTests/cellRepeater/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>2krMYFeaC92WqfghzeHB2dWzKPaT01v7v3gjh2V36TmfU2A21fnm!1521853567</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=2krMYFeaC92WqfghzeHB2dWzKPaT01v7v3gjh2V36TmfU2A21fnm!1521853567</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testNumber</name>
+          <value>1</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>5292e6:f2bd4ac018:-7fc5</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Cell Repeater</title>
+<style type="text/css">
+.cellTable {
+        border: 1px solid red;
+        border-collapse: collapse;
+        empty-cells: show;
+} 
+.cellCell {
+        border: 1px solid red;
+} 
+</style>
+</head>
+<body>
+<h4>Cell Repeater</h4>
+<b> more cells than data</b>
+<table class="cellTable"><tr><td class="cellCell">
+  Item: <span>1</span>
+</td><td class="cellCell">
+  Item: <span>2</span>
+</td><td class="cellCell">
+  Item: <span>3</span>
+</td><td class="cellCell">
+  Item: <span>4</span>
+</td></tr>
+<tr><td class="cellCell">
+  Item: <span>5</span>
+</td><td class="cellCell">
+  Item: <span>6</span>
+</td><td class="cellCell">
+  Item: <span>7</span>
+</td><td class="cellCell">
+  Item: <span>8</span>
+</td></tr>
+<tr><td class="cellCell">
+  Item: <span>9</span>
+</td><td class="cellCell">
+  Item: <span>10</span>
+</td><td class="cellCell">&nbsp;</td><td class="cellCell">&nbsp;</td></tr>
+<tr><td class="cellCell">&nbsp;</td><td class="cellCell">&nbsp;</td><td class="cellCell">&nbsp;</td><td class="cellCell">&nbsp;</td></tr>
+</table>
+<hr />
+<b>less cells than data</b>
+<table><tr><td>
+  Item: <span>1</span>
+</td><td>
+  Item: <span>2</span>
+</td></tr>
+<tr><td>
+  Item: <span>3</span>
+</td><td>
+  Item: <span>4</span>
+</td></tr>
+<tr><td>
+  Item: <span>5</span>
+</td><td>
+  Item: <span>6</span>
+</td></tr>
+</table>
+<hr />
+<b>Veritical Repeat</b>
+<table><tr><td>
+  Item: <span>1</span>
+</td><td>
+  Item: <span>3</span>
+</td><td>
+  Item: <span>5</span>
+</td></tr>
+<tr><td>
+  Item: <span>2</span>
+</td><td>
+  Item: <span>4</span>
+</td><td>
+  Item: <span>6</span>
+</td></tr>
+</table>
+<hr />
+<b>Vertical Repeat = false</b>
+<table><tr><td>
+  Item: <span>1</span>
+</td><td>
+  Item: <span>2</span>
+</td><td>
+  Item: <span>3</span>
+</td></tr>
+<tr><td>
+  Item: <span>4</span>
+</td><td>
+  Item: <span>5</span>
+</td><td>
+  Item: <span>6</span>
+</td></tr>
+</table>
+<hr />
+<b>Databind rows</b>
+<table><tr><td>
+  Item: <span>1</span>
+</td><td>
+  Item: <span>2</span>
+</td><td>
+  Item: <span>3</span>
+</td><td>
+  Item: <span>4</span>
+</td><td>
+  Item: <span>5</span>
+</td></tr>
+<tr><td>
+  Item: <span>6</span>
+</td><td>
+  Item: <span>7</span>
+</td><td>
+  Item: <span>8</span>
+</td><td>
+  Item: <span>9</span>
+</td><td>
+  Item: <span>10</span>
+</td></tr>
+</table>
+<hr />
+<b>Databind cols</b>
+<table><tr><td>
+  Item: <span>1</span>
+</td><td>
+  Item: <span>2</span>
+</td><td>
+  Item: <span>3</span>
+</td><td>
+  Item: <span>4</span>
+</td><td>
+  Item: <span>5</span>
+</td></tr>
+<tr><td>
+  Item: <span>6</span>
+</td><td>
+  Item: <span>7</span>
+</td><td>
+  Item: <span>8</span>
+</td><td>
+  Item: <span>9</span>
+</td><td>
+  Item: <span>10</span>
+</td></tr>
+</table>
+</body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>14 Jan 2003, 08:25:43.540 AM MST</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>1</testCount>
+  <passedCount>0</passedCount>
+  <failedCount>1</failedCount>
+</recorderSession>

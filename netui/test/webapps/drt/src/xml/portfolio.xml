@@ -1,0 +1,40 @@
+<?xml version="1.0"?> 
+<portfolio xmlns="http://www.openuri.org/customerPortfolio">
+  <stocks>
+    <stock exchange='nasdaq'>
+        <symbol>BEAS</symbol>
+        <name>BEA Systems</name>
+        <price>14.35</price>
+        <web>http://www.bea.com</web>
+        <shares>500</shares>
+    </stock>
+    <stock exchange='nasdaq'>
+        <symbol>CSCO</symbol>
+        <name>Cisco Systems</name>
+        <price>19.42</price>
+        <web>http://www.cisco.com</web>
+        <shares>400</shares>
+    </stock>
+    <stock exchange='nyse'>
+        <symbol exchange='nyse'>GE</symbol>
+        <name>General Electric</name>
+        <price>59.42</price>
+        <web>http://www.ge.com</web>
+        <shares>300</shares>
+    </stock>
+    <stock exchange='nasdaq'>
+        <symbol>RHAT</symbol>
+        <name>RedHat Systems</name>
+        <price>18.20</price>
+        <web>http://www.redhat.com</web>
+        <shares>200</shares>
+    </stock>
+    <stock exchange='nyse'>
+        <symbol exchange='nyse'>YHOO</symbol>
+        <name>Yahoo Inc</name>
+        <price>48.16</price>
+        <web>http://www.yahoo.com</web>
+        <shares>100</shares>
+    </stock>
+  </stocks>
+</portfolio>

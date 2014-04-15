@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+
+<struts-config>
+
+    <form-beans>
+        <form-bean name="TestTagForm" type="test.TestTagForm">
+            <form-property name="textBox" type="java.lang.String"/>
+            <form-property name="checkBox1" type="java.lang.Boolean"/>
+            <form-property name="checkBox2" type="java.lang.Boolean"/>
+            <form-property name="select" type="[Ljava.lang.String"/>
+            <form-property name="radioGroup" type="java.lang.String"/>
+            <form-property name="hidden" type="java.lang.String"/>
+        </form-bean>
+        <form-bean name="DataboundTagTestForm" type="databinding.struts.SimpleTagTestForm">
+            <form-property name="textProperty" type="java.lang.String"/>
+            <form-property name="booleanProperty" type="java.lang.Boolean"/>
+        </form-bean>
+    </form-beans>
+
+    <global-exceptions>
+    </global-exceptions>
+
+    <global-forwards>
+    </global-forwards>
+
+    <action-mappings>
+
+        <action path="/TestTags"
+                type="test.TestTagAction"
+                name="TestTagForm"
+                scope="session"
+                >
+            <forward name="index" path="/tags/tagtest.jsp"/>
+        </action>
+
+        <action path="/NavTree"
+                type="test.NavTreeAction"
+                scope="session"
+                >
+            <forward name="index" path="/index.jsp"/>
+        </action>
+
+        <action path="/DataboundTagTest" type="databinding.struts.SimpleTagTestAction" name="DataboundTagTestForm">
+            <forward name="postback" path="/tags/databoundTagTest.jsp"/>
+        </action>
+
+        <action path="/DataboundTagTest_NoXScript" type="databinding.struts.SimpleTagTestAction" name="DataboundTagTestForm">
+            <forward name="postback" path="/tags/databoundTagTestNoXScript.jsp"/>
+        </action>
+    </action-mappings>
+
+    <controller processorClass="org.apache.beehive.netui.pageflow.PageFlowRequestProcessor"/>
+
+
+    <message-resources null="false" parameter="errors.RootMessages" key="rootMessages"/>
+
+  <!--
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+  </plug-in>
+  -->
+
+</struts-config>
+

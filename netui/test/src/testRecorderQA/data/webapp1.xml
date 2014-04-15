@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<server xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <name>weblogic</name>
+    <hostname>localhost</hostname>
+    <port>7001</port>
+
+    <webapps>
+        <webapp>
+            <name>webapp1</name>
+            <description>webapp1 description</description>
+            <testMode>true</testMode>
+            <contextRoot>webapp1ContextRoot</contextRoot>
+            <testDefinitionsDirectory>D:/dev/src/wlw/netui/applications/testRecorder/tests/webapp1</testDefinitionsDirectory>
+        </webapp>
+
+        <webapp>
+            <name>webappOverride1</name>
+            <description>webapp override 1 description</description>
+            <testMode>true</testMode>
+            <contextRoot>webappOverride1ContextRoot</contextRoot>
+            <testDefinitionsDirectory>D:/dev/src/wlw/netui/applications/testRecorder/tests/webapp1</testDefinitionsDirectory>
+            <overrideDefaultConfig>
+                <suffixList>
+                    <suffix>jsp</suffix>
+                    <suffix>jspx</suffix>
+                    <suffix>do</suffix>
+                    <suffix>jpf</suffix>
+                </suffixList>
+                <servletURI>testRecorderr</servletURI>
+            </overrideDefaultConfig>
+        </webapp>
+
+        <webapp>
+            <name>webappOverride2</name>
+            <description>webappOverride2 description</description>
+            <testMode>true</testMode>
+            <contextRoot>webappOverride2ContextRoot</contextRoot>
+            <testDefinitionsDirectory>D:/dev/src/wlw/netui/applications/testRecorder/tests/webappOverride</testDefinitionsDirectory>
+            <overrideDefaultConfig>
+                <suffixList>
+                    <suffix>a</suffix>
+                    <suffix>b</suffix>
+                    <suffix>c</suffix>
+                    <suffix>d</suffix>
+                </suffixList>
+                <servletURI>override</servletURI>
+            </overrideDefaultConfig>
+        </webapp>
+    </webapps>
+</server>

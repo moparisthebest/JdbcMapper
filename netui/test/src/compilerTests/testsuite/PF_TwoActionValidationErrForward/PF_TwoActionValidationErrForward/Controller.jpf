@@ -1,0 +1,41 @@
+package PF_TwoActionValidationErrForward;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains two jpf:validation-error-forward
+ * annotations.  This is invalid syntax.
+ *
+ * @result: The compiler should catch this error and issue an error message.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+    	validationErrorForward=@Jpf.Forward(name="failure1", navigateTo=Jpf.NavigateTo.currentPage),
+    	validationErrorForward=@Jpf.Forward(name="failure2", navigateTo=Jpf.NavigateTo.previousPage),
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    }

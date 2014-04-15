@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>JpfFaces</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>12 Sep 2004, 05:03:41.356 PM MDT</ses:startDate>
+   <ses:description>Test of basic JSF / page flow integration, including raising actions and passing forms from JSF pages and backing files.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/JpfFacesController.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;html>
+    &lt;head> &lt;title>Page Flow / JSF&lt;/title> &lt;/head>
+    &lt;body bgcolor="white">
+    &lt;h3>Page Flow / JSF: page 1&lt;/h3>
+    
+        &lt;form id="go2form" method="post" action="/jsfWeb/jpfFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+
+          	&lt;input id="go2form:foo" type="text" name="go2form:foo" />
+            &lt;br/>
+            &lt;a id="go2form:go2button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go2button'; document.forms['go2form'].submit(); return false;">go to page2 (pass a form)&lt;/a>
+                - type "stay" to make the CommandHandler return null
+            &lt;br/>
+            &lt;a id="go2form:go3button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go3button'; document.forms['go2form'].submit(); return false;">go to page3 (no form)&lt;/a>
+            &lt;br/>
+            &lt;a id="go2form:go4button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go4button'; document.forms['go2form'].submit(); return false;">go to page4 (no CommandHandler)&lt;/a>
+        &lt;input type="hidden" name="go2form" value="go2form" />&lt;input type="hidden" name="go2form:_idcl" />&lt;/form>
+    
+&lt;/HTML></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>go2form</ses:name>
+                  <ses:value>go2form</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:_idcl</ses:name>
+                  <ses:value>go2form:go2button</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:foo</ses:name>
+                  <ses:value>stay</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>70</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/jpfFaces/JpfFacesController.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;html>
+    &lt;head> &lt;title>Page Flow / JSF&lt;/title> &lt;/head>
+    &lt;body bgcolor="white">
+    &lt;h3>Page Flow / JSF: page 1&lt;/h3>
+    
+        &lt;form id="go2form" method="post" action="/jsfWeb/jpfFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+
+          	&lt;input id="go2form:foo" type="text" name="go2form:foo" value="stay" />
+            &lt;br/>
+            &lt;a id="go2form:go2button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go2button'; document.forms['go2form'].submit(); return false;">go to page2 (pass a form)&lt;/a>
+                - type "stay" to make the CommandHandler return null
+            &lt;br/>
+            &lt;a id="go2form:go3button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go3button'; document.forms['go2form'].submit(); return false;">go to page3 (no form)&lt;/a>
+            &lt;br/>
+            &lt;a id="go2form:go4button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go4button'; document.forms['go2form'].submit(); return false;">go to page4 (no CommandHandler)&lt;/a>
+        &lt;input type="hidden" name="go2form" value="go2form" />&lt;input type="hidden" name="go2form:_idcl" />&lt;/form>
+    
+&lt;/HTML></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>go2form</ses:name>
+                  <ses:value>go2form</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:_idcl</ses:name>
+                  <ses:value>go2form:go2button</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:foo</ses:name>
+                  <ses:value>hello there</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>77</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/jpfFaces/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF: page 2</h3>
+    
+        Message from page flow: <i><span id="msg">got form; bar was 'hello there'</span></i>
+        <br/>
+
+        <form id="go1form" method="post" action="/jsfWeb/jpfFaces/page2.faces" enctype="application/x-www-form-urlencoded">
+
+            <input id="go1form:go1button" type="submit" name="go1form:go1button" value="back to page 1" />
+        <input type="hidden" name="go1form" value="go1form" /></form>
+    
+</HTML>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/page2.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>go1form</ses:name>
+                  <ses:value>go1form</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go1form:go1button</ses:name>
+                  <ses:value>back to page 1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>50</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/jpfFaces/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;html>
+    &lt;head> &lt;title>Page Flow / JSF&lt;/title> &lt;/head>
+    &lt;body bgcolor="white">
+    &lt;h3>Page Flow / JSF: page 1&lt;/h3>
+    
+        &lt;form id="go2form" method="post" action="/jsfWeb/jpfFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+
+          	&lt;input id="go2form:foo" type="text" name="go2form:foo" />
+            &lt;br/>
+            &lt;a id="go2form:go2button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go2button'; document.forms['go2form'].submit(); return false;">go to page2 (pass a form)&lt;/a>
+                - type "stay" to make the CommandHandler return null
+            &lt;br/>
+            &lt;a id="go2form:go3button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go3button'; document.forms['go2form'].submit(); return false;">go to page3 (no form)&lt;/a>
+            &lt;br/>
+            &lt;a id="go2form:go4button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go4button'; document.forms['go2form'].submit(); return false;">go to page4 (no CommandHandler)&lt;/a>
+        &lt;input type="hidden" name="go2form" value="go2form" />&lt;input type="hidden" name="go2form:_idcl" />&lt;/form>
+    
+&lt;/HTML></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>go2form</ses:name>
+                  <ses:value>go2form</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:_idcl</ses:name>
+                  <ses:value>go2form:go3button</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:foo</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>66</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/jpfFaces/page2.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF: page 3</h3>
+    
+        <form id="go1form" method="post" action="/jsfWeb/jpfFaces/page3.faces" enctype="application/x-www-form-urlencoded">
+
+            <input id="go1form:go1button" type="submit" name="go1form:go1button" value="back to page 1" />
+        <input type="hidden" name="go1form" value="go1form" /></form>
+    
+</HTML>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/page3.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>go1form</ses:name>
+                  <ses:value>go1form</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go1form:go1button</ses:name>
+                  <ses:value>back to page 1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>50</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/jpfFaces/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;html>
+    &lt;head> &lt;title>Page Flow / JSF&lt;/title> &lt;/head>
+    &lt;body bgcolor="white">
+    &lt;h3>Page Flow / JSF: page 1&lt;/h3>
+    
+        &lt;form id="go2form" method="post" action="/jsfWeb/jpfFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+
+          	&lt;input id="go2form:foo" type="text" name="go2form:foo" />
+            &lt;br/>
+            &lt;a id="go2form:go2button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go2button'; document.forms['go2form'].submit(); return false;">go to page2 (pass a form)&lt;/a>
+                - type "stay" to make the CommandHandler return null
+            &lt;br/>
+            &lt;a id="go2form:go3button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go3button'; document.forms['go2form'].submit(); return false;">go to page3 (no form)&lt;/a>
+            &lt;br/>
+            &lt;a id="go2form:go4button" href="#" onclick="document.forms['go2form']['go2form:_idcl'].value='go2form:go4button'; document.forms['go2form'].submit(); return false;">go to page4 (no CommandHandler)&lt;/a>
+        &lt;input type="hidden" name="go2form" value="go2form" />&lt;input type="hidden" name="go2form:_idcl" />&lt;/form>
+    
+&lt;/HTML></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/jpfFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>go2form</ses:name>
+                  <ses:value>go2form</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:_idcl</ses:name>
+                  <ses:value>go2form:go4button</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>go2form:foo</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>66</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=64B1EE34A4FD1C9B5397253EED55BAA0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/jpfFaces/page3.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head> <title>Page Flow / JSF</title> </head>
+    <body bgcolor="white">
+    <h3>Page Flow / JSF: page 4</h3>
+    
+        <form id="go1form" method="post" action="/jsfWeb/jpfFaces/page4.faces" enctype="application/x-www-form-urlencoded">
+
+            <input id="go1form:go1button" type="submit" name="go1form:go1button" value="back to page 1" />
+        <input type="hidden" name="go1form" value="go1form" /></form>
+    
+</HTML>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>12 Sep 2004, 05:04:30.938 PM MDT</ses:endDate>
+   <ses:testCount>7</ses:testCount>
+</ses:recorderSession>

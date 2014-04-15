@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>InheritControllerSimpleActionAttributes</sessionName>
+<tester>crogers</tester>
+<startDate>24 Jan 2006, 02:10:40.083 PM MST</startDate>
+<description>Test inheritance and values for loginRequired, readOnly, and rolesAllowed attributes set on the Controllers and Simple Actions.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+<title>Page Flow Inheritance - Overriding Simple Actions and Attributes</title>
+</head>
+<body>
+    <h3>Page Flow Inheritance - Overriding Simple Actions and Attributes</h3>
+
+    <p>
+        There are some attributes such as loginRequired, readOnly, and rolesAllowed that
+        can be set on both the Controller and the Action annotations. This set of tests
+        covers different scenarios of overriding actions and their attributes with
+        inheritance. The default behavior for loginRequired and readOnly is to not use a
+        &lt;set-property&gt; in the &lt;action&gt; of the generated struts module config
+        file if the attribute is false or not set. On the runtime, no property implies
+        false. However, if the property is not set for the delegating action, then the
+        runtime uses the property of the delegate. Explicitly setting the attribute to
+        false, should set the property and have a false value in the runtime.
+    </p>
+    <b>Test 1:</b>
+    <ul>
+        <li><a href="super1/begin.do">Controller attributes set to true</a></li>
+        <li><a href="derived1a/begin.do">extended Controller attributes changed to false</a></li>
+        <li><a href="derived1b/begin.do">extended Controller, no attributes changed</a></li>
+    </ul>
+    <b>Test 2:</b>
+    <ul>
+        <li><a href="super2/begin.do">Controller attributes not set explicitly</a></li>
+        <li><a href="derived2a/begin.do">extended Controller attributes set to true</a></li>
+        <li><a href="derived2b/begin.do">extended Controller attributes set to false</a></li>
+    </ul>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/super1/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/override/simpleActions/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+    <title>Page Flow Inheritance - Overriding Simple Actions</title>
+</head>
+<body>
+    <h1>Page Flow Inheritance - Overriding Simple Actions</h1>
+    <h3>Super1</h3>
+    
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role1,role2
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = pageFlowCore_inheritance_override_simpleActions_super2_Super2_FormOne
+    actionPath = /actionTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = pageFlowCore.inheritance.override.simpleActions.super2.Super2$FormOne
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /begin
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role1,role2
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role1,role2
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super1.Super1
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role2,roleA,role1
+    doValidation = false
+</pre>
+    <br/>
+    <a href="/coreWeb/pageFlowCore/inheritance/override/simpleActions/super1/actionOne.do">Action One</a>
+    <br/>
+    <a href="../begin.do">back to start</a>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived1a/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/override/simpleActions/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+    <title>Page Flow Inheritance - Overriding Simple Actions</title>
+</head>
+<body>
+    <h1>Page Flow Inheritance - Overriding Simple Actions</h1>
+    <h3>Super1</h3>
+    
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /actionOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = pageFlowCore_inheritance_override_simpleActions_super2_Super2_FormOne
+    actionPath = /actionTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = pageFlowCore.inheritance.override.simpleActions.super2.Super2$FormOne
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /begin
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = role1,role2
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role1,role2
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1a.Derived1a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = role2,roleA,role1
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+    <br/>
+    <a href="/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived1a/actionOne.do">Action One</a>
+    <br/>
+    <a href="../begin.do">back to start</a>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived1b/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/override/simpleActions/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+    <title>Page Flow Inheritance - Overriding Simple Actions</title>
+</head>
+<body>
+    <h1>Page Flow Inheritance - Overriding Simple Actions</h1>
+    <h3>Super1</h3>
+    
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /actionOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role1,role2,role3,role4
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = pageFlowCore_inheritance_override_simpleActions_super2_Super2_FormOne
+    actionPath = /actionTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = pageFlowCore.inheritance.override.simpleActions.super2.Super2$FormOne
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /begin
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role1,role2,role3,role4
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived1b.Derived1b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role2,role4,roleA,role1,role3
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super1
+</pre>
+    <br/>
+    <a href="/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived1b/actionOne.do">Action One</a>
+    <br/>
+    <a href="../begin.do">back to start</a>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/super2/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/override/simpleActions/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+    <title>Page Flow Inheritance - Overriding Simple Actions</title>
+</head>
+<body>
+    <h1>Page Flow Inheritance - Overriding Simple Actions</h1>
+    <h3>Super2</h3>
+    
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = formOne
+    actionPath = /actionTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = pageFlowCore.inheritance.override.simpleActions.super2.Super2$FormOne
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /begin
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.super2.Super2
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = roleA
+    doValidation = false
+</pre>
+    <br/>
+    <a href="/coreWeb/pageFlowCore/inheritance/override/simpleActions/super2/actionOne.do">Action One</a>
+    <br/>
+    <a href="../begin.do">back to start</a>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>6</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived2a/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/override/simpleActions/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+    <title>Page Flow Inheritance - Overriding Simple Actions</title>
+</head>
+<body>
+    <h1>Page Flow Inheritance - Overriding Simple Actions</h1>
+    <h3>Derived2a</h3>
+    
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /actionOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role3,role4
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = formOne
+    actionPath = /actionTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = pageFlowCore.inheritance.override.simpleActions.super2.Super2$FormOne
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role3,role4
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /begin
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role3,role4
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role3,role4
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2a.Derived2a
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = role4,roleA,role3
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+    <br/>
+    <a href="/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived2a/actionOne.do">Action One</a>
+    <br/>
+    <a href="../begin.do">back to start</a>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>7</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived2b/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>EE0F035273260D4946406D2C9EDF419B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>UTF-8,*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=EE0F035273260D4946406D2C9EDF419B</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/pageFlowCore/inheritance/override/simpleActions/</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051111 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+<head>
+    <title>Page Flow Inheritance - Overriding Simple Actions</title>
+</head>
+<body>
+    <h1>Page Flow Inheritance - Overriding Simple Actions</h1>
+    <h3>Super2</h3>
+    
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /actionOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /actionThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = formOne
+    actionPath = /actionTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = pageFlowCore.inheritance.override.simpleActions.super2.Super2$FormOne
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /begin
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginOne
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = null
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+<pre>
+(PageFlowActionMapping)
+    actionName = null
+    actionPath = /loginThree
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = true
+    rolesAllowed = null
+    doValidation = false
+</pre>
+<pre>
+(DelegatingActionMapping)
+    actionName = null
+    actionPath = /loginTwo
+    actionParameter = pageFlowCore.inheritance.override.simpleActions.derived2b.Derived2b
+    unqualifiedActionPath = null
+    formClass = null
+    preventDoubleSubmit = false
+    readOnly = true
+    loginRequired = false
+    rolesAllowed = roleA
+    doValidation = false
+    localPathsRelativeTo = /pageFlowCore/inheritance/override/simpleActions/super2
+</pre>
+    <br/>
+    <a href="/coreWeb/pageFlowCore/inheritance/override/simpleActions/derived2b/actionOne.do">Action One</a>
+    <br/>
+    <a href="../begin.do">back to start</a>
+</body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>24 Jan 2006, 02:11:25.518 PM MST</endDate>
+<testCount>7</testCount>
+</recorderSession>

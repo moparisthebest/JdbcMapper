@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>StyleOptions</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Feb 2005, 07:12:04.387 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/tags/styleOptions/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2FB79E4AD0F13D9C8B2A66C5A1D37235</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=2FB79E4AD0F13D9C8B2A66C5A1D37235; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1dd5eec:1020442d225:-77ad</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Styles on Options</title>
+<!-- target -->
+<base href="http://localhost:8080/coreWeb/tags/styleOptions/Begin.jsp">
+<style>
+.redCheck {
+        Color: red;
+        font: bold 14pt sans-serif
+}
+.redRadio {
+        Color: red;
+        font: bold 10pt sans-serif
+}
+.blueCheck {
+        Color: blue;
+        font: bold 8pt sans-serif
+}
+.blueRadio {
+        Color: blue;
+        font: bold 16pt sans-serif
+}
+</style>
+</head>
+<body>
+<h4>Style</h4>
+<form action="/coreWeb/tags/styleOptions/postback.do" method="post" style="border: solid 1pt;padding: 10pt">
+
+<!-- CHECKBOXGROUP with Option-->
+<input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup}OldValue" value="true">
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup}" value="foo"><span style="font: bold 14pt sans-serif">foo</span><br />
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup}" value="bar"><span style="font: 8pt sans-serif">bar</span>
+
+<hr />
+
+<!-- CHECKBOXGROUP with Option-->
+<input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup1}OldValue" value="true">
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup1}" value="foo"><span class="redCheck">foo</span><br />
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup1}" value="bar"><span class="redCheck">bar</span>
+<br />
+<hr />
+
+<!-- CHECKBOXGROUP with OptionDataSource-->
+<input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}OldValue" value="true"><input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}" value="Check 1"><span style="color: red;font: bold 14pt sans-serif">Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}" value="Check 2"><span style="color: red;font: bold 14pt sans-serif">Check 2</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup2}" value="Check 3"><span style="color: red;font: bold 14pt sans-serif">Check 3</span><br>
+
+<hr />
+<!-- CHECKBOXGROUP with OptionDataSource-->
+<input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup3}OldValue" value="true"><input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup3}" value="Check 1"><span class="blueCheck">Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup3}" value="Check 2"><span class="blueCheck">Check 2</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkBoxGroup3}" value="Check 3"><span class="blueCheck">Check 3</span><br>
+
+<hr />
+
+<!-- RADIOBUTTONGROUP with Option-->
+
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="Radio 1"><span style="font: bold 14pt sans-serif">Radio 1</span><br />
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="Radio 2" checked><span style="font: 10pt sans-serif">Radio 2</span>
+<br />
+<hr />
+<!-- RADIOBUTTONGROUP with Option-->
+
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio1}" value="Radio 1" checked><span class="redRadio">Radio 1</span><br />
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio1}" value="Radio 2"><span class="redRadio" style="font: 10pt sans-serif">Radio 2</span>
+<br />
+<hr />
+
+<!-- RADIOBUTTONGROUP with OptionDataSource-->
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio2}" value="Radio 1"><span style="color: red;font: bold 6pt sans-serif">Radio 1</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio2}" value="Radio 2"><span style="color: red;font: bold 6pt sans-serif">Radio 2</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio2}" value="Radio 3" checked><span style="color: red;font: bold 6pt sans-serif">Radio 3</span><br>
+
+<hr />
+
+<!-- RADIOBUTTONGROUP with OptionDataSource-->
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio3}" value="Radio 1" checked><span class="blueRadio">Radio 1</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio3}" value="Radio 2"><span class="blueRadio">Radio 2</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radio3}" value="Radio 3"><span class="blueRadio">Radio 3</span><br>
+
+<hr />
+
+<!-- BUTTON -->
+<input type="submit" value="submit" style="color:blue;font: bold 12pt serif">
+</form>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 07:12:05.869 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

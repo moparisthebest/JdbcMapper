@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+   this XML is invalid.  two tests exist with the same name.
+-->
+<testDefinitions xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <categories>
+        <category>
+            <name>DRT</name>
+            <description>
+                Developer Regression Tests
+            </description>
+        </category>
+    </categories>
+
+    <tests>
+        <test>
+            <name>test</name>
+            <description>t1</description>
+            <webapp>webapp1</webapp>
+        </test>
+
+        <test>
+            <name>test</name>
+            <description>t2</description>
+            <webapp>webapp1</webapp>
+        </test>
+    </tests>
+</testDefinitions>
+

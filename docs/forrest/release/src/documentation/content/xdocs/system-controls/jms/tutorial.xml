@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>JMS Control Tutorial</title>
+    </header>
+    <body>
+            <p>The Jmscontrol is an extensible control. Before a JmsControl can be used in an application, 
+                    a sub-interface of the <code>org.apache.beehive.controls.system.jms.JmsControl</code> interface must be created and 
+                    annotated with <code>@ControlExtension</code>.</p>
+
+            <source>
+@ControlExtension
+public interface SampleQueue 
+    extends JMSControl {
+...
+}
+            </source>
+
+            <p>In order for the control to work, it needs to know the destination of the messages. This is 
+                    accomplished using a JNDI context. Unless otherwise specified the default initial 
+                    context is used. This may be overridden by settng the <code>jndiContextFactory</code> and 
+                    <code>jndiProviderUrl</code> properties, either programically using the <code>setJndiContextFactory()</code> and 
+                    <code>setJndiProviderUrl()</code> setters or via the corresponding <code>@Destination</code> attributes.</p>
+
+            <p>The queue/topic destination is then obtained using the value of the <code>sendJndiName</code> property 
+                    and a queue/topic connection is obtained using by the <code>jndiConnectionFactory</code> property. 
+                    In most cases the same connection factory is used for both queues and topics. The 
+                    <code>@Destination</code> sendType attribute may be used to constrain the use of the control to 
+                    either a topic or a queue. By default it's value is Auto which allowes for run-time 
+                    determination of whether the <code>sendJndiName</code> names a queue or a topic. By setting it to 
+                    Queue or Topic a run-time check is made to see if the connection factory and destination 
+                    is of the correct type.</p>
+
+            <p>If the JNDI context to be used (i.e. the control is running in an ejb-container (or 
+                    servlet-container with a JNDI context) is known (or is the default context) and the 
+                    connection-factory (e.g. <code>weblogic.jms.ConnectionFactory</code>) and queue JNDI name 
+                    (e.g. <code>jms.SampleQueue</code>) is also known at development time then the extension class can 
+                    be annotated with the <code>@Destination</code> annotation as shown in the example:</p>
+
+            <source>
+@ControlExtension
+@JMSControl.Destination(sendType=JMSControl.DestinationType.Queue,sendJndiName="jms.SampleQueue",jndiConnectionFactory="weblogic.jms.ConnectionFactory")
+public interface SampleQueue 
+    extends JMSControl {
+...
+}
+            </source>
+            <p>Likewise, for a topic (e.g. <code>jms.SampleTopic</code>) the following file might be appropriate:</p>
+            <source>
+@ControlExtension
+@JMSControl.Destination(sendType=JMSControl.DestinationType.Topic,sendJndiName="jms.SampleTopic",jndiConnectionFactory="weblogic.jms.ConnectionFactory")
+public interface SampleTopic 
+    extends JMSControl {
+...
+}
+            </source>
+            <p>The <code>sendType</code> attribute could be left out of these examples and the control extensions would still work.</p>
+            <p>See Extension Class Annotation for other annotations defined at the class or type level.</p>
+            <p>The extension interface can include one or more methods that send messages. These methods must have 
+                    at least one unannotated parameter that corresponds to the body of the message. Other annotated 
+                    parameters can defined to provide property values and other information at run-time to the 
+                    message (see Extension Class Annotation for allowed annotation). The method itself can be 
+                    annotated (see Extension Class Annotation for allowed annotation).</p>
+            <p>Some examples appropriate to topics and queues include:</p>
+            <source>
+/**
+ * Submit an xml object (org.apache.xmlbeans) as a text message.
+ * @param document the document.
+ * @param type the message JMS type.
+*/
+public void submitXml(XmlObject document, @Type String type);
+
+/**
+ * Submit an xml object (org.apache.xmlbeans) with JMS type "xmlObject".
+ * @param document the document.
+ */
+@Message(MessageType.Text)
+@Type("xmlObject")
+public void submitXml(XmlObject document);
+    
+/**
+ * Submit an already constructed message
+ * @param message the jms-message.
+*/
+public void submitMessage(Message message);
+
+/**
+ * Submit a BytesMessage with the given byte array body and property hello.
+ * @param body the byte array.
+ * @param hello the value of the hello property.
+*/
+public void submitMessage(byte[] body, @Property(name=hello) hello);
+
+/**
+ * Submit a MapMessage with the given map and property hello set to world.
+ * @param body the byte array.
+*/
+@Properties({PropertyValue(name="hello", value="world")})
+public void submitMessage(Map body);
+            </source>
+    </body>
+</document>

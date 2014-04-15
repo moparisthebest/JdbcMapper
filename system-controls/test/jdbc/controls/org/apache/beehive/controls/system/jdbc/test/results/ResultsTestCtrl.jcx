@@ -1,0 +1,548 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * $Header:$
+ */
+
+package org.apache.beehive.controls.system.jdbc.test.results;
+
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Time;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
+import java.math.BigDecimal;
+
+import org.apache.beehive.controls.system.jdbc.JdbcControl;
+import org.apache.beehive.controls.system.jdbc.DefaultRowSetResultSetMapper;
+
+import javax.sql.RowSet;
+
+import test.customerDb.XStoogeRowDocument;
+
+/**
+ * This control is used for unit tests for results returned from the db control.
+ */
+@org.apache.beehive.controls.api.bean.ControlExtension
+@JdbcControl.ConnectionDriver(databaseDriverClass="org.apache.derby.jdbc.EmbeddedDriver", databaseURL="jdbc:derby:MyDB;create=true")
+public interface ResultsTestCtrl extends JdbcControl {
+
+    public static class Customer {
+        private String fname;
+        public int userid;
+
+        public void setFname(String fname) { this.fname = fname; }
+        public String getFname() { return fname; }
+    }
+
+    public static class CustomerInput1 {
+        private int _userid;
+
+        public int getUserid() {return _userid;}
+        public void setUserid(int userid) {_userid = userid;}
+    }
+
+    public static class CustomerInput2 {
+        public int userid;
+    }
+
+    public static class CustomerWrapper {
+        public CustomerInput2 c;
+    }
+
+    public static class CustomerInput3 extends CustomerInput1 {
+        private int foo;
+    }
+
+    public static class CustomerInput4 extends CustomerInput2 {
+        private int foo;
+    }
+
+    public static class ComplexWhereClause
+    {
+        public JdbcControl.ComplexSqlFragment getWhereClause()
+        {
+            JdbcControl.SQLParameter[] params = new JdbcControl.SQLParameter[1];
+            params[0] = new JdbcControl.SQLParameter("tester4");
+            return new JdbcControl.ComplexSqlFragment("where fname = ?", params);
+        }
+    }
+
+    public static class BlobInfo {
+        private Blob blb;
+
+        public void setBlb(Blob blb) { this.blb = blb; }
+        public Blob getBlb() { return blb; }
+
+    }
+
+    public static class Binary {
+        private byte[] _bytes;
+        private byte[] _varbytes;
+        private byte[] _lvarbytes;
+
+        public void setBin(byte[] bytes) { _bytes = bytes; }
+        public byte[] getBin() { return _bytes; }
+
+        public void setVarbin(byte[] varbytes) { _varbytes = varbytes; }
+        public byte[] getVarbin() { return _varbytes; }
+
+        public void setLvarbin(byte[] lvarbytes) { _lvarbytes = lvarbytes; }
+        public byte[] getLvarbin() { return _lvarbytes; }
+    }
+
+    //
+    // simple query
+    //
+    @SQL(statement="SELECT fname FROM USERS")
+    public ResultSet getAllUsers() throws SQLException;
+
+    //
+    // simple query with param substitution
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE fname={someUser}")
+    public ResultSet getSomeUser(String someUser) throws SQLException;
+
+    //
+    // from a object getMethod
+    //
+    @SQL(statement="SELECT fname FROM USERS WHERE userid={customer.userid}")
+    public String getSomeUser(CustomerInput1 customer) throws SQLException;
+
+    //
+    // from a object getField
+    //
+    @SQL(statement="SELECT fname FROM USERS WHERE userid={customer.userid}")
+    public String getSomeUser(CustomerInput2 customer) throws SQLException;
+
+    //
+    // from a object getField
+    //
+    @SQL(statement="SELECT fname FROM USERS WHERE userid={customer.userid}")
+    public String getSomeUser(CustomerInput3 customer) throws SQLException;
+
+    //
+    // from a object getField
+    //
+    @SQL(statement="SELECT fname FROM USERS WHERE userid={customer.userid}")
+    public String getSomeUser(CustomerInput4 customer) throws SQLException;
+
+    //
+    // from a object getField
+    //
+    @SQL(statement="SELECT fname FROM USERS WHERE userid={customer.userid}")
+    public String getSomeUser(Map customer) throws SQLException;
+
+    //
+    // from a object nested getField
+    //
+    @SQL(statement="SELECT fname FROM USERS WHERE userid={customer.c.userid}")
+    public String getSomeUser(CustomerWrapper customer) throws SQLException;
+
+    //
+    // simple query with param substitution
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE userid={someUserId}")
+    public ResultSet getSomeUser(int someUserId) throws SQLException;
+
+    //
+    // query with sql substitution
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE {sql: where}")
+    public ResultSet getJustOneUser(String where) throws SQLException;
+
+    // query using ComplexSqlFragments in a sql: substitution
+    @SQL(statement="SELECT * FROM USERS {sql: cwc.whereClause}")
+    public ResultSet whereClauseSql(ComplexWhereClause cwc);
+
+    // query using ComplexSqlFragments in a parameter substitution
+    @SQL(statement="SELECT * FROM USERS {cwc.whereClause}")
+    public ResultSet whereClauseSub(ComplexWhereClause cwc);
+
+    //
+    // query returning an array of Object
+    //
+    @SQL(statement="SELECT * FROM USERS")
+    public Customer[] getCustomerArray() throws SQLException;
+
+    //
+    // query returning an array of Object / array size is limited in annotation
+    //
+    @SQL(statement="SELECT * FROM USERS", arrayMaxLength=2)
+    public Customer[] getCustomerArrayLimitedSize() throws SQLException;
+
+    //
+    // query returning an array of Object / array size is limited in annotation
+    //
+    @SQL(statement="SELECT * FROM USERS", arrayMaxLength=2, maxRows=1)
+    public Customer[] getCustomerArrayLimitedSize2() throws SQLException;
+
+    //
+    // query returning an array of Object / array size is limited in annotation
+    //
+    @SQL(statement="SELECT * FROM USERS", arrayMaxLength=2, maxRows=4)
+    public Customer[] getCustomerArrayLimitedSize3() throws SQLException;
+
+    //
+    // query returning an array of Object / array size is limited in annotation by maxRows
+    //
+    @SQL(statement="SELECT * FROM USERS", maxRows=1)
+    public Customer[] getCustomerArrayLimitedSize4() throws SQLException;
+
+    //
+    // query returning an array of Object / array size is limited in annotation by maxRows
+    //
+    @SQL(statement="SELECT * FROM USERS", maxRows=JdbcControl.MAXROWS_ALL, arrayMaxLength=JdbcControl.MAXROWS_ALL)
+    public Customer[] getCustomerArrayLimitedSize5() throws SQLException;
+
+    //
+    // query returning an array of Object / array size is limited in annotation by maxArrayLength
+    //
+    @SQL(statement="SELECT * FROM USERS", arrayMaxLength=JdbcControl.MAXROWS_ALL)
+    public Customer[] getCustomerArrayLimitedSize6() throws SQLException;
+
+    //
+    // query returning a HashMap
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE userid={someUserId}")
+    public HashMap getCustomerHashMap(int someUserId) throws SQLException;
+
+    //
+    // query returning an array of HashMap
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE userid={someUserId}")
+    public HashMap[] getCustomerHashMapArray(int someUserId) throws SQLException;
+
+    //
+    // query returning a Map
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE userid={someUserId}")
+    public Map getCustomerMap(int someUserId) throws SQLException;
+
+    //
+    // query returning an iterator
+    //
+    @SQL(statement="SELECT * FROM USERS", iteratorElementType=Customer.class)
+    public Iterator getCustomerIterator() throws SQLException;
+
+    //
+    // query returning an empty value
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE userid={someUserId}")
+    public int getNoUsers(int someUserId) throws SQLException;
+
+    //
+    // query returning an object
+    //
+    @SQL(statement="SELECT * FROM USERS WHERE userid={someUserId}")
+    public Customer getACustomer(int someUserId) throws SQLException;
+
+    //
+    // query returning a RowSet -- NOTE: uses default row set mapper
+    //
+    @SQL(statement="SELECT * FROM USERS", resultSetMapper=DefaultRowSetResultSetMapper.class)
+    public RowSet getAllUsersINRS() throws SQLException;
+
+    //
+    // query returning an XmlObject
+    //
+    @SQL(statement="SELECT * FROM XBEAN_USERS WHERE stooge_name={someStooge}")
+    public XStoogeRowDocument.XStoogeRow getAUserXmlBean(String someStooge) throws SQLException;
+
+    //
+    // query returning an array of XmlObjects
+    //
+    @SQL(statement="SELECT * FROM XBEAN_USERS")
+    public XStoogeRowDocument.XStoogeRow[] getAllUserXmlBean() throws SQLException;
+
+    //
+    // set a db row with a XmlObject
+    //
+    @SQL(statement="insert into XBEAN_USERS VALUES ({stooge.STOOGENAME}, {stooge.STOOGEPECKINGORDER}, {stooge.STOOGEPANTSIZE})")
+    public void insertAXmlBean(XStoogeRowDocument.XStoogeRow stooge) throws SQLException;
+
+    //
+    // query which invokes a stored procedure
+    //
+    @SQL(statement="{CALL getExpensiveProductSP(?)}")
+    public void getExpensiveProduct(SQLParameter[] results) throws SQLException;
+
+    //
+    // query which invokes a stored procedure
+    //
+    @SQL(statement="{call getExpensiveProductsSP(?)}")
+    public void getExpensiveProducts(SQLParameter[] results) throws SQLException;
+
+    //
+    // query which invokes a stored procedure
+    //
+    @SQL(statement="{call getProductsByColorSP(?,?)}")
+    public void getProductsByColor(SQLParameter[] results) throws SQLException;
+
+    //
+    // creates a stored procedure
+    //
+    @SQL(statement="CREATE PROCEDURE getProductSP(IN color VARCHAR(64), IN sku INT) " +
+                    "PARAMETER STYLE JAVA " +
+                    "READS SQL DATA " +
+                    "LANGUAGE JAVA " +
+                    "EXTERNAL NAME 'org.apache.beehive.controls.system.jdbc.units.utils.StoredProcedures.getProductSP'")
+    public void createStoredProc() throws SQLException;
+
+    //
+    // invokes the stored proc -- with 2 IN params
+    //
+    @SQL(statement="{call getProductSP({inColor},{inSKU})}")
+    public void getProduct(String inColor, int inSKU) throws SQLException;
+
+    //
+    // batch updates
+    //
+    @SQL(statement="INSERT INTO users VALUES ({fname}, {userid})",  batchUpdate=true)
+    public int[] doABatchUpdate(String[] fname, int[] userid);
+
+    //
+    // a basic usage of the getGeneratedKeys annotation member
+    //
+    @SQL(statement="INSERT INTO usergen (person) VALUES ({aValue})", getGeneratedKeys=true)
+    public ResultSet getGenKeys(String aValue);
+
+    //
+    // a basic usage of the getGeneratedKeys and generatedKeyColumnNames members
+    //
+    @SQL(statement="INSERT INTO usergen (person) VALUES ({aValue})", getGeneratedKeys=true, generatedKeyColumnNames = {"user_id"})
+    public ResultSet getGenKeys2(String aValue);
+
+    //
+    // a basic usage of the getGeneratedKeys annotation member with return type mapping
+    //
+    @SQL(statement="INSERT INTO usergen (person) VALUES ({aValue})", getGeneratedKeys=true)
+    public int getGenKeys3(String aValue);
+
+    //
+    // a basic usage of the getGeneratedKeys annotation member with return type mapping
+    //
+    @SQL(statement="INSERT INTO usergen (person) VALUES ({aValue})", getGeneratedKeys=true)
+    public String getGenKeys4(String aValue);
+
+    //
+    // a basic usage of the getGeneratedKeys annotation member with return type mapping
+    //
+    @SQL(statement="INSERT INTO usergen (person) VALUES ({aValue})", getGeneratedKeys=true)
+    public int[] getGenKeys5(String aValue);
+
+    //
+    // a basic usage of the getGeneratedKeys and generatedKeyColumnIndexes annotation members
+    //
+    @SQL(statement="INSERT INTO usergen (person) VALUES ({aValue})", getGeneratedKeys=true, generatedKeyColumnIndexes = {1})
+    public ResultSet getGenKeys6(String aValue);
+
+    //
+    // a basic usage of the scrollableResultSet element
+    //
+    @SQL(statement="SELECT * FROM USERS", scrollableResultSet=ScrollType.SCROLL_INSENSITIVE_UPDATABLE)
+    public ResultSet getScrollableResultSet_IU();
+
+    //
+    // a basic usage of the scrollableResultSet element
+    //
+    @SQL(statement="SELECT * FROM USERS", scrollableResultSet=ScrollType.SCROLL_SENSITIVE)
+    public ResultSet getScrollableResultSet_SR();
+
+    //
+    // a basic usage of the fetchSize/fetchDirection elements
+    //
+    @SQL(statement="SELECT * FROM USERS", fetchDirection=FetchDirection.REVERSE, fetchSize=10)
+    public ResultSet getFetchOptmizedResultSet();
+
+    //
+    // query with non-default holdability specified
+    //
+    @SQL(statement="SELECT * FROM USERS", resultSetHoldabilityOverride=HoldabilityType.HOLD_CURSORS)
+    public ResultSet getResultSetHoldablity();
+
+    //
+    // select a single column of values from the users table,
+    // specifically tests mapping single column result set values to return type
+    //
+    @SQL(statement="SELECT fname FROM users")
+    public String[] getFnameColumn();
+
+    //
+    // /////////////////////////////// methods for JDBC types tests ////////////////////////////////////////
+    //
+
+    //
+    // insert a blob
+    //
+    @SQL(statement="INSERT INTO blob_table VALUES ({id}, {blob})")
+    public int insertABlob(int id, Blob blob);
+
+    //
+    // select a blob
+    //
+    @SQL(statement="SELECT blb FROM blob_table WHERE id={id}")
+    public BlobInfo getABlob(int id);
+
+    //
+    // select a clob
+    //
+    @SQL(statement="SELECT clb FROM clob_table WHERE id={id}")
+    public Clob getAClob(int id);
+
+    //
+    // get a char
+    //
+    @SQL(statement="SELECT c FROM basic_types")
+    public String getChar();
+
+    //
+    // get a char string
+    //
+    @SQL(statement="SELECT ca FROM basic_types")
+    public String getChar2();
+
+    //
+    // varchar test
+    //
+    @SQL(statement="SELECT vc FROM basic_types")
+    public String getVarchar();
+
+    //
+    // long varchar test
+    //
+    @SQL(statement="SELECT lvc FROM basic_types")
+    public String getLongvarchar();
+
+    //
+    // fixed length binary
+    //
+    @SQL(statement="SELECT bin FROM basic_types")
+    public Binary getFixedLengthBinary();
+
+    //
+    // var length binary
+    //
+    @SQL(statement="SELECT varbin FROM basic_types")
+    public Binary getVarLengthBinary();
+
+    //
+    // long binary
+    //
+    @SQL(statement="SELECT lvarbin FROM basic_types")
+    public Binary getLongVarLengthBinary();
+
+    //
+    // small int
+    //
+    @SQL(statement="SELECT sint FROM basic_types")
+    public short getSmallIntValue();
+
+    //
+    // small int
+    //
+    @SQL(statement="SELECT sint FROM basic_types")
+    public Short getSmallIntValue2();
+
+    //
+    // int
+    //
+    @SQL(statement="SELECT i FROM basic_types")
+    public Integer getIntValue2();
+
+    //
+    // int
+    //
+    @SQL(statement="SELECT i FROM basic_types")
+    public int getIntValue();
+
+    //
+    // bigint
+    //
+    @SQL(statement="SELECT bint FROM basic_types")
+    public long getBigIntValue();
+
+    //
+    // bigint
+    //
+    @SQL(statement="SELECT bint FROM basic_types")
+    public Long getBigIntValue2();
+
+    //
+    // real
+    //
+    @SQL(statement="SELECT r FROM basic_types")
+    public float getRealValue();
+
+    //
+    // real
+    //
+    @SQL(statement="SELECT r FROM basic_types")
+    public Float getRealValue2();
+
+    //
+    // double precision
+    //
+    @SQL(statement="SELECT dp FROM basic_types")
+    public double getDoubleValue();
+
+    //
+    // double precision
+    //
+    @SQL(statement="SELECT dp FROM basic_types")
+    public Double getDoubleValue2();
+
+    //
+    // decimal
+    //
+    @SQL(statement="SELECT d FROM basic_types")
+    public BigDecimal getDecimalValue();
+
+    //
+    // numeric
+    //
+    @SQL(statement="SELECT nu FROM basic_types")
+    public BigDecimal getNumericValue();
+
+    //
+    // date
+    //
+    @SQL(statement="SELECT dt FROM basic_types")
+    public java.sql.Date getDateValue();
+
+    //
+    // time
+    //
+    @SQL(statement="SELECT t FROM basic_types")
+    public Time getTimeValue();
+
+    //
+    // timestamp
+    //
+    @SQL(statement="SELECT ts FROM basic_types")
+    public java.sql.Timestamp getTimestampValue();
+
+    //
+    // serialization - int
+    //
+    @SQL(statement="SELECT i FROM basic_types_ser")
+    public int getIntValueSer();
+
+}
+

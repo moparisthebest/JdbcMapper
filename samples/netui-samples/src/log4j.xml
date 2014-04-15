@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="BEEHIVE_FILE_LOG" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="beehive.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="500000KB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{DATE} %-5p %-15c{1} [%x]: %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="BEEHIVE_CONSOLE_LOG" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{DATE} %-5p %-15c{1} [%x]: %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Beehive, including Controls, NetUI, etc -->
+    <category name="org.apache.beehive">
+        <priority value="info"/>
+        <appender-ref ref="BEEHIVE_CONSOLE_LOG"/>
+    </category>
+
+    <!-- NetUI Expression Language: debug logging is _very_ verbose.  Only enable if necessary -->
+    <category name="org.apache.beehive.netui.script">
+        <priority value="error"/>
+        <appender-ref ref="BEEHIVE_CONSOLE_LOG"/>
+    </category>
+
+    <!-- Struts -->
+    <category name="org.apache.struts">
+        <priority value="warn"/>
+        <appender-ref ref="BEEHIVE_CONSOLE_LOG"/>
+    </category>
+
+    <!-- Jakarta Commons -->
+    <category name="org.apache.commons">
+        <priority value="warn"/>
+        <appender-ref ref="BEEHIVE_CONSOLE_LOG"/>
+    </category>
+
+</log4j:configuration>

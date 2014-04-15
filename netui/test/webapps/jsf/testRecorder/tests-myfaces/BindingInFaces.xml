@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>BindingInFaces</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>13 Feb 2005, 01:24:44.663 PM MST</ses:startDate>
+   <ses:description>Test of binding to pageInput, pageFlow, sharedFlow in a JSF page.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/bindingInFaces/BindingInFacesController.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        
+
+
+
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/bindingInFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{pageInput.somePageInput}: a page input
+                <br/>
+                &#35;{pageFlow.someProperty}: <input id="_id0:_id2" name="_id0:_id2" type="text" value="page flow property"/>
+                <br/>
+                &#35;{sharedFlow.sf.someProperty}: <input id="_id0:_id3" name="_id0:_id3" type="text" value="shared flow property"/>
+                <br/>
+                &#35;{backing.someProperty}: <input id="_id0:_id4" name="_id0:_id4" type="text" value="backing file property"/>
+                <br/>
+                <br/>
+                <input id="_id0:_id5" name="_id0:_id5" type="submit" value="postback" onclick="clear__5Fid0();"/> This ensures that the page inputs don't get lost over postback.
+                <br/>
+                <input id="_id0:_id6" name="_id0:_id6" type="submit" value="get page input from backing" onclick="clear__5Fid0();"/>
+                    <span style="color:red"/><span id="_id0:outputField"></span></span>
+                    This ensures that the backing bean has access to page inputs.
+                    <br/>
+                <input id="_id0:_id7" name="_id0:_id7" type="submit" value="submit" onclick="clear__5Fid0();"/> Send everything to a page flow action.
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/bindingInFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_id2</ses:name>
+                  <ses:value>page flow property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id3</ses:name>
+                  <ses:value>shared flow property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id4</ses:name>
+                  <ses:value>backing file property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id5</ses:name>
+                  <ses:value>postback</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>154</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/bindingInFaces/BindingInFacesController.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        
+
+
+
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/bindingInFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{pageInput.somePageInput}: a page input
+                <br/>
+                &#35;{pageFlow.someProperty}: <input id="_id0:_id2" name="_id0:_id2" type="text" value="page flow property"/>
+                <br/>
+                &#35;{sharedFlow.sf.someProperty}: <input id="_id0:_id3" name="_id0:_id3" type="text" value="shared flow property"/>
+                <br/>
+                &#35;{backing.someProperty}: <input id="_id0:_id4" name="_id0:_id4" type="text" value="backing file property"/>
+                <br/>
+                <br/>
+                <input id="_id0:_id5" name="_id0:_id5" type="submit" value="postback" onclick="clear__5Fid0();"/> This ensures that the page inputs don't get lost over postback.
+                <br/>
+                <input id="_id0:_id6" name="_id0:_id6" type="submit" value="get page input from backing" onclick="clear__5Fid0();"/>
+                    <span style="color:red"/><span id="_id0:outputField"></span></span>
+                    This ensures that the backing bean has access to page inputs.
+                    <br/>
+                <input id="_id0:_id7" name="_id0:_id7" type="submit" value="submit" onclick="clear__5Fid0();"/> Send everything to a page flow action.
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/bindingInFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_id2</ses:name>
+                  <ses:value>page flow property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id3</ses:name>
+                  <ses:value>shared flow property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id4</ses:name>
+                  <ses:value>backing file property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id6</ses:name>
+                  <ses:value>get page input from backing</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>173</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/bindingInFaces/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        
+
+
+
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/bindingInFaces/page1.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{pageInput.somePageInput}: a page input
+                <br/>
+                &#35;{pageFlow.someProperty}: <input id="_id0:_id2" name="_id0:_id2" type="text" value="page flow property"/>
+                <br/>
+                &#35;{sharedFlow.sf.someProperty}: <input id="_id0:_id3" name="_id0:_id3" type="text" value="shared flow property"/>
+                <br/>
+                &#35;{backing.someProperty}: <input id="_id0:_id4" name="_id0:_id4" type="text" value="backing file property"/>
+                <br/>
+                <br/>
+                <input id="_id0:_id5" name="_id0:_id5" type="submit" value="postback" onclick="clear__5Fid0();"/> This ensures that the page inputs don't get lost over postback.
+                <br/>
+                <input id="_id0:_id6" name="_id0:_id6" type="submit" value="get page input from backing" onclick="clear__5Fid0();"/>
+                    <span style="color:red"/><span id="_id0:outputField">a page input</span></span>
+                    This ensures that the backing bean has access to page inputs.
+                    <br/>
+                <input id="_id0:_id7" name="_id0:_id7" type="submit" value="submit" onclick="clear__5Fid0();"/> Send everything to a page flow action.
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/jsfWeb/bindingInFaces/page1.faces</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>_id0:_id2</ses:name>
+                  <ses:value>changed page flow property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id3</ses:name>
+                  <ses:value>changed shared flow property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id4</ses:name>
+                  <ses:value>backing file property</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_id7</ses:name>
+                  <ses:value>submit</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0:_link_hidden_</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>_id0_SUBMIT</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>168</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=1776E558464A706481F9E143F58C6BFC</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/jsfWeb/bindingInFaces/page1.faces</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/bindingInFaces/results.jsp">
+    </head>
+    <body>
+        &#36;{pageFlow.someProperty}: <span>changed page flow property</span>
+        <br/>
+        &#36;{sharedFlow.sf.someProperty}: <span>changed shared flow property</span>
+        <br/>
+        <a href="/jsfWeb/bindingInFaces/begin.do">start over</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>13 Feb 2005, 01:27:38.854 PM MST</ses:endDate>
+   <ses:testCount>4</ses:testCount>
+</ses:recorderSession>

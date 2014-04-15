@@ -1,0 +1,1 @@
+The web service control does not support XMLBean types for rpc/encoded services.

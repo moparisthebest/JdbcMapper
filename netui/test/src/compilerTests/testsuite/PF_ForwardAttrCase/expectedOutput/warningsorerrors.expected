@@ -1,0 +1,28 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:20: cannot find symbol
+symbol  : method Name()
+location: @interface org.apache.beehive.netui.pageflow.annotations.Jpf.Forward
+            @Jpf.Forward(Name = "pg1", path = "Pg1.jsp")
+                         ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:30: cannot find symbol
+symbol  : variable TRUE
+location: class PF_ForwardAttrCase.Controller
+            @Jpf.Forward(name = "pg1", redirect = TRUE)
+                                                  ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:40: cannot find symbol
+symbol  : method Redirect()
+location: @interface org.apache.beehive.netui.pageflow.annotations.Jpf.Forward
+            @Jpf.Forward(name = "pg1", Redirect = true)
+                                       ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:23: Attribute "name" must be present.
+    protected Forward begin()
+                      ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:33: At least one of attributes "path", "tilesDefinition", "returnAction", "navigateTo", or "action" must be present.
+    protected Forward page1()
+                      ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:33: Attribute "redirect" may only be present when one of attributes "path", "navigateTo", or "action" is present.
+    protected Forward page1()
+                      ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardAttrCase\Controller.java:43: At least one of attributes "path", "tilesDefinition", "returnAction", "navigateTo", or "action" must be present.
+    protected Forward page2()
+                      ^
+4 errors

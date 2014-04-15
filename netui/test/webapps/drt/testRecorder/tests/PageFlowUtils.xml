@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>PageFlowUtils</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>26 Jan 2005, 10:54:02.040 PM MST</ses:startDate>
+   <ses:description>Test of static methods in PageFlowUtils.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/pageFlowUtils/pageFlowUtilsController.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            PageFlowUtils
+        </title>
+    </head>
+    <body>
+        <h3>PageFlowUtils</h3>
+        
+        
+        
+        
+        
+        <code>getCurrentPageFlow( request )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>getModulePath( request )</code>:
+            /miniTests/pageFlowUtils<br>
+
+        <code>getModulePath( request, "/coreWeb/foo/bar/baz.jpf" )</code>:
+            /foo/bar<br>
+
+        <code>getRelativeURI( request, curJPF )</code>:
+            /index.jsp<br>
+            
+        <code>getRelativeURI( request, "/coreWeb/foo/bar/baz.jsp", curJPF )</code>:
+            null<br>
+            
+        <code>getRelativeURI( request, "/coreWeb/miniTests/pageFlowUtils/foo.jsp", curJPF )</code>:
+            /foo.jsp<br>
+            
+        <code>getModulePathForRelativeURI( null )</code>:
+            null<br>
+
+        <code>getBeginActionURI( "/coreWeb/miniTests/pageFlowUtils/pageFlowUtilsController.jpf" )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do<br>
+
+        <code>ensureCurrentPageFlow( request, response )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>ensureCurrentPageFlow( request, response, servletContext )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>getCurrentActionResolver( request )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>ensureGlobalApp( request, response )</code>:
+            global.Global<br>
+
+        <code>ensureGlobalApp( request, response, cxt )</code>:
+            global.Global<br>
+
+        <code>getGlobalApp( request )</code>:
+            global.Global<br>
+
+        <code>getSharedFlows( request ).get( "tempSharedFlow" )</code>:
+            miniTests.pageFlowUtils.TempSharedFlow<br>
+
+        <code>getSharedFlow( "webappRoot.SharedFlow", request )</code>:
+            miniTests.pageFlowUtils.TempSharedFlow<br>
+
+        <code>removeSharedFlow( "webappRoot.SharedFlow", request )</code>:
+            <br>
+
+        <code>getSharedFlow( "webappRoot.SharedFlow", request )</code>:
+            null<br>
+
+        <code>getFormBeanName( new TestForm(), request )</code>:
+            testForm<br>
+
+        <code>getFormBeanName( TestForm.class, request )</code>:
+            testForm<br>
+
+        <code>getFormBeanName( ActionForm.class, request )</code>:
+            actionForm<br>
+
+        <code>getJpfClassName( "/foo/bar/barController.jpf" )</code>:
+            foo.bar.barController<br>
+
+        <code>getPageFlowClassName( "/foo/bar/barController.jpf" )</code>:
+            foo.bar.barController<br>
+
+        <code>getPageFlowURI( "foo.bar.barController" )</code>:
+            /foo/bar/barController.jpf<br>
+
+        <code>getModuleConfPath( "/foo/bar" )</code>:
+            /_pageflow/struts-config-foo-bar.xml<br>
+
+        <code>getModuleConfPath( "/" )</code>:
+            /_pageflow/struts-config.xml<br>
+
+        <code>getModuleConfPath( "" )</code>:
+            /_pageflow/struts-config.xml<br>
+
+        <code>getActionURI( request )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do<br>
+
+        <code>getGlobalAppConfig( servletContext )</code>:
+            /-global<br>
+
+        <code>ensureModuleConfig( "/miniTests/pageFlowUtils/another", request, servletContext ).getPrefix()</code>:
+            /miniTests/pageFlowUtils/another<br>
+
+        <code>getModuleConfig( "/miniTests/pageFlowUtils/another", servletContext ).getPrefix()</code>:
+            /miniTests/pageFlowUtils/another<br>
+
+        <code>isAbsoluteURI( "foo" )</code>:
+            false<br>
+
+        <code>isAbsoluteURI( "/foo" )</code>:
+            false<br>
+
+        <code>isAbsoluteURI( "http://www.foo.com" )</code>:
+            true<br>
+
+        <code>getFileExtension( "foo.txt" )</code>:
+            txt<br>
+
+        <code>getFileExtension( "foo" )</code>:
+            <br>
+
+        <code>addPageInput( "foo", "Foo!", request );</code>
+            <br>
+
+        <code>getPageInput( "foo", request )</code>:
+            Foo!<br>
+
+        <code>addActionOutput( "bar", "Bar!", request );</code>:
+            <br>
+
+        <code>getActionOutput( "bar", request )</code>:
+            Bar!<br>
+
+        <code>getActionURI( cxt, request, response, "begin" )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do<br>
+
+        <code>getActionURI( cxt, request, response, "/relative/to/webapp/root" )</code>:
+            /coreWeb/relative/to/webapp/root.do<br>
+
+        
+        <code>PageFlowUtils.getRewrittenActionURI( cxt, request, response, "begin", params, "frag", true )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do?foo=bar#frag<br>
+
+        <code>PageFlowUtils.getRewrittenResourceURI( cxt, request, response, "index.jsp", params, "frag", true )</code>:
+            /coreWeb/miniTests/pageFlowUtils/index.jsp?foo=bar#frag<br>
+
+        <br>
+        <br>
+
+        <a href="/coreWeb/miniTests/pageFlowUtils/goNested.do">go to nested/nestedController.jpf</a>
+        <br>
+        <a href="/coreWeb/miniTests/pageFlowUtils/validation.do">tests of addValidationError()</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/pageFlowUtils/goNested.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/pageFlowUtils/pageFlowUtilsController.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!--Generated by WebLogic Workshop-->
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Nested (PageFlowUtils Tests)
+        </title>
+    </head>
+    <body>
+        <h3>Nested (PageFlowUtils Tests)</h3>
+        
+        
+        <code>getPageFlowStack( request ).size()</code>:
+            1<br>
+
+        <code>getNestingPageFlow( request )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <br>
+        <br>
+        <a href="/coreWeb/miniTests/pageFlowUtils/nested/done.do">Exit nested</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/pageFlowUtils/nested/done.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/pageFlowUtils/goNested.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            PageFlowUtils
+        </title>
+    </head>
+    <body>
+        <h3>PageFlowUtils</h3>
+        
+        
+        
+        
+        
+        <code>getCurrentPageFlow( request )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>getModulePath( request )</code>:
+            /miniTests/pageFlowUtils<br>
+
+        <code>getModulePath( request, "/coreWeb/foo/bar/baz.jpf" )</code>:
+            /foo/bar<br>
+
+        <code>getRelativeURI( request, curJPF )</code>:
+            /index.jsp<br>
+            
+        <code>getRelativeURI( request, "/coreWeb/foo/bar/baz.jsp", curJPF )</code>:
+            null<br>
+            
+        <code>getRelativeURI( request, "/coreWeb/miniTests/pageFlowUtils/foo.jsp", curJPF )</code>:
+            /foo.jsp<br>
+            
+        <code>getModulePathForRelativeURI( null )</code>:
+            null<br>
+
+        <code>getBeginActionURI( "/coreWeb/miniTests/pageFlowUtils/pageFlowUtilsController.jpf" )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do<br>
+
+        <code>ensureCurrentPageFlow( request, response )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>ensureCurrentPageFlow( request, response, servletContext )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>getCurrentActionResolver( request )</code>:
+            miniTests.pageFlowUtils.pageFlowUtilsController<br>
+
+        <code>ensureGlobalApp( request, response )</code>:
+            global.Global<br>
+
+        <code>ensureGlobalApp( request, response, cxt )</code>:
+            global.Global<br>
+
+        <code>getGlobalApp( request )</code>:
+            global.Global<br>
+
+        <code>getSharedFlows( request ).get( "tempSharedFlow" )</code>:
+            miniTests.pageFlowUtils.TempSharedFlow<br>
+
+        <code>getSharedFlow( "webappRoot.SharedFlow", request )</code>:
+            miniTests.pageFlowUtils.TempSharedFlow<br>
+
+        <code>removeSharedFlow( "webappRoot.SharedFlow", request )</code>:
+            <br>
+
+        <code>getSharedFlow( "webappRoot.SharedFlow", request )</code>:
+            null<br>
+
+        <code>getFormBeanName( new TestForm(), request )</code>:
+            testForm<br>
+
+        <code>getFormBeanName( TestForm.class, request )</code>:
+            testForm<br>
+
+        <code>getFormBeanName( ActionForm.class, request )</code>:
+            actionForm<br>
+
+        <code>getJpfClassName( "/foo/bar/barController.jpf" )</code>:
+            foo.bar.barController<br>
+
+        <code>getPageFlowClassName( "/foo/bar/barController.jpf" )</code>:
+            foo.bar.barController<br>
+
+        <code>getPageFlowURI( "foo.bar.barController" )</code>:
+            /foo/bar/barController.jpf<br>
+
+        <code>getModuleConfPath( "/foo/bar" )</code>:
+            /_pageflow/struts-config-foo-bar.xml<br>
+
+        <code>getModuleConfPath( "/" )</code>:
+            /_pageflow/struts-config.xml<br>
+
+        <code>getModuleConfPath( "" )</code>:
+            /_pageflow/struts-config.xml<br>
+
+        <code>getActionURI( request )</code>:
+            /coreWeb/miniTests/pageFlowUtils/nestedDone.do<br>
+
+        <code>getGlobalAppConfig( servletContext )</code>:
+            /-global<br>
+
+        <code>ensureModuleConfig( "/miniTests/pageFlowUtils/another", request, servletContext ).getPrefix()</code>:
+            /miniTests/pageFlowUtils/another<br>
+
+        <code>getModuleConfig( "/miniTests/pageFlowUtils/another", servletContext ).getPrefix()</code>:
+            /miniTests/pageFlowUtils/another<br>
+
+        <code>isAbsoluteURI( "foo" )</code>:
+            false<br>
+
+        <code>isAbsoluteURI( "/foo" )</code>:
+            false<br>
+
+        <code>isAbsoluteURI( "http://www.foo.com" )</code>:
+            true<br>
+
+        <code>getFileExtension( "foo.txt" )</code>:
+            txt<br>
+
+        <code>getFileExtension( "foo" )</code>:
+            <br>
+
+        <code>addPageInput( "foo", "Foo!", request );</code>
+            <br>
+
+        <code>getPageInput( "foo", request )</code>:
+            Foo!<br>
+
+        <code>addActionOutput( "bar", "Bar!", request );</code>:
+            <br>
+
+        <code>getActionOutput( "bar", request )</code>:
+            Bar!<br>
+
+        <code>getActionURI( cxt, request, response, "begin" )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do<br>
+
+        <code>getActionURI( cxt, request, response, "/relative/to/webapp/root" )</code>:
+            /coreWeb/relative/to/webapp/root.do<br>
+
+        
+        <code>PageFlowUtils.getRewrittenActionURI( cxt, request, response, "begin", params, "frag", true )</code>:
+            /coreWeb/miniTests/pageFlowUtils/begin.do?foo=bar#frag<br>
+
+        <code>PageFlowUtils.getRewrittenResourceURI( cxt, request, response, "index.jsp", params, "frag", true )</code>:
+            /coreWeb/miniTests/pageFlowUtils/index.jsp?foo=bar#frag<br>
+
+        <br>
+        <br>
+
+        <a href="/coreWeb/miniTests/pageFlowUtils/goNested.do">go to nested/nestedController.jpf</a>
+        <br>
+        <a href="/coreWeb/miniTests/pageFlowUtils/validation.do">tests of addValidationError()</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/pageFlowUtils/validation.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=10BDCB2A3CF45681FCE6B36058375F36</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/pageFlowUtils/nested/done.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            PageFlowUtils - validation errors
+        </title>
+    </head>
+    <body>
+        <h3>PageFlowUtils - validation errors</h3>
+        
+        
+
+
+        <code>&lt;netui:error&gt</code>:
+        <blockquote>
+            <font color="red">This message has no arguments.
+</font>
+            <br>
+            <font color="red">This message has a single argument: <b>arg1</b>.
+</font>
+            <br>
+            <font color="red">This message has three arguments: <b>arg1</b>, <b>arg2</b>, and <b>arg3</b>.
+</font>
+            <br>
+            <font color="red">This message has three arguments: <b>arg1</b>, <b>arg2</b>, and <b>arg3</b>.
+</font>
+            <br>
+            <font color="red">The page flow is /miniTests/pageFlowUtils/pageFlowUtilsController.jpf.  Some args are: arg1, arg2, arg3.
+</font>
+            <br>
+        </blockquote>
+
+        <code>&lt;netui:errors&gt</code>:
+        <blockquote>
+            <font color="red"><ul>
+<li>This message has no arguments.
+</li><li>This message has a single argument: <b>arg1</b>.
+</li><li>This message has three arguments: <b>arg1</b>, <b>arg2</b>, and <b>arg3</b>.
+</li><li>This message has three arguments: <b>arg1</b>, <b>arg2</b>, and <b>arg3</b>.
+</li><li>The page flow is /miniTests/pageFlowUtils/pageFlowUtilsController.jpf.  Some args are: arg1, arg2, arg3.
+</li></ul></font>
+
+        </blockquote>
+        
+                       
+        <br>
+        <br>
+        <a href="/coreWeb/miniTests/pageFlowUtils/begin.do">go back</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>26 Jan 2005, 10:55:00.273 PM MST</ses:endDate>
+   <ses:testCount>4</ses:testCount>
+</ses:recorderSession>

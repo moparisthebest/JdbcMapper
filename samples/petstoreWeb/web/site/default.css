@@ -1,0 +1,128 @@
+body {
+background-color: #ffffff;
+font-family: Arial, Verdana;
+font-size: 14px;
+font-style: normal;
+font-weight: normal;
+margin: 0px;
+}
+
+A:link, A:visited, A:active {
+font-size: 14px;
+color: blue;
+text-decoration: none;
+font-family: Arial, Verdana; 
+}
+
+A:hover {
+color: red;
+text-decoration: underline;
+}
+
+A.boldanchor:link, A.boldanchor:visited, A.boldanchor:active  {
+font-size: 18px;
+color: black;
+font-weight: bold;
+}
+
+A.toolbar:link, A.toolbar:visited, A.toolbar:active  {
+font-size: 12px;
+color: black;
+border: solid #f1f1f1 4px;
+}
+
+A.toolbar:hover {
+background-color: #a5a5a5;
+text-decoration: none;
+border: solid #a5a5a5 4px;
+}
+
+table.tableborder { 
+margin-top: 10px;
+}
+
+tr.rowltgrey td { 
+padding: 4px;
+background-color: #e5e5e5;
+border-bottom: solid #cccccc 1px;
+border-right: solid #cccccc 1px;
+text-align: center;
+}
+
+tr.rowltgrey td a { 
+font-weight: bold;
+}
+
+tr.rowgrey td {
+background-color: #cccccc;
+font-weight: bold;
+text-align: center;
+padding: 4px;
+border-bottom: solid #4c4c4c 1px;
+}
+
+td.cellgrey {
+padding: 4px;
+background-color: #dddddd;
+font-size: 14px;
+text-align: right;
+border-bottom: solid #bbbbbb 1px;
+width: 175px;
+}
+
+td.cellltgrey { 
+padding: 2px;
+background-color: #eeeeee;
+border-bottom: solid #bbbbbb 1px;
+}
+
+a.navigation {
+font-weight: bold;
+}
+
+span.boldlabel {
+font-size: 22px;
+font-weight: bold;
+}
+
+span.smalllabel {
+font-size: small;
+font-weight: bold;
+}
+
+span.meditaliclabel {
+font-size: 16px;
+font-style: italic;
+}
+
+span.boldlabelgreen {
+font-size: large;
+font-weight: bold;
+color: #00ff00;
+}
+
+span.error {
+font-color: #ff0000;
+font-size: 2;
+font-style: italic;
+}
+
+#leftnav {
+margin-left: 10px;
+}
+
+#footer {
+width: 100%;
+clear: both;
+}
+
+table.toolbar {
+border-top: solid #999999 1px;
+border-bottom: solid #999999 1px;
+background-color: #f1f1f1;
+}
+
+td.separator {
+color: #999999;
+font-size: 8px;
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>B40862</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>09 Jul 2004, 01:58:51.546 PM MDT</ses:startDate>
+   <ses:description>ekoneil</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b40862/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies/>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-27b9ba8f:fda56b30ee:-7ff8</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; Feedreader; .NET CLR 1.1.4322)</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;table cellpadding="0" width="100%" cellspacing="0">
+    &lt;tr>
+            &lt;td height="215" valign="top" class="Overline">
+                  &lt;table width="100%" border="0" cellpadding="2" cellspacing="0" class="portaltext">
+                    &lt;!--DWLayoutTable-->
+                    &lt;tr>
+                      &lt;td valign="top"> &lt;p>&lt;strong>Reports &amp;amp; Research&lt;/strong>
+                          &lt;span class="hightlite">(&lt;em>Web&lt;/em> Notes Login Required)&lt;/span>
+                          &lt;br />
+
+                            
+
+                            
+                                    &lt;p>
+                                        &lt;a href="http://nyc-db-07.jpmorganchase.com/IBGCMWEB.NSF/GCMRCDSSpreadWidenersNACurrent?ReadForm">&lt;span>CDS Spread Wideners Report - NA&lt;/span>&lt;/a>
+                                    &amp;nbsp;&amp;nbsp;
+                                        &lt;a href="/coreWeb/bugs/b40862/editCompanies.do?reportNo=0">edit&lt;/a>
+                                    &lt;p>
+                                    &lt;!-- If there is a list of companies, render them here -->
+                                    
+                                    
+                                    
+
+                                    
+                                    &lt;table border=1>
+                                        &lt;tr>
+                                    
+                                        &lt;td>&lt;font color="red">RHAT&lt;/font>&lt;/td>
+                                    
+                                        &lt;td>&lt;font color="blue">SUNW&lt;/font>&lt;/td>
+                                    
+                                        &lt;/tr>
+                                    &lt;/table>
+                                    
+                                
+                                    &lt;p>
+                                        &lt;a href="http://nyc-db-07.jpmorganchase.com/IBGCMWEB.NSF/GCMRCDSSpreadWidenersEMEACurrent?ReadForm">&lt;span>CDS Spread Wideners Report - EMEA&lt;/span>&lt;/a>
+                                    &amp;nbsp;&amp;nbsp;
+                                        &lt;a href="/coreWeb/bugs/b40862/editCompanies.do?reportNo=1">edit&lt;/a>
+                                    &lt;p>
+                                    &lt;!-- If there is a list of companies, render them here -->
+                                    
+                                    
+                                    
+
+                                    
+                                
+                                    &lt;p>
+                                        &lt;a href="http://nyc-db-07.jpmorganchase.com/IBGCMWEB.NSF/GCMRCDSSpreadWidenersEMEACurrent?ReadForm">&lt;span>CDS Spread Wideners Report - BARFOO&lt;/span>&lt;/a>
+                                    &amp;nbsp;&amp;nbsp;
+                                        &lt;a href="/coreWeb/bugs/b40862/editCompanies.do?reportNo=2">edit&lt;/a>
+                                    &lt;p>
+                                    &lt;!-- If there is a list of companies, render them here -->
+                                    
+                                    
+                                    
+
+                                    
+                                
+                                    &lt;p>
+                                        &lt;a href="http://nyc-db-07.jpmorganchase.com/IBGCMWEB.NSF/GCMRCDSSpreadWidenersEMEACurrent?ReadForm">&lt;span>CDS Spread Wideners Report - FOOBAR&lt;/span>&lt;/a>
+                                    &amp;nbsp;&amp;nbsp;
+                                        &lt;a href="/coreWeb/bugs/b40862/editCompanies.do?reportNo=3">edit&lt;/a>
+                                    &lt;p>
+                                    &lt;!-- If there is a list of companies, render them here -->
+                                    
+                                    
+                                    
+
+                                    
+                                
+
+                        &lt;/td>
+                    &lt;/tr>
+                  &lt;/table>
+                &lt;/td>
+        &lt;/tr>
+
+&lt;/table></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>09 Jul 2004, 01:58:53.031 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

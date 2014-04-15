@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>B15574</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Feb 2005, 06:15:57.696 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b15574/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3B1389F34BE03E93E7116508D9E28135</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=3B1389F34BE03E93E7116508D9E28135; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7dba</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Update through a repeater</title>
+</head>
+<body>
+<h4>Update Through A Repeater</h4>
+<form action="/coreWeb/bugs/b15574/postback.do" method="post">
+<b>Bound to the page flow</b><br />
+
+  <input type="text" name="{pageFlow.info[0]}" value="1"><br />
+
+  <input type="text" name="{pageFlow.info[1]}" value="2"><br />
+
+  <input type="text" name="{pageFlow.info[2]}" value="3"><br />
+
+  <input type="text" name="{pageFlow.info[3]}" value="4"><br />
+
+<br />
+<b>Bound to the form</b><br />
+
+  <input type="text" name="{pageFlow.info[0]}" value="1"><br />
+
+  <input type="text" name="{pageFlow.info[1]}" value="2"><br />
+
+  <input type="text" name="{pageFlow.info[2]}" value="3"><br />
+
+  <input type="text" name="{pageFlow.info[3]}" value="4"><br />
+
+<br />
+<input type="submit" value="Submit">
+</form>
+<br />
+<b>Results:</b><br />
+
+  <span>1</span><br />
+
+  <span>2</span><br />
+
+  <span>3</span><br />
+
+  <span>4</span><br />
+
+<br />
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/bugs/b15574/postback.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[0]}</ses:name>
+                  <ses:value>1x</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[0]}</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[1]}</ses:name>
+                  <ses:value>2x</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[1]}</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[2]}</ses:name>
+                  <ses:value>3x</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[2]}</ses:name>
+                  <ses:value>3</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[3]}</ses:name>
+                  <ses:value>4x</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{pageFlow.info[3]}</ses:name>
+                  <ses:value>4</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>3B1389F34BE03E93E7116508D9E28135</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>235</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=3B1389F34BE03E93E7116508D9E28135; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7dba</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Update through a repeater</title>
+</head>
+<body>
+<h4>Update Through A Repeater</h4>
+<form action="/coreWeb/bugs/b15574/postback.do" method="post">
+<b>Bound to the page flow</b><br />
+
+  <input type="text" name="{pageFlow.info[0]}" value="1"><br />
+
+  <input type="text" name="{pageFlow.info[1]}" value="2"><br />
+
+  <input type="text" name="{pageFlow.info[2]}" value="3"><br />
+
+  <input type="text" name="{pageFlow.info[3]}" value="4"><br />
+
+<br />
+<b>Bound to the form</b><br />
+
+  <input type="text" name="{pageFlow.info[0]}" value="1"><br />
+
+  <input type="text" name="{pageFlow.info[1]}" value="2"><br />
+
+  <input type="text" name="{pageFlow.info[2]}" value="3"><br />
+
+  <input type="text" name="{pageFlow.info[3]}" value="4"><br />
+
+<br />
+<input type="submit" value="Submit">
+</form>
+<br />
+<b>Results:</b><br />
+
+  <span>1</span><br />
+
+  <span>2</span><br />
+
+  <span>3</span><br />
+
+  <span>4</span><br />
+
+<br />
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 06:15:57.776 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>2</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>2</ses:failedCount>
+</ses:recorderSession>

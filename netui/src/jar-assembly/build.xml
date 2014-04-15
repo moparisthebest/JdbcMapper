@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/JARAssembly" default="build" basedir=".">
+
+    <import file="../../netui-imports.xml"/>
+
+    <property name="module.name" value="jar-assembly"/>
+    <property name="module.dir" location="${src.dir}/${module.name}"/>
+
+    <target name="build">
+        <jar jarfile="${jars.dir}/beehive-netui-tags.jar">
+            <metainf dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </metainf>
+            <metainf dir="${jars.dir}">
+                <include name="${netui-tags-html.tld.name}"/>
+                <include name="${netui-tags-databinding.tld.name}"/>
+                <include name="${netui-tags-template.tld.name}"/>
+            </metainf>
+            <fileset dir="${classes.dir}/tags-html"/>
+            <fileset dir="${classes.dir}/tags-databinding"/>
+            <fileset dir="${classes.dir}/tags-template"/>
+            <manifest>
+                <attribute name="Extension-Name" value="Beehive NetUI HTML Tag Library"/>
+                <attribute name="Specification-Title" value="Beehive NetUI HTML Tag Library"/>
+                <attribute name="Specification-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Specification-Version" value="${beehive.version}"/>
+                <attribute name="Implementation-Title" value="Beehive NetUI HTML Tag Library"/>
+                <attribute name="Implementation-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Implementation-Version" value="${beehive.version}"/>
+                <attribute name="Beehive-Version" value="${beehive.version}"/>
+            </manifest>
+        </jar>
+        <jar jarfile="${jars.dir}/beehive-netui-core.jar">
+            <metainf dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </metainf>
+            <fileset dir="${classes.dir}/pageflow"/>
+            <fileset dir="${classes.dir}/core"/>
+            <fileset dir="${classes.dir}/scoping"/>
+            <fileset dir="${classes.dir}/util"/>
+            <manifest>
+                <attribute name="Extension-Name" value="Beehive NetUI Framework Library"/>
+                <attribute name="Specification-Title" value="Beehive NetUI Framework Library"/>
+                <attribute name="Specification-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Specification-Version" value="${beehive.version}"/>
+                <attribute name="Implementation-Title" value="Beehive NetUI Framework Library"/>
+                <attribute name="Implementation-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Implementation-Version" value="${beehive.version}"/>
+                <attribute name="Beehive-Version" value="${beehive.version}"/>
+                <attribute name="PageFlow-Runtime-Version" value="${pageflow.version.runtime}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${jars.dir}/beehive-netui-core.jar"/>
+        <delete dir="${jars.dir}/beehive-netui-tags.jar"/>
+    </target>
+
+</project>

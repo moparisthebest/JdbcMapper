@@ -1,0 +1,211 @@
+##
+## The Velocity code generation template for the ClientInitializer class generated for
+## a control client class (a class that uses controls declaratively).
+##
+## Licensed to the Apache Software Foundation (ASF) under one or more
+## contributor license agreements.  See the NOTICE file distributed with
+## this work for additional information regarding copyright ownership.
+## The ASF licenses this file to You under the Apache License, Version 2.0
+## (the "License"); you may not use this file except in compliance with
+## the License.  You may obtain a copy of the License at
+## 
+##     http://www.apache.org/licenses/LICENSE-2.0
+## 
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+## $Header:$
+##
+## The following context variables are used by this template:
+##      $client - a ControlClient instance
+##      $init - a ClientInitializer instance that defines the attributes of the intializer
+##
+## The actual class template apears at the end of this file, and is preceded by a number of
+## supporting macros that define elements of the template.
+##
+## SUPPORTING MACROS
+##
+## This macro defines any static final Field values needed for field initialization
+##
+#macro (declareReflectFields)
+    #foreach ($field in $init.reflectFields)
+        static final Field $field.reflectField;
+    #end
+#end
+##
+## This macro initializes the value of any static final Field values for field initialization
+##
+#macro (initReflectFields)
+    try
+    {
+    #foreach ($field in $init.reflectFields)
+        $field.reflectField = ${client.className}.class.getDeclaredField("$field.name");
+        ${field.reflectField}.setAccessible(true);
+    #end
+    }
+    catch (NoSuchFieldException __bc_nsfe)
+    {
+        throw new ExceptionInInitializerError(__bc_nsfe);
+    }
+#end
+##
+## This macro declares a new event adaptor class that maps events from an EventSet to
+## a set of implemented handlers on a control client
+##
+#macro (declareEventAdaptor $adaptor)
+    #set ($eventSet = $adaptor.eventSet)
+    #set ($binding = $adaptor.eventField.typeBindingMap)
+    public static class $adaptor.className 
+              implements ${eventSet.className}${adaptor.eventSetBinding}, 
+                         EventAdaptor, java.io.Serializable
+    {
+        private static final long serialVersionUID = 1L;
+
+        $client.className __bc_client;
+
+        public ${adaptor.className}($client.className client) { __bc_client = client; }
+
+        public Object getClient() { return __bc_client; }
+
+        #foreach ($event in $eventSet.events)
+            public ${event.getReturnType($binding)} ${event.name}(${event.getArgDecl($binding)}) $event.throwsClause
+            {
+            #if ($adaptor.hasHandler($event))
+                #if ($event.returnType != "void") return #end __bc_client.${adaptor.getHandler($event).name}(${event.argList});
+            #elseif ($event.returnType != "void")
+                return $event.getDefaultReturnValue($binding);
+            #end
+            }
+        #end
+
+        #foreach ($superEvent in $eventSet.superEventSet.events)
+            public ${superEvent.getReturnType($binding)} ${superEvent.name}(${superEvent.getArgDecl($binding)}) $superEvent.throwsClause
+            {
+            #if ($adaptor.hasHandler($superEvent))
+                #if ($superEvent.returnType != "void") return #end __bc_client.${adaptor.getHandler($superEvent).name}(${superEvent.argList});
+            #elseif ($superEvent.returnType != "void")
+                return $superEvent.getDefaultReturnValue($binding);
+            #end
+            }
+        #end
+    }
+
+#end
+##
+## This macro declares the generated classes that act as event adaptors between an event
+## source (control in this case) and client class event handlers.
+##
+#macro (declareEventAdaptors)
+    #foreach ($control in $client.controls)
+        #foreach ($adaptor in $control.eventAdaptors)
+            #declareEventAdaptor($adaptor)
+        #end
+    #end
+#end
+##
+## This macro initializes any event adaptors for a declared control
+##
+#macro (initEventAdaptors $control)
+    #foreach ($adaptor in $control.eventAdaptors)
+        ${control.localName}.${adaptor.eventSet.addListenerMethod}(new ${adaptor.className}(client));
+    #end
+#end
+##
+##
+## This macro defines the initialization of a declared control.  A check is made first to see
+## if an external initializer (like java.beans.XMLDecoder) has already instantiated a configured
+## bean into the context.
+##
+#macro (initControl $client $control)
+    __bc_id = ${client.getID($control)};
+    $control.controlBean.className $control.localName = (cbc == null ? null : ($control.controlBean.className)cbc.getBean(__bc_id));
+    if ($control.localName == null)
+        $control.localName = (${control.controlBean.className}) Controls.instantiate(${control.controlBean.className}.class, getAnnotationMap(cbc, ${control.reflectField}), cbc, __bc_id );
+    #initEventAdaptors($control)
+
+    #if ($control.hasVersionRequired())
+    enforceVersionRequired( $control.localName, ${control.reflectField}.getAnnotation(VersionRequired.class) );
+    #end
+
+    #if ($init.needsReflection($control))
+    ${control.reflectField}.set(client, $control.localName);
+    #else
+    client.${control.name} = $control.localName; 
+    #end
+#end
+##
+##
+## This macro defines the initialization method for all declared control instances.
+##
+#macro (declareFieldInit)
+    private static void initializeFields(ControlBeanContext cbc,
+                                         $client.className client)
+    {
+        try
+        {
+            String __bc_id;
+            #foreach ($control in $client.Controls)
+            #if ($velocityCount == 1)
+            //
+            // Initialize any nested controls used by the client
+            //
+            #end 
+            #initControl($client $control) 
+            #end
+        }
+        catch (RuntimeException __bc_re) { throw __bc_re; }
+        catch (Exception __bc_e)
+        {
+            __bc_e.printStackTrace();
+            throw new ControlException("Initializer failure", __bc_e);
+        }
+    }
+#end
+
+##
+## THE CONTROL INITIALIZER CLASS TEMPLATE
+##
+#if (!$init.isRootPackage())
+package $init.package;
+#end
+
+import java.lang.reflect.Field;
+import org.apache.beehive.controls.api.ControlException;
+import org.apache.beehive.controls.api.bean.Controls;
+import org.apache.beehive.controls.api.versioning.VersionRequired;
+import org.apache.beehive.controls.api.context.ControlBeanContext;
+import org.apache.beehive.controls.runtime.bean.EventAdaptor;
+import org.apache.beehive.controls.runtime.bean.AdaptorPersistenceDelegate;
+
+@SuppressWarnings("all")
+public class $init.shortName
+             extends org.apache.beehive.controls.runtime.bean.ClientInitializer
+{
+    #if ($init.reflectFields.size() != 0)
+        #declareReflectFields()
+        static
+        {
+            #initReflectFields()
+        }
+    #end
+
+    #if ($client.needsFieldInit())
+    #declareEventAdaptors()
+
+    #declareFieldInit()
+    #end
+
+    public static void initialize(ControlBeanContext cbc, $client.ClassName client)
+    {
+        #if ($client.hasSuperClient())
+        ${client.superClientName}ClientInitializer.initialize( cbc, client );
+        #end
+
+        #if ($client.needsFieldInit())
+        initializeFields( cbc, client );
+        #end
+    }
+}

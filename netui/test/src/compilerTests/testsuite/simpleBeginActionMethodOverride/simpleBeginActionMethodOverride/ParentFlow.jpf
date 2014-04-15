@@ -1,0 +1,19 @@
+package simpleBeginActionMethodOverride;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp")
+}
+)
+public class ParentFlow
+    extends PageFlowController
+{
+   
+}

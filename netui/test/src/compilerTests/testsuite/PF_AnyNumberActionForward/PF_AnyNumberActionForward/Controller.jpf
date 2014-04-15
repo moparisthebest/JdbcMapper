@@ -1,0 +1,186 @@
+package PF_AnyNumberActionForward;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file declares 50 jpf:forward annotations on
+ * ActionForward method "page1".  The spec says I can have any number.
+ *
+ * @result:  PageFlowController should compile cleanly.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "begin",
+                path = "Begin.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("begin");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "page1",
+                path = "Page1.jsp"),
+            @Jpf.Forward(
+                name = "page2",
+                path = "Page2.jsp"),
+            @Jpf.Forward(
+                name = "page3",
+                path = "Page3.jsp"),
+            @Jpf.Forward(
+                name = "page4",
+                path = "Page4.jsp"),
+            @Jpf.Forward(
+                name = "page5",
+                path = "Page5.jsp"),
+            @Jpf.Forward(
+                name = "page6",
+                path = "Page6.jsp"),
+            @Jpf.Forward(
+                name = "page7",
+                path = "Page7.jsp"),
+            @Jpf.Forward(
+                name = "page8",
+                path = "Page8.jsp"),
+            @Jpf.Forward(
+                name = "page9",
+                path = "Page9.jsp"),
+            @Jpf.Forward(
+                name = "page10",
+                path = "Page10.jsp"),
+            @Jpf.Forward(
+                name = "page11",
+                path = "Page11.jsp"),
+            @Jpf.Forward(
+                name = "page12",
+                path = "Page12.jsp"),
+            @Jpf.Forward(
+                name = "page13",
+                path = "Page13.jsp"),
+            @Jpf.Forward(
+                name = "page14",
+                path = "Page14.jsp"),
+            @Jpf.Forward(
+                name = "page15",
+                path = "Page15.jsp"),
+            @Jpf.Forward(
+                name = "page16",
+                path = "Page16.jsp"),
+            @Jpf.Forward(
+                name = "page17",
+                path = "Page17.jsp"),
+            @Jpf.Forward(
+                name = "page18",
+                path = "Page18.jsp"),
+            @Jpf.Forward(
+                name = "page19",
+                path = "Page19.jsp"),
+            @Jpf.Forward(
+                name = "page20",
+                path = "Page20.jsp"),
+            @Jpf.Forward(
+                name = "page21",
+                path = "Page21.jsp"),
+            @Jpf.Forward(
+                name = "page22",
+                path = "Page22.jsp"),
+            @Jpf.Forward(
+                name = "page23",
+                path = "Page23.jsp"),
+            @Jpf.Forward(
+                name = "page24",
+                path = "Page24.jsp"),
+            @Jpf.Forward(
+                name = "page25",
+                path = "Page25.jsp"),
+            @Jpf.Forward(
+                name = "page26",
+                path = "Page26.jsp"),
+            @Jpf.Forward(
+                name = "page27",
+                path = "Page27.jsp"),
+            @Jpf.Forward(
+                name = "page28",
+                path = "Page28.jsp"),
+            @Jpf.Forward(
+                name = "page29",
+                path = "Page29.jsp"),
+            @Jpf.Forward(
+                name = "page30",
+                path = "Page30.jsp"),
+            @Jpf.Forward(
+                name = "page31",
+                path = "Page31.jsp"),
+            @Jpf.Forward(
+                name = "page32",
+                path = "Page32.jsp"),
+            @Jpf.Forward(
+                name = "page33",
+                path = "Page33.jsp"),
+            @Jpf.Forward(
+                name = "page34",
+                path = "Page34.jsp"),
+            @Jpf.Forward(
+                name = "page35",
+                path = "Page35.jsp"),
+            @Jpf.Forward(
+                name = "page36",
+                path = "Page36.jsp"),
+            @Jpf.Forward(
+                name = "page37",
+                path = "Page37.jsp"),
+            @Jpf.Forward(
+                name = "page38",
+                path = "Page38.jsp"),
+            @Jpf.Forward(
+                name = "page39",
+                path = "Page39.jsp"),
+            @Jpf.Forward(
+                name = "page40",
+                path = "Page40.jsp"),
+            @Jpf.Forward(
+                name = "page41",
+                path = "Page41.jsp"),
+            @Jpf.Forward(
+                name = "page42",
+                path = "Page42.jsp"),
+            @Jpf.Forward(
+                name = "page43",
+                path = "Page43.jsp"),
+            @Jpf.Forward(
+                name = "page44",
+                path = "Page44.jsp"),
+            @Jpf.Forward(
+                name = "page45",
+                path = "Page45.jsp"),
+            @Jpf.Forward(
+                name = "page46",
+                path = "Page46.jsp"),
+            @Jpf.Forward(
+                name = "page47",
+                path = "Page47.jsp"),
+            @Jpf.Forward(
+                name = "page48",
+                path = "Page48.jsp"),
+            @Jpf.Forward(
+                name = "page49",
+                path = "Page49.jsp"),
+            @Jpf.Forward(
+                name = "page50",
+                path = "Page50.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("page1");
+        }
+    }

@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_TwoActionValidationErrForward\Controller.java:31: duplicate annotation member value validationErrorForward in org.apache.beehive.netui.pageflow.annotations.Jpf.Action
+    	validationErrorForward=@Jpf.Forward(name="failure2", navigateTo=Jpf.NavigateTo.previousPage),
+                                                                                      ^
+1 error

@@ -1,0 +1,2478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>PfForwards</sessionName>
+  <tester>rich</tester>
+  <startDate>23 Jul 2003, 03:35:09.140 PM MDT</startDate>
+  <description>Tests of all the ways to forward (relative, webapp-relative, URI, etc.), including redirects.</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/Controller.jpf</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>3</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/redirect.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/begin.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html><head><title>Fake Redirect</title></head><body>
+Fake redirect to: <b>/coreWeb/pageFlowCore/forwards/index.jsp</b><br><br>
+<a href="begin.do">go back</a>
+</body></html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>4</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/redirect.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>5</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/withQueryParams.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/begin.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html><head><title>Fake Redirect</title></head><body>
+Fake redirect to: <b>/coreWeb/pageFlowCore/forwards/index.jsp?foo&bar=baz</b><br><br>
+<a href="begin.do">go back</a>
+</body></html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>6</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/withQueryParams.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>7</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/randomURI.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/begin.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html><head><title>Fake Redirect</title></head><body>
+Fake redirect to: <b>http://www.google.com/search?q=xmlbeans</b><br><br>
+<a href="begin.do">go back</a>
+</body></html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>8</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/randomURI.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>9</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/uriRedirect.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/begin.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html><head><title>Fake Redirect</title></head><body>
+Fake redirect to: <b>/netui/index.jsp</b><br><br>
+<a href="begin.do">go back</a>
+</body></html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>10</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/uriRedirect.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>11</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/uriWebappForward.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/begin.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>12</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/uriRelativeForward.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/uriWebappForward.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>13</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/uriRelativeForward.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html><head><title>Fake Redirect</title></head><body>
+Fake redirect to: <b>/coreWeb/pageFlowCore/forwards/Controller.jpf</b><br><br>
+<a href="begin.do">go back</a>
+</body></html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>14</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/begin.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>15</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/pageFlowCore/forwards/setPath.do</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>application/x-shockwave-flash,text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1</value>
+        </header>
+        <header>
+          <name>Accept-Charset</name>
+          <value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip,deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us,en;q=0.5</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>keep-alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1e1iNtfZVVpnF24YWB1mewvHwcRnsG7kgs620CjfMNoHYB73KI10!371667101</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Keep-Alive</name>
+          <value>300</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/pageFlowCore/forwards/begin.do</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.4) Gecko/20030624</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+<head>
+<title>Index Page for /pageFlowCore/forwards/Controller.jpf</title>
+</head>
+<body bgcolor="white">
+
+<h3>Index Page for /pageFlowCore/forwards/Controller.jpf</h3>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/begin.do">forward to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="index" path="index.jsp"
+     */
+    protected Forward begin()
+    {
+        return new Forward( "index" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/redirect.do">redirect to this page</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward redirect()
+    {
+        return new Forward( "indexRedirect" );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/withQueryParams.do">redirect to this page, with query params</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="indexRedirect" path="index.jsp" redirect="true"
+     */
+    protected Forward withQueryParams()
+    {
+        Forward fw = new Forward( "indexRedirect" );
+        fw.addQueryParam( "foo" );
+        fw.addQueryParam( "bar", "baz" );
+        return fw;
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/randomURI.do">redirect to google</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward randomURI()
+        throws Exception
+    {
+        return new Forward( new URI( "http://www.google.com/search?q=xmlbeans" ) );
+    }
+</pre>
+
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRedirect.do">redirect to the netui webapp</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "/netui/index.jsp", true ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriWebappForward.do">forward to this page, using a webapp-relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriWebappForward()
+        throws Exception
+    {
+        return new Forward( new URI( "/forwardTest/Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeForward.do">forward to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeForward()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ) );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/uriRelativeRedirect.do">redirect to this page, using a relative URI</a>
+<pre>
+    /**
+     * @jpf:action
+     */
+    protected Forward uriRelativeRedirect()
+        throws Exception
+    {
+        return new Forward( new URI( "Controller.jpf" ), true );
+    }
+</pre>
+
+<br><a href="/coreWeb/pageFlowCore/forwards/setPath.do">forward to this page using Forward.setPath()</a>
+<pre>
+    /**
+     * @jpf:action
+     * @jpf:forward name="unused" path=""
+     */
+    protected Forward setPath()
+        throws Exception
+    {
+        //
+        // Note that setPath() works differently than the URI/URL constructors.
+        // It acts just like setPath() on the base class -- sets a path that
+        // eventually gets the current context path prepended, and respects the
+        // redirect and context-sensitive flags.
+        //
+        Forward fwd = new Forward( "unused" );
+        fwd.setPath( "/forwardTest/index.jsp" );
+        fwd.setContextRelative( true );
+        return fwd;
+    }
+</pre>
+
+
+</body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>23 Jul 2003, 03:36:47.484 PM MDT</endDate>
+  <testCount>15</testCount>
+
+</recorderSession>

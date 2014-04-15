@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+
+<!-- 
+  Build file for the System Controls project.
+-->
+<project name="Beehive/SystemControls/Main" default="build" basedir=".">
+
+    <import file="systemcontrols-imports.xml"/>
+
+    <target name="clean" description="Cleans all system controls build products.">
+        <delete dir="build"/>
+
+        <ant dir="test/ant" target="test.clean" inheritAll="false"/>
+    </target>
+
+    <target name="build" depends="prepare" description="Compiles and builds all of the system controls.">
+
+        <echo message="--------------------------------------------------"/>
+        <echo message="|      System Controls build starting            |"/>
+        <echo message="--------------------------------------------------"/>
+
+        <ant dir="src/ejb" target="build" inheritAll="false"/>
+        <ant dir="src/jdbc" target="build" inheritAll="false"/>
+        <ant dir="src/jms" target="build" inheritAll="false"/>
+        <ant dir="src/webservice" target="build" inheritAll="false"/>
+
+        <echo message="--------------------------------------------------"/>
+        <echo message="|      System Controls build ending              |"/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <target name="docs" description="Generate system controls Javadoc.">
+        <ant dir="ant" target="build" antfile="javadoc.xml" inheritAll="false"/>
+    </target>
+
+    <target name="drt" description="Runs the System Controls DRTs">
+        <echo message="--------------------------------------------------"/>
+        <echo message="|      System Controls tests starting            |"/>
+        <echo message="--------------------------------------------------"/>
+
+        <ant dir="${basedir}/test/ant/" target="drt" inheritAll="false">
+            <property name="drt.cc.mode" value="true"/>
+        </ant>
+
+        <echo message="--------------------------------------------------"/>
+        <echo message="|      System Controls tests ending              |"/>
+        <echo message="--------------------------------------------------"/>
+    </target>
+
+    <target name="ws.drt" description="Runs the Web Service Control DRT">
+        <ant dir="${basedir}/test/webservice" target="drt" inheritAll="false"/>
+    </target>
+
+    <target name="ejb.drt" description="Runs the EJB Control DRT">
+        <ant dir="${basedir}/test/ejb" target="test" inheritAll="false"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.lib.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <target name="deploy.m2">
+        <!-- beehive-control-ejb -->
+        <copy todir="${build.m2.dir}/beehive-ejb-control/${beehive.version}">
+            <mapper type="glob" from="*.jar" to="*-${beehive.version}.jar"/>
+            <fileset dir="build/jars">
+                <include name="beehive-ejb-control.jar"/>
+            </fileset>
+        </copy>
+        <filter token="beehive.version" value="${beehive.version}"/>
+        <copy todir="${build.m2.dir}/beehive-ejb-control/${beehive.version}" filtering="true">
+            <mapper type="glob" from="*.pom" to="*-${beehive.version}.pom"/>
+            <fileset dir="src/ejb" includes="beehive-ejb-control.pom"/>
+        </copy>
+        <jar destfile="${build.m2.dir}/beehive-ejb-control/${beehive.version}/beehive-ejb-control-${beehive.version}-sources.jar">
+            <fileset dir="src/ejb"/>
+        </jar>
+        <!-- beehive-jms-control -->
+        <copy todir="${build.m2.dir}/beehive-jms-control/${beehive.version}">
+            <mapper type="glob" from="*.jar" to="*-${beehive.version}.jar"/>
+            <fileset dir="build/jars">
+                <include name="beehive-jms-control.jar"/>
+            </fileset>
+        </copy>
+        <filter token="beehive.version" value="${beehive.version}"/>
+        <copy todir="${build.m2.dir}/beehive-jms-control/${beehive.version}" filtering="true">
+            <mapper type="glob" from="*.pom" to="*-${beehive.version}.pom"/>
+            <fileset dir="src/jms" includes="beehive-jms-control.pom"/>
+        </copy>
+        <jar destfile="${build.m2.dir}/beehive-jms-control/${beehive.version}/beehive-jms-control-${beehive.version}-sources.jar">
+            <fileset dir="src/jms"/>
+        </jar>
+        <!-- beehive-jdbc-control -->
+        <copy todir="${build.m2.dir}/beehive-jdbc-control/${beehive.version}">
+            <mapper type="glob" from="*.jar" to="*-${beehive.version}.jar"/>
+            <fileset dir="build/jars">
+                <include name="beehive-jdbc-control.jar"/>
+            </fileset>
+        </copy>
+        <filter token="beehive.version" value="${beehive.version}"/>
+        <copy todir="${build.m2.dir}/beehive-jdbc-control/${beehive.version}" filtering="true">
+            <mapper type="glob" from="*.pom" to="*-${beehive.version}.pom"/>
+            <fileset dir="src/jdbc" includes="beehive-jdbc-control.pom"/>
+        </copy>
+        <jar destfile="${build.m2.dir}/beehive-jdbc-control/${beehive.version}/beehive-jdbc-control-${beehive.version}-sources.jar">
+            <fileset dir="src/jdbc"/>
+        </jar>
+    </target>
+
+</project>

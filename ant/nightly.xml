@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+<!--
+    Ant build file used to product Beehive nightlies
+-->
+<project name="Beehive Nightly Build" default="usage" basedir=".">
+
+    <tstamp>
+        <format property="date" pattern="yyyyMMdd"/>
+    </tstamp>
+
+    <echo>Get SVN revision</echo>
+    <exec executable="svnversion" dir=".." failifexecutionfails="true" outputproperty="beehive.svn.revision">
+        <arg value="."/>
+    </exec>
+
+    <property name="ftp.root" value="http://cvs.apache.org/dist/beehive/nightlies"/>
+    <property name="ftp.dir" value="beehive/${date}"/>
+    <property name="url" value="${ftp.root}/${ftp.dir}"/>
+    <property name="beehive.version" value="${date}-svn${beehive.svn.revision}"/>
+
+    <import file="../beehive-imports.xml"/>
+
+    <echo>Date: ${date}</echo>
+    <echo>Beehive SVN revision: ${beehive.svn.revision}</echo>
+    <echo>Beehive distribution name: ${dist.name}</echo>
+    <echo>FTP URL: ${url}</echo>
+
+    <target name="echo" description="Echo the SVN revision and date for debugging"/>
+
+    <target name="run" description="Run the entire nightly build, test, and distribution packaging / testing process">
+
+        <antcall target="scrub.tomcat"/>
+
+        <ant antfile="../build.xml" target="clean" inheritAll="false"/>
+        <ant antfile="../build.xml" target="deploy" inheritAll="false"/>
+        <ant antfile="../build.xml" target="drt" inheritAll="false"/>
+
+        <java classname="org.apache.tools.ant.Main" fork="true" failOnError="true">
+            <classpath>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+            <arg line="-f ../build.xml build.dist -Dbeehive.version=${beehive.version} -Dant.home=${os.ANT_HOME} -emacs"/>
+        </java>      
+
+        <java classname="org.apache.tools.ant.Main" fork="true" failOnError="true">
+            <classpath>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+            <arg line="-f ../build.xml build.dist.src -Dbeehive.version=${beehive.version} -Dant.home=${os.ANT_HOME} -emacs"/>
+        </java>      
+
+        <java classname="org.apache.tools.ant.Main" fork="true" failOnError="true">
+            <classpath>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+            <arg line="-f ../build.xml build.dist.lib -Dbeehive.version=${beehive.version} -Dant.home=${os.ANT_HOME} -emacs"/>
+        </java>      
+
+        <java classname="org.apache.tools.ant.Main" fork="true" failOnError="true">
+            <classpath>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+            <arg line="-f ../build.xml build.dist.archives -Dbeehive.version=${beehive.version} -Dant.home=${os.ANT_HOME} -emacs"/>
+        </java>      
+
+        <antcall target="scrub.tomcat"/>
+
+        <java classname="org.apache.tools.ant.Main" fork="true" failOnError="true">
+            <classpath>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+            <arg line="-f ${beehive.home}/test/dist-test/build.xml build -Ddist.name=${dist.name} -Dant.home=${os.ANT_HOME} -emacs"/>
+        </java>      
+
+        <java classname="org.apache.tools.ant.Main" fork="true" failOnError="true">
+            <classpath>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+            <arg line="-f ${beehive.home}/test/dist-test/build.xml run -Dbeehive.dist.dir=${beehive.home}/build/dist/${dist.name} -Dbeehive.dist.name=${dist.name} -Dant.home=${os.ANT_HOME} -emacs"/>
+        </java>      
+
+        <!-- ftp to Apache -->
+        <echo></echo>
+        <echo></echo>
+        <echo>FTP to Beehive distribution to Apache</echo>
+        <echo></echo>
+        <echo></echo>
+    </target>
+
+    <!-- this target is a work in progress for automatically FTPing the archives via sftp to Apache -->
+    <target name="sftp.nightly" description="SFTP the nightly release to apache.org; note, this target currently does not work">
+        <fail unless="user" message="Username undefined"/>
+
+        <property name="sftp.script" location="${beehive.home}/build/dist/archives/sftp-${date}-${beehive.svn.revision}"/>
+        <echo file="${sftp.script}">
+chdir /www/cvs.apache.org/dist/beehive/nightlies/
+mkdir ${date}
+put /home/eko/dev/oss/beehive-nightly/trunk/build/dist/archives/apache-beehive-${date}-${beehive.svn.revision}.tar.gz
+put /home/eko/dev/oss/beehive-nightly/trunk/build/dist/archives/apache-beehive-${date}-${beehive.svn.revision}.zip
+put /home/eko/dev/oss/beehive-nightly/trunk/build/dist/archives/README.txt
+        </echo>
+
+        <exec dir="." executable="sftp" os="Linux" output="results.txt">
+            <arg line=" -b ${sftp.script} ${user}@cvs.apache.org"/>
+        </exec>
+    </target>
+
+    <target name="scrub.tomcat" description="Scrub a local Tomcat install of Beehive related test web applications">
+        <delete dir="${os.CATALINA_HOME}/work/Catalina/localhost/coreWeb"/>
+        <delete file="${os.CATALINA_HOME}/conf/Catalina/localhost/coreWeb.xml"/>
+        <delete dir="${os.CATALINA_HOME}/work/Catalina/localhost/controlsWeb"/>
+        <delete file="${os.CATALINA_HOME}/conf/Catalina/localhost/controlsWeb.xml"/>
+        <delete dir="${os.CATALINA_HOME}/work/Catalina/localhost/jsfWeb"/>
+        <delete file="${os.CATALINA_HOME}/conf/Catalina/localhost/jsfWeb.xml"/>
+        <delete dir="${os.CATALINA_HOME}/work/Catalina/localhost/urlTemplates"/>
+        <delete file="${os.CATALINA_HOME}/conf/Catalina/localhost/urlTemplates.xml"/>
+    </target>
+
+</project>

@@ -1,0 +1,57 @@
+package PF_SameGlobalActionForwardName;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file declares a global forward named "gb1" that
+ * forwards to path "Gb1.jsp".  Then one of the ActionForward methods declares a
+ * local forward also named "gb1" that will forward to path "Gb2.jsp".
+ *
+ * @result: This PageFlowController should compile cleanly and the resulting config xml
+ * file should be generated correctly.
+ *
+ ******************************************************************************/
+    @Jpf.Controller(
+        forwards = {
+            @Jpf.Forward(
+                name = "gb1",
+                path = "Gb1.jsp") 
+        })
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp") 
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp") 
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "gb1",
+                path = "Gb2.jsp") 
+        })
+    protected Forward page2()
+        {
+        return new Forward("gb1");
+        }
+    }

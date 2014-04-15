@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>PostToXmlBean</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>13 Jun 2005, 10:31:10.932 PM MDT</ses:startDate>
+   <ses:description>Test to ensure that we can post data directly into an XmlBean (and that we can run validation rules on XmlBean properties).</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/postToXmlBean/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>8F5DE36CF9606CD0D42247B37A9595D0</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1b4sw6tbabbvh</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=8F5DE36CF9606CD0D42247B37A9595D0; JSESSIONID=1b4sw6tbabbvh</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/postToXmlBean/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/postToXmlBean/Controller.jpf</h3>
+
+        This test confirms that we can post data directly into an XmlBean (and also that we can run
+        validation rules on XmlBean properties).
+        <br/>
+        <br/>
+
+        <form action="/coreWeb/miniTests/postToXmlBean/submit.do" method="post">
+            <table>
+                <tr>
+                    <td>symbol:</td>
+                    <td><input type="text" name="{actionForm.symbol}"></td>
+                </tr>
+                <tr>
+                    <td>name:</td>
+                    <td><input type="text" name="{actionForm.name}"></td>
+                </tr>
+                <tr>
+                    <td>price:</td>
+                    <td><input type="text" name="{actionForm.price}" value="0.0"></td>
+                </tr>
+            </table>
+            <br/>
+            <input type="submit" value="submit">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/postToXmlBean/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.name}</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.price}</ses:name>
+                  <ses:value>0.0</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.symbol}</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>8F5DE36CF9606CD0D42247B37A9595D0</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1b4sw6tbabbvh</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>74</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=8F5DE36CF9606CD0D42247B37A9595D0; JSESSIONID=1b4sw6tbabbvh</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/postToXmlBean/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/postToXmlBean/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/postToXmlBean/Controller.jpf</h3>
+
+        This test confirms that we can post data directly into an XmlBean (and also that we can run
+        validation rules on XmlBean properties).
+        <br/>
+        <br/>
+
+        <form action="/coreWeb/miniTests/postToXmlBean/submit.do" method="post">
+            <table>
+                <tr>
+                    <td>symbol:</td>
+                    <td><input type="text" name="{actionForm.symbol}">The symbol is required.
+</td>
+                </tr>
+                <tr>
+                    <td>name:</td>
+                    <td><input type="text" name="{actionForm.name}">The name is required.
+</td>
+                </tr>
+                <tr>
+                    <td>price:</td>
+                    <td><input type="text" name="{actionForm.price}" value="0.0">The price is not in the range 0.01 through 100000.0.
+</td>
+                </tr>
+            </table>
+            <br/>
+            <input type="submit" value="submit">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/postToXmlBean/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.name}</ses:name>
+                  <ses:value>ABCD Corp.</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.price}</ses:name>
+                  <ses:value>50.50</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.symbol}</ses:name>
+                  <ses:value>abcd</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>8F5DE36CF9606CD0D42247B37A9595D0</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1b4sw6tbabbvh</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>90</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=8F5DE36CF9606CD0D42247B37A9595D0; JSESSIONID=1b4sw6tbabbvh</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/postToXmlBean/submit.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/postToXmlBean/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/postToXmlBean/Controller.jpf</h3>
+
+        This test confirms that we can post data directly into an XmlBean (and also that we can run
+        validation rules on XmlBean properties).
+        <br/>
+        <br/>
+
+        <form action="/coreWeb/miniTests/postToXmlBean/submit.do" method="post">
+            <table>
+                <tr>
+                    <td>symbol:</td>
+                    <td><input type="text" name="{actionForm.symbol}" value="abcd">The symbol must be exacly four uppercase characters.
+</td>
+                </tr>
+                <tr>
+                    <td>name:</td>
+                    <td><input type="text" name="{actionForm.name}" value="ABCD Corp."></td>
+                </tr>
+                <tr>
+                    <td>price:</td>
+                    <td><input type="text" name="{actionForm.price}" value="50.5"></td>
+                </tr>
+            </table>
+            <br/>
+            <input type="submit" value="submit">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/postToXmlBean/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.name}</ses:name>
+                  <ses:value>ABCD Corp.</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.price}</ses:name>
+                  <ses:value>50.5</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.symbol}</ses:name>
+                  <ses:value>ABCD</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>8F5DE36CF9606CD0D42247B37A9595D0</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1b4sw6tbabbvh</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.7,ja;q=0.3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>89</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=8F5DE36CF9606CD0D42247B37A9595D0; JSESSIONID=1b4sw6tbabbvh</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/postToXmlBean/submit.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/postToXmlBean/success.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/postToXmlBean/Controller.jpf</h3>
+
+        Success.  The data submitted was:
+        <table>
+            <tr>
+                <td>symbol:</td>
+                <td><b>ABCD</b></td>
+            </tr>
+            <tr>
+                <td>name:</td>
+                <td><b>ABCD Corp.</b></td>
+            </tr>
+            <tr>
+                <td>price:</td>
+                <td><b>50.5</b></td>
+            </tr>
+        </table>
+
+        <br/>
+        <a href="/coreWeb/miniTests/postToXmlBean/begin.do">start over</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>13 Jun 2005, 10:32:06.161 PM MDT</ses:endDate>
+   <ses:testCount>4</ses:testCount>
+</ses:recorderSession>

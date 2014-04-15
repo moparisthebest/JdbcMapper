@@ -1,0 +1,30 @@
+/*
+ * This test verifies that:
+ *  An invalid relative path in a shared flow Forward annotation throws a compiler warning
+ */
+
+package SF_InvalidRelativePath;
+
+import java.io.IOException;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowException;
+import org.apache.beehive.netui.pageflow.SharedFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+
+@Jpf.Controller()
+public class SharedFlow
+    extends SharedFlowController
+{
+    @Jpf.Action(
+            forwards = {
+                    @Jpf.Forward(name= "success", path="invalid.jsp")
+            }
+    )
+    protected Forward invalidAction() {
+        Forward forward = new Forward("success");
+        return new Forward( "success" ); 
+    }
+
+}

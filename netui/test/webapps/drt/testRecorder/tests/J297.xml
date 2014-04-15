@@ -1,0 +1,2310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>J297</sessionName>
+<tester>Daryl</tester>
+<startDate>25 Feb 2006, 08:04:26.906 AM MST</startDate>
+<description>Daryl</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: begin<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/select.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: select<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/subTreeSelect.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.0</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: subTreeSelect<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/selectOverride.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.0.0</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: selectOverride<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/subTreeSelect.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.0.0.0</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: subTreeSelect<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>6</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/subTreeSelect.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.0.0.1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: subTreeSelect<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>7</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/selectOverride.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: selectOverride<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>8</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/select.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.1.0</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: select<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>9</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/select.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.1.1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: select<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>10</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/select.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.2</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: select<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>11</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/selectOverride.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.2.0</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: selectOverride<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>12</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/bugs/j297/select.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>netui_treeid</name>
+<value>tree</value>
+</parameter>
+<parameter>
+<name>netui_treeselected</name>
+<value>0.2.1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>056760B7CD384E030ACB2BD04B428D4B</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=056760B7CD384E030ACB2BD04B428D4B; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>731779a1:109a1b75c61:-7aa6</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<head>
+    <title>Dynamic Tree with RunAtClient and ExpandOnClient
+    </title>
+</head>
+<body>
+<h4>Verify Action Override</h4>
+<p style="color:green">Verify that the action on a treeItem
+overrides the inheritted action and is not applied to the children.
+</p>
+<a href="/coreWeb/bugs/j297/reset.do">Reset</a><br>
+Action: select<br>
+<!--Begin scriptContainer-->
+<div style="border: thin solid;height: 300px;">
+
+    <script language="JavaScript" type="text/JavaScript" src="/coreWeb/resources/beehive/version1/javascript/netui-tree.js"></script>
+    <div netui:treeName="Tree653">
+   <div netui:treeLevel="0">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/rootCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/rootExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/rootExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0">&nbsp;0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/nodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0" netui:imageExpand="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0 [sts]">&nbsp;0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <a href="#" netui:imageCollapse="/coreWeb/resources/beehive/version1/images/lastNodeCollapsed.gif" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.0.0" netui:expandLast="true" netui:imageExpand="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.0.0 [O]">&nbsp;0.0.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.0 [sts]">&nbsp;0.0.0.0 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="3">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/subTreeSelect.do?netui_treeselected=0.0.0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/alien.gif" style="vertical-align:text-top" border="0" alt="0.0.0.1 [sts]">&nbsp;0.0.0.1 [sts]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.1"><img src="/coreWeb/resources/beehive/version1/images/nodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.1 [0]">&nbsp;0.1 [0]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.0">&nbsp;0.1.0&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/verticalLine.gif" style="vertical-align:bottom;" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.1.1&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.1.1">&nbsp;0.1.1&nbsp;</a>
+   </div>
+      <div netui:treeLevel="1">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <a href="#" netui:treeAnchor="expand" netui:treeAnchorInit="true" netui:treeId="0.2" netui:expandLast="true"><img src="/coreWeb/resources/beehive/version1/images/lastNodeExpanded.gif" style="vertical-align:bottom;" border="0" alt="Collapse Tree Element"></a>
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/folder.gif" style="vertical-align:text-top" border="0" alt="0.2">&nbsp;0.2&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/selectOverride.do?netui_treeselected=0.2.0&amp;netui_treeid=tree" style="text-decoration: none">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.0 [O]">&nbsp;0.2.0 [O]&nbsp;</a>
+   </div>
+      <div netui:treeLevel="2">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/spacer.gif" width="16px" border="0" alt="">
+      <img src="/coreWeb/resources/beehive/version1/images/lastLineJoin.gif" style="vertical-align:bottom;" border="0" alt="">
+      <a href="/coreWeb/bugs/j297/select.do?netui_treeselected=0.2.1&amp;netui_treeid=tree" style="background-color: #FFD185; font-color: #FFFFFF; text-decoration: none;">&nbsp;<img src="/coreWeb/tree/images/cool.gif" style="vertical-align:text-top" border="0" alt="0.2.1">&nbsp;0.2.1&nbsp;</a>
+   </div>
+   </div>
+
+
+</div>
+<!--End scriptContainer-->
+   <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// write out the webapp name
+netUI.webAppName = "/coreWeb";
+
+if (netUI.netUITree == null) {
+    netUI.netUITree = new NetUITree();
+    netUI.netUITree.trees = new Object();
+}
+netUI.netUITree.trees.Tree653 = new Object();
+netUI.netUITree.trees["Tree653"].imgExpandName = "/coreWeb/resources/beehive/version1/images/" + "nodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseName = "/coreWeb/resources/beehive/version1/images/" + "nodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].imgExpandLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeCollapsed.gif";
+netUI.netUITree.trees["Tree653"].imgCollapseLastName = "/coreWeb/resources/beehive/version1/images/" + "lastNodeExpanded.gif";
+netUI.netUITree.trees["Tree653"].altExpand = "Expand Tree Element";
+netUI.netUITree.trees["Tree653"].altCollapse = "Collapse Tree Element";
+netUI.netUITree.init();
+
+netUI.netUITree.trees["Tree653"].ajaxPrefix = "/coreWeb/bugs/j297";
+
+netUI.netUITree.trees["Tree653"].ajaxParam = "Tree653";
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+</tests>
+<endDate>25 Feb 2006, 08:04:28.015 AM MST</endDate>
+<sessionStatus>fail</sessionStatus>
+<testCount>12</testCount>
+<passedCount>0</passedCount>
+<failedCount>12</failedCount>
+</recorderSession>

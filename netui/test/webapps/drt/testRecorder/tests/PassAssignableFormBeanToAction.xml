@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>PassAssignableFormBeanToAction</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>03 Feb 2005, 10:28:47.303 AM MST</ses:startDate>
+   <ses:description>Test of passing assignable (subclass and interface implementor) form beans from action to action.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/passAssignableFormBeanToAction/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/passAssignableFormBeanToAction/Controller.jpf</h3>
+
+        action2 accepts a form bean of type <code>BaseFormBean</code>.  In the first case, we pass it an instance of that.  In the second case, we pass it an instance of the derived <code>SubclassFormBean</code>.
+        <br/>
+        <br/>
+        action3 accepts interface <code>SomeInterface</code>.  In the third case, we pass it an instance of <code>SubclassFormBean</code>, which implements the interface.
+        <br/>
+        <br/>
+        value in form bean: <b></b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passBaseToAction2.do">pass base form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passSubclassToAction2.do">pass subclass form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passInterfaceImplementorToAction3.do">pass subclass form bean (which implements the right interface) to action3</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/passAssignableFormBeanToAction/passBaseToAction2.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/Controller.jpf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/passAssignableFormBeanToAction/Controller.jpf</h3>
+
+        action2 accepts a form bean of type <code>BaseFormBean</code>.  In the first case, we pass it an instance of that.  In the second case, we pass it an instance of the derived <code>SubclassFormBean</code>.
+        <br/>
+        <br/>
+        action3 accepts interface <code>SomeInterface</code>.  In the third case, we pass it an instance of <code>SubclassFormBean</code>, which implements the interface.
+        <br/>
+        <br/>
+        value in form bean: <b>action2: base</b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passBaseToAction2.do">pass base form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passSubclassToAction2.do">pass subclass form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passInterfaceImplementorToAction3.do">pass subclass form bean (which implements the right interface) to action3</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/passAssignableFormBeanToAction/passSubclassToAction2.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/passBaseToAction2.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/passAssignableFormBeanToAction/Controller.jpf</h3>
+
+        action2 accepts a form bean of type <code>BaseFormBean</code>.  In the first case, we pass it an instance of that.  In the second case, we pass it an instance of the derived <code>SubclassFormBean</code>.
+        <br/>
+        <br/>
+        action3 accepts interface <code>SomeInterface</code>.  In the third case, we pass it an instance of <code>SubclassFormBean</code>, which implements the interface.
+        <br/>
+        <br/>
+        value in form bean: <b>action2: subclass</b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passBaseToAction2.do">pass base form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passSubclassToAction2.do">pass subclass form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passInterfaceImplementorToAction3.do">pass subclass form bean (which implements the right interface) to action3</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/passAssignableFormBeanToAction/passInterfaceImplementorToAction3.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=27839BA317C0406C994DAC32DE6353AD</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>referer</ses:name>
+                  <ses:value>http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/passSubclassToAction2.do</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/passAssignableFormBeanToAction/index.jsp">
+    </head>
+    <body>
+        <h3>/miniTests/passAssignableFormBeanToAction/Controller.jpf</h3>
+
+        action2 accepts a form bean of type <code>BaseFormBean</code>.  In the first case, we pass it an instance of that.  In the second case, we pass it an instance of the derived <code>SubclassFormBean</code>.
+        <br/>
+        <br/>
+        action3 accepts interface <code>SomeInterface</code>.  In the third case, we pass it an instance of <code>SubclassFormBean</code>, which implements the interface.
+        <br/>
+        <br/>
+        value in form bean: <b>action3: subclass</b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passBaseToAction2.do">pass base form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passSubclassToAction2.do">pass subclass form bean to action2</a>
+        <br/>
+        <a href="/coreWeb/miniTests/passAssignableFormBeanToAction/passInterfaceImplementorToAction3.do">pass subclass form bean (which implements the right interface) to action3</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>03 Feb 2005, 10:28:58.899 AM MST</ses:endDate>
+   <ses:testCount>4</ses:testCount>
+</ses:recorderSession>

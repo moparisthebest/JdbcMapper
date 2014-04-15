@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>The JMS Control Developer's Guide</title>
+    </header>
+    <body>
+        <section>
+            <title>Overview: Messaging Systems and JMS</title>
+            <p>A JMS control makes it easy for your application to communicate with messaging systems. To better
+               understand how to use a JMS control, it helps to understand messaging systems and how JMS control
+               interact with them.</p>
+
+            <section>
+                <title>Understanding Messaging Systems</title>
+
+                <p>Messaging systems provide communication between software components. A client of a messaging
+                   system can send messages to, and receive messages from, any other client. Each client connects
+                   to a messaging server that provides facilities for sending and receiving messages.
+                   Codehaus's ActiveMQ which is a component of the Apache Geronimo project, is an example of a
+                   messaging server.</p>
+
+                <p>Messaging systems provide distributed communication that is asynchronous. This means that a
+                   component sends a message to a destination and a message recipient can retrieve messages from a
+                   destination, but the sender and receiver do not communicate directly. The sender only knows that a
+                   destination exists to which it can send messages, and the receiver also knows there is a destination
+                   from which it can receive messages. As long as they agree what message format and what destination
+                   to use, the messaging system manages the actual message delivery.</p>
+
+                <p>Messaging systems also provide reliability for message delivery. The specific level of reliability
+                   is typically configurable on a per-destination or per-client basis, but messaging systems are
+                   capable of guaranteeing that a message will be delivered, and that it will be delivered to each
+                   intended recipient exactly once.</p>
+
+                <p>JMS supports two basic styles of message-based communications: point-to-point and
+                   publish-and-subscribe. Each is described in greater detail below.</p>
+            </section>
+
+            <section>
+                <title>Using JMS Queues for Point-to-Point Messaging</title>
+
+                <p>Point-to-point messaging is accomplished with JMS queues, which are specific named resources
+                   configured in a JMS server. A JMS client, of which the JMS control is an example, sends
+                   messages to a queue or receives messages from a queue.</p>
+
+                <p>Point-to-point messages have a single consumer. Multiple receivers can listen for messages
+                   on the same queue, but once any receiver retrieves a particular message from the queue that
+                   message is consumed and is no longer available to other potential consumers.</p>
+
+                <p>The messaging system continues to resend a particular message until a predetermined number of
+                   retries have been attempted. Once the message is received, a message consumer acknowledges receipt.</p>
+            </section>
+
+            <section>
+                <title>Using JMS Topics for Publish-and-Subscribe Messaging</title>
+
+                <p>Publish-and-subscribe messaging is accomplished with JMS topics. A topic is a specific named
+                   resource configured in a JMS server.</p>
+
+                <p>A JMS client, of which the JMS control is an example, publishes messages to a topic, or subscribes
+                   to a topic. Published messages have multiple potential subscribers. All current subscribers to a
+                   topic receive all messages published to that topic after the subscription becomes active.</p>
+            </section>
+            <section>
+                <title>Connection Factories and Transactions</title>
+
+                <p>Before a JMS client can send or receive messages to a queue or topic, it must obtain a connection
+                   to the messaging system, via a connection factory. A connection factory is a resource that is
+                   configured by the message server administrator. The names of connection factories are stored in
+                   a JNDI directory, where clients wishing to make a connection can look them up.</p>
+
+                <p>Unless otherwise specified the default initial context is used. This may be overridden by settng
+                   the <code>jndiContextFactory</code> and <code>jndiProviderUrl</code> properties, either programically
+                   using the <code>setJndiContextFactory()</code> and <code>setJndiProviderUrl()</code> setters or via the
+                   corresponding <code>@Destination</code> attributes.</p>
+
+           </section>
+       </section>
+
+       <section>
+                <title>JMS Control Annotations</title>
+                <section>
+                    <title>JMS Control Class-level Annotations</title>
+
+                    <p>The <code>JMSControl.Destination</code> annotation defines the destination 
+                            of the message, the message type and connection related attributes. 
+                            The attributes defined for this annotation are:</p>
+
+                    <table>
+                        <tr><th>Attribute</th><th>Value</th><th>Required</th><th>Description</th></tr>
+                        <tr>
+                                <td>sendJndiName</td>
+                                <td>String</td>
+                                <td>Yes</td>
+                                <td>JNDI name of the queue or topic.</td>
+                        </tr>
+                        <tr>
+                                <td>sendCorrelationProperty</td>
+                                <td>String</td>
+                                <td>No</td>
+                                <td>The correlation property to be used for message sent. Default is empty, 
+                                        which signifies that the JMS correlation header is to be used.</td>
+                        </tr>
+                        <tr>
+                                <td>connectionFactoryJndiName</td>
+                                <td>String</td>
+                                <td>Yes</td>
+                                <td>JNDI name of the connection factory. Required</td>
+                        </tr>
+                        <tr>
+                                <td>transacted</td>
+                                <td>boolean</td>
+                                <td>No</td>
+                                <td>True if en-queuing is under transactional semantics of the enclosing container. 
+                                        Default is true.</td>
+                        </tr>
+                        <tr>
+                                <td>acknowledgeMode</td>
+                                <td>enum AcknowledgeMode</td>
+                                <td>No</td>
+                                <td>The acknowledgement strategy, one of Auto, Client, DupsOk. Default is Auto.</td>
+                        </tr>
+                        <tr>
+                                <td>sendType</td>
+                                <td>JMSControl.DestinationType</td>
+                                <td>No</td>
+                                <td>Values are Auto, Queue and Topic. If Auto, then the type is determined 
+                                        by the destination named by the sendJndiName attribute. Default is Auto.</td>
+                        </tr>
+                        <tr>
+                                <td>jndiContextFactory</td>
+                                <td>String</td>
+                                <td>No</td>
+                                <td>The class name of the jndi-context-factory. Default is none.</td>
+                        </tr>
+                        <tr>
+                                <td>jndiProviderURL</td>
+                                <td>String</td>
+                                <td>No</td>
+                                <td>The provider URL for JNDI. Default is none.</td>
+                        </tr>
+                    </table>
+               </section>
+
+               <section>
+                   <title>JMS Control Method Annotations</title>
+
+                   <p>Methods added to a JMS control that send messages may be annotated with the following
+                           annotations:</p>
+
+                    <table>
+                        <tr><th>Annotation</th><th>Value</th><th>Description</th></tr>
+
+                        <tr>
+                                <td>JMSControl.Message</td>
+                                <td>JMSControl.MessageType (enum)</td>
+                                <td>Enum values are: Auto, Text, Bytes, Object, Map and JMSMessage</td>
+                        </tr>
+
+                        <tr>
+                                <td>JMSControl.Priority</td>
+                                <td>int</td>
+                                <td>A JMS priority (0-9). Defaults to provider's default priority.</td>
+                        </tr>
+
+                        <tr>
+                                <td>JMSControl.Expiration</td>
+                                <td>long</td>
+                                <td>A JMS expiration in milliseconds. Default's to provider's default expiration.</td>
+                        </tr>
+                        <tr>
+                                <td>JMSControl.Delivery</td>
+                                <td>JMSControl.DeliveryMode (enum)</td>
+                                <td> This attribute determines the delivery mode of the message. 
+                                        Defaults to the JMS provider's default delivery mode. Enum values are: 
+                                        NonPersistent, Persistent and Auto</td>
+                        </tr>
+
+                        <tr>
+                                <td>JMSControl.Type</td>
+                                <td>String</td>
+                                <td>Specifies the JMS type.</td>
+                        </tr>
+
+                        <tr>
+                                <td>JMSControl.CorrelationId</td>
+                                <td>String</td>
+                                <td>Specifies the JMS correlation id.</td>
+                        </tr>
+
+                        <tr>
+                                <td>JMSControl.Properties</td>
+                                <td>JMSControl.PropertyValue[]</td>
+                                <td>One or more string/int/long valued properties to be added to the message. 
+                                        <code>PropertyValue</code> has the string valued attributes 'name', 'value' 
+                                        and class valued 'type'. The allowed values for 'type' are String.class, 
+                                        Integer.class and Long.class.  If type is not specified, then String 
+                                        is assumed.</td>
+                        </tr>
+                </table>
+
+
+                <p>Notes for the JWSControl.MessageType enumerated value:</p>
+
+                <ul>
+                        <li>If not specified or no message-type string, then the default is Auto. </li>
+                        <li> If Auto, then the type of JMS message is determined by the type of the body passed in; rules for determining these types are:
+                                <ul>
+                                        <li>If the body is a String or XmlObject, a TextMessage is sent.</li>
+                                        <li>If the body is a byte[], a StreamMessage is sent.</li> 
+                                        <li>If the body is a Map, a MapMessage is sent</li>
+                                        <li>If the body is a JMSMessage, a JMSMessage is sent</li>
+                                        <li>Otherwise if the body is Serializable, an ObjectMessage is sent.</li>
+                                        <li>Any other type results in a control exception.</li>
+                                </ul>
+                        </li>
+                </ul> 
+            </section>
+
+
+            <section>
+                <title>JMS Control Method Parameter Annotations</title>
+
+               <p>These annotations denote which parameter is to be the body of the message and zero or more 
+                       properties to be set in the message respectively.  The following annotations my be
+                       used on method parameters:</p>
+                <table>
+                    <tr><th>Annotation</th><th>Value</th><th>Description</th></tr>
+
+                    <tr>
+                            <td>JMSControl.Property</td>
+                            <td>String</td>
+                            <td>The parameter contains the value of the property.</td>
+                    </tr>
+
+                    <tr>
+                            <td>JMSControl.Priority</td>
+                            <td>int</td>
+                            <td>A JMS priority (0-9). If not specifed the method-level annotation is used; 
+                                    if method-level annotation has not been specified the default for the 
+                                    JMS provider is used.</td>
+                    </tr>
+
+                    <tr>
+                            <td>JMSControl.Expiration</td>
+                            <td>long</td>
+                            <td>JMS expiration in milliseconds. If not specified the method-level annotation is used; 
+                                    if method-level annotation has not been specified the default for the provider 
+                                    is used.</td>
+                    </tr>
+
+                    <tr>
+                            <td>JMSControl.Delivery</td>
+                            <td>JMSControl.DeliveryMode</td>
+                            <td> The DeliveryMode valued parameter determines the delivery mode of the message. 
+                            If not specified, then the method-level annotation is used; else the default for 
+                            the provider is used.</td>
+                    </tr>
+
+                    <tr>
+                            <td>JMSControl.Type</td>
+                            <td>String</td>
+                            <td>The JMS type.</td>
+                    </tr>
+
+                    <tr>
+                            <td>JMSControl.CorrelationId</td>
+                            <td>String</td>
+                            <td>The JMS correlation id.</td>
+                    </tr>
+               </table>
+            </section>
+       </section>
+
+
+       <section>
+            <title>JMS Control Methods</title>
+
+            <p>A JMS control always includes the following methods:</p>
+            <table>
+                    <tr><th>Method</th><th>Description</th></tr>
+                    <tr>
+                            <td>getSession()</td>
+                            <td>Get the queue/topic session.</td>
+                    </tr>
+                    <tr>
+                            <td>getDestination()</td>
+                            <td>Get the queue/topic destination.</td>
+                    </tr>
+                    <tr>
+                            <td>getConnection()</td>
+                            <td>Get the queue/topic connection.</td>
+                    </tr>
+                    <tr>
+                            <td>setHeaders(Map)</td>
+                            <td> Sets the JMS headers to be assigned to the next JMS message sent. Note that 
+                                    these headers are set only on the next message, subsequent messages will 
+                                    not get these headers. Also note that if the body is a message itself,
+                                    then any header set through this map will override headers set in the message.
+                                    
+                                    
+                                    The keys should be of type HeaderType or equivalent strings.
+                                    See table below for valid values.</td>
+                    </tr>
+                    <tr>
+                            <td>setHeader(HeaderType,Object)</td>
+                            <td>Sets a JMS header to be assigned to the next JMS message sent. Note that 
+                                    this header is set only on the next message, subsequent messages will 
+                                    not get this header. Also note that if the body is a message itself,
+                                    then the header set here will override the header set in the message.</td>
+                    </tr>
+                    <tr>
+                            <td>setProperties(Map)</td>
+                            <td>Sets the JMS properties to be assigned to the next JMS message sent. Note that 
+                                    these properties are set only on the next message, subsequent messages will 
+                                    not get these properties. Also note that if the next message is sent through
+                                    a publish method, then any property set through this map will override 
+                                    properties set in the message itself.
+                            </td>
+                    </tr>
+                    <tr>
+                            <td>setProperty(String,Object)</td>
+                            <td>Set the given JMS property to be assigned to the next JMS message sent. Note that
+                                this property is set only on the next message, subsequent messages will not get this
+                                property. Also note that if the body is a message itself, then the property set here
+                                will override the property set in the message.
+                            </td>
+                    </tr>
+            </table>
+
+            <p>The methods of the extension control-classes correspond to sending a message to a topic/queue, e.g.</p>
+            <source>send&lt;message-type&gt;(...)</source>
+       </section>
+
+       <section>
+            <title>Header Types</title>
+
+            <p>The table below defines the valid values for header types passed into setHeader() or setHeaders():</p>
+            <table>
+                    <tr><th>JMS Message Method</th><th>HeaderType/String</th><th>Allowed Value Types</th></tr>
+                    <tr>
+                            <td>setJMSType()</td>
+                            <td>JMSType</td>
+                            <td>String</td>
+                    </tr>
+                    <tr>
+                            <td>setJMSCorrelationID()</td>
+                            <td>JMSCorrelationID</td>
+                            <td>String or byte[]</td>
+                    </tr>
+                    <tr>
+                            <td>setJMSExpiration()</td>
+                            <td>JMSExpiration</td>
+                            <td>String valued long or Long</td>
+                    </tr>
+                    <tr>
+                            <td>setJMSPriority()</td>
+                            <td>Priority</td>
+                            <td>String valued int or Integer</td>
+                    </tr>
+            </table>
+       </section>
+
+        <section>
+            <title>Creating a JMS Control</title>
+
+            <p>The JMS control is an extensible control. Before a JMS Control can be used in an application, 
+               a sub-interface of the <code>org.apache.beehive.controls.system.jms.JmsControl</code> interface 
+               must be created and annotated with <code>@ControlExtension</code>.</p>
+
+                    <source>
+@ControlExtension
+public interface SampleQueue 
+    extends JMSControl {
+...
+}
+                    </source>
+            
+
+            <p>A JMS control needs to know the destination of the messages it will send. This is accomplished 
+               using a JNDI context. Unless otherwise specified the default initial context is used. This may 
+               be overridden by settng the <code>@Destination</code> annotation's <code>jndiContextFactory</code> 
+               and the <code>jndiProviderUrl</code> attributes.</p>
+
+            <p>The queue/topic destination is then obtained using the value of the <code>sendJndiName</code> attribute of
+               the <code>@Destination</code> annotation.  A queue/topic connection is obtained using by 
+               the <code>jndiConnectionFactory</code> attribute.  In most cases the same connection factory is 
+               used for both queues and topics.</p>
+
+            <p>The <code>@Destination.sendType</code> attribute may be used to 
+               constrain the use of the control to either a topic or a queue.  By default its value is 
+               <code>Auto</code> which allows for run-time determination of whether the <code>sendJndiName</code> 
+               names a queue or a topic. By setting it to Queue or Topic a run-time check is made to see if 
+               the connection factory and destination is of the correct type.</p>
+
+            <p>The extension interface can include one or more methods that send messages. These 
+               methods must have at least one parameter that corresponds to the body of 
+               the message. Other annotated parameters can defined to provide property values and 
+               other information at run-time to the message. The method itself can be annotated as well.</p>
+
+            <p>In the example below, the OrderQueue control class has one submitOrder() method that takes an 
+               Order object as the body and a string that sets the 'DeliverBy' property in the 
+               javax.jms.ObjectMessage to be sent to the queue.orders JMS queue.</p>
+
+            <source>
+@ControlExtension
+@JMSControl.Destination(sendJndiName="queue.orders",jndiConnectionFactory="weblogic.jws.jms.QueueConnectionFactory")
+public interface OrderQueue extends JMSControl
+ {
+    public class Order implements java.io.Serializable
+    {
+        public Order()
+        {
+            
+        }
+        public Order(int buyer,String[] list)
+        {
+            buyerId = buyer;
+            itemList = list;
+            
+        }
+        private int buyerId;
+        private String[] itemList;
+    }
+
+    public void submitOrder(Order order,@Property(name="DeliverBy") String deliverBy);
+}
+            </source>
+        </section>
+        <section>
+            <title>Specifying the Message Body</title>
+
+            <p>This section describes some of the ways in which you can specify the body of a message 
+                    sent via the JMS control.</p>
+
+            <section>
+                <title>Selecting the Message Type</title>
+
+                <p>A JMS control can send text messages (including XML messages), byte array messages, 
+                        object messages, and javax.jms.Message (JMS Message) objects. These are the types defined by 
+                        the JMS messaging service specification.</p>
+
+                <p>When you create a JMS control, you can specify which type of message it sends and receives 
+                        with the <code>JMSControl.Message.messageType()</code> annotation.</p> 
+
+                <p>You have complete control over the send methods, as long as you are sending a message of a 
+                        supported type; you can modify method signatures as you need to, including 
+                        adding additional parameters to handle message headers and properties. However, you can 
+                        only specify one parameter in the method for the message body.</p>
+
+           </section>
+           <section>
+                   <title>Sending and Receiving a Simple Text Message</title>
+
+                   <p>The simplest message body is a text message. The following example shows a simple text 
+                           message sent to the messaging service via a JMS control:</p>
+                   <source>
+public void sendString(String msg) throws Exception
+  {
+  myJMSControl.sendTextMessage(msg);
+  }
+                   </source>
+  
+
+           </section>
+           <section>
+                   <title>Sending and Receiving an XML Message using XMLBeans</title>
+
+                   <p>If you need to send a set of values in the message body, you can construct the message 
+                           body using an XMLBeans object type. Apache XMLBeans technology generates a set of Java 
+                           classes from an XML schema (.xsd) file. You can then use these classes to work with 
+                           XML documents in your code.</p>
+
+                   <p>If you don't already have a schema file, you can construct one by hand, or you can generate 
+                           one from an XML document or fragment using a third-party authoring tool. Once you've 
+                           generated the XMLBeans classes from the schema file, you can import those classes into 
+                           your JMS control class. You can then modify the send method or receiving callback on 
+                           the JMS control to send or receive a message of the appropriate type.</p>
+
+                   <p>Note that XMLBeans messages are transmitted as JMS text messages. When you create a JMS 
+                           control that will use an XMLBeans type for the message body, specify the type as
+                           with the <code>JMSControl.Message.messageType()</code> annotation as 'Text'.</p> 
+
+                   <p>The following is a simple JWS Control which sends an XML message:</p>
+                   <source>
+import java.util.Date;
+
+import org.apache.beehive.controls.api.bean.ControlExtension;
+import org.apache.beehive.controls.system.jms.JMSControl;
+import org.apache.xmlbeans.XmlObject;
+
+@ControlExtension
+@JMSControl.Destination(sendJndiName="jms.SampleQueue",jndiConnectionFactory="weblogic.jws.jms.QueueConnectionFactory")
+public interface SampleQueue extends JMSControl
+{
+   /**
+    * Submit an xml object (org.apache.xmlbeans) as a text message.
+    * @param document the document.
+    * @param type the message JMS type.
+    */
+    public void submitXml(XmlObject document,@Type String type);
+    
+    /**
+     * Submit an xml object (org.apache.xmlbeans) with JMS type "xmlObject".
+     * @param document the document.
+     */
+    @Message(MessageType.Text)
+    @Type("xmlObject")
+    public void submitXml(XmlObject document);
+    
+    /**
+     * Submit an already constructed message
+     * @param message the jms-message.
+     */
+    public void submitMessage(Message message);
+}
+                   </source>
+           </section>
+        </section>
+
+
+        <section>
+                <title>Specifying Message Headers and Properties</title>
+
+                <p>The JMS control includes properties for setting and retrieving headers and properties 
+                        on a JMS message.</p>
+
+                <section>
+                        <title>Accessing Message Headers</title>
+
+                        <p>A JMS message includes a number of header fields that contain information used to 
+                                identify and route messages. You can set the message headers for an outgoing 
+                                message using the JMS control by using the <code>JMSControl.setHeaders(Map)</code> method
+                                or the <code>JMSControl.setHeader(HeaderType, Object)</code> method.
+                                The supported headers for an outgoing message are:</p>
+                        <ul>
+                                <li>JMSCorrelationID</li>
+                                <li>JMSExpriation</li>
+                                <li>Priority</li>
+                                <li>JMSType</li>
+                        </ul>
+
+                        <p>For more information on these headers, see the Sun JMS specification.</p>
+
+                </section>
+
+                <section>
+                        <title>Accessing Message Properties</title>
+
+                        <p>A JMS message can also include properties that you or the message sender can add to 
+                                send additional information about the message. You can think of them as optional, 
+                                custom headers. Properties can be of type boolean, byte, short, int, long, float, 
+                                double, or string. They can be set when a message is sent. You can add as many properties 
+                                to the message as you need to.</p>
+
+                        <p>You can set the properties of messages sent using the JMS control by using the 
+                                <code>JMSControl.setProperties(Map)</code> or the 
+                                <code>JMSControl.setProperty(String, Object)</code> methods.</p>
+
+                        <p>When the JMS control is sending a message, the JMS control adds the properties 
+                                specified to the outgoing message. You can optionally specify that a parameter 
+                                passed to the method that sends the message should be substituted as a property 
+                                value on the message.</p>
+                </section>
+
+        </section>
+    </body>
+</document>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Control Annotations</title>
+  </header>
+	<body>
+		<section>
+			<title>Controls Annotations</title>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationConstraints.AllowExternalOverride.html">@AnnotationConstraints.AllowExternalOverride</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationConstraints.MembershipRule.html">@AnnotationConstraints.MembershipRule</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationConstraints.MembershipRuleValues.html">@AnnotationConstraints.MembershipRuleValues</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationConstraints.RequiredRuntimeVersion.html">@AnnotationConstraints.RequiredRuntimeVersion</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.Date.html">@AnnotationMemberTypes.Date</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.Decimal.html">@AnnotationMemberTypes.Decimal</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.FilePath.html">@AnnotationMemberTypes.FilePath</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.Int.html">@AnnotationMemberTypes.Int</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.JndiName.html">@AnnotationMemberTypes.JndiName</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.JndiName.ResourceType.html">@AnnotationMemberTypes.JndiName.ResourceType</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.Optional.html">@AnnotationMemberTypes.Optional</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.QName.html">@AnnotationMemberTypes.QName</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.Text.html">@AnnotationMemberTypes.Text</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.URI.html">@AnnotationMemberTypes.URI</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.URL.html">@AnnotationMemberTypes.URL</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/AnnotationMemberTypes.XML.html">@AnnotationMemberTypes.XML</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/properties/BaseProperties.html">@BaseProperties</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/BeanInfo.html">@BeanInfo</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/events/Client.html">@Client</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/context/Context.html">@Context</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/Control.html">@Control</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/ControlExtension.html">@ControlExtension</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/ControlImplementation.html">@ControlImplementation</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/ControlInterface.html">@ControlInterface</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/ControlReferences.html">@ControlReferences</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/events/EventHandler.html">@EventHandler</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/events/EventSet.html">@EventSet</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/EventSetInfo.html">@EventSetInfo</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/ExternalPropertySets.html">@ExternalPropertySets</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/FeatureAttribute.html">@FeatureAttribute</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/FeatureInfo.html">@FeatureInfo</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/ManifestAttribute.html">@ManifestAttribute</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/ManifestAttributes.html">@ManifestAttributes</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/packaging/PropertyInfo.html">@PropertyInfo</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/properties/PropertySet.html">@PropertySet</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/bean/Threading.html">@Threading</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/versioning/Version.html">@Version</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/versioning/VersionRequired.html">@VersionRequired</a></p>
+			<p><a href="../apidocs/javadoc/org/apache/beehive/controls/api/versioning/VersionSupported.html">@VersionSupported</a></p>
+		</section>
+			</body>
+			<footer>
+        <legal>Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+	&copy; 2004, Apache Software Foundation
+	</legal>
+    </footer>
+</document>

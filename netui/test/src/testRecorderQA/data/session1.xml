@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>Accesskey</sessionName>
+  <tester>Daryl</tester>
+  <startDate>26 Mar 2004, 02:18:16.539 PM MST</startDate>
+  <description>Test of the accesskey attribute</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/netuiDRT/tags/accesskey/Controller.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322; .NET CLR 1.0.3705) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>-67265aa3:fb89054f29:-7ff6</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>1</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+        <title>
+            Web Application Page
+        </title>
+    </head>
+    <body>
+        <a href="/netuiDRT/tags/accesskey/begin.do" accesskey="H"><b>H</b>ome</a>
+        <br>
+        <a href="/netuiDRT/tags/accesskey/post.do" accesskey="P"><b>P</b>ost</a>
+        <br>
+        <a href="/netuiDRT/tags/accesskey/begin.do"><img src="/netuiDRT/tags/accesskey/./folder.gif" accesskey="W"></a>
+        <form name="myBean" action="/netuiDRT/tags/accesskey/post.do" method="post">
+            <table>
+                <tr valign="top">
+                    <td>Color:</td>
+                    <td>
+                    
+                        <input type="radio" name="wlw-radio_button_group_key:{actionForm.color}" value="foo" accesskey="8" alt="PageFlow Text for Alt"><span>foo</span> (8)<br/>
+                        <input type="radio" name="wlw-radio_button_group_key:{actionForm.color}" value="bar" accesskey="9" alt="PageFlow Text for Alt"><span>bar</span> (9)<br/>
+                        <input type="radio" name="wlw-radio_button_group_key:{actionForm.color}" value="baz" accesskey="0" alt="PageFlow Text for Alt"><span>baz</span> (0)<br/>
+                    
+                   </td>
+                </tr>
+                <tr valign="top">
+                    <td>Des<b>C</b>ription:</td>
+                    <td>
+                    <textarea name="{actionForm.description}" accesskey="C"></textarea>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td><b>D</b>isabled:</td>
+                    <td>
+                    <input type="hidden" name="wlw-checkbox_key:{actionForm.disabled}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.disabled}" accesskey="D" alt="PageFlow Text for Alt">
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td>na<b>M</b>e:</td>
+                    <td>
+                    <input type="text" name="{actionForm.name}" value="" accesskey="M" alt="PageFlow Text for Alt">
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td><b>T</b>ype:</td>
+                    <td>
+                    <input type="hidden" name="wlw-select_key:{actionForm.type}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.type}" accesskey="T">
+<option value="foo">foo</option>
+<option value="bar">bar</option>
+<option value="baz">baz</option></select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td>Attributes:</td>
+                    <td>
+                    <input type="hidden" name="wlw-checkbox_group_key:{actionForm.attributes}OldValue" value="true">
+                        <input type="checkbox" name="wlw-checkbox_group_key:{actionForm.attributes}" value="fenders" accesskey="1" alt="PageFlow Text for Alt"><span>fenders</span> (1)<br/>
+                        <input type="checkbox" name="wlw-checkbox_group_key:{actionForm.attributes}" value="wheels" accesskey="2" alt="PageFlow Text for Alt"><span>wheels</span> (2)<br/>
+                        <input type="checkbox" name="wlw-checkbox_group_key:{actionForm.attributes}" value="windows" accesskey="3" alt="PageFlow Text for Alt"><span>windows</span> (3)<br/>
+                    
+                    </td>
+                </tr>
+            </table>
+            <br/>&nbsp;
+            <input type="submit" value="_Form Submit" accesskey="F" alt="PageFlow Text for Alt">
+            <input type="Reset" value="_Reset" accesskey="R" alt="PageFlow Text for Alt">
+            <input type="image" src="/netuiDRT/tags/accesskey/./folder.gif" accesskey="X">
+        </form>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/netuiDRT/tags/accesskey/post.do</uri>
+      <method>POST</method>
+
+      <parameters>
+        <parameter>
+          <name>wlw-checkbox_group_key:{actionForm.attributes}</name>
+          <value>fenders</value>
+        </parameter>
+        <parameter>
+          <name>wlw-checkbox_group_key:{actionForm.attributes}</name>
+          <value>wheels</value>
+        </parameter>
+        <parameter>
+          <name>wlw-checkbox_group_key:{actionForm.attributes}</name>
+          <value>windows</value>
+        </parameter>
+        <parameter>
+          <name>wlw-checkbox_group_key:{actionForm.attributes}OldValue</name>
+          <value>true</value>
+        </parameter>
+        <parameter>
+          <name>wlw-checkbox_key:{actionForm.disabled}</name>
+          <value>on</value>
+        </parameter>
+        <parameter>
+          <name>wlw-checkbox_key:{actionForm.disabled}OldValue</name>
+          <value>false</value>
+        </parameter>
+        <parameter>
+          <name>wlw-radio_button_group_key:{actionForm.color}</name>
+          <value>foo</value>
+        </parameter>
+        <parameter>
+          <name>wlw-select_key:{actionForm.type}</name>
+          <value>foo</value>
+        </parameter>
+        <parameter>
+          <name>wlw-select_key:{actionForm.type}OldValue</name>
+          <value>true</value>
+        </parameter>
+        <parameter>
+          <name>{actionForm.description}</name>
+          <value>kkk</value>
+        </parameter>
+        <parameter>
+          <name>{actionForm.name}</name>
+          <value>ss</value>
+        </parameter>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>AkeadFMq2FYrS3jFgVcWLMGz3M2CaGoWmy732dQPcga5tzxWmird!601497888</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate, x-gzip, compress, x-compress</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Cache-Control</name>
+          <value>no-cache</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive, TE</value>
+        </header>
+        <header>
+          <name>Content-length</name>
+          <value>563</value>
+        </header>
+        <header>
+          <name>Content-type</name>
+          <value>application/x-www-form-urlencoded</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=AkeadFMq2FYrS3jFgVcWLMGz3M2CaGoWmy732dQPcga5tzxWmird!601497888</value>
+        </header>
+        <header>
+          <name>Cookie2</name>
+          <value>$Version="1"</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>TE</name>
+          <value>trailers, deflate, gzip, compress</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322; .NET CLR 1.0.3705) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.failMode</name>
+          <value>stop</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testID</name>
+          <value>-67265aa3:fb89054f29:-7ff6</value>
+        </header>
+        <header>
+          <name>testRecorder.playback.testNumber</name>
+          <value>2</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+        <title>
+            Web Application Page
+        </title>
+    </head>
+    <body>
+        <a href="/netuiDRT/tags/accesskey/begin.do" accesskey="H">Home</a><br/>
+        <b>Attributes:</b><br/>
+        <ol>
+                <li>
+                    <span>fenders</span>
+                </li>
+            
+                <li>
+                    <span>wheels</span>
+                </li>
+            
+                <li>
+                    <span>windows</span>
+                </li>
+            </ol><br>
+        <b>Color:</b> <span>foo</span><br/>
+        <b>Description:</b> <span>kkk</span><br/>
+        <b>Disabled:</b> <span>true</span><br/>
+        <b>Name:</b> <span>ss</span><br/>
+        <b>Type:</b> <span>foo</span><br/>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+
+    <testResults>
+      <testStatus>fail</testStatus>
+
+    </testResults>
+  </test>
+
+  </tests>
+
+  <endDate>26 Mar 2004, 02:18:20.875 PM MST</endDate>
+  <sessionStatus>fail</sessionStatus>
+  <testCount>2</testCount>
+  <passedCount>0</passedCount>
+  <failedCount>2</failedCount>
+</recorderSession>

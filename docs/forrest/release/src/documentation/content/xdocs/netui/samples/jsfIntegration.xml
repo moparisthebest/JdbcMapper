@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>NetUI: JSF Integration</title>
+	</header>
+	<body>
+		<section id="intro">
+			<title>Introduction</title>
+			<p>This sample shows how to integrate JSF (Java Server Faces) into your NetUI 
+				web app; specifically, how to use JSF pages as the View tier with NetUI Page Flow
+                as the Controller tier.  For more information 
+                see <a href="site:pageflow_jsf">Java Server Faces</a>.</p>
+		</section>
+		<section id="running">
+			<title>Running the Sample on Tomcat 5</title>
+			<p>The following instructions explain how to run the sample on Tomcat 5.  The sample
+				will run on other web containers, but we have chosen Tomcat 5 for convenience.</p>
+			<section id="set_up">
+				<title>To Set up the Environment</title>
+                <p>Before proceeding, complete all of the necessary and optional steps in the 
+					following topic: 
+					<a class="fork" href="#setup">Beehive Installation and Setup</a></p>
+				<p>Open a command shell and confirm that you have set following variables:</p>
+					<ul>
+						<li><code>ANT_HOME</code></li>
+						<li><code>JAVA_HOME</code></li>
+						<li><code>CATALINA_HOME</code></li>
+					</ul>
+					<p>Also ensure that the following elements are on your <code>PATH</code>:</p>
+					<ul>
+						<li><code>ANT_HOME/bin</code></li>
+						<li><code>JAVA_HOME/bin</code></li>
+					</ul>
+			</section>
+			<section id="copy_app">
+				<title>To Copy the Application to a Project 
+					Folder (Optional Step)</title>
+				<p>To keep your Beehive distribution directory 
+					pristine, you should copy the folder
+					<code>&lt;BeehiveRoot>/samples/netui-jsf</code> to another location before 
+					proceeding.</p> 
+				
+				<note>&lt;BeehiveRoot> refers to the top-level directory of your Beehive installation.
+					A typical value for &lt;BeehiveRoot> would be <code>/apache/apache-beehive-1.0</code>. </note>
+					<p>The following instructions assume that you have 
+					copied the folder <code>netui-jsf</code> into the 
+					directory <code>/beehive_projects</code>, 
+					resulting in the following directory structure.</p>
+				<source>/
+  beehive_projects
+    netui-jsf</source>
+	<note>Strictly speaking, you do not need to copy the <code>netui-jsf</code>
+		directory to another location.  If you wish to leave the <code>netui-jsf</code> directory
+		in place, in the instructions below you must
+		replace occurrences of the path element <code>/beehive_projects</code>
+		with this path element: <code>&lt;BeehiveRoot>/samples</code>.
+		<br/><br/>
+		For example, to build the sample, run the following Ant command:
+		<br/><br/>
+		&nbsp;&nbsp;&nbsp;<code>ant -f &lt;BeehiveRoot>/samples/netui-jsf/src/WEB-INF/build.xml clean  build war</code>
+		<br/><br/>
+		To delete the sample's build directory, run the <code>clean</code> target:
+		<br/><br/>
+		&nbsp;&nbsp;&nbsp;<code>ant -f &lt;BeehiveRoot>/samples/netui-jsf/src/WEB-INF/build.xml clean</code></note>
+			</section>
+			<section><title>To Download a JSF Implementation</title>
+				<p>Download and install one of the following JSF implementations:</p>
+				<ul>
+					<li><a href="http://myfaces.apache.org">MyFaces v1.0.9 or later</a></li>
+					<li><a href="http://java.sun.com/j2ee/javaserverfaces/download.html">JSF Reference Implementation v1.1_01</a></li>
+				</ul>
+				</section>
+			<section id="edit_properties_file"><title>To Edit the <code>build.properties</code> File</title>
+				<p>In this section you will edit the <code>build.properties</code> file--the file
+					that sets the build-related properties for your web application.</p>
+				<p>Open the file <code>/beehive_projects/netui-jsf/WEB-INF/src/build.properties</code>
+					in a text editor.</p>
+				<p>Edit the file so that the <code>beehive.home</code> property points to the 
+					top-level folder of your beehive installation.</p>  
+				<p>Also uncomment one of the properties <code>myfaces.dir</code> or <code>jsf-ri.dir</code>.
+					Point the uncommented property at the appropriate directory.</p>
+				<p>For example, if your beehive installation
+					resides at <code>/apache/apache-beehive-1.0</code>
+					and you have installed the JSF Reference Implementation, 
+					then your <code>build.properties</code> file
+					would appear as follows.</p>
+				<source>beehive.home=<strong>/apache/apache-beehive-1.0</strong>
+
+servlet-api.jar=${os.CATALINA_HOME}/common/lib/servlet-api.jar
+jsp-api.jar=${os.CATALINA_HOME}/common/lib/jsp-api.jar
+
+context.path=netui-jsf
+
+# TODO:
+# if using MyFaces, uncomment the 'myfaces.dir' property and set it to a directory that contains
+# myfaces.jar (MyFaces v1.0.9 or later).
+#myfaces.dir=
+
+# TODO:
+# If using the JavaServer Faces Reference Implementation, uncomment the 'jsf-ri.dir' property and
+# set it to a directory that contains jsf-api.jar and jsf-impl.jar (JSF RI v1.1_01).
+<strong>jsf-ri.dir=/java/jsf-1_1_01/lib</strong></source>
+<note>Windows users must use forwardslashes (/) not backslashes (\) in the 
+	<code>build.properties</code> file.</note>
+
+					</section>
+			<section id="compile">
+				<title>To Compile the Application</title>
+				<section><title>...If Using JSF Reference Implementation</title></section>
+				<p>If you are using the JSF Reference Implementation, enter the following Ant 
+					command:</p>
+<source>ant 
+  -f /beehive_projects/netui-jsf/WEB-INF/src/build.xml
+  clean
+  build-jsf-ri
+  war
+
+<strong>Copy and Paste version:</strong>
+ant -f /beehive_projects/netui-jsf/WEB-INF/src/build.xml clean build-jsf-ri war</source>
+                 <section><title>...If Using MyFaces</title>
+				<p>If you are using MyFaces, enter the following Ant 
+					command:</p>
+<source>ant 
+  -f /beehive_projects/netui-jsf/WEB-INF/src/build.xml
+  clean
+  build-myfaces
+  war
+
+<strong>Copy and Paste version:</strong>
+ant -f /beehive_projects/netui-jsf/WEB-INF/src/build.xml clean build-myfaces war</source>
+
+					</section>
+					<p>Both of these targets build a WAR file and save it to:</p>
+					<source>/beehive_projects/netui-jsf.war</source>
+			</section>
+			<section id="start_tomcat">
+				<title>To Start Tomcat</title>
+				<p>To start Tomcat, run the following command:</p>
+				<source>%CATALINA_HOME%\bin\startup.bat</source>
+                <p>On non-Windows systems:</p>
+                <source>$CATALINA_HOME/bin/startup.sh</source>
+			</section>
+			<section id="deploy">
+				<title>To Deploy to Tomcat</title>
+ <p>To deploy the samples, copy the WAR file to Tomcat's <code>webapps</code> directory.</p>
+ <p>On Windows:</p>
+ <source>copy C:\beehive_projects\netui-jsf.war %CATALINA_HOME%\webapps /Y</source>
+                <note>
+                    On Windows, there are file-locking issues that Tomcat versions 5.5.x and above are sensitive to.
+                    In particular, any web application that uses Struts will <strong>fail to redeploy</strong> if you
+                    copy in a new .war file as described here.  The Commons Digester team is adding a workaround for the
+                    issue (see
+                    <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=37034">this bug</a>), but in the meantime,
+                    you can work around it with the <code>antiResourceLocking</code> option in Tomcat.  Just add a file
+                    called <code>context.xml</code> in a directory called <code>META-INF</code> inside the
+                    web application directory before building (so it will end up as <code>META-INF/context.xml</code>
+                    in your <code>controls_tutorial.war</code>):
+                    <br/>
+                    <br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;?xml version="1.0" encoding="UTF-8"?></code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;Context antiResourceLocking="true"></code><br/>
+                    <code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Context></code>
+                </note>
+ <p>Everywhere else:</p>
+ <source>cp /beehive_projects/netui-jsf.war $CATALINA_HOME/webapps</source>
+			</section>
+			<section id="test">
+				<title>Running</title>
+				<p>To browse the JSF sample, visit the following link in a browser:</p>
+				<p><a class="fork" href="http://localhost:8080/netui-jsf">http://localhost:8080/netui-jsf</a></p>
+			    
+			</section>
+		</section>
+	</body>
+	<footer>
+		<legal>Java, J2EE, and JCP are trademarks or registered trademarks of 
+			Sun Microsystems, Inc. in the United States and other 
+			countries.<br/> &copy; 2004, Apache Software Foundation </legal>
+	</footer>
+</document>

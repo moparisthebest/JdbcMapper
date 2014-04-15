@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+    "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<!-- This is test Tiles definition file. -->
+
+<tiles-definitions>
+
+    <definition name="defaultLayout" path="/miniTests/tiles/default.jsp">
+        <put name="titleString"  value="Sample Page Title" />
+        <put name="header"       value="/miniTests/tiles/header.jsp" />
+        <put name="menu"         value="mainMenu" />
+        <put name="content"      value="mainBody" />
+        <put name="footer"       value="/miniTests/tiles/footer.jsp" />
+    </definition>
+
+    <definition name="mainMenu" path="/miniTests/tiles/mainMenu.jsp" >
+    </definition>
+
+    <definition name="mainBody" path="/miniTests/tiles/mainBody.jsp">
+        <put name="panel1"       value="/miniTests/tiles/panel1.jsp" />
+        <put name="panel2"       value="/miniTests/tiles/panel2.jsp" />
+        <put name="body"         value="/miniTests/tiles/netui-body.jsp" />
+    </definition>
+
+    <definition name="defaultPage" extends="defaultLayout">
+        <put name="titleString"  value="Default Layout Page - Tiles, NetUI Tags" />
+    </definition>
+
+    <definition name="strutsBody" extends="mainBody">
+        <put name="body"         value="/miniTests/tiles/struts-body.jsp" />
+    </definition>
+
+    <definition name="defaultStrutsPage" extends="defaultLayout">
+        <put name="titleString"  value="Default Layout Page - Tiles, Struts Tags" />
+        <put name="content"      value="strutsBody" />
+    </definition>
+
+    <definition name="blankPage" extends="defaultLayout">
+        <put name="titleString"  value="Blank Body Page - Tiles" />
+        <put name="content"      value="/miniTests/tiles/blank.jsp" />
+    </definition>
+
+    <definition name="editMenuPage" extends="defaultLayout">
+        <put name="titleString"  value="Edit Menu Page - Tiles" />
+        <put name="menu"         value="/miniTests/tiles/editMenu.jsp" />
+    </definition>
+
+    <definition name="alternatePanels" extends="mainBody">
+        <put name="panel1"       value="/miniTests/tiles/panel2.jsp" />
+        <put name="panel2"       value="/miniTests/tiles/panel1.jsp" />
+    </definition>
+
+    <definition name="reversePanels" extends="defaultLayout">
+        <put name="titleString"  value="Reversed Panels Page - Tiles" />
+        <put name="content"      value="alternatePanels" />
+    </definition>
+
+    <definition name="alternateBody" path="/miniTests/tiles/alternateBody.jsp">
+        <put name="panel1"       value="/miniTests/tiles/panel1.jsp" />
+        <put name="panel2"       value="/miniTests/tiles/panel2.jsp" />
+        <put name="body"         value="/miniTests/tiles/netui-body.jsp" />
+    </definition>
+
+    <definition name="reverseBody" extends="defaultLayout">
+        <put name="titleString"  value="Reversed Panels Page - Tiles" />
+        <put name="content"      value="alternateBody" />
+    </definition>
+
+    <definition name="alternateLayout" path="/miniTests/tiles/alternate.jsp">
+        <put name="titleString"  value="Alternate Layout" />
+        <put name="header"       value="/miniTests/tiles/header.jsp" />
+        <put name="menu"         value="/miniTests/tiles/sideMenu.jsp" />
+        <put name="panel1"       value="/miniTests/tiles/panel1.jsp" />
+        <put name="panel2"       value="/miniTests/tiles/panel2.jsp" />
+        <put name="body"         value="/miniTests/tiles/netui-body.jsp" />
+        <put name="footer"       value="/miniTests/tiles/footer.jsp" />
+    </definition>
+
+    <definition name="j158Page" path="/miniTests/tiles/j158.do">
+        <put name="titleString"  value="Alternate Layout Page - Tiles" />
+    </definition>
+
+
+</tiles-definitions>

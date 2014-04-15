@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<testDefinitions xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <categories>
+        <category>
+            <name>DRT</name>
+            <description>
+                Developer Regression Tests
+            </description>
+        </category>
+    </categories>
+
+    <tests>
+        <test>
+            <name>testWithNonExistentWebapp</name>
+            <description>this test haa a webapp specification that is not in the webapps XML</description>
+            <webapp>nonExistent</webapp>
+            <categories>
+                <category>DRT</category>
+            </categories>
+        </test>
+    </tests>
+</testDefinitions>
+

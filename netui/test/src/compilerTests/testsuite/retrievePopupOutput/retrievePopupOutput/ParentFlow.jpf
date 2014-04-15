@@ -1,0 +1,21 @@
+package retrievePopupOutput;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="noTagIdRef.jsp"),
+    @Jpf.SimpleAction(name = "simplePopup",
+                      path = "noDatasource.jsp")
+}
+)
+public class ParentFlow
+    extends PageFlowController
+{
+   
+}

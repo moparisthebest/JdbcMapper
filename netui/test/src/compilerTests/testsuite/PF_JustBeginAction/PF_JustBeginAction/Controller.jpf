@@ -1,0 +1,26 @@
+package PF_JustBeginAction;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ * @desc: This is the default controller for a blank web application.
+ *
+ * @result: This should compile, cleanly.
+ */
+@Jpf.Controller()
+public class Controller extends PageFlowController
+{
+    @Jpf.Action(
+        forwards={
+           @Jpf.Forward(name="index", path="index.jsp")
+        }
+    )
+    protected Forward begin()
+    {
+        return new Forward("index");
+    }
+
+
+}

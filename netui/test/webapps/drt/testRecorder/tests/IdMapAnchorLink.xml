@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>IdMapAnchorLink</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>29 Mar 2005, 12:30:02.234 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/idmap/anchorLink/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1E32E05DC8FDCD5E3D746A21B1D11938</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1E32E05DC8FDCD5E3D746A21B1D11938; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-44f7ea7d:102efc67118:-7bdf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/idmap/anchorLink/index.jsp">
+    &lt;/head>
+    &lt;body>
+    &lt;a id="top" name="top">&lt;/a>
+    &lt;p style="color:green">This test verifies the behavior of anchors
+    acting as fragment identifiers.  Anchor which only set the tagId
+    act location that may be the target of another anchor.  When the
+    linkName attribute is set, this acts to target a named anchor by
+    creating a fragment identifier.  In this case the link name may or
+    may not be qualified into a script container.  If the link name does
+    not start with the '#', it will be qualified the same way a tagId
+    is qualified.  If link name begins with '#' it is output as is.
+    &lt;/p>
+    &lt;p style="color:green">In this test there are two anchors specifying
+    'top' as their tagId value.  One is above this text and the other
+    is inside a scoped ScriptContainer and appears below.  At the bottom
+    of the page, two link go to the real top and the test top.
+    &lt;/p>
+    &lt;div style="border: thin solid;height: 100px;">&lt;/div>
+    &lt;div netui:idScope="one" >
+       &lt;a id="one.top" name="one.top">&lt;/a>
+       &lt;h4>Fragment Identifiers and Scoped Ids&lt;/h4>
+       &lt;a href="#one.bottom">Bottom&lt;/a>
+       &lt;div style="border: thin solid;height: 400px;">
+       &lt;p id="javaOut">&lt;/p>
+       &lt;/div>
+       &lt;a id="one.bottom" name="one.bottom">&lt;/a>
+       &lt;a href="#one.top">Test Top&lt;/a>&lt;br>
+       &lt;a href="#top">Real Top&lt;/a>
+    &lt;/div>
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>&lt;/body>
+    &lt;script language="JavaScript" type="text/JavaScript">
+
+    var p = document.getElementById("javaOut");
+    var val = "&lt;b>Document Access&lt;/b>&lt;br>";
+    var anchorTag = document.getElementById(lookupIdByTagId("top",p));
+    val = val + "Test Top ScopeId: &lt;b>" + lookupIdScope(anchorTag,".") + "&lt;/b>&lt;br/>";
+    val = val + "Test Top ID: &lt;b>" + lookupIdByTagId("top",anchorTag) + "&lt;/b>&lt;br/>";
+    anchorTag = document.getElementById(lookupIdByTagId("top"));
+    val = val + "Real Top Scope Id: &lt;b>" + lookupIdScope(anchorTag,".") + "&lt;/b>&lt;br/>";
+    val = val + "Real Top ID: &lt;b>" + lookupIdByTagId("top") + "&lt;/b>&lt;br/>";
+    p.innerHTML = val;
+    &lt;/script>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/idmap/anchorLink/index.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1E32E05DC8FDCD5E3D746A21B1D11938</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>-------</ses:name>
+                  <ses:value>----:-----------:--------------------------------------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1E32E05DC8FDCD5E3D746A21B1D11938; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-44f7ea7d:102efc67118:-7bdf</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/idmap/anchorLink/index.jsp">
+    &lt;/head>
+    &lt;body>
+    &lt;a id="top" name="top">&lt;/a>
+    &lt;p style="color:green">This test verifies the behavior of anchors
+    acting as fragment identifiers.  Anchor which only set the tagId
+    act location that may be the target of another anchor.  When the
+    linkName attribute is set, this acts to target a named anchor by
+    creating a fragment identifier.  In this case the link name may or
+    may not be qualified into a script container.  If the link name does
+    not start with the '#', it will be qualified the same way a tagId
+    is qualified.  If link name begins with '#' it is output as is.
+    &lt;/p>
+    &lt;p style="color:green">In this test there are two anchors specifying
+    'top' as their tagId value.  One is above this text and the other
+    is inside a scoped ScriptContainer and appears below.  At the bottom
+    of the page, two link go to the real top and the test top.
+    &lt;/p>
+    &lt;div style="border: thin solid;height: 100px;">&lt;/div>
+    &lt;div netui:idScope="one" >
+       &lt;a id="one.top" name="one.top">&lt;/a>
+       &lt;h4>Fragment Identifiers and Scoped Ids&lt;/h4>
+       &lt;a href="#one.bottom">Bottom&lt;/a>
+       &lt;div style="border: thin solid;height: 400px;">
+       &lt;p id="javaOut">&lt;/p>
+       &lt;/div>
+       &lt;a id="one.bottom" name="one.bottom">&lt;/a>
+       &lt;a href="#one.top">Test Top&lt;/a>&lt;br>
+       &lt;a href="#top">Real Top&lt;/a>
+    &lt;/div>
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>&lt;/body>
+    &lt;script language="JavaScript" type="text/JavaScript">
+
+    var p = document.getElementById("javaOut");
+    var val = "&lt;b>Document Access&lt;/b>&lt;br>";
+    var anchorTag = document.getElementById(lookupIdByTagId("top",p));
+    val = val + "Test Top ScopeId: &lt;b>" + lookupIdScope(anchorTag,".") + "&lt;/b>&lt;br/>";
+    val = val + "Test Top ID: &lt;b>" + lookupIdByTagId("top",anchorTag) + "&lt;/b>&lt;br/>";
+    anchorTag = document.getElementById(lookupIdByTagId("top"));
+    val = val + "Real Top Scope Id: &lt;b>" + lookupIdScope(anchorTag,".") + "&lt;/b>&lt;br/>";
+    val = val + "Real Top ID: &lt;b>" + lookupIdByTagId("top") + "&lt;/b>&lt;br/>";
+    p.innerHTML = val;
+    &lt;/script>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>29 Mar 2005, 12:30:03.116 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>2</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>2</ses:failedCount>
+</ses:recorderSession>

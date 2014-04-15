@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<!-- ======================================================================== -->
+<!--                                                                          -->
+<!-- Common NetUI build dependencies                                          -->
+<!--                                                                          -->
+<!-- ======================================================================== -->
+<project name="module-import">
+
+    <import file="../beehive-imports.xml"/>
+    
+    <property name="src.dir" location="${beehive.home}/netui/src"/>
+    <property name="build.dir" location="${beehive.home}/netui/build"/>
+    <property name="jars.dir" location="${build.dir}/jars"/>
+    <property name="tlds.dir" location="${build.dir}/jars"/>
+
+    <property name="webapp.dist.dir" location="${build.dir}/dist/webapp"/>
+
+    <!-- todo: make netui.properties go away... -->
+    <property file="${beehive.home}/netui/ant/netui.properties"/>
+
+    <property name="testRecorder.dir" location="${build.dir}/tools"/>
+
+    <!-- filesets used by <path> structures and for copying -->
+    <fileset id="commons-el.fileset" file="${beehive.home}/netui/external/commons-el/commons-el.jar"/>
+
+    <fileset id="jstl.fileset" dir="${external.dir}/jstl">
+        <patternset refid="jstl.jars"/>
+    </fileset>
+
+    <property name="struts.dependency.path.ref" value="struts12.dependency.path"/>
+
+    <path id="commons-beanutils.dependency.path">
+        <fileset file="${beehive.home}/netui/external/struts/commons-beanutils.jar"/>
+    </path>
+
+    <!-- <path> structures used by clients needing to reference sets of related JARs -->
+    <path id="struts11.dependency.path">
+        <fileset dir="${struts11.dir}">
+            <patternset refid="struts11.jars"/>
+        </fileset>
+    </path>
+
+    <path id="struts12.dependency.path">
+        <fileset dir="${struts12.dir}">
+            <patternset refid="struts12.jars"/>
+        </fileset>
+    </path>
+
+    <path id="jsf.dependency.path">
+        <fileset file="${jsf-api.jar}"/>
+    </path>
+
+    <path id="commons-el.dependency.path">
+        <fileset file="${external.dir}/commons-el/commons-el.jar"/>
+    </path>
+
+    <path id="commons-collections.dependency.path">
+        <fileset file="${external.dir}/commons-collections/commons-collections.jar"/>
+    </path>
+
+    <path id="webdoclet.dependency.path">
+        <path refid="servlet.dependency.path"/>
+        <path refid="log4j.dependency.path"/>
+        <path refid="commons-collections.dependency.path"/>
+        <fileset dir="${beehive.home}/netui/external/xdoclet">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${struts.dir}">
+            <include name="commons-logging.jar"/>
+        </fileset>
+        <fileset file="${jars.dir}/bootstrap.jar"/>
+    </path>
+
+    <path id="webapp.dependency.path">
+        <fileset dir="${webapp.dist.dir}/web/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="testrecorder.build.dependency.path">
+        <pathelement location="${external.dir}/testRecorder/commons-httpclient-2.0.jar"/>
+        <path refid="commons-logging.dependency.path"/>
+    </path>
+
+    <macrodef name="copy-testrecorder-deps">
+        <attribute name="todir"/>
+        <sequential>
+            <copy todir="@{todir}/lib">
+                <fileset file="${external.dir}/testRecorder/commons-httpclient-2.0.jar"/>
+                <fileset refid="commons-logging.fileset"/>
+            </copy>
+            <copy todir="@{todir}/ant">
+                <fileset file="${test.dir}/ant/testRecorderCore.xml"/>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <patternset id="struts11.jars">
+        <include name="commons-beanutils.jar"/>
+        <include name="commons-collections.jar"/>
+        <include name="commons-digester.jar"/>
+        <include name="commons-fileupload.jar"/>
+        <include name="commons-lang.jar"/>
+        <include name="commons-logging.jar"/>
+        <include name="commons-validator.jar"/>
+        <include name="jakarta-oro.jar"/>
+        <include name="struts-legacy.jar"/>
+        <include name="struts.jar"/>
+    </patternset>
+
+    <patternset id="struts12.jars">
+        <include name="commons-beanutils.jar"/>
+        <include name="commons-digester.jar"/>
+        <include name="commons-fileupload.jar"/>
+        <include name="commons-logging.jar"/>
+        <include name="commons-validator.jar"/>
+        <include name="jakarta-oro.jar"/>
+        <include name="struts.jar"/>
+    </patternset>
+
+    <patternset id="jstl.jars">
+        <include name="jstl.jar"/>
+        <include name="standard.jar"/>
+    </patternset>
+
+</project>

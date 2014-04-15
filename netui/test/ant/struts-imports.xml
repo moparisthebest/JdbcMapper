@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+
+<project name="Beehive/NetUI/Test/Struts" default="" basedir=".">
+
+    <macrodef name="deploy-struts11">
+        <attribute name="webappdir" description="The root directory of a web appliction into which Struts should be deployed"/>
+        <attribute name="strutsdir" description="The root directory of the Struts libraries"/>
+        <sequential>
+            <available property="webapp.dir.available" file="@{webappdir}" type="dir"/>
+            <fail unless="webapp.dir.available" message="Can't deploy the Struts runtime to a @{webappdir} that does not exist."/>
+
+            <available property="struts.dir.available" file="@{strutsdir}" type="dir"/>
+            <fail unless="struts.dir.available" message="Can't find Struts in @{strutsdir}"/>
+
+            <echo>Deploy Struts 1.1</echo>
+
+            <copy todir="@{webappdir}/WEB-INF/lib">
+                <fileset dir="@{strutsdir}">
+                    <patternset refid="struts11.jars"/>
+                </fileset>
+            </copy>
+            <copy todir="@{webappdir}/WEB-INF">
+                <fileset dir="@{strutsdir}">
+                    <patternset refid="struts11.webinf"/>
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="deploy-struts12">
+        <attribute name="webappdir" description="The root directory of a web appliction into which Struts should be deployed"/>
+        <attribute name="strutsdir" description="The root directory of the Struts libraries"/>
+        <sequential>
+            <available property="webapp.dir.available" file="@{webappdir}" type="dir"/>
+            <fail unless="webapp.dir.available" message="Can't deploy the Struts runtime to a @{webappdir} that does not exist."/>
+
+            <available property="struts.dir.available" file="@{strutsdir}" type="dir"/>
+            <fail unless="struts.dir.available" message="Can't find Struts in @{strutsdir}"/>
+
+            <echo>Deploy Struts 1.2</echo>
+
+            <copy todir="@{webappdir}/WEB-INF/lib">
+                <fileset dir="@{strutsdir}">
+                    <patternset refid="struts12.jars"/>
+                </fileset>
+            </copy>
+            <copy todir="@{webappdir}/WEB-INF">
+                <fileset dir="@{strutsdir}">
+                    <patternset refid="struts12.webinf"/>
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="undeploy-struts12">
+        <attribute name="webappdir" description="The root directory of a web appliction into which Struts should be deployed"/>
+        <sequential>
+            <available property="webapp.dir.available" file="@{webappdir}" type="dir"/>
+            <fail unless="webapp.dir.available" message="Can't deploy the Struts runtime to a @{webappdir} that does not exist."/>
+
+            <echo>Undeploy Struts 1.2</echo>
+
+            <delete>
+                <fileset dir="@{webappdir}/WEB-INF/lib">
+                    <patternset refid="struts12.jars"/>
+                </fileset>
+            </delete>
+            <delete>
+                <fileset dir="@{webappdir}/WEB-INF">
+                    <patternset refid="struts12.webinf"/>
+                </fileset>
+            </delete>
+        </sequential>
+    </macrodef>
+
+    <patternset id="struts11.jars">
+        <include name="commons-beanutils.jar"/>
+        <include name="commons-collections.jar"/>
+        <include name="commons-digester.jar"/>
+        <include name="commons-fileupload.jar"/>
+        <include name="commons-lang.jar"/>
+        <include name="commons-logging.jar"/>
+        <include name="commons-validator.jar"/>
+        <include name="jakarta-oro.jar"/>
+        <include name="struts-legacy.jar"/>
+        <include name="struts.jar"/>
+    </patternset>
+
+    <patternset id="struts11.webinf">
+        <include name="validator-rules.xml"/>
+    </patternset>
+
+    <patternset id="struts12.jars">
+        <include name="commons-beanutils.jar"/>
+        <include name="commons-digester.jar"/>
+        <include name="commons-fileupload.jar"/>
+        <include name="commons-logging.jar"/>
+        <include name="commons-validator.jar"/>
+        <include name="jakarta-oro.jar"/>
+        <include name="struts.jar"/>
+    </patternset>
+
+    <patternset id="struts12.webinf">
+        <include name="validator-rules.xml"/>
+    </patternset>
+
+</project>

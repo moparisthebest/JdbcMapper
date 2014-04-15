@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Tree Tags</title>
+    </header>
+    <body>
+        <section id="Intro">
+            <title>Introduction</title>
+            <p>The following topic explains the tree tags and classes and how they are used to create
+                and render trees.  A tree is rendered in an HTML page based upon an
+                object representation of the tree.  NetUI defines a set of classes which
+                create the tree structure which is rendered.  The object representation may be created
+                either through NetUI JSP tags found in a JSP or may be created programmatically
+                in a page flow or shared flow.  This means that there are parallel representations
+                of a tree.  In a JSP, a set of JSP tags represent the tree.  This representation is
+                then transformed into a tree data structure defined by a set of tree classes.
+            </p>
+
+        </section>
+        <section id="Example">
+            <title>Simple Example</title>
+            <p>This section presents a sample of the most basic tree.  The tree is created in a JSP and
+                displays a simple tree on the page.  The tree itself has a root node with three children.  The
+                root may be expanded and collapsed.  Any of the tree nodes may be selected.
+            </p>
+            <section id="ExampleCode">
+                <title>Simple Example Code</title>
+                <p>
+                    <strong>simpleTree.jsp</strong>
+                </p>
+                <source><![CDATA[
+<%@ page language="java" contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://beehive.apache.org/netui/tags-html-1.0" prefix="netui"%>
+<netui:html>
+    <head>
+        <title>SimpleTree</title>
+        <netui:base/>
+    </head>
+    <netui:body>
+        <netui:tree dataSource="pageFlow.simpleTree" selectionAction="postback" tagId="tree">
+            <netui:treeItem expanded="true">
+                <netui:treeLabel>0</netui:treeLabel>
+                <netui:treeItem>
+                    <netui:treeLabel>0.0</netui:treeLabel>
+                </netui:treeItem>
+                <netui:treeItem>0.1</netui:treeItem>
+                <netui:treeItem>0.2</netui:treeItem>
+            </netui:treeItem>
+        </netui:tree>
+    </netui:body>
+</netui:html>
+]]></source>
+                <p> The <code>&lt;netui:tree></code> tag is the JSP tag that adds a tree to the page.  It is responsible
+                    for rendering the tree in the generated HTML page.  In this example, the contents of the tree
+                    itself are also
+                    defined in the <code>&lt;netui:tree></code> tag by using the <code>&lt;netui:treeItem></code>
+                    tags and nesting them
+                    in a tree structure.  In this simple case, the tree has a root (0) with three children (0.0,
+                    0.1, and 0.2).
+                </p>
+                <p> There are three required attributes on the <code>&lt;netui:tree></code> tag,
+                    <code>dataSource</code>, <code>tagId</code>
+                    and
+                    <code>selectionAction</code>.  The <code>dataSource</code> is used to bind to a
+                    <code>TreeElement</code> based data structure representing the tree to be displayed.
+                    The <code>selectionAction</code> is the action that will be called when a node is selected
+                    in the tree.  In some cases, it may also be called when a node in the tree is expanded or
+                    collapsed. In addition, the <code>tagId</code> attribute is also required.  If
+                    <code>runAtClient</code> is <code>true</code> then you must also specify the name of the
+                    tree by setting the <code>tagId</code>.
+                </p>
+                <p>
+                    <strong>Note:</strong>  In the example above, the leaf nodes are defined in two manners.  The
+                    first child (0.0) uses the <code>&lt;netui:treeLabel></code> to set the nodes label.  The next two
+                    children (0.1 and 0.2) are defined with the label as the body of the <code>&lt;netui:treeItem></code>. The
+                    <code>&lt;netui:treeItem></code> supports setting the label value from the body of the
+                    <code>&lt;netui:treeItem></code> if it is a leaf in the tree.  You are required to use
+                    the <code>&lt;netui:treeLabel></code> for all interior nodes or nodes with children.  In other
+                    words, <code>&lt;netui:treeItem></code> does not support mixed content; meaning that interior nodes must use
+                    <code>&lt;netui:treeLabel></code> to set the label value and all text inside the body is ignored.
+                </p>
+                <p>
+                    <strong>Controller.jpf</strong>
+                </p>
+                <source><![CDATA[
+package simpleTree;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import org.apache.beehive.netui.tags.tree.TreeElement;
+
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="simpleTree.jsp"),
+        @Jpf.SimpleAction(name="postback", path="simpleTree.jsp")
+    }
+)
+public class Controller
+    extends PageFlowController
+{
+    private TreeElement _simpleTree;
+
+    public TreeElement getSimpleTree() {
+        return _simpleTree;
+    }
+
+    public void setSimpleTree(TreeElement _simpleTree) {
+        this._simpleTree = _simpleTree;
+    }
+}
+]]></source>
+                <p>This very simple Page Flow controller supports displaying a tree.  There is a single property
+                "simpleTree" which holds a reference to a <code>TreeElement</code>.  This <code>TreeElement</code> represents the root
+                of the underlying tree object structure which is rendered by the <code>&lt;netui:tree></code> tag.
+                There are two actions defined, the standard
+                    <code>begin</code> action and the
+                    <code>postback</code>
+                action.  The
+                    <code>postback</code> action is called when a selection or expansion link is selected
+                in the rendered tree.
+                </p>
+            </section>
+            <section id="ExampleLifecycle">
+                <title>Simple Sample Lifecycle</title>
+                <p> This section describes the basic tree lifecycle using the SimpleTree example above.  The
+                    following figure represents the basic lifecycle of a tree being rendered by a <code>&lt;netui:tree></code>
+                    tag.
+                </p>
+                <p>
+                    <img src="images/simpleTreeFlow.png" alt="Tree Tag Lifecycle"/>
+                </p>
+                <p> The <code>dataSource</code> attribute is a required attribute on all trees.  It binds
+                    to an instance of a <code>TreeElement</code> (defined in
+                    <code>org.apache.beehive.netui.tags.tree</code>).  All trees are represented as tree data
+                        structure with a single root.  The <code>dataSource</code> attribute binds to this root.
+                </p>
+                <p>When the <code>&lt;netui:tree></code> tag begins processing it checks to see if the variable
+                    bound to by the <code>dataSource</code> is equal to null.  If it is, then the tree will
+                    process it's body content to create the tree data structure.  If the
+                    <code>dataSource</code> is not null, then that tree's data structure is used to render content.
+                    If you want to programmatically (or dynamically) create a tree, you may create the tree structure
+                    before the bound variable is accessed.  Typically this would be done in the <code>onCreate</code>
+                    method of a shared flow or page flow.
+                </p>
+                <p>In the simpleTree sample, the first time the page is displayed the body of the tree tag is
+                    processed because the page flow's property
+                    <code>simpleTree</code> is null.  This creates the initial
+                    tree data structure which is then rendered.  When the page is requested
+                    again, for example when a tree element is selected, the tree data structure created on the first
+                    request continues to be used and the body of the <code>&lt;netui:tree></code> tag is ignored.
+                </p>
+                <p> <strong>Note:</strong> A very common development task is to iteratively develop the
+                    <code>&lt;netui:tree></code>'s body content.  In order for any changes to be reflected when the tree is
+                    rendered, the variable bound to by
+                    <code>dataSource</code> must be null.  It is
+                    common to add an action to the page flow that will reset the value to null and call
+                    that from a link on a page.  If variable is not null, changes to the JSP will not be
+                    reflected in the rendered tree.
+                </p>
+            </section>
+        </section>
+        <section id="TagAndClasses">
+            <title>Tag and Classes</title>
+            <p>
+                This section describes the primary JSP tags and how they relate to the classes which
+                define the underlying data structure representing the tree. 
+                All of the tree features are available both in the tree tags as well as the underlying tree classes (described below).
+            </p>
+            <section id="TagToClassMapping">
+                <title>Tag to Class Mapping</title>
+                <p> There are a number of JSP tags that allow creation of tree through JSPs.  These tags build
+                the underlying data structures representing the tree.  This section describes the mapping
+                between the JSP tags and the actual classes that represent the tree.
+                </p>
+                <p>
+                    <strong>Note: </strong> in many cases, this document describes setting attributes on the tree
+                JSP tags to enable features.  In reality, the attributes are passed through to the
+                    <code>TreeElement</code> class which usually has a corresponding property.  Other tags
+                map their values to properties of the
+                    <code>TreeElement</code>.  If you
+                are programmatically creating a tree by building the tree hierarchy using <code>TreeElement</code>s, you
+                directly set properties on the tree classes.
+                </p>
+                <p> The following list describes the mapping of the tree JSP tags to underlying tree classes:
+                </p>
+                <ul>
+                    <li><strong><code>Tree</code></strong> -- The <code>&lt;netui:tree></code> tag doesn't create
+                    a <code>TreeElement</code>.  It binds to
+                    a <code>TreeElement</code> representing the root of the tree data structure.  The <code>&lt;netui:tree></code>
+                    tag does create the initial <code>TreeRenderState</code> object representing how the tree is rendered.
+                    </li>
+                    <li><strong><code>TreeItem</code></strong> -- The <code>&lt;netui:treeItem></code> tag will create a
+                        <code>TreeElement</code>. If the <code>&lt;netui:treeItem></code> is the root of a tree, then the
+                        <code>TreeRootElement</code> will be created.
+                    </li>
+                    <li><strong><code>TreeLabel</code></strong> -- The <code>&lt;netui:treeLabel></code> tag sets
+                    the value of the label which is stored as a property of a <code>TreeElement</code>.
+                    Using this tag is required for non-leaf nodes.  For leaf nodes
+                    the body content of the <code>&lt;netui:treeItem></code> will be used as the label value as long as that body does
+                    not contain other JSP tags (mixed content).
+                    </li>
+                    <li><strong><code>TreeContent</code></strong> -- The <code>&lt;netui:treeContent></code> tag sets the
+                    value of the content for a <code>TreeElement</code>. The content is a property of the
+                        <code>TreeElement</code>.
+                    </li>
+                    <li><strong><code>TreeProperyOverride</code></strong> -- The <code>&lt;netui:treePropertyOverride></code>
+                        tag is used to override various attributes on the tree such as the selection action and images.
+                        This tag will create an <code>InheritableState</code> object and set it on the
+                        <code>TreeElement</code>.
+                    </li>
+                    <li><strong><code>TreeHtmlAttribute</code></strong> -- The <code>&lt;netui:treeHtmlAttribute></code>
+                        tag is used to set additional attributes on the HTML generated when rendering the node.
+                        This tag will create a <code>TreeHtmlAttributeInfo</code> class that is set on the
+                        <code>TreeElement</code>.
+                    </li>
+                </ul>
+            </section>
+            <section id="ITreeRootElement">
+                <title>ITreeRootElement</title>
+                <p>In the SimpleTree example above, we described the tree data structure as being a
+                    hierarchy of <code>TreeElement</code> nodes.  Many advanced features, including runAtClient, of the tree
+                    require the root of the tree to implement the interface <code>ITreeRootElement</code>.
+                    The class <code>TreeRootElement</code> extends <code>TreeElement</code> and implements
+                    <code>ITreeRootElement</code>, providing a default implementation. In the SimpleTree example,
+                    when the body
+                    of the <code>&lt;netui:tree></code> is processed, the root <code>&lt;netui:treeItem></code> is created as a
+                    <code>TreeRootElement</code> and all other <code>&lt;netui:treeItem></code>'s are created as <code>TreeElements</code>.
+                </p>
+                <p> The following features require the root element in a tree to implement <code>ITreeRootElement</code>:
+                </p>
+                <ul>
+                    <li><strong><code>runAtClient</code></strong> -- Allows the tree to be expanded and
+                        collapsed on the client without round trips to the server.
+                    </li>
+                    <li><strong>Root Images</strong> -- Allows setting different expand and collapse images
+                        on the root node of the tree.
+                    </li>
+                </ul>
+                <p>The following additional state is tracked by the root element:
+                </p>
+                <ul>
+                    <li><strong>Selection</strong> -- Direct access to the currently selected tree element.
+                    </li>
+                    <li><strong>Tree State</strong> -- Access to the InheritableState and TreeRenderState
+                        defined on the tree (explained below).
+                    </li>
+                    <li><strong>Images</strong> -- Allows different expand and collapse images to be set on the root
+                        supporting the Root Images feature.
+                    </li>
+                </ul>
+            </section>
+        </section>
+        <section id="TreeFeatures">
+            <title>Tree Features</title>
+            <p>This section describes the basic features of the NetUI Tree.  The SimpleTree example introduces the
+                basic mechanics for creating a tree in a page flow.  A tree is output into the HTML page as
+                a hierarchy of <code>TreeElement</code>s.  The SimpleTree example renders the following:
+            </p>
+            <p>
+                <img src="images/simpleTreePage.png" alt="Tree Tag Display"/>
+            </p>
+            <p>The root of the tree supports expanding and collapsing.  The children of a node appear
+                at the same level.  Trees appear commonly in applications such as file system explorers and
+                are good at representing limited hierarchical data sets.
+            </p>
+            <section id="runAtClient">
+                <title>runAtClient</title>
+                <p> The <code>&lt;netui:tree></code> tag has an attribute
+                    <code>runAtClient</code> which when
+                    set to
+                    <code>true</code> will enabled expanding and collapsing the tree on the client
+                    without server round trips.  When runAtClient is on, the tree will be completely rendered
+                    into the generated HTML.  Client side JavaScript will then collapse and expand nodes when
+                    the user interacts with the tree.  The following image describes the interactions between
+                    the server and client.
+                </p>
+                <p>
+                    <img src="images/runAtClientFlow.png" alt="Flow of the tree when runAtClient is true"/>
+                </p>
+                <p> runAtClient uses
+                    <code>XmlHttpRequest</code> to update the underlying state on the server
+                    as the user interacts with the tree on the client.  This mode requires JavaScript and XmlHttpRequest
+                    support in the client browser.  This mode of operation is commonly referred to as AJAX
+                    (Asynchronous JavaScript and XML).  It minimizes the amount of information sent between
+                    the client and server when the
+                    user is exploring the tree itself.
+                </p>
+                <p> In the diagram above, when the tree is rendered, all of the nodes will be rendered into the
+                    HTML document generated.  JavaScript on the client will then process the tree when the
+                    HTML document is loaded.  The JavaScript will turn off display of tree nodes which
+                    are collapsed so that the tree appears in the expected state.  As the user interacts with
+                    the tree by expanding and/or collapsing nodes, JavaScript will continue to turn on and off
+                    the display of tree nodes (and their children).  In order to update the state of the tree
+                    stored on the server, the client also use XmlHttpRequest to send messages to the server
+                    indicating the nodes that are being expanded and collapsed.  The next full server request
+                    will display the tree properly because the internal state has been updated as the user
+                    interacted with the tree.
+                </p>
+            </section>
+            <section id="expandOnServer">
+                <title>expandOnServer</title>
+                <p> When a tree has the <code>runAtClient</code> attribute set, then individual elements
+                    can indicate that they need to be expanded on the server by setting the
+                    <code>expandOnServer</code> attribute on the <code>&lt;netui:treeItem></code> tag.  When
+                    <code>expandOnServer</code> is enabled, if the node is in a collapsed state,
+                    the node itself will be rendered in the generated HTML, but
+                    all children nodes will not.  When the user expands the node, an XmlHttpRequest is made
+                    to the server and the children (and possibly their children) will be rendered into HTML
+                    and sent back to the client.  JavaScript will update the DOM and cause the children to be
+                    displayed.  Once the children are received, all further expand and collapse operations happen
+                    on the client.
+                </p>
+                <p> runAtClient and <code>expandOnServer</code> can be used together to optimize the amount of tree state
+                    rendered into the initial request and then to minimize the amount of state transferred
+                    when the user is exploring the tree.  It is very common for people to drill
+                    into one or two areas of a tree after searching the top level nodes.  To optimize for
+                    this type of browsing, render out the top few levels of a tree and then create a layer
+                    of children that set <code>expandOnServer</code> to true.  The top few layers will be initially rendered
+                    and when a user goes deep into one, the server provides the branch asynchronously when requested.
+                </p>
+            </section>
+            <section id="RenderedContents">
+                <title>TreeElement Rendered Contents</title>
+                <p>This section describes the markup written out to represent a tree node in the
+                    rendered HTML document. The basic Markup looks like this:
+                </p>
+                <p><strong>[Tree Markup] [Expand/Collapse Icon] [Anchor - [Icon][Label]] [Content]</strong>
+                </p>
+                <ul>
+                    <li><strong>Tree Markup</strong>  [
+                        <img src="images/lineJoin.gif" alt="lineJoin.gif"/> - lineJoin.gif,
+                        <img src="images/lastLineJoin.gif" alt="lastLineJoin.gif"/> - lastLineJoin.gif,
+                        <img src="images/verticalLine.gif" alt="verticalLine.gif"/> -verticalLine.gif,
+                        spacer.gif] --
+                        There are four images that represent the "structure" of the tree.  These are
+                        used to create the visual hiearchical representation of the tree.
+                    </li>
+                    <li><strong>Expand/Collapse Icon</strong> [
+                        <img src="images/nodeCollapsed.gif" alt="nodeCollapsed.gif"/> - nodeCollapsed.gif,
+                        <img src="images/lastNodeCollapsed.gif" alt="lastNodeCollapsed.gif"/> - lastNodeCollapsed.gif
+                        <img src="images/rootCollapsed.gif" alt="rootCollapsed.gif"/> - rootCollapsed.gif,
+                        <img src="images/nodeExpanded.gif" alt="nodeExpanded.gif"/> - nodeExpanded.gif,
+                        <img src="images/lastNodeExpanded.gif" alt="lastNodeExpanded.gif"/> - lastNodeExpanded.gif
+                        <img src="images/rootExpanded.gif" alt="rootExpanded.gif"/> - rootExpanded.gif
+                        ] -- There are six images that represent the expand and collapse links on an interior
+                        node.  The root images are only available if the root of the tree implements <code>ITreeRootElement</code>.
+                    </li>
+                    <li><strong>Icon</strong> [
+                        <img src="images/folder.gif" alt="folder.gif"/> - folder.gif,
+                        ] -- This Icon and the Label represent the node in the tree.  Either act as a selectable
+                        link that will call the selection action.
+                    </li>
+                    <li><strong>Label</strong> -- The label is a text item representing the node.  This is a
+                        property of the <code>TreeElement</code>.  This is a selectable link that will call the selection action.</li>
+                    <li><strong>Content</strong> -- This is an optional text item that may appear after the label.
+                        It is not selectable.
+                    </li>
+                </ul>
+                <p> The tree supports setting a default location where the images are picked from within a
+                    WebApp.  All of the images are found by default in the <code>resources\beehive\version1\images</code>
+                    directory.  It is possible to change both the default location for finding the images
+                    in addition to the images themselves by explicitly setting the name of the image on the Tree.
+                </p>
+            </section>
+            <section id="customTreeRenderer">
+                <title>Using a Custom TreeRenderer Implementation</title>
+                <p>
+                    The HTML markup for the tree is handled by the <a href="apidocs/javadoc/org/apache/beehive/netui/tags/tree/TreeRenderer.html">TreeRenderer</a> class.  By default, TreeRenderer handles tree rendering 
+                    across the web application, unless another rendering class is specified.
+                </p>
+                <p>
+                    You can override the rendering behavior of the default TreeRenderer class with a custom renderer class.  A custom TreeRenderer class is
+                    especially useful for precise control of whitespace, line breaks, and image placement in the rendered tree.
+                </p>
+                <p>
+                    To override the default TreeRenderer class: 
+                </p>
+                <ol>
+                    <li>extend the TreeRenderer class and override any of the formatting methods 
+                    that are appropriate to your purposes</li>
+                    <li>configure NetUI to use your extended class to render the tree</li>
+                </ol>
+                <p>
+                    An example custom TreeRenderer class appears below.  This class overrides the method
+                    renderConnectionImageSuffix() so that a new line is not added after the
+                    &lt;img> element for the connetcting expand/collapse image and
+                    renderSelectionLinkPrefix() so that no white space indentation is placed
+                    before the anchor used to select a node. Also, the methods renderItemIconPrefix() and renderItemIconSuffix()
+                    are overridden to wrap a &lt;span> around the &lt;img> element for the node icon. A &lt;span>
+                    might be used to incorporate CSS styles or a call to a JavaScript routine.
+                </p>
+                <source>
+package mytree.renderer;
+
+import org.apache.beehive.netui.tags.rendering.AbstractRenderAppender;
+import org.apache.beehive.netui.tags.tree.TreeElement;
+import org.apache.beehive.netui.tags.tree.TreeRenderer;
+
+public class MyTreeRenderer extends TreeRenderer
+{
+   protected void renderConnectionImageSuffix(AbstractRenderAppender writer,
+                                              TreeElement node)
+   {
+   }
+
+   protected void renderSelectionLinkPrefix(AbstractRenderAppender writer,
+                                            TreeElement node)
+   {
+   }
+
+   protected void renderItemIconPrefix(AbstractRenderAppender writer,
+                                       TreeElement node)
+   {
+       writer.append("&lt;span ID=\"myItemIcon\" style=\"cursor:pointer;\"");
+       writer.append(" onClick=\"doSomething()\">");
+   }
+
+   protected void renderItemIconSuffix(AbstractRenderAppender writer,
+                                       TreeElement node)
+   {
+       writer.append("&lt;/span>");
+   }
+                    
+    // more overridden methods...                    
+}
+                    
+                </source>
+                <p>
+                    To configure NetUI to use your custom TreeRenderer, edit the <a href="site:config_tree_renderer_class">&lt;tree-renderer-class></a> element of the beehive-netui-config.xml file
+                    to refer to your custom class: 
+                </p>
+                <source>&lt;tree-renderer-class>mytree.renderer.MyTreeRenderer&lt;/tree-renderer-class></source>
+            </section>
+        </section>
+    </body>
+</document>

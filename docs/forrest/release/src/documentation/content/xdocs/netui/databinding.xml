@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+                          "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Data binding to NetUI Implicit Objects</title>
+    </header>
+    <body>
+        <section id="introduction">
+            <title>Introduction</title>
+            <p>
+            In NetUI, data binding allows JSP tags or other UI technologies to read and write data 
+            available in the web-tier environment.  This document discusses both the <em>implicit objects</em> that 
+            are available via NetUI to the JSP author and the <em>expression languages</em> that are used to bind UI 
+            objects to those implicit objects.  
+            </p>
+            <p>
+            NetUI tags support binding to both <em>read-only</em> and <em>read-write</em> data.  Read-only data is usually
+            bound to tag attributes that simply display information on a page.  Read-write data is bound with the intention
+            of being updated from a web browser.  Often, read-write data is displayed within an HTML form tag and bound to 
+            HTML text boxes, radio buttons, select boxes, and other HTML widget types.  Each of these types of binding 
+            use the syntax of the JSP 2.0 Expression Language (EL) to express a binding from JSP tag to JavaBean property,
+            Map member, List item, array element, and so on.  The JSP 2.0 Expression Language is used to bind read-only 
+            data to tag attributes.  This language is documented in detail <a href="site:jspel">here</a>.  For example, 
+            this example binds a NetUI <code>span</code> tag to a value from a JSP's PageContext attribute map:
+            </p>
+            <source><![CDATA[<netui:span value="${pageScope.fooAttribute}"/>]]></source>
+            <p>
+            Here, the JSP container evaluates the expression and invokes the <code>span</code> tag's <code>setValue</code>
+            attribute method to pass the result to the tag.  The JSP 2.0 EL is also able to perform simple arithmetic 
+            and boolean operations in expressions.
+            </p>
+            <p>
+            When using the NetUI JSP tags, read-write data is bound to NetUI JSP tags differently.  NetUI tags use a derivation 
+            of the JSP 2.0 EL to refer to implicit objects in a JSP, but unlike the JSP 2.0 EL, the syntax is slightly different.
+            For example, when binding a NetUI <code>textBox</code> tag to data that is meant to be read and then updated during an 
+            HTML form POST, the <code>textBox</code> tag might look like:
+            </p>
+            <source><![CDATA[<netui:textBox dataSource="actionForm.userName"/> ]]></source>
+            <p>
+            This expression syntax is used on NetUI JSP tag attributes named <code>dataSource</code>.  The expression syntax is 
+            necessary to allow the NetUI tags to know <em>both</em> the value of the expression and the expression text.  The 
+            expression text is needed in order to write the tag's name in the HTML rendered to a web browser.  For example, 
+            with a <code>userName</code> of "foo", the JSP tag above will render:
+            </p>
+            <source><![CDATA[<input type="text" name="{actionForm.userName}" value="foo"/> ]]></source>
+            <p>
+            The expression text is used by the <code>&lt;netui:textBox></code> tag to render the value of the HTML <code>input</code>'s 
+            <code>name</code> attribute, and when the containing HTML form POSTs, this name is used to detect the presence of 
+            a NetUI expression that can then be used to update a property on a JavaBean or other data structure.  
+            </p>
+            <note label="Best Practice">
+            In order to prevent POSTing data into JSP implicit objects such as <code>requestScope</code> or <code>sessionScope</code>,
+            only a few NetUI implicit objects should be used in read/write expressions.  These include <code>pageFlow</code>, 
+            <code>sharedFlow</code>, and <code>actionForm</code>.
+            </note>
+            <p>
+            </p>
+        </section>
+        <section id="implicit-objects-jsp">
+            <title>JSP Implicit Objects</title>
+            <p>
+            A JSP 2.0+ container exposes a set of implicit objects for use by JSP authors.  These implicit objects are documented
+            <a href="site:jspel">here</a>.  These can be used on any of the NetUI JSP tag attributes that accept runtime expressions.
+            For example, in a webapp called <code>foo</code> the following JSP snippet uses the <code>pageContext</code> implicit object
+            as a JavaBean to build a fully-qualified image path:
+            </p>
+            <source><![CDATA[<netui:image value="${pageContext.request.contextPath}/images/banner.png"/> ]]></source>
+            <p>
+            This renders the following HTML markup:
+            </p>
+            <source><![CDATA[<img source="/foo/images/banner.png"/> ]]></source>
+            <p>
+            The JSP container also makes implicit objects available that provide access to the attribute maps for the page context, 
+            request, session, and servlet context.  By adding attributes to the page context, request, and session, webapp 
+            developers can add their own implicit objects.  In the following example, a JavaBean of type <code>Widget</code> is
+            added to the request in a page flow action:
+            </p>
+            <source>getRequest().setAttribute("widget", fooWidget);</source>
+            <p>
+            Then, this JSP snippet uses the expression language to data bind to the Widget's <code>density</code> property:
+            </p>
+            <source>The density is: ${widget.density}</source>
+            <p>
+            This is effectively the same as writing code that does:
+            </p>
+            <source><![CDATA[The density is: <%= ((Widget)request.getAttribute("widget")).getDensity() %>]]></source>
+        </section>
+        <section id="implicit-objects-netui">
+            <title>NetUI Implicit Objects</title>
+            <p>
+            In addition to the implicit objects that the JSP container provides, the NetUI runtime provides an additional set 
+            of objects that are available when using certain NetUI features.  Not all of the implicit objects are 
+            always available -- for example, the <code>actionForm</code> implicit object is only available when used inside of
+            a <code>&lt;netui:form</code> tag for accessing the form's associated form bean.
+            </p>
+            <p>
+            A summary of the NetUI implicit objects is shown in the table below; details are available further down this document.
+            </p>
+            <table>
+            <tr><th>Implicit Object</th><th>Context</th><th>Description</th></tr>
+            <tr>
+                <td><code>actionForm</code></td>
+                <td>Within the <code>&lt;netui:form></code> tag</td>
+                <td>Provides access to the properties of a JavaBean used as the form bean for an HTML form.</td>
+            </tr>
+            <tr>
+                <td><code>bundle</code></td>
+                <td>Inside of a JSP where the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/bundle/DeclareBundle.html">
+                    <code>&lt;netui-data:declareBundle></code></a>
+                    tag is used to refer to a resource bundle or where a JSP is part of a page flow that has 
+                    resource bundles declared with the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.MessageBundle.html">
+                        <code>@Jpf.MessageBundle</code>
+                    </a>
+                    annotation.</td>
+                <td>Provides access to message strings contained in a Java properties file.  Strings are referred to by name in the expression.</td>
+            </tr>
+            <tr>
+                <td><code>container</code></td>
+                <td>The <code>container</code> implicit object is available inside of several NetUI JSP tags that "repeat" over data sets 
+                    including the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/datagrid/DataGrid.html">
+                    <code>&lt;netui-data:dataGrid</code></a>, 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/repeater/Repeater.html">
+                    <code>&lt;netui-data:repeater</code></a>, 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/cellrepeater/CellRepeater.html">
+                    <code>&lt;netui-data:cellRepeater</code></a>,
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Select.html">
+                    <code>&lt;netui:select</code></a>,
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/CheckBoxGroup.html">
+                    <code>&lt;netui:checkBoxGroup</code></a>, and
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/RadioButtonGroup.html">
+                    <code>&lt;netui:radioButtonGroup</code></a>,
+                </td>
+                <td>Provides access to the JavaBean properties exposed by the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/script/common/IDataAccessProvider.html">
+                    <code>IDataAccessProvider</code></a> interface.  Implementations
+                    of this interface are made available to the PageContext during rendering so that tag bodies can access information about 
+                    the current data item, the item's index, and so on.
+                </td>                    
+            </tr>
+            <tr>
+                <td><code>pageFlow</code></td>
+                <td>Available to any JSP that is part of a page flow.</td>
+                <td>The <code>pageFlow</code> implicit object provides access to the 
+                    current page flow controller instance as a JavaBean.  This allows a page flow controller to expose properties to JSPs.
+                </td>
+            </tr>
+            <tr>
+                <td><code>pageInput</code></td>
+                <td>
+                Available to any JSP that was reached by a page flow 
+                <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/Forward.html">Forward</a> 
+                object that had <em>page inputs</em> attached to the Forward.
+                </td>
+                <td>
+                Page flows allow <em>action outputs</em> to be attached to Forward objects as a way to provide a data contract between a page flow action 
+                and a page.  This ensures that all actions that forward to JSPs provide the JSP with the appropriate data and that all JSPs receive
+                the correct data.  This data contract is validated at both the action and at the JSP when using the 
+                <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/pageinput/DeclarePageInput.html">
+                <code>&lt;netui-data:declarePageInput></code></a>.
+                tag.
+                </td>
+            </tr>
+            <tr>
+                <td><code>sharedFlow</code></td>
+                <td>Available to any JSP that is part of a 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/PageFlowController.html">
+                    page flow</a> which references 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/SharedFlowController.html">
+                    shared flows</a>.</td>
+                <td>The <code>sharedFlow</code> implicit object provides access to any JavaBean properties on Shared Flows associated 
+                    with the current page flow.  This allows Shared Flows to expose properties to JSPs.
+                </td>
+            </tr>
+            </table>
+            <section>
+            <title>NetUI Implicit Object Details</title>
+            <p>
+            </p>
+            </section>
+            <section id="implicit-objects-netui-actionForm">
+            <title>actionForm</title>
+            <p>
+            The <code>actionForm</code> implicit object is a convenient way to explicitly reference a JavaBean used for authoring
+            HTML forms.  This implicit object is available only inside of <code>&lt;netui:form></code> tags with <code>action</code>
+            attributes that reference page flow actions accepting a JavaBean.  The <code>actionForm</code> implicit object allows
+            data binding to JavaBean properties, Map attributes, Lists, and arrays as with any other implicit object.  This example
+            shows a JSP that contains a form which POSTs to a page flow action that accepts a JavaBean <code>NameForm</code>.
+            </p>
+            <p>The JavaBean:</p>
+            <source>public class NameForm {
+    private String _name;
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String name) {
+    _name = name;
+    }
+}</source>
+            <p>
+            The JSP:
+            </p>
+            <source><![CDATA[<netui:form action="submitNameform">
+    <netui:textBox dataSource="actionForm.name"/><br/>
+    <netui:button value="Submit"/>
+</netui:form>]]></source>
+            <p>
+            The page flow action <code>submitNameForm</code>:
+            </p>
+            <source>@Jpf.Action()
+public Forward submitNameForm(NameForm form) {
+    ...
+}</source>
+            <p>
+            Here, the <code>dataSource</code>'s <code>actionForm.name</code> expression refers to the value of the
+            <code>NameForm</code>'s <code>name</code> property.  The result is data bound to the <code>textBox</code> tag.
+            When the form is submitted to the server, the request parameter <code>{actionForm.name}</code> is applied
+            to the action form which is then passed to the <code>submitNameForm</code> action.
+            </p>
+            </section>
+            <section id="implicit-objects-netui-bundle">
+            <title>bundle</title>
+            <p>
+            The <code>bundle</code> implicit object is useful for binding UI to localized message strings.  The <code>bundle</code>
+            implicit object is available in one of two situations:
+            </p>
+            <ul>
+                <li>when declaring a resource bundle accessible to a JSP via the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/bundle/DeclareBundle.html">
+                    <code>&lt;netui-data:declareBundle></code></a> tag.</li>
+                <li>when a page flow with which the JSP is associated exposes resource bundles via the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.MessageBundle.html">
+                        <code>@Jpf.MessageBundle</code>
+                    </a>
+                    annotation.</li>
+            </ul>
+            <p>
+            The <code>declareBundle</code> JSP tag is used to make a specific resource bundle available to a JSP.  For example, 
+            given the following resource bundle and JSP, a page can data bind to messages in the resource bundle using the 
+            JSP 2.0 EL.  
+            </p>
+            <p>
+            The resource bundle, which is located in <code>WEB-INF/classes/org/foo/messages.properties</code>:
+            </p>
+            <source><![CDATA[message1=This is the first message
+message2=Another message]]></source>
+            <p>
+            The JSP can declare this resource bundle to be available to the page using this JSP snippet:
+            </p>
+            <source><![CDATA[<%@ taglib uri="http://beehive.apache.org/netui/tags-databinding-1.0" prefix="netui-data"%>                
+
+<netui-data:declareBundle name="fooMessages" bundlePath="org/foo/messages"/>]]></source>
+            <p>
+            Finally, messages in the JSP can be data bound with JSP literal text and tags:
+            </p>
+            <source><![CDATA[<netui:span value="${bundle.fooMessages.message1}"/>
+
+${bundle.fooMessages.message2}]]></source>
+            <p>            
+            The expressions above contain a reference to the <code>bundle</code> implicit object.  Then, the specific
+            bundle name is referred to with <code>fooMessages</code>; this name must match the value of a <code>name</code>
+            attribute of a <code>declareBundle</code> tag or the name of a bundle declared in a page flow controller.  Finally, the
+            expressions use <code>message1</code> and <code>message2</code> to refer to message keys in the 
+            <code>messages.properties</code> file.
+            </p>
+            <p>
+            Resource bundles can also be registered with the <code>bundle</code> implicit object by using the
+            <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.MessageBundle.html">
+                <code>@Jpf.MessageBundle</code>
+            </a>
+            class-level annotation.  This allows a page flow to also integrate with the implicit message resources object which is
+            available via a Struts module.  These resource bundles will be available to all JSPs that are part of a page flow without having
+            to use the <code>declareBundle</code> JSP tag.  Because a default resource bundle can be associated with a Struts module, the 
+            bundle name <code>default</code> is reserved for referencing this bundle.  For example, the following page flow controller declares
+            the resource bundle above as the default page flow bundle:
+            </p>
+            <source>@Jpf.Controller(
+    forwards = {...}
+    messageBundles = {
+        @Jpf.MessageBundle(bundlePath="org.foo.messages")
+    }
+)
+public class Controller 
+    extends PageFlowController {
+    ...
+}</source>
+            <p>
+            Message strings from this bundle can be referred to in JSPs with an expression like:
+            </p>
+            <source><![CDATA[${bundle.default.message1}]]></source>
+            <p>
+            A resource bundle can also be registered with a specific name by adding an annotation like:
+            </p>
+            <source>@Jpf.Controller(
+    forwards = {...}
+    messageBundles = {
+        @Jpf.MessageBundle(bundleName="jpfBundle", bundlePath="org.foo.messages")
+    }
+)
+public class Controller 
+    extends PageFlowController {
+    ...
+}</source>
+            <p>
+            Then, the same message strings from the previous two examples are available with an expression like
+            </p>
+            <source>${bundle.jpfBundle.message1}</source>
+            <p>
+            Each of these three ways to register a resource bundle (JSP tag, implicit page flow bundle, and explicit page flow bundle)
+            can be used together in a single page flow.
+            </p>
+            </section>
+            <section id="implicit-objects-netui-container">
+            <title>container</title>
+            <p>
+            The <code>container</code> implicit object is available to a JSP when inside of several NetUI tags that <em>repeat</em> over
+            a Map, List, array, or various other kinds of data sets.  Generally, JSP tags that can be bound to data sets iterate through them
+            from start to end as in a Java <code>for</code> loop.  Such JSP tags include:
+            </p>
+            <ul>
+                <li>
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/datagrid/DataGrid.html">
+                    <code>&lt;netui-data:dataGrid></code></a>
+                </li>
+                <li>
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/repeater/Repeater.html">
+                    <code>&lt;netui-data:repeater></code></a>
+                </li>
+                <li>
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/databinding/cellrepeater/CellRepeater.html">
+                    <code>&lt;netui-data:cellRepeater></code></a>
+                </li>
+                <li>
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Select.html">
+                    <code>&lt;netui:select></code></a>
+                </li>
+                <li>
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/CheckBoxGroup.html">
+                    <code>&lt;netui:checkBoxGroup></code></a>
+                </li>
+                <li>
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/RadioButtonGroup.html">
+                    <code>&lt;netui:radioButtonGroup></code></a>.
+                </li>
+            </ul>
+            <p>
+            The <code>container</code> implicit object provides access to the current item in the data set and to metadata about the current
+            iteration.  This access is based on the properties available on the <code>IDataAccessProvider</code> interface and includes:
+            </p>
+            <table>
+                <tr>
+                    <th>Property Name</th>
+                    <th>Description</th>
+                </tr>
+                <tr><td><code>item</code></td>
+                    <td>Refers to the current data item.  In an array of <code>Widget</code> beans, the JavaBean propeties of widget can 
+                        be accessed with an expression like <code>${container.item.density}</code></td></tr>
+                <tr><td><code>index</code></td>
+                    <td>Refers to the current index of iteration.  Tags are free to define their own rules for the the value of the
+                        <code>index</code> property, but in general, this is a zero-based index that increments each time the 
+                        JSP tag renders its body / iterates to the next data item.
+                    </td>
+                </tr>
+                <tr><td><code>container</code></td>
+                    <td>Refers to an outer repeating container.  This value is used when two repeating containers are
+                        nested and the inner container needs to access the current item in the outer container.  For example,
+                        this might be used when rendering hierarchical data sets.
+                    </td>
+                </tr>
+            </table>
+            <p>
+            The following example uses the NetUI <code>&lt;netui-data:repeater></code> to iterate over an array of <code>Widget</code>
+            beans displaying each Bean's name and density properties and their index in the array.
+            </p> 
+            <source><![CDATA[<%@ taglib uri="http://beehive.apache.org/netui/tags-databinding-1.0" prefix="netui-data"%>                
+
+<table>                
+<tr><th>Index</th><th>Name</th><th>Density</th></tr>
+<netui-data:repeater dataSource="requestScope.widgetBeanArray">
+    <tr><td>${container.index}</td><td>${container.item.name}</td><td>${container.item.density}</td></tr>
+</netui-data:repeater>            
+</table>]]></source>
+            <p>
+            Notice in this example how the <code>repeater</code> tag has a <code>dataSource</code> attribute that references 
+            the data set to iterate through.  The <code>dataSource</code> attribute requires the use of the NetUI Expression 
+            Language because the <code>repeater</code> can be used to render editing UI for data sets.  For example, in the case
+            of rendering a shopping cart, the repeater can be used to render each item in the cart with a <code>&lt;netui:textBox></code>
+            for editing the quantity of each item.  An example of this can be found in the Beehive sample webapp called
+            <code>netui-samples</code> under the <code>ui/repeaterediting/</code> directory.
+            </p>
+            </section>
+            <section id="implicit-objects-netui-pageFlow">
+            <title>pageFlow</title>
+            <p>
+            The <code>pageFlow</code> implicit object is used to refer to the current page flow controller as a JavaBean.  If there is no page flow
+            present, the <code>pageFlow</code> implicit object will not be available for data binding.  For example, if a page flow controller
+            exposes a <code>username</code> property as:
+            </p>
+            <source>@Jpf.Controller(
+    forwards={@Jpf.Forward(name="index", path="index.jsp")}
+)
+public class Controller {
+    private String _username = null;
+  
+    public String getUsername() {
+        return _username;
+    }
+
+    @Jpf.Action()
+    public Forward begin() {
+        _username = "Foo Bar";
+        return new Forward("index");
+    }
+}</source>
+            <p>
+            The <code>username</code> property can be data bound in <code>index.jsp</code> as: 
+            </p>
+            <source><![CDATA[${pageFlow.username}]]></source>
+            <note label="Best Practice">
+            Because mutable JavaBean properties can be updated via an HTML form POST, JavaBean properties exposed by a page flow should usually 
+            be read-only unless the page flow itself is being used as a form bean.
+            </note>
+            </section>
+            <section id="implicit-objects-netui-pageInput">
+            <title>pageInput</title>
+            <p>
+            The <code>pageInput</code> implicit object is used to refer to a <code>Map</code> of objects that are passed via a 
+            <code>Forward</code> from a page flow action to a JSP.  Use of Page Inputs consists of two parts -- the first are called
+            <em>action outputs</em> and the second are called <em>page inputs</em>.  Action outputs are passed from page flow actions
+            to pages via the action's <code>Forward</code> object.  page flow actions use Java annotations to declare a validatable 
+            data contract that ensures that an action passes the correct data via a <code>Forward</code>.  At the page, this data
+            is called a <em>page input</em> and can again be checked to ensure that the page receives the data necessary to render
+            successfully.
+            </p>
+            <p>
+            This example shows a page flow action that passes an action output of type <code>Widget</code> to a JSP which 
+            data binds to the <code>density</code> property on the <code>Widget</code>.
+            </p>
+            <p>
+            The page flow controller:
+            </p>
+            <source>@Jpf.Controller() 
+public class Controller
+    extends PageFlowController {
+
+    @Jpf.Action(
+        forwards={@Jpf.Forward(name="success", 
+                               path="index.jsp",
+                               actionOutputs={@Jpf.ActionOutput(name="theWidget", type=Widget.class, required=true)}
+                              )
+        }
+    )
+    protected Forward begin() {
+        Widget widget = new Widget();
+        widget.setDensity(3.14);
+        Forward f = new Forward("success");
+        f.addActionOutput("theWidget", widget);
+        return f;
+    }
+}</source>
+            <p>
+            Notice here that the action has added an action output to the <code>Forward</code> via the <code>addActionOutput</code>
+            method call.  The NetUI runtime will then validate the data contract declared in the annotations against the 
+            returned forward object.  If validation fails, a runtime error will be displayed in the browser.
+            </p>
+            <p>
+            The JSP:
+            </p>
+            <source><![CDATA[<%@ taglib uri="http://beehive.apache.org/netui/tags-databinding-1.0" prefix="netui-data"%>                
+                
+<netui-data:declarePageInput name="theWidget" type="org.foo.Widget"/>
+
+${pageInput.theWidget.density}]]></source>
+            <p>
+            Notice here that the page has used a <code>declarePageInput</code> tag to ensure that the <code>Widget</code>
+            entering the page is both present in the set of page inputs and is non-null.  Given this information, the JSP
+            then refers to properties on the <code>Widget</code> via the expression language.
+            </p>
+            <p>
+            Action outputs and page inputs can be used with or without validation; to disable action output validation, simply remove 
+            any action output annotations from a page flow action.  To disable page input validation in a JSP, remove any 
+            <code>declarePageInput</code> tags from the JSP.  The APIs to add action outputs to <code>Forward</code> objects
+            and to refer to them via the <code>pageInput</code> implicit object will continue to work without any data contract
+            validation.
+            </p>
+            </section>
+            <section id="implicit-objects-netui-sharedFlow">
+            <title>sharedFlow</title>
+            <p>
+            The <code>sharedFlow</code> implicit object is used to refer to properties of shared flow objects that are associated with 
+            the current page flow.  If there is no page flow present, the <code>sharedFlow</code> implicit object will not be available
+            for data binding.  In order for a shared flow to be available for data binding, it must be registered with a page flow by
+            type; additionally, it is registered with a name that will uniquely identify it in the set of shared flows associated with a 
+            page flow.  More information on shared flows can be found <a href="site:pageflow_sharedFlow">here</a>.
+            </p>
+            <p>
+            The following example shows a shared flow, a page flow that uses the Shared Flow, and a JSP that uses the JSP 2.0 EL
+            to data bind to a JavaBean propety of the shared flow.
+            </p>
+            <p>
+            The Shared Flow:
+            </p>
+            <source>package org.foo;
+
+import org.apache.beehive.netui.pageflow.SharedFlowController;
+
+@Jpf.Controller()
+public class SharedFlow 
+   extends SharedFlowController {
+
+    private String _sharedMessage = null;
+ 
+    public String getSharedMessage() {
+        return _sharedMessage;
+    }
+}</source>
+            <p>
+            The page flow controller:
+            </p>
+            <source>@Jpf.Controller(
+    sharedFlowRefs={@Jpf.SharedFlowRef(name="aSharedFlow", type=org.foo.SharedFlow.class)}
+)
+public class Controller
+   extends PageFlowController {
+
+    ...
+}
+            </source>
+            <p>
+            Above, the page flow controller adds an explicit reference to the shared flow controller <code>org.foo.SharedFlow</code> defined above.
+            </p>
+            <p>
+            The JSP:
+            </p>
+            <source><![CDATA[${sharedFlow.aSharedFlow.sharedMessage}]]></source>
+            <p>
+            In a JSP whose current page flow controller is the <code>Controller</code> class defined above, the JSP has access to 
+            all of the shared flows associated to the page flow via its
+            <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SharedFlowRef.html">
+                <code>@Jpf.SharedFlowRef</code>
+            </a>
+            annotation.  The shared flow can then be referenced by the <code>name</code> attribute of the <code>SharedFlowRef</code> annotation.  
+            In this case, the name <code>aSharedFlow</code> is used in the JSP 2.0 expression to refer to the <code>sharedFlow</code>'s 
+            <code>sharedMessage</code> property.
+            </p>
+            </section>
+        </section>
+    <section id="el-details">
+        <title>Expression Language Details</title>
+            <p>
+            Due to limitations in the JSP 2.0 Expression Language specification, expressions can not be used to reference
+            read-write data because the JSP tag itself can never obtain both the expression text and the value of the 
+            expression.  In NetUI, both the value and expression text are required to bind to editable data because the 
+            expression text is written into the JSP as the HTML <code>name</code> attribute of HTML form <code>input</code>
+            fields.  
+            </p>
+    </section>
+    </body>
+</document>

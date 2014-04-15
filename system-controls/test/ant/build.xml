@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<project name="Beehive/SystemControls/Test" default="drt" basedir=".">
+    
+    <import file="test-imports.xml"/>
+
+    <property name="drt.testResults.dir" location="${beehive.home}/system-controls/build/drt.testResults"/>
+    <property name="bvt.testResults.dir" location="${beehive.home}/system-controls/build/bvt.testResults"/>
+
+    <target name="prepare">
+        <mkdir dir="${test.lib.dir}"/>
+    </target>
+
+    <!-- ============================================= -->
+    <!-- Build Targets                                 -->
+    <!-- ============================================= -->
+    <target name="test.build" depends="prepare" description="Build the QA modules">
+        <antcall target="test.do.subant">
+            <param name="target.name" value="build"/>
+        </antcall>
+    </target>
+
+    <target name="test.clean" description="Clean the QA modules">
+        <delete dir="${drt.testResults.dir}"/>
+        <delete dir="${bvt.testResults.dir}"/>
+        <delete dir="../webservice/build"/>
+    </target>
+
+    <target name="test.do.subant">
+        <subant target="${target.name}">
+            <filelist dir="${test.src.dir}">
+                <file name="jdbc/controls"/>
+                <file name="jdbc/junitTests"/>
+            </filelist>
+        </subant>
+    </target>
+
+    <!-- ============================================= -->
+    <!-- DRT Targets                                   -->
+    <!-- ============================================= -->
+    <target name="drt" depends="test.clean,test.build,junit.drt" description="Run the System Controls JUnit DRTs"/>
+
+    <target name="junit.drt">
+        <property name="formatter.type" value="xml"/>
+        <property name="testout.dir" value="${drt.testResults.dir}"/>
+        <property name="fail" value="true"/>
+
+        <antcall target="run.tests"/>
+    </target>
+
+    <target name="junit.bvt">
+        <property name="formatter.type" value="xml"/>
+        <property name="testout.dir" value="${bvt.testResults.dir}"/>
+        <property name="fail" value="false"/>
+
+        <antcall target="run.tests"/>
+    </target>
+
+    <import file="junitCore.xml"/>
+
+</project>

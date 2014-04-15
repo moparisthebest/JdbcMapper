@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://xml.attachments" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xml.attachments" xmlns:intf="http://xml.attachments" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema targetNamespace="http://xml.attachments" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_apachesoap_Source">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="apachesoap:Source[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="echoXmlRequest">
+
+      <wsdl:part name="xml" type="apachesoap:Source"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlArrayResponse">
+
+      <wsdl:part name="return" type="impl:ArrayOf_apachesoap_Source"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlResponse">
+
+      <wsdl:part name="return" type="apachesoap:Source"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlArrayRequest">
+
+      <wsdl:part name="xmlArr" type="impl:ArrayOf_apachesoap_Source"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="XmlSourceRpcEnc">
+
+      <wsdl:operation name="echoXml" parameterOrder="xml">
+
+         <wsdl:input message="impl:echoXmlRequest" name="echoXmlRequest"/>
+
+         <wsdl:output message="impl:echoXmlResponse" name="echoXmlResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoXmlArray" parameterOrder="xmlArr">
+
+         <wsdl:input message="impl:echoXmlArrayRequest" name="echoXmlArrayRequest"/>
+
+         <wsdl:output message="impl:echoXmlArrayResponse" name="echoXmlArrayResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="XmlSourceRpcEncSoapBinding" type="impl:XmlSourceRpcEnc">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoXml">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoXmlRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://xml.attachments" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoXmlResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://xml.attachments" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoXmlArray">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoXmlArrayRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://xml.attachments" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoXmlArrayResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://xml.attachments" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="XmlSourceRpcEncService">
+
+      <wsdl:port binding="impl:XmlSourceRpcEncSoapBinding" name="XmlSourceRpcEnc">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/attachments/xml/XmlSourceRpcEnc.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

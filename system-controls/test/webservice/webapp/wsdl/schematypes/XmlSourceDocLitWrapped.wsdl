@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://xml.attachments" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xml.attachments" xmlns:intf="http://xml.attachments" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.attachments" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <element name="echoXml">
+    <complexType>
+     <sequence>
+      <element name="xml" type="apachesoap:Source"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoXmlResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="apachesoap:Source"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoXmlArray">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="xmlArr" type="apachesoap:Source"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="echoXmlArrayResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="return" type="apachesoap:Source"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="echoXmlRequest">
+
+      <wsdl:part element="impl:echoXml" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlArrayResponse">
+
+      <wsdl:part element="impl:echoXmlArrayResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlResponse">
+
+      <wsdl:part element="impl:echoXmlResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlArrayRequest">
+
+      <wsdl:part element="impl:echoXmlArray" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="XmlSourceDocLitWrapped">
+
+      <wsdl:operation name="echoXml">
+
+         <wsdl:input message="impl:echoXmlRequest" name="echoXmlRequest"/>
+
+         <wsdl:output message="impl:echoXmlResponse" name="echoXmlResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoXmlArray">
+
+         <wsdl:input message="impl:echoXmlArrayRequest" name="echoXmlArrayRequest"/>
+
+         <wsdl:output message="impl:echoXmlArrayResponse" name="echoXmlArrayResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="XmlSourceDocLitWrappedSoapBinding" type="impl:XmlSourceDocLitWrapped">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoXml">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoXmlRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoXmlResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoXmlArray">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoXmlArrayRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoXmlArrayResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="XmlSourceDocLitWrappedService">
+
+      <wsdl:port binding="impl:XmlSourceDocLitWrappedSoapBinding" name="XmlSourceDocLitWrapped">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/attachments/xml/XmlSourceDocLitWrapped.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

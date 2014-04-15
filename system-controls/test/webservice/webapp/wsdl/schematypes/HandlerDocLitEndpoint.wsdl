@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://handlers" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://handlers" xmlns:intf="http://handlers" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://handlers" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="inputHeader" type="xsd:string"/>
+   <element name="echoStringHeader">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="inputHeader1" type="xsd:string"/>
+   <element name="echoStringHeaderResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="echoStringHeaderRequest">
+
+      <wsdl:part element="impl:inputHeader" name="inputHeader"/>
+
+      <wsdl:part element="impl:echoStringHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoStringHeaderResponse">
+
+      <wsdl:part element="impl:inputHeader1" name="inputHeader"/>
+
+      <wsdl:part element="impl:echoStringHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="HandlerDocLitEndpoint">
+
+      <wsdl:operation name="echoStringHeader">
+
+         <wsdl:input message="impl:echoStringHeaderRequest" name="echoStringHeaderRequest"/>
+
+         <wsdl:output message="impl:echoStringHeaderResponse" name="echoStringHeaderResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="HandlerDocLitEndpointSoapBinding" type="impl:HandlerDocLitEndpoint">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoStringHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoStringHeaderRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echoStringHeaderRequest" namespace="http://handlers" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoStringHeaderResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echoStringHeaderResponse" namespace="http://handlers" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="HandlerDocLitEndpointService">
+
+      <wsdl:port binding="impl:HandlerDocLitEndpointSoapBinding" name="HandlerDocLitEndpoint">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/handlers/HandlerDocLitEndpoint.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

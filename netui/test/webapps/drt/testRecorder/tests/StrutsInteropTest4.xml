@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+
+  <sessionName>StrutsInteropTest4</sessionName>
+  <tester>Connie Emmart</tester>
+  <startDate>23 Jul 2003, 04:28:14.147 PM MDT</startDate>
+  <description>Struts Interoperability Test 4</description>
+
+  <tests>
+  <test>
+    <testNumber>1</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/interOp/test4/Controller1/Jpf1.jpf</uri>
+      <method>GET</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1fKjFWB0hVY2RFoGpLnZSUdGHvBNMTm7L5bx43doq7GMggBB0Bx9!258586711</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1fKjFWB0hVY2RFoGpLnZSUdGHvBNMTm7L5bx43doq7GMggBB0Bx9!258586711</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/interOp/test4/Start.jsp</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+
+
+
+
+
+    <head>
+        <title>InterOp Test4</title>
+    </head>
+
+    <body>
+
+           <h3>Interop Test4</h3>
+           <br/>
+
+
+
+            Start.jsp ... Jpf1.jpf/begin.do -> /JpfNestable/begin.do ->
+                              /interOp/tests/test4/gotoStrutsJSP.do -> Struts1.jsp...
+
+
+
+          <hr width="95%"/>
+          <br/>
+
+
+
+        <form name="form" method="post" action="/coreWeb/interOp/tests/test4/gotoDone.do">
+            <center>
+                <input type="submit" value="Goto Done">
+            </center>
+        </form>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+  <test>
+    <testNumber>2</testNumber>
+
+    <request>
+
+      <protocol>HTTP</protocol>
+      <protocolVersion>1.1</protocolVersion>
+      <host>localhost</host>
+      <port>7001</port>
+      <uri>/coreWeb/interOp/tests/test4/gotoDone.do</uri>
+      <method>POST</method>
+
+      <parameters>
+      </parameters>
+
+      <cookies>
+        <cookie>
+          <name>JSESSIONID</name>
+          <value>1fKjFWB0hVY2RFoGpLnZSUdGHvBNMTm7L5bx43doq7GMggBB0Bx9!258586711</value>
+        </cookie>
+      </cookies>
+
+      <headers>
+        <header>
+          <name>Accept</name>
+          <value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, application/x-shockwave-flash, */*</value>
+        </header>
+        <header>
+          <name>Accept-Encoding</name>
+          <value>gzip, deflate</value>
+        </header>
+        <header>
+          <name>Accept-Language</name>
+          <value>en-us</value>
+        </header>
+        <header>
+          <name>Cache-Control</name>
+          <value>no-cache</value>
+        </header>
+        <header>
+          <name>Connection</name>
+          <value>Keep-Alive</value>
+        </header>
+        <header>
+          <name>Content-Length</name>
+          <value>0</value>
+        </header>
+        <header>
+          <name>Content-Type</name>
+          <value>application/x-www-form-urlencoded</value>
+        </header>
+        <header>
+          <name>Cookie</name>
+          <value>JSESSIONID=1fKjFWB0hVY2RFoGpLnZSUdGHvBNMTm7L5bx43doq7GMggBB0Bx9!258586711</value>
+        </header>
+        <header>
+          <name>Host</name>
+          <value>localhost:7001</value>
+        </header>
+        <header>
+          <name>Referer</name>
+          <value>http://localhost:7001/coreWeb/interOp/test4/Controller1/Jpf1.jpf</value>
+        </header>
+        <header>
+          <name>User-Agent</name>
+          <value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</value>
+        </header>
+      </headers>
+
+    </request>
+
+    <response>
+      <statusCode>200</statusCode>
+      <reason></reason>
+      <responseBody><![CDATA[<html>
+
+
+
+
+
+    <head>
+        <title>InterOp Test4</title>
+    </head>
+
+    <body>
+
+           <h3>Interop Test4</h3>
+           <br/>
+
+
+
+            Start.jsp ... Jpf1.jpf/begin.do -> /JpfNestable/begin.do ->
+                              /interOp/tests/test4/gotoStrutsJSP.do -> Struts1.jsp...
+                             JpfNestable/done.do -> Jpf1.jpf/done.do -> Done.jsp
+
+
+
+          <hr width="95%"/>
+          <br/>
+
+
+        <center>
+            <h2>Test completed successfully</h2>
+        </center>
+    </body>
+</html>]]></responseBody>
+
+    </response>
+  </test>
+
+  </tests>
+
+  <endDate>23 Jul 2003, 04:28:23.300 PM MDT</endDate>
+  <testCount>2</testCount>
+
+</recorderSession>

@@ -1,0 +1,696 @@
+##
+## The Velocity code generation template for the JavaBean generated from a Control public
+## or extension interface.
+##
+## Licensed to the Apache Software Foundation (ASF) under one or more
+## contributor license agreements.  See the NOTICE file distributed with
+## this work for additional information regarding copyright ownership.
+## The ASF licenses this file to You under the Apache License, Version 2.0
+## (the "License"); you may not use this file except in compliance with
+## the License.  You may obtain a copy of the License at
+## 
+##     http://www.apache.org/licenses/LICENSE-2.0
+## 
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+## $Header:$
+##
+## The following context variables are used by this template:
+##      $bean - a ControlBean instance that defines the attributes of the bean
+##      $intf - a ControlInterface instance that defines the attributes of the public interface
+##
+## The actual class template apears at the end of this file, and is preceded by a number of
+## supporting macros that define elements of the template.
+##
+## LOCAL SUPPORTING MACROS
+##
+## This macro declares the template for defining bean constructors
+##
+#macro (declareConstructors)
+    /**
+     * This is the public constructor for the class.  A client-defined control ID may
+     * be provided.  This ID must be unique within the nesting ControlBeanContext.
+     * @param context The containing ControlBeanContext
+     * @param id The control identifier (or null to autogenerate a unique value)
+     * @param props The initialization Properties for the new instance (or null for defaults)
+     */
+    public ${bean.shortName}(ControlBeanContext context, String id, PropertyMap props)
+    {
+        this(context, id, props, ${intf.className}.class);
+    }
+
+    /**
+     * This is the public null-arg constructor for this ControlBean.  If a control id
+     * is not provided, a unique value will be auto-generated.
+     */
+    public ${bean.shortName}()
+    {
+        this(null, null, null);
+    }
+
+    /**
+     * This is the protected version that is used by any ControlBean subclass
+     */
+    protected ${bean.shortName}(ControlBeanContext context, String id, PropertyMap props, Class controlClass)
+    {
+        super(context, id, props, controlClass);
+
+        #foreach ($eventSet in $intf.eventSets)
+            #if ($velocityCount == 1)
+            //
+            // Register event notifier instances for any EventSets
+            //
+            #end
+            setEventNotifier(${eventSet.className}.class, new ${eventSet.notifierClass}());
+        #end
+    }
+
+#end
+##
+## This macro defines the implementation of of the getParameterNames helper method
+##
+#macro (declareGetParameterNames)
+    /**
+     * Returns an array of parameter names for the request method, or null if no parameter
+     * data is available.
+     */
+    protected String [] getParameterNames(Method m)
+    {
+        // Check the local map for operations on this bean type
+        if (_methodParamMap.containsKey(m))
+        {
+            return _methodParamMap.get(m);
+        }
+
+        // Delegate up if not found locally
+        return super.getParameterNames(m);
+    }
+#end
+##
+## This macro defines the implementation of an operation
+##
+#macro (declareOperationImpl $operation)
+    #set ($returnType = $operation.returnType)
+    /**
+     * Implements ${intf.className}.${operation.name}
+     */
+    public $operation.formalTypes $returnType ${operation.name}($operation.argDecl) $operation.throwsClause
+    {
+        Object [] __bc_argArray = new Object[] { $operation.argList };
+        Throwable __bc_thrown = null;
+        #if (!$intf.isExtension())
+        $intf.formalClassName __bc_target = ($intf.formalClassName)ensureControl();
+        #else
+        Extensible __bc_target = (Extensible)ensureControl();
+        #end
+        #if ($returnType != "void")
+        $returnType __bc_retval = ${operation.defaultReturnValue};
+        #end
+        #if ($operation.interceptorServiceNames.size() > 0)
+	    String __bc_pivotedInterceptor = null;
+		#end
+
+        try
+        {
+            #if ($operation.interceptorServiceNames.size() == 0)
+	        preInvoke(${operation.methodField}, __bc_argArray);
+	        #else
+	        preInvoke(${operation.methodField}, __bc_argArray, ${operation.methodField}Interceptors);
+			#end
+
+            ##
+            ## There are two basic generation patterns:
+            ##      - standard invoke (declared on a ControlInterface)
+            ##      - extensible invoke (declared on a ControlExtension)
+            ##
+            #if ($returnType != "void")
+            __bc_retval =
+            #end
+            #if (!$intf.isExtension())
+            __bc_target.${operation.name}($operation.argList)
+            #else
+            #if ($returnType != "void")
+            (#toObject ($returnType))
+            #end
+            __bc_target.invoke(${operation.methodField}, __bc_argArray)
+            #end
+            ;
+        }
+        #if ($operation.interceptorServiceNames.size() > 0)
+        catch (org.apache.beehive.controls.spi.svc.InterceptorPivotException __bc_ipe)
+	    {
+	    	__bc_pivotedInterceptor = __bc_ipe.getInterceptorName();
+            #if ($returnType != "void")
+	    	__bc_retval = (#toObject ($returnType))__bc_ipe.getReturnValue();
+	    	#end
+	    }
+        #end
+        catch (Throwable __bc_t)
+        {
+            //
+            // All exceptions are caught here, so postInvoke processing has visibility into
+            // the exception status.  Errors, RuntimExceptions, or declared checked exceptions will
+            // be rethrown.
+            //
+            __bc_thrown = __bc_t;
+
+            if (__bc_t instanceof Error) throw (Error)__bc_t;
+            else if (__bc_t instanceof RuntimeException) throw (RuntimeException)__bc_t;
+            #foreach ($thrownException in $operation.throwsList)
+            else if (__bc_t instanceof $thrownException) throw ($thrownException)__bc_t;
+            #end
+
+            throw new UndeclaredThrowableException(__bc_t);
+        }
+        finally
+        {
+            #if ($returnType == "void")
+            Object __bc_rv = null;
+            #else
+            Object __bc_rv = __bc_retval;
+            #end
+            #if ($operation.interceptorServiceNames.size() == 0)
+            postInvoke(${operation.methodField}, __bc_argArray, __bc_rv, __bc_thrown);
+            #else
+            postInvoke(${operation.methodField}, __bc_argArray, __bc_rv, __bc_thrown, ${operation.methodField}Interceptors, __bc_pivotedInterceptor);
+            #end
+        }
+        #if ($returnType != "void")
+        return __bc_retval;
+        #end
+    }
+
+#end
+##
+## This macro defines the property accessor methods for a bean property
+##
+#macro (declarePropertyAccessors $property)
+    /**
+     * A PropertyKey that can be used to access the $property.name property of the
+     * $property.propertySet.shortName PropertySet
+     */
+    public static final PropertyKey $property.keyName = new PropertyKey(${property.propertySet.className}.class, "$property.name");
+
+    #if ($property.propertySet.hasSetters())
+    public synchronized void ${property.writeMethod}($property.type value)
+        #if ($property.constrained)
+        throws java.beans.PropertyVetoException
+        #end
+    {
+        #if ($property.bound || $property.constrained)
+        // Ensure the control impl exists, since it may want to receive property events
+        ensureControl();
+
+        Object __bc_oldValue = getRawControlProperty($property.keyName);
+        #end
+
+        #if ($property.constrained)
+        fireVetoableChange($property.keyName, __bc_oldValue, value);
+        #end
+        setControlProperty($property.keyName, value);
+        #if ($property.bound)
+        firePropertyChange($property.keyName, __bc_oldValue, value);
+        #end
+    }
+    #end
+
+    #if (!$property.propertySet.isOptional())
+        public $property.type ${property.readMethod}()
+        {
+            return (#toObject($property.type))getControlProperty($property.keyName);
+        }
+    #end
+
+#end
+##
+## This macro declares the registration methods supporting a PropertyChangeListener
+##
+#macro (declareBoundPropertySupport)
+    /**
+     * Adds a new PropertyChangeListener for listening to changes on bound properties of this
+     * control.
+     */
+    public void addPropertyChangeListener(PropertyChangeListener pcl)
+    {
+        getPropertyChangeSupport().addPropertyChangeListener(pcl);
+    }
+
+    /**
+     * Adds a new PropertyChangeListener for listening to changes to a specific bound
+     * property of this control.
+     */
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener pcl)
+    {
+        getPropertyChangeSupport().addPropertyChangeListener(propertyName, pcl);
+    }
+
+    /**
+     * Removes a registered PropertyChangeListener listening to changes on bound properties of
+     * this control.
+     */
+    public void removePropertyChangeListener(PropertyChangeListener pcl)
+    {
+        getPropertyChangeSupport().removePropertyChangeListener(pcl);
+    }
+
+    /**
+     * Removes a registered PropertyChangeListener listening to changes on a specific bound
+     * property of this control.
+     */
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener pcl)
+    {
+        getPropertyChangeSupport().removePropertyChangeListener(propertyName, pcl);
+    }
+#end
+##
+## This macro declares the registration methods supporting a VetoableChangeListener
+##
+#macro (declareConstrainedPropertySupport)
+    /**
+     * Adds a new PropertyChangeListener for listening to changes on bound properties of this
+     * control.
+     */
+    public void addVetoableChangeListener(VetoableChangeListener vcl)
+    {
+        getVetoableChangeSupport().addVetoableChangeListener(vcl);
+    }
+
+    /**
+     * Adds a new PropertyChangeListener for listening to changes to a specific constrained
+     * property of this control.
+     */
+    public void addVetoableChangeListener(String propertyName, VetoableChangeListener vcl)
+    {
+        getVetoableChangeSupport().addVetoableChangeListener(propertyName, vcl);
+    }
+
+    /**
+     * Removes a registered PropertyChangeListener listening to changes on constrained properties
+     * of this control.
+     */
+    public void removeVetoableChangeListener(VetoableChangeListener vcl)
+    {
+        getVetoableChangeSupport().removeVetoableChangeListener(vcl);
+    }
+
+    /**
+     * Removes a registered PropertyChangeListener listening to changes to a specific constrained
+     * property of this control.
+     */
+    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener vcl)
+    {
+        getVetoableChangeSupport().removeVetoableChangeListener(propertyName, vcl);
+    }
+#end
+##
+## This macro defines the implementation of an event routing method
+##
+#macro (declareEventImpl $event)
+    #set ($returnType = $event.returnType)
+    public $returnType ${event.name}($event.argDecl) $event.throwsClause
+    {
+        Throwable __bc_thrown = null;
+        #if ($returnType != "void")
+        $returnType __bc_retval = ${event.defaultReturnValue};
+        #end
+
+        $eventSet.notifierClass __bc_notifier = ($eventSet.notifierClass)getEventNotifier(${eventSet.className}.class);
+
+        #if ($event.eventSet.unicast)
+            $event.eventSet.formalClassName __bc_listener = ($event.eventSet.formalClassName)__bc_notifier.getListener();
+
+            //
+            // If an event listener has been registered, then deliver the event
+            //
+            if (__bc_listener != null)
+            {
+	            Object [] __bc_argArray = new Object[] {$event.argList};
+                #if ($event.interceptorServiceNames.size() != 0)
+	            String __bc_pivotedInterceptor = null;
+	            #end
+	            try
+	            {
+                #if ($event.interceptorServiceNames.size() != 0)
+	            preEvent($event.methodField, __bc_argArray, ${event.methodField}Interceptors);
+	            #end
+                #if ($returnType != "void")
+                __bc_retval = __bc_listener.${event.name}($event.argList);
+                #else
+                __bc_listener.${event.name}($event.argList);
+                #end
+	            }
+	            #if ($event.interceptorServiceNames.size() != 0)
+	            catch (org.apache.beehive.controls.spi.svc.InterceptorPivotException __bc_ipe)
+	            {
+	            	__bc_pivotedInterceptor = __bc_ipe.getInterceptorName();
+		            #if ($returnType != "void")
+			    	__bc_retval = (#toObject ($returnType))__bc_ipe.getReturnValue();
+			    	#end
+	            }
+                #end
+                catch (Throwable __bc_t)
+                {
+                    //
+                    // All exceptions are caught here, so postEvent processing has visibility into
+                    // the exception status.  Errors, RuntimExceptions, or declared checked exceptions will
+                    // be rethrown.
+                    //
+                    __bc_thrown = __bc_t;
+
+                    if (__bc_t instanceof Error) throw (Error)__bc_t;
+                    else if (__bc_t instanceof RuntimeException) throw (RuntimeException)__bc_t;
+                    #foreach ($thrownException in $event.throwsList)
+                    else if (__bc_t instanceof $thrownException) throw ($thrownException)__bc_t;
+                    #end
+
+                    throw new UndeclaredThrowableException(__bc_t);
+                }
+                #if ($event.interceptorServiceNames.size() != 0)
+                finally
+                {
+                    #if ($returnType == "void")
+                    Object __bc_rv = null;
+                    #else
+                    Object __bc_rv = __bc_retval;
+                    #end
+                    postEvent($event.methodField, __bc_argArray, __bc_rv, __bc_thrown, ${event.methodField}Interceptors, __bc_pivotedInterceptor);
+                }
+                #end
+            }
+            #if ($returnType != "void")
+            return __bc_retval;
+            #end
+        #else
+            Object [] __bc_argArray = new Object[] {$event.argList};
+
+            #if ($event.interceptorServiceNames.size() != 0)
+            String __bc_pivotedInterceptor = null;
+            #end
+            java.util.Iterator __bc_listenerIter = __bc_notifier.listenerIterator();
+
+            try
+            {
+                #if ($event.interceptorServiceNames.size() != 0)
+                preEvent($event.methodField, __bc_argArray, ${event.methodField}Interceptors);
+                #end
+                while (__bc_listenerIter.hasNext())
+                {
+                    $event.eventSet.formalClassName __bc_listener = ($eventSet.formalClassName)__bc_listenerIter.next();
+                    __bc_listener.${event.name}($event.argList);
+                }
+            }
+            #if ($event.interceptorServiceNames.size() != 0)
+            catch (org.apache.beehive.controls.spi.svc.InterceptorPivotException __bc_ipe)
+            {
+            	__bc_pivotedInterceptor = __bc_ipe.getInterceptorName();
+            }
+            #end
+            catch (Throwable __bc_t)
+            {
+                //
+                // All exceptions are caught here, so postEvent processing has visibility into
+                // the exception status.  Errors, RuntimExceptions, or declared checked exceptions will
+                // be rethrown.
+                //
+                __bc_thrown = __bc_t;
+
+                if (__bc_t instanceof Error) throw (Error)__bc_t;
+                else if (__bc_t instanceof RuntimeException) throw (RuntimeException)__bc_t;
+                #foreach ($thrownException in $event.throwsList)
+                else if (__bc_t instanceof $thrownException) throw ($thrownException)__bc_t;
+                #end
+
+                throw new UndeclaredThrowableException(__bc_t);
+            }
+            #if ($event.interceptorServiceNames.size() != 0)
+            finally
+            {
+                postEvent($event.methodField, __bc_argArray, null, __bc_thrown, ${event.methodField}Interceptors, __bc_pivotedInterceptor);
+            }
+            #end
+        #end
+     }
+
+#end
+##
+## This macro defines the implementation of a preEvent method
+##
+#macro (declarePreEvent $eventSet)
+    private void preEvent(Method method, Object[] argArray, String[] interceptors)
+    	throws org.apache.beehive.controls.spi.svc.InterceptorPivotException
+    {
+        for ( String __bc_n : interceptors )
+        {
+            org.apache.beehive.controls.spi.svc.Interceptor __bc_i = ensureInterceptor( __bc_n );
+            try
+            {
+	            __bc_i.preEvent( ${bean.shortName}.this, ${eventSet.formalClassName}.class , method, argArray );
+	        }
+	        catch (org.apache.beehive.controls.spi.svc.InterceptorPivotException __bc_ipe)
+	        {
+	        	__bc_ipe.setInterceptorName(__bc_n);
+	        	throw __bc_ipe;
+	        }
+        }
+    }
+#end
+##
+## This macro defines the implementation of a postEvent method
+##
+#macro (declarePostEvent $eventSet)
+    private void postEvent(Method method, Object[] argArray, Object retval, Throwable t, String[] interceptors, String pivotedInterceptor)
+    {
+        for (int __bc_cnt = interceptors.length - 1; __bc_cnt >= 0; __bc_cnt--)
+        {
+	        String __bc_n = interceptors[__bc_cnt];
+	        if (pivotedInterceptor == null || __bc_n.equals(pivotedInterceptor))
+	        {
+	        	pivotedInterceptor = null;
+	            org.apache.beehive.controls.spi.svc.Interceptor __bc_i = ensureInterceptor( __bc_n );
+    	        __bc_i.postEvent( ${bean.shortName}.this, ${eventSet.formalClassName}.class , method, argArray, retval, t );
+    	    }
+        }
+    }
+#end
+##
+## This macro defines an EventSet proxy implementation for routing events
+##
+#macro (declareEventSetImpl $eventSet)
+    /**
+     * This inner class implements a simple proxy to deliver $eventSet.shortName events
+     * back to a register listener.
+     */
+    protected class $eventSet.notifierClass
+        #if ($eventSet.extendsNotifierBase)
+        extends $eventSet.notifierExtends
+        #else
+        extends ${bean.superClass.className}.${eventSet.notifierExtendsShortName}
+        #end
+        implements ${eventSet.formalClassName}, java.io.Serializable
+    {
+        private static final long serialVersionUID = 1L;
+
+        #set ( $interceptor = false )
+        #foreach ($event in $eventSet.events)
+            #declareEventImpl($event)
+			#if ($event.interceptorServiceNames.size() != 0)
+				#set ( $interceptor = true )
+			#end
+        #end
+        #if ( $interceptor )
+        	#declarePreEvent ($eventSet)
+        	#declarePostEvent ($eventSet)
+        #end
+    }
+
+#end
+##
+## This macros defines the EventSet listener registration methods
+##
+#macro (declaredListenerMethods $eventSet)
+    /**
+     * Registers a new listener for ${eventSet.shortName} events on the bean.
+     */
+    public synchronized void ${eventSet.addListenerMethod}($eventSet.formalClassName listener)
+    #if ($eventSet.unicast)
+                             throws java.util.TooManyListenersException
+    #end
+    {
+        $eventSet.notifierClass __bc_notifier = ($eventSet.notifierClass)getEventNotifier(${eventSet.className}.class);
+        __bc_notifier.addListener(listener);
+    }
+
+    /**
+     * Unregisters an existing listener for ${eventSet.shortName} events on the bean.
+     */
+    public synchronized void ${eventSet.removeListenerMethod}($eventSet.formalClassName listener)
+    {
+        $eventSet.notifierClass __bc_notifier = ($eventSet.notifierClass)getEventNotifier(${eventSet.className}.class);
+        __bc_notifier.removeListener(listener);
+    }
+
+    /**
+     * Returns the  array of registered listeners for ${eventSet.shortName} events on the bean, or
+     * an empty array if no listener has been registered
+     */
+    public synchronized $eventSet.formalClassName [] ${eventSet.getListenersMethod}()
+    {
+        $eventSet.notifierClass __bc_notifier = ($eventSet.notifierClass)getEventNotifier(${eventSet.className}.class);
+        $eventSet.formalClassName [] __bc_listeners = new ${eventSet.className}[__bc_notifier.getListenerCount()];
+        __bc_notifier.getListeners(__bc_listeners);
+        return __bc_listeners;
+    }
+#end
+##
+## This macro declares the local (bean class) cache that is used for shared PropertyMaps
+##
+#macro (declarePropertyCache)
+    /**
+     * The _annotCache maintains a lookup cache from AnnotatedElements to an associated
+     * PropertyMap.  This enables these maps to be shared across multiple beans.
+     */
+    static private HashMap __bc_annotCache = new HashMap();
+
+    protected Map getPropertyMapCache() { return __bc_annotCache; }
+#end
+##
+## This macro enforces the VersionRequired annotation semantics
+##
+#macro (enforceVersionRequired)
+    /*
+     * Enforce VersionRequired
+     */
+    Class __bc_controlIntf = null;
+
+    #if ($intf.getMostDerivedInterface())
+    __bc_controlIntf = ${intf.getMostDerivedInterface().className}.class;
+    #end
+
+    Version __bc_versionPresent = (Version)__bc_controlIntf.getAnnotation(Version.class);
+    VersionRequired __bc_versionRequired = (${bean.shortName}.class).getAnnotation(VersionRequired.class);
+
+    org.apache.beehive.controls.runtime.bean.ControlBean.enforceVersionRequired("${intf.className}", __bc_versionPresent, __bc_versionRequired);
+#end
+##
+## This macro declares the interceptor arrays for operations and eventsets
+##
+#macro (declareMethodInterceptors)
+    #foreach ($operation in $intf.operations)
+        #if ($operation.interceptorServiceNames.size() != 0)
+        private static String[] ${operation.methodField}Interceptors = ${operation.interceptorDecl};
+        #end
+    #end
+
+    #foreach ($eventSet in $intf.eventSets)
+        #foreach ($event in $eventSet.events)
+            #if ($event.interceptorServiceNames.size() != 0)
+		        private static String[] ${event.methodField}Interceptors = ${event.interceptorDecl};
+		    #end
+        #end
+    #end
+#end
+
+##
+## This macro declares the code that prioritizes interceptor arrays for operations
+##
+#macro (prioritizeInterceptors)
+    #foreach ($operation in $intf.operations)
+        #if ($operation.interceptorServiceNames.size() != 0)
+        ${operation.methodField}Interceptors = org.apache.beehive.controls.runtime.bean.InterceptorUtils.prioritizeInterceptors( ${operation.methodField}Interceptors );
+        #end
+    #end
+    #foreach ($eventSet in $intf.eventSets)
+        #foreach ($event in $eventSet.events)
+            #if ($event.interceptorServiceNames.size() != 0)
+		        ${event.methodField}Interceptors = org.apache.beehive.controls.runtime.bean.InterceptorUtils.prioritizeInterceptors(${event.methodField}Interceptors);
+		    #end
+        #end
+    #end
+
+#end
+##
+## THE CONTROLBEAN CLASS TEMPLATE
+##
+#if (!$bean.isRootPackage())
+package $bean.package;
+#end
+
+import java.beans.*;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.UndeclaredThrowableException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.beehive.controls.api.bean.*;
+import org.apache.beehive.controls.api.context.ControlBeanContext;
+import org.apache.beehive.controls.api.properties.PropertyKey;
+import org.apache.beehive.controls.api.properties.PropertyMap;
+import org.apache.beehive.controls.api.versioning.*;
+
+@SuppressWarnings("all")
+public class ${bean.classDeclaration}
+       extends ${bean.superClass.className}${bean.superTypeBinding}
+       implements ${intf.formalClassName}
+{
+    #if ($intf.operations.size() != 0 || $intf.localEventSetCount != 0)
+    #declareMethodStatics()
+
+    static
+    {
+        #initMethodStatics()
+    }
+
+    #declareMethodInterceptors()
+
+    static
+    {
+        #prioritizeInterceptors()
+    }
+
+    #end
+
+    #if ($intf.getVersionRequired())
+    static
+    {
+        #enforceVersionRequired()
+    }
+    #end
+
+    #declareConstructors()
+
+    #if ($intf.operations.size() != 0)
+        #declareGetParameterNames()
+
+        #foreach ($operation in $intf.operations)
+            #declareOperationImpl ($operation)
+        #end
+    #end
+
+    #foreach ($propertySet in $intf.propertySets)
+        #foreach ($property in $propertySet.properties)
+            #declarePropertyAccessors ($property)
+        #end
+    #end
+
+    #if ($intf.addsBoundPropertySupport())
+    #declareBoundPropertySupport()
+    #end
+
+    #if ($intf.addsConstrainedPropertySupport())
+    #declareConstrainedPropertySupport()
+    #end
+
+    #foreach ($eventSet in $intf.eventSets)
+        #declareEventSetImpl ($eventSet)
+        #declaredListenerMethods($eventSet)
+    #end
+
+    #declarePropertyCache()
+
+    private static final long serialVersionUID = 1L;
+}

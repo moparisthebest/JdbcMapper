@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+
+<project name="Beehive/NetUI/Tests-JDK1.4" default="bvt" basedir=".">
+
+    <property name="required.jdk.version" value="1.4"/>
+
+    <import file="../../../../beehive-imports.xml"/>
+    <import file="../../../netui-imports.xml"/>
+
+    <property name="webapp.name" value="coreWeb"/>
+    <property name="testRecorder.config.name" value="netui-server-drt-config"/>
+    <property name="server.root.url" value="http://localhost:8080"/>
+    <property name="webapp.waitfor.url" value="${server.root.url}/${webapp.name}"/>
+    <property name="webapp.dir" location="${app.dir}/drt/${webapp.name}"/>
+    <property name="jdk14.temp.dir" value="${app.dir}/drt/temp-jdk14"/>
+    <property name="temp.webapp.dir" value="${jdk14.temp.dir}/${webapp.name}"/>
+
+    <target name="build" description="build the webapp under JDK 1.4">
+        <!-- check for JDK 1.4 -->
+        <condition property="java.version.correct">
+            <equals arg1="${ant.java.version}" arg2="1.4"/>
+        </condition>
+        <fail unless="java.version.correct" message="Java version 1.4 (no earlier or later) is required."/>
+
+        <!-- delete and recreate the temp directory -->
+        <delete dir="${jdk14.temp.dir}" failonerror="true"/>
+        <mkdir dir="${jdk14.temp.dir}"/>
+        <mkdir dir="${temp.webapp.dir}"/>
+
+        <!-- copy the XDoclet compiler (and XDoclet/XJavaDoc) into a lib directory in the temp directory -->
+        <property name="compiler.lib.dir" value="${jdk14.temp.dir}/compiler-lib"/>
+        <mkdir dir="${compiler.lib.dir}"/>
+        <copy todir="${compiler.lib.dir}" file="${build.lib.dir}/${compiler-xdoclet.jar.name}"/>
+        <copy todir="${compiler.lib.dir}" file="${xdoclet.jar}"/>
+        <copy todir="${compiler.lib.dir}" file="${xjavadoc.jar}"/>
+
+        <!-- deploy netui into the temp webapp -->
+        <ant antfile="${test.dir}/ant/buildWebapp.xml" target="deploy.netui" inheritAll="false">
+            <property name="webapp.dir" location="${temp.webapp.dir}"/>
+            <property name="include.testrecorder" value="true"/>
+            <property name="testRecorder.config.name" value="${testRecorder.config.name}"/>
+            <property name="test.file" location="${app.dir}/drt/testRecorder/config/testRecorder-tests.xml"/>
+            <property name="config.file" location="${app.dir}/drt/testRecorder/config/testRecorder-config.xml"/>
+            <property name="webapp.file" location="${app.dir}/drt/testRecorder/config/testRecorder-webapp.xml"/>
+            <property name="struts.version" value="1.2"/>
+            <property name="required.jdk.version" value="${required.jdk.version}"/>
+        </ant>
+
+        <!-- delete beehive-controls.jar and beehive-netui-pageflow.jar, and add beehive-netui-pageflow-jdk14.jar -->
+        <delete file="${temp.webapp.dir}/WEB-INF/lib/beehive-controls.jar"/>
+        <delete file="${temp.webapp.dir}/WEB-INF/lib/${pageflow.jar.name}"/>
+        <!-- TODO: need a constant for the pageflow-jdk14 jar -->
+        <copy file="${build.lib.dir}/beehive-netui-pageflow-jdk14.jar" todir="${temp.webapp.dir}/WEB-INF/lib"/>
+
+        <!-- copy files from coreWeb, and translate annotations into XDoclet tags -->
+        <antcall target="copy.webapp"/>
+
+        <!-- build the webapp, using the XDoclet compiler -->
+        <ant antfile="${build.lib.dir}/pageflow-webapp-build-xdoclet.xml" target="clean" inheritAll="false">
+            <property name="webapp.dir" location="${temp.webapp.dir}"/>
+            <property name="compiler.lib.dir" location="${compiler.lib.dir}"/>
+        </ant>
+        <ant antfile="${build.lib.dir}/pageflow-webapp-build-xdoclet.xml" target="build" inheritAll="false">
+            <property name="webapp.dir" location="${temp.webapp.dir}"/>
+            <property name="compiler.lib.dir" location="${compiler.lib.dir}"/>
+        </ant>
+    </target>
+
+    <target name="copy.webapp" description="copy files from coreWeb, and translate annotations into XDoclet tags">
+        <taskdef name="annotations-to-xdoclet" classname="org.apache.beehive.netui.compiler.xdoclet.tools.AnnotationsToXDocletTask" classpath="${compiler.lib.dir}/${compiler-xdoclet.jar.name}"/>
+
+        <copy todir="${temp.webapp.dir}" failonerror="true">
+            <fileset dir="${webapp.dir}">
+                <include name="**/*.css"/>
+                <include name="**/*.db"/>
+                <include name="**/*.gif"/>
+                <include name="**/*.html"/>
+                <include name="**/*.inc"/>
+                <include name="**/*.jcs"/>
+                <include name="**/*.jpg"/>
+                <include name="**/*.js"/>
+                <include name="**/*.jsp"/>
+                <include name="**/*.jspf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.tag"/>
+                <include name="**/*.tld"/>
+                <include name="**/*.txt"/>
+                <include name="**/*.xml"/>
+                <include name="**/*.xsd"/>
+                <include name="**/*.xsdconfig"/>
+            </fileset>
+        </copy>
+
+        <annotations-to-xdoclet todir="${temp.webapp.dir}" overwrite="true">
+            <fileset dir="${webapp.dir}">
+                <include name="**/*.jpf"/>
+                <include name="**/*.jpfs"/>
+                <include name="**/*.java"/>
+                <include name="**/Global.app"/>
+                <exclude name="WEB-INF/.tmpbeansrc/**"/>
+                <exclude name="WEB-INF/classes/**"/>
+                <exclude name="**/miniTests/generics/**"/>
+                <exclude name="**/databinding/datagrid/controls/**"/>
+                <exclude name="**/databinding/controls/**"/>
+                <exclude name="**/pageFlowCore/inheritControls/**"/>
+                <exclude name="**/xmlbeans/**"/>
+                <exclude name="**/xmlBeans/**"/>
+            </fileset>
+        </annotations-to-xdoclet>
+
+    </target>
+
+    <target name="bvt.running" description="Playback the bvt suite to a running server">
+        <ant antfile="${test.dir}/ant/testRecorder.xml" target="suite.callback" inheritAll="false">
+            <property name="suite.name" value="bvt"/>
+            <property name="playback.webapps" value="${webapp.name}"/>
+            <property name="waitfor.url" value="${webapp.waitfor.url}"/>
+            <property name="required.jdk.version" value="${required.jdk.version}"/>
+        </ant>
+    </target>
+
+    <target name="bvt" depends="build" description="Run the bvt suite with full server start / stop support.">
+        <ant antfile="${test.dir}/ant/testRecorder.xml" inheritAll="false" target="server.test">
+            <property name="app.build.file" location="${app.dir}/drt/bvt-jdk14.xml"/>
+            <property name="waitfor.url" value="${server.root.url}"/>
+            <property name="suite.name" value="bvt"/>
+            <property name="playback.webapps" value="${webapp.name}"/>
+            <property name="drt.mode" value="true"/>
+            <property name="required.jdk.version" value="${required.jdk.version}"/>
+        </ant>
+    </target>
+
+    <target name="start" description="Start server with asserts enabled for org.apache.beehive.netui">
+        <start-server shmem="false" javaOptions="-ea:org.apache.beehive.netui..."/>
+    </target>
+
+    <target name="stop" description="Stop server">
+        <stop-server/>
+    </target>
+
+
+    <!-- todo: this needs to compost down into buildWebapp.xml; until we're sure it works, it stays here -->
+    <target name="ensure.deployed" description="Deploy webapp for the test recorder">
+        <echo>Ensuring that the webapp ${webapp.name} is deployed on a running server at the url ${webapp.waitfor.url}</echo>
+
+        <waitfor maxwait="5" maxwaitunit="second" timeoutproperty="unavailable">
+            <http url="${webapp.waitfor.url}"/>
+        </waitfor>
+        <antcall target="do.deploy"/>
+        <antcall target="do.redeploy"/>
+        <fail if="still.unavailable" message="Couldn't find webapp with path ${webapp.waitfor.url}"/>
+    </target>
+
+    <target name="do.deploy" if="unavailable">
+        <echo>Webapp is not deployed; deploying</echo>
+
+        <antcall target="deploy"/>
+        <echo>...deploy complete</echo>
+
+        <waitfor maxwait="120" maxwaitunit="second" timeoutproperty="still.unavailable">
+            <http url="${webapp.waitfor.url}"/>
+        </waitfor>
+    </target>
+
+    <target name="do.redeploy" unless="unavailable">
+        <echo>Webapp is deployed; undeploy and redeploy</echo>
+
+        <antcall target="undeploy"/>
+        <echo>...undeploy complete</echo>
+
+        <antcall target="deploy"/>
+        <echo>...deploy complete</echo>
+
+        <waitfor maxwait="120" maxwaitunit="second" timeoutproperty="still.unavailable">
+            <http url="${webapp.waitfor.url}"/>
+        </waitfor>
+    </target>
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- Targets for deploying the webapp on a server                     -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+    <target name="deploy" description="Deploy webapp">
+        <deploy-webapp webappDir="${temp.webapp.dir}" contextPath="${webapp.name}"/>
+    </target>
+
+    <target name="undeploy" description="Undeploy webapp">
+        <undeploy-webapp contextPath="${webapp.name}"/>
+    </target>
+
+    <target name="redeploy" description="Redeploy webapp">
+        <redeploy-webapp contextPath="${webapp.name}"/>
+    </target>
+
+
+</project>

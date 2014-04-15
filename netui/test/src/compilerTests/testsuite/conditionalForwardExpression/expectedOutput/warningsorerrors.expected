@@ -1,0 +1,7 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\conditionalForwardExpression\Controller.java:58: warning: The expression, "${pageFlow.choice=='page1'}", has already been used in another conditional forward for the simple action, "anAction".
+public class Controller 
+       ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\conditionalForwardExpression\Controller.java:58: warning: The expression, "${pageFlow.choice=='page2'}", has already been used in another conditional forward for the simple action, "anotherAction".
+public class Controller 
+       ^
+2 warnings

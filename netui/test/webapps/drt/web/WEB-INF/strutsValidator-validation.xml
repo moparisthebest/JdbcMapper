@@ -1,0 +1,12 @@
+<form-validation>
+    <formset>
+        <form name="myForm">
+            <field property="email" depends="required">
+                <arg0 key="email.displayName"/>
+            </field>
+            <field property="age" depends="required,integer">
+                <arg0 key="age.displayName"/>
+            </field>
+        </form>
+    </formset>  
+</form-validation>

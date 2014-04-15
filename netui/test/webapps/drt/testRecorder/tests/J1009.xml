@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>J1009</sessionName>
+<tester>rich</tester>
+<startDate>17 Nov 2005, 01:30:50.856 PM MST</startDate>
+<description>Test to ensure that you can still successfully end a nested page flow in a popup window after running actions on the page flow in the original window.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/miniTests/updateFormFromNestedPopup/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>F83B5E68DECAD627D98C85AE45405C64</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=F83B5E68DECAD627D98C85AE45405C64; Language=en; Country=US</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/index.jsp">
+    </head>
+    <body>
+      <form action="/coreWeb/miniTests/updateFormFromNestedPopup/submit.do" method="post">
+        <table>
+          <tr valign="top">
+            <td><b>Name:<b></td>
+            <td>
+              <input type="text" name="{actionForm.name}">
+              <span style="color:red"></span>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td>Address:</td>
+            <td>
+              <input type="text" name="{actionForm.address}">
+            </td>
+          </tr>
+          <tr valign="top">
+            <td>City:</td>
+            <td>
+              <input type="text" name="{actionForm.city}">
+            </td>
+          </tr>
+          <tr valign="top">
+            <td><b>State:</b></td>
+            <td>
+              <input type="text" name="{actionForm.state}" id="stateField">
+              <span style="color:red"></span>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td><b>Zip:<b></td>
+            <td>
+              <input type="text" name="{actionForm.zip}" id="zipField">
+              <span style="color:red"></span>
+
+              <a href="/coreWeb/miniTests/updateFormFromNestedPopup/getZip.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.state%3AstateField&amp;_netui%3AretrieveItem=outputFormBean.zip%3AzipField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" onclick="Netui_Popup('/coreWeb/miniTests/updateFormFromNestedPopup/getZip.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.state%3AstateField&amp;_netui%3AretrieveItem=outputFormBean.zip%3AzipField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=550,height=150,location=0',false,'Netui_Window',null);return false;">look up</a>
+
+            </td>
+          </tr>
+        </table>
+        <br/>
+        <input type="submit" value="submit">
+      </form>
+
+    <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+if (!window_netui_popup) {
+  var window_netui_popup = new Array();
+}
+
+// Parse the field names and values from a Form and return
+// them as a string of parameters to add to a url query
+function get_form_query(formNode)
+{
+  var params = "";
+
+  if (formNode != null)
+  {
+    var sep = "";
+    for (var i = 0; i < formNode.elements.length; i++) {
+      switch (formNode[i].type) {
+        case "radio":
+        case "checkbox":        // input type=checkbox
+          if (!formNode[i].checked)
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&";
+          break;
+        case "file":            // input type=file
+        case "hidden":          // input type=hidden
+        case "text":            // input type=text
+        case "textArea":        // textarea
+        case "select-one":      // select
+        case "select-multiple": // select multiple
+          if (formNode[i].value == "")
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&";
+          break;
+        // ignore these...
+        case "submit":          // input type=submit
+        case "reset":           // input type=reset
+        case "button":          // input type=button
+        case "password":        // input type=password
+          break;
+      }
+    }
+  }
+
+  return params;
+}
+
+function Netui_Popup(url, name, features, replace, popup, formName)
+{
+  if (window_netui_popup[popup] != null && ! window_netui_popup[popup].closed)
+  {
+    window_netui_popup[popup].focus();
+    return;
+  }
+
+  if (formName != null && formName.length > 0) {
+    var formNode = null;
+    for (var i = 0; i < document.forms.length; i++) {
+      if (document.forms[i].name == formName) {
+          formNode = document.forms[i];
+          break;
+      }
+    }
+
+    if (formNode != null) {
+      var sep = "?";
+      if (url != null && url.length != 0 && url.indexOf("?") > 0) {
+          sep = "&";
+      }
+      url += sep + get_form_query(formNode);
+    }
+  }
+
+  window_netui_popup[popup]=open(url, name, features, replace);
+  if (window_netui_popup[popup].opener == null) window_netui_popup[popup].opener=self;
+}
+
+function Netui_OnPopupDone(map)
+{
+  for (var i in map)
+  {
+    var element = document.getElementById(i);
+    if (element != null)
+    {
+      element.value=map[i];
+    }
+  }
+}
+
+window_netui_popup["Netui_Window"] = null;
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.stateField="{actionForm.state}"
+netui_names.zipField="{actionForm.zip}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.stateField="{actionForm.state}"
+netui_tagIdNameMap.zipField="{actionForm.zip}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/miniTests/updateFormFromNestedPopup/getZip.do</uri>
+<method>GET</method>
+<parameters>
+<parameter>
+<name>_netui:retrieveItem</name>
+<value>outputFormBean.state:stateField</value>
+</parameter>
+<parameter>
+<name>_netui:retrieveItem</name>
+<value>outputFormBean.zip:zipField</value>
+</parameter>
+<parameter>
+<name>_netui:returnActionCallback</name>
+<value>Netui_OnPopupDone</value>
+</parameter>
+<parameter>
+<name>_netui:returnActionViewRenderer</name>
+<value>org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>F83B5E68DECAD627D98C85AE45405C64</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=F83B5E68DECAD627D98C85AE45405C64; Language=en; Country=US</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/getZip/index.jsp">
+    </head>
+    <body>
+          <form action="/coreWeb/miniTests/updateFormFromNestedPopup/getZip/submitZip.do" method="post">
+        <table>
+          <tr valign="top">
+            <td>Zip:</td>
+            <td>
+              <input type="text" name="{actionForm.zip}">
+              <span style="color:red"></span>
+            </td>
+          </tr>
+        </table>
+        <br/>&nbsp;
+        <input type="submit" value="submit">
+        <input type="submit" name="actionOverride:cancel" value="cancel">
+      </form>
+
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/miniTests/updateFormFromNestedPopup/submit.do</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>{actionForm.address}</name>
+<value></value>
+</parameter>
+<parameter>
+<name>{actionForm.city}</name>
+<value></value>
+</parameter>
+<parameter>
+<name>{actionForm.name}</name>
+<value></value>
+</parameter>
+<parameter>
+<name>{actionForm.state}</name>
+<value></value>
+</parameter>
+<parameter>
+<name>{actionForm.zip}</name>
+<value></value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>F83B5E68DECAD627D98C85AE45405C64</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>117</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=F83B5E68DECAD627D98C85AE45405C64; Language=en; Country=US</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/index.jsp">
+    </head>
+    <body>
+      <form action="/coreWeb/miniTests/updateFormFromNestedPopup/submit.do" method="post">
+        <table>
+          <tr valign="top">
+            <td><b>Name:<b></td>
+            <td>
+              <input type="text" name="{actionForm.name}">
+              <span style="color:red">The name is required.
+</span>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td>Address:</td>
+            <td>
+              <input type="text" name="{actionForm.address}">
+            </td>
+          </tr>
+          <tr valign="top">
+            <td>City:</td>
+            <td>
+              <input type="text" name="{actionForm.city}">
+            </td>
+          </tr>
+          <tr valign="top">
+            <td><b>State:</b></td>
+            <td>
+              <input type="text" name="{actionForm.state}" id="stateField">
+              <span style="color:red">The state is required.
+</span>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td><b>Zip:<b></td>
+            <td>
+              <input type="text" name="{actionForm.zip}" id="zipField">
+              <span style="color:red">The zip code is required.
+</span>
+
+              <a href="/coreWeb/miniTests/updateFormFromNestedPopup/getZip.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.state%3AstateField&amp;_netui%3AretrieveItem=outputFormBean.zip%3AzipField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone" onclick="Netui_Popup('/coreWeb/miniTests/updateFormFromNestedPopup/getZip.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.state%3AstateField&amp;_netui%3AretrieveItem=outputFormBean.zip%3AzipField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone','','width=550,height=150,location=0',false,'Netui_Window',null);return false;">look up</a>
+
+            </td>
+          </tr>
+        </table>
+        <br/>
+        <input type="submit" value="submit">
+      </form>
+
+    <script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+if (!window_netui_popup) {
+  var window_netui_popup = new Array();
+}
+
+// Parse the field names and values from a Form and return
+// them as a string of parameters to add to a url query
+function get_form_query(formNode)
+{
+  var params = "";
+
+  if (formNode != null)
+  {
+    var sep = "";
+    for (var i = 0; i < formNode.elements.length; i++) {
+      switch (formNode[i].type) {
+        case "radio":
+        case "checkbox":        // input type=checkbox
+          if (!formNode[i].checked)
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&";
+          break;
+        case "file":            // input type=file
+        case "hidden":          // input type=hidden
+        case "text":            // input type=text
+        case "textArea":        // textarea
+        case "select-one":      // select
+        case "select-multiple": // select multiple
+          if (formNode[i].value == "")
+            break;
+          params += sep + formNode[i].name + "=" + formNode[i].value;
+          sep="&";
+          break;
+        // ignore these...
+        case "submit":          // input type=submit
+        case "reset":           // input type=reset
+        case "button":          // input type=button
+        case "password":        // input type=password
+          break;
+      }
+    }
+  }
+
+  return params;
+}
+
+function Netui_Popup(url, name, features, replace, popup, formName)
+{
+  if (window_netui_popup[popup] != null && ! window_netui_popup[popup].closed)
+  {
+    window_netui_popup[popup].focus();
+    return;
+  }
+
+  if (formName != null && formName.length > 0) {
+    var formNode = null;
+    for (var i = 0; i < document.forms.length; i++) {
+      if (document.forms[i].name == formName) {
+          formNode = document.forms[i];
+          break;
+      }
+    }
+
+    if (formNode != null) {
+      var sep = "?";
+      if (url != null && url.length != 0 && url.indexOf("?") > 0) {
+          sep = "&";
+      }
+      url += sep + get_form_query(formNode);
+    }
+  }
+
+  window_netui_popup[popup]=open(url, name, features, replace);
+  if (window_netui_popup[popup].opener == null) window_netui_popup[popup].opener=self;
+}
+
+function Netui_OnPopupDone(map)
+{
+  for (var i in map)
+  {
+    var element = document.getElementById(i);
+    if (element != null)
+    {
+      element.value=map[i];
+    }
+  }
+}
+
+window_netui_popup["Netui_Window"] = null;
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.stateField="{actionForm.state}"
+netui_names.zipField="{actionForm.zip}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.stateField="{actionForm.state}"
+netui_tagIdNameMap.zipField="{actionForm.zip}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script></body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/miniTests/updateFormFromNestedPopup/getZip/submitZip.do</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>{actionForm.zip}</name>
+<value>80303</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>F83B5E68DECAD627D98C85AE45405C64</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>26</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=F83B5E68DECAD627D98C85AE45405C64; Language=en; Country=US</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/getZip.do?_netui%3AreturnActionViewRenderer=org.apache.beehive.netui.tags.internal.ReturnActionViewRenderer&amp;_netui%3AretrieveItem=outputFormBean.state%3AstateField&amp;_netui%3AretrieveItem=outputFormBean.zip%3AzipField&amp;_netui%3AreturnActionCallback=Netui_OnPopupDone</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        You have chosen <b>80303</b>, in <b>Colorado</b>.
+        Is this correct?
+        <br/>
+        <br/>
+        <form action="/coreWeb/miniTests/updateFormFromNestedPopup/getZip/done.do" method="post">
+            <input type="submit" value="yes">
+            <input type="submit" name="actionOverride:begin" value="no">
+        </form>
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/miniTests/updateFormFromNestedPopup/getZip/done.do</uri>
+<method>POST</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>F83B5E68DECAD627D98C85AE45405C64</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>0</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=F83B5E68DECAD627D98C85AE45405C64; Language=en; Country=US</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/coreWeb/miniTests/updateFormFromNestedPopup/getZip/submitZip.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<script language="JavaScript" type="text/JavaScript">
+<!--
+var map = new Object();
+map["stateField"] = "Colorado";
+map["zipField"] = "80303";
+top.opener.Netui_OnPopupDone(map);
+window.close();
+-->
+</script>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>17 Nov 2005, 01:31:17.665 PM MST</endDate>
+<testCount>5</testCount>
+</recorderSession>

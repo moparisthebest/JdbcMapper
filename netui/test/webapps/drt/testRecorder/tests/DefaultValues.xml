@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>DefaultValues</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Feb 2005, 06:28:55.684 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/defaultValues/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7785</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Default Values</title>
+</head>
+<body>
+<h4>Default Values</h4>
+</body>
+<form action="/coreWeb/miniTests/defaultValues/postback.do" method="post">
+   <input type="text" name="{actionForm.text}" value="Page Flow Default Text"><br />
+   <textarea name="{actionForm.textArea}">Page Flow Default Text Area</textarea><br />
+   <input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}">
+<option value="Option 1">Option 1</option>
+<option value="Option 2">Option 2</option>
+<option value="Option 3">Option 3</option>
+<option value="Default Option" selected>Default Option</option></select><br />
+   <input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Radio 1"><span>Radio 1</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Radio 2"><span>Radio 2</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Radio 3"><span>Radio 3</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Default Radio" checked><span>Default Radio</span><br>
+<br />
+   <input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkGroup}OldValue" value="true"><input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Check 1"><span>Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Check 2"><span>Check 2</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Check 3"><span>Check 3</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Default Check 1" checked><span>Default Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Default Check 2" checked><span>Default Check 2</span><br>
+<br />
+   <input type="submit" value="Submit">
+</form>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/miniTests/defaultValues/postback.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkGroup</ses:name>
+                  <ses:value>Check 2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkGroupPostBack</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/miniTests/defaultValues/Begin.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radioGroup</ses:name>
+                  <ses:value>Radio 2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>Option 2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>x</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value>x</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>158</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7785</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Default Values</title>
+</head>
+<body>
+<h4>Default Values</h4>
+</body>
+<form action="/coreWeb/miniTests/defaultValues/postback.do" method="post">
+   <input type="text" name="{actionForm.text}" value="x"><br />
+   <textarea name="{actionForm.textArea}">x</textarea><br />
+   <input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}">
+<option value="Option 1">Option 1</option>
+<option value="Option 2" selected>Option 2</option>
+<option value="Option 3">Option 3</option>
+<option value="Default Option">Default Option</option></select><br />
+   <input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Radio 1"><span>Radio 1</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Radio 2" checked><span>Radio 2</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Radio 3"><span>Radio 3</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{actionForm.radioGroup}" value="Default Radio"><span>Default Radio</span><br>
+<br />
+   <input type="hidden" name="wlw-checkbox_group_key:{actionForm.checkGroup}OldValue" value="true"><input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Check 1"><span>Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Check 2" checked><span>Check 2</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Check 3"><span>Check 3</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Default Check 1"><span>Default Check 1</span><br>
+<input type="checkbox" name="wlw-checkbox_group_key:{actionForm.checkGroup}" value="Default Check 2"><span>Default Check 2</span><br>
+<br />
+   <input type="submit" value="Submit">
+</form>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 06:28:58.008 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>2</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>2</ses:failedCount>
+</ses:recorderSession>

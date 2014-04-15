@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://mimemultipart.attachments" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://mimemultipart.attachments" xmlns:intf="http://mimemultipart.attachments" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+
+   <wsdl:message name="getImagesRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="getImagesResponse">
+
+      <wsdl:part name="return" type="apachesoap:Multipart"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlTextResponse">
+
+      <wsdl:part name="return" type="apachesoap:Multipart"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoPlainTextRequest">
+
+      <wsdl:part name="pt" type="apachesoap:Multipart"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoPlainTextResponse">
+
+      <wsdl:part name="return" type="apachesoap:Multipart"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoXmlTextRequest">
+
+      <wsdl:part name="pt" type="apachesoap:Multipart"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="MimeMultipartRpcEnc">
+
+      <wsdl:operation name="echoPlainText" parameterOrder="pt">
+
+         <wsdl:input message="impl:echoPlainTextRequest" name="echoPlainTextRequest"/>
+
+         <wsdl:output message="impl:echoPlainTextResponse" name="echoPlainTextResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoXmlText" parameterOrder="pt">
+
+         <wsdl:input message="impl:echoXmlTextRequest" name="echoXmlTextRequest"/>
+
+         <wsdl:output message="impl:echoXmlTextResponse" name="echoXmlTextResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getImages">
+
+         <wsdl:input message="impl:getImagesRequest" name="getImagesRequest"/>
+
+         <wsdl:output message="impl:getImagesResponse" name="getImagesResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="MimeMultipartRpcEncSoapBinding" type="impl:MimeMultipartRpcEnc">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoPlainText">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoPlainTextRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mimemultipart.attachments" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoPlainTextResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mimemultipart.attachments" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoXmlText">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoXmlTextRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mimemultipart.attachments" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoXmlTextResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mimemultipart.attachments" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getImages">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getImagesRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mimemultipart.attachments" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getImagesResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://mimemultipart.attachments" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="MimeMultipartRpcEncService">
+
+      <wsdl:port binding="impl:MimeMultipartRpcEncSoapBinding" name="MimeMultipartRpcEnc">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/attachments/mimemultipart/MimeMultipartRpcEnc.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

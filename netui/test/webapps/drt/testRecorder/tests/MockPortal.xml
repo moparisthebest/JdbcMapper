@@ -1,0 +1,1585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>MockPortal</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>15 Apr 2005, 10:04:46.544 AM MDT</ses:startDate>
+   <ses:description>rich</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>begin</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=submit&amp;smokeTestA_submit=true" method="post">
+            data: <input type="text" name="smokeTestA{pageFlow.data}" id="smokeTestA.tb">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=goNested&amp;smokeTestA_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestA__tb="smokeTestA{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestA___tb="smokeTestA{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>begin</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=submit&amp;smokeTestB_submit=true" method="post">
+            data: <input type="text" name="smokeTestB{pageFlow.data}" id="smokeTestB.tb">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=goNested&amp;smokeTestB_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestB__tb="smokeTestB{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestB___tb="smokeTestB{pageFlow.data}"
+
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>smokeTestA_submit</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestAaltAction</ses:name>
+                  <ses:value>submit</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestA{pageFlow.data}</ses:name>
+                  <ses:value>aaa</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>83</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>submit</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+
+        data: <b><span>aaa</span></b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=begin&amp;smokeTestA_submit=true">go back</a>
+    </body>
+
+</html>
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=submit&amp;smokeTestB_submit=true" method="post">
+            data: <input type="text" name="smokeTestB{pageFlow.data}" id="smokeTestB.tb">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=goNested&amp;smokeTestB_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestB__tb="smokeTestB{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestB___tb="smokeTestB{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>smokeTestB_submit</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestBaltAction</ses:name>
+                  <ses:value>submit</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestB{pageFlow.data}</ses:name>
+                  <ses:value>bbb</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>83</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+
+        data: <b><span>aaa</span></b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=begin&amp;smokeTestA_submit=true">go back</a>
+    </body>
+
+</html>
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>submit</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+
+        data: <b><span>bbb</span></b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=begin&amp;smokeTestB_submit=true">go back</a>
+    </body>
+
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>smokeTestA_submit</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestAaltAction</ses:name>
+                  <ses:value>begin</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>begin</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=submit&amp;smokeTestA_submit=true" method="post">
+            data: <input type="text" name="smokeTestA{pageFlow.data}" id="smokeTestA.tb" value="aaa">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=goNested&amp;smokeTestA_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestA__tb="smokeTestA{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestA___tb="smokeTestA{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+
+        data: <b><span>bbb</span></b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=begin&amp;smokeTestB_submit=true">go back</a>
+    </body>
+
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>smokeTestA_submit</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestAaltAction</ses:name>
+                  <ses:value>goNested</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>goNested</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/nested/index.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.nested.NestedController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/nested/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/mockportal/smokeTest/nested/index.jsp">
+    </head>
+    <body>
+                    
+        <h3>Nested</h3>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=done&amp;smokeTestA_submit=true">done</a>
+
+                
+    </body>
+</html>
+
+  
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/results.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+
+        data: <b><span>bbb</span></b>
+        <br/>
+        <br/>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=begin&amp;smokeTestB_submit=true">go back</a>
+    </body>
+
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>smokeTestB_submit</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestBaltAction</ses:name>
+                  <ses:value>begin</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.nested.NestedController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/nested/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/mockportal/smokeTest/nested/index.jsp">
+    </head>
+    <body>
+                    
+        <h3>Nested</h3>
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=done&amp;smokeTestA_submit=true">done</a>
+
+                
+    </body>
+</html>
+
+  
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>begin</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=submit&amp;smokeTestB_submit=true" method="post">
+            data: <input type="text" name="smokeTestB{pageFlow.data}" id="smokeTestB.tb" value="bbb">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=goNested&amp;smokeTestB_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestB__tb="smokeTestB{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestB___tb="smokeTestB{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/mockportal/MockPortal.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>smokeTestA_submit</ses:name>
+                  <ses:value>true</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>smokeTestAaltAction</ses:name>
+                  <ses:value>done</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>81B1D26C03D3F4B5BDF05717436FCE64</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=81B1D26C03D3F4B5BDF05717436FCE64; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>39b06d10:10346959ac1:-7af0</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040803 Firefox/0.9.3</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Mock Portal (/mockportal)</title>
+</head>
+
+<body>
+
+    <h3>Mock Portal (/mockportal)</h3>
+    <table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestA</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="green">Action was: <b>done</b></font><br>
+<font color="green">Action result URI: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+<font color="green">Action result isRedirect: <b>false</b></font><br>
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestA">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=submit&amp;smokeTestA_submit=true" method="post">
+            data: <input type="text" name="smokeTestA{pageFlow.data}" id="smokeTestA.tb" value="aaa">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestAaltAction=goNested&amp;smokeTestA_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestA__tb="smokeTestA{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestA___tb="smokeTestA{pageFlow.data}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+<table border="1" cellspacing="1" cellpadding="5" width="100%">
+<tr bordercolor="White"><td bgcolor="#EEEEFF">
+<b>Portlet smokeTestB</b></td></tr><tr bordercolor="White"><td bgcolor="#EEEEFF">
+<font color="black">PageFlow/StrutsModule type: <b>mockportal.smokeTest.SmokeTestController</b></font><br>
+<font color="black">Current URL: <b>/mockportal/smokeTest/index.jsp</b></font><br>
+</td></tr>
+<tr><td>
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" netui:idScope="smokeTestB">
+
+    <head>
+        <title>
+            Mock Portal Smoke Test
+        </title>
+    </head>
+    <body>
+        <h3>Mock Portal Smoke Test</h3>
+        
+        <form action="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=submit&amp;smokeTestB_submit=true" method="post">
+            data: <input type="text" name="smokeTestB{pageFlow.data}" id="smokeTestB.tb" value="bbb">
+            <input type="submit" value="submit">
+        </form>
+
+        <a href="/coreWeb/mockportal/MockPortal.jsp?smokeTestBaltAction=goNested&amp;smokeTestB_submit=true">goNested</a>
+    </body>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.smokeTestB__tb="smokeTestB{pageFlow.data}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.smokeTestB___tb="smokeTestB{pageFlow.data}"
+
+-->
+</script>
+</html>
+</td></tr>
+</table><br><br>
+
+        
+        
+    
+
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>15 Apr 2005, 10:04:49.328 AM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>7</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>7</ses:failedCount>
+</ses:recorderSession>

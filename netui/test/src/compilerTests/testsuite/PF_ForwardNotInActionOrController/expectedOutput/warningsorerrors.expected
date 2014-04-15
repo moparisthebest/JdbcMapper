@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardNotInActionOrController\Controller.java:29: annotation type not applicable to this kind of declaration
+    @Jpf.Forward(name = "pg2", path = "Pg2.jsp")
+                                      ^
+1 error

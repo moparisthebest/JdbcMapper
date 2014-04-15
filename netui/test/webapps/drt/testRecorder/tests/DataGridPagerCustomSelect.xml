@@ -1,0 +1,5056 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>DataGridPagerCustomSelect</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>26 Apr 2005, 06:55:16.092 PM MDT</ses:startDate>
+   <ses:description>ekoneil</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;2</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>GE</span></td>
+
+            <td class="datagrid"><span>59.42</span></td>
+
+            <td class="datagrid"><a href="http://www.ge.com?rowid=2&amp;symbol=GE"><span>General Electric</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>RHAT</span></td>
+
+            <td class="datagrid"><span>18.2</span></td>
+
+            <td class="datagrid"><a href="http://www.redhat.com?rowid=3&amp;symbol=RHAT"><span>RedHat Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 2 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">Previous</a>&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;2" selected="true">2</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;4</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>YHOO</span></td>
+
+            <td class="datagrid"><span>48.16</span></td>
+
+            <td class="datagrid"><a href="http://www.yahoo.com?rowid=4&amp;symbol=YHOO"><span>Yahoo Inc</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 3 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Previous</a>&nbsp;&nbsp;&nbsp;Next&nbsp;/&nbsp;Last
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;4" selected="true">3</option>
+      
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;4</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>YHOO</span></td>
+
+            <td class="datagrid"><span>48.16</span></td>
+
+            <td class="datagrid"><a href="http://www.yahoo.com?rowid=4&amp;symbol=YHOO"><span>Yahoo Inc</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 3 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Previous</a>&nbsp;&nbsp;&nbsp;Next&nbsp;/&nbsp;Last
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;4" selected="true">3</option>
+      
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;2</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>GE</span></td>
+
+            <td class="datagrid"><span>59.42</span></td>
+
+            <td class="datagrid"><a href="http://www.ge.com?rowid=2&amp;symbol=GE"><span>General Electric</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>RHAT</span></td>
+
+            <td class="datagrid"><span>18.2</span></td>
+
+            <td class="datagrid"><a href="http://www.redhat.com?rowid=3&amp;symbol=RHAT"><span>RedHat Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 2 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">Previous</a>&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;2" selected="true">2</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>8</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/doPage.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;2</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>GE</span></td>
+
+            <td class="datagrid"><span>59.42</span></td>
+
+            <td class="datagrid"><a href="http://www.ge.com?rowid=2&amp;symbol=GE"><span>General Electric</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>RHAT</span></td>
+
+            <td class="datagrid"><span>18.2</span></td>
+
+            <td class="datagrid"><a href="http://www.redhat.com?rowid=3&amp;symbol=RHAT"><span>RedHat Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 2 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">Previous</a>&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;2" selected="true">2</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>9</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>10</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/doPage.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;4</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>YHOO</span></td>
+
+            <td class="datagrid"><span>48.16</span></td>
+
+            <td class="datagrid"><a href="http://www.yahoo.com?rowid=4&amp;symbol=YHOO"><span>Yahoo Inc</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 3 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Previous</a>&nbsp;&nbsp;&nbsp;Next&nbsp;/&nbsp;Last
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;4" selected="true">3</option>
+      
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>11</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;2</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>GE</span></td>
+
+            <td class="datagrid"><span>59.42</span></td>
+
+            <td class="datagrid"><a href="http://www.ge.com?rowid=2&amp;symbol=GE"><span>General Electric</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>RHAT</span></td>
+
+            <td class="datagrid"><span>18.2</span></td>
+
+            <td class="datagrid"><a href="http://www.redhat.com?rowid=3&amp;symbol=RHAT"><span>RedHat Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 2 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">Previous</a>&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;2" selected="true">2</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>12</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>13</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/doPage.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;2</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>GE</span></td>
+
+            <td class="datagrid"><span>59.42</span></td>
+
+            <td class="datagrid"><a href="http://www.ge.com?rowid=2&amp;symbol=GE"><span>General Electric</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>RHAT</span></td>
+
+            <td class="datagrid"><span>18.2</span></td>
+
+            <td class="datagrid"><a href="http://www.redhat.com?rowid=3&amp;symbol=RHAT"><span>RedHat Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 2 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">Previous</a>&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;2" selected="true">2</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>14</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/doPage.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;4</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>YHOO</span></td>
+
+            <td class="datagrid"><span>48.16</span></td>
+
+            <td class="datagrid"><a href="http://www.yahoo.com?rowid=4&amp;symbol=YHOO"><span>Yahoo Inc</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 3 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Previous</a>&nbsp;&nbsp;&nbsp;Next&nbsp;/&nbsp;Last
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;4" selected="true">3</option>
+      
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>15</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/doPage.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;0</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>16</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>netui_row</ses:name>
+                  <ses:value>portfolio;4</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>YHOO</span></td>
+
+            <td class="datagrid"><span>48.16</span></td>
+
+            <td class="datagrid"><a href="http://www.yahoo.com?rowid=4&amp;symbol=YHOO"><span>Yahoo Inc</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 3 of 3&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do">First</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Previous</a>&nbsp;&nbsp;&nbsp;Next&nbsp;/&nbsp;Last
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+      
+        <option value="portfolio;0">1</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+        <option value="portfolio;4" selected="true">3</option>
+      
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>17</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/pager/customselect/begin.do</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7f9f</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6) Gecko/20050225 Firefox/1.0.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>NetUI Data Grid Samples</title>
+    <link rel="stylesheet" href="/coreWeb/databinding/datagrid/site/css/default.css" type="text/css"/>
+  </head>
+  <base href="http://localhost:8080/coreWeb/databinding/datagrid/pager/customselect/index.jsp">
+  <body>
+    <p>
+    <b>Paged Data Grid</b>
+    <table width="100%">
+    <tr><td></td></tr>
+    <tr><td>
+        
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    
+<table class="datagrid">
+
+        
+        
+        
+        
+    
+        
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+            <th class="datagrid">Web</th>
+
+
+        
+</tr>
+        
+        
+    
+        
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>14.35</span></td>
+
+            <td class="datagrid"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>19.42</span></td>
+
+            <td class="datagrid"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+        
+    
+        
+        
+        
+        
+<tr class="datagrid-footer">
+          <td colspan="2" align="left">
+            Page 1 of 3&nbsp;&nbsp;First&nbsp;/&nbsp;Previous&nbsp;&nbsp;&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B2">Next</a>&nbsp;/&nbsp;<a href="/coreWeb/databinding/datagrid/pager/customselect/begin.do?netui_row=portfolio%3B4">Last</a>
+          </td>
+          <td colspan="1" align="right">
+            
+
+
+
+
+
+
+
+
+  <form name="pageForm" id="pageForm" action="/coreWeb/databinding/datagrid/pager/customselect/doPage.do" method="post">
+    Jump to Page:
+
+<script type="text/javascript">
+  function doPagerSubmit(comp)
+  {
+    var form = document.forms[getNetuiTagName("pageForm",comp)];
+    form.method="GET";
+    form.submit();
+  }
+  </script>
+  <select name="netui_row" onchange="doPagerSubmit(this); return true;">
+    
+    
+      
+        <option value="portfolio;0" selected="true">1</option>
+      
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;2">2</option>
+      
+    
+    
+    
+      
+      
+        <option value="portfolio;4">3</option>
+      
+    
+    
+  </select>
+    </form>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.pageForm="pageForm"
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null && tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+
+
+// map tagId to "real name"
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.pageForm="pageForm"
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+-->
+</script>
+
+
+
+
+          </td>
+        
+</tr>
+    </table>
+
+
+    <br/>
+    <a href="/coreWeb/databinding/datagrid/pager/customselect/index.jsp">Reset</a>
+    <br/>
+    </p>
+    
+    </td></tr>
+    </p>
+    <table>
+    <tr><td><a href="/netuiDRT/databinding/datagrid/basic/index.jsp">Home</a></td></tr>
+    </table>
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>26 Apr 2005, 06:55:19.967 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>17</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>17</ses:failedCount>
+</ses:recorderSession>

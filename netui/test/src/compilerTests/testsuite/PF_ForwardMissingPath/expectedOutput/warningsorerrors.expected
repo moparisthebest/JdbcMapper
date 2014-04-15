@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardMissingPath\Controller.java:35: At least one of attributes "path", "tilesDefinition", "returnAction", "navigateTo", or "action" must be present.
+    protected Forward page1()
+                      ^
+1 error

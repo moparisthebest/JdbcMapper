@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+  <!-- Generated from /conditionalForwardExpression/Controller.java on Tue Sep 19 22:07:10 MDT 2006 -->
+  <form-beans/>
+  <global-exceptions/>
+  <global-forwards>
+    <forward name="_auto" path=""/>
+  </global-forwards>
+  <action-mappings>
+    <action className="org.apache.beehive.netui.pageflow.config.PageFlowActionMapping" parameter="conditionalForwardExpression.Controller" path="/anAction" scope="request" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" validate="false">
+      <set-property property="readonly" value="true"/>
+      <set-property property="simpleAction" value="true"/>
+      <set-property property="defaultForward" value="_defaultForward"/>
+      <set-property property="conditionalForwards" value="_anon2:${pageFlow.choice=='page1'};_anon3:${pageFlow.choice=='page2'};"/>
+      <forward name="_defaultForward" path="/index.jsp"/>
+      <forward name="_anon1" path="/page1.jsp"/>
+      <forward name="_anon2" path="/index.jsp"/>
+      <forward name="_anon3" path="/page2.jsp"/>
+    </action>
+    <action className="org.apache.beehive.netui.pageflow.config.PageFlowActionMapping" parameter="conditionalForwardExpression.Controller" path="/anotherAction" scope="request" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" validate="false">
+      <set-property property="readonly" value="true"/>
+      <set-property property="simpleAction" value="true"/>
+      <set-property property="defaultForward" value="_defaultForward"/>
+      <set-property property="conditionalForwards" value="_anon1:${pageFlow.choice=='page1'};_anon3:${pageFlow.choice=='page2'};"/>
+      <forward name="_defaultForward" path="/index.jsp"/>
+      <forward name="_anon1" path="/page1.jsp"/>
+      <forward name="_anon2" path="/index.jsp"/>
+      <forward name="_anon3" path="/page2.jsp"/>
+    </action>
+    <action className="org.apache.beehive.netui.pageflow.config.PageFlowActionMapping" parameter="conditionalForwardExpression.Controller" path="/begin" scope="request" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" validate="false">
+      <set-property property="readonly" value="true"/>
+      <set-property property="simpleAction" value="true"/>
+      <set-property property="defaultForward" value="_defaultForward"/>
+      <forward name="_defaultForward" path="/index.jsp"/>
+    </action>
+    <action className="org.apache.beehive.netui.pageflow.config.PageFlowActionMapping" parameter="conditionalForwardExpression.Controller" path="/goPrev" scope="request" type="org.apache.beehive.netui.pageflow.internal.FlowControllerAction" validate="false">
+      <set-property property="readonly" value="true"/>
+      <set-property property="simpleAction" value="true"/>
+      <set-property property="defaultForward" value="_defaultForward"/>
+      <forward className="org.apache.beehive.netui.pageflow.config.PageFlowActionForward" name="_defaultForward" path="previousPage">
+        <set-property property="returnToPage" value="true"/>
+      </forward>
+    </action>
+  </action-mappings>
+  <controller className="org.apache.beehive.netui.pageflow.config.PageFlowControllerConfig" inputForward="true" processorClass="org.apache.beehive.netui.pageflow.PageFlowRequestProcessor">
+    <set-property property="isReturnToActionDisabled" value="true"/>
+    <set-property property="sharedFlows" value=""/>
+    <set-property property="controllerClass" value="conditionalForwardExpression.Controller"/>
+    <set-property property="isMissingDefaultMessages" value="true"/>
+  </controller>
+  <message-resources key="_defaultMsgs" null="true" parameter="org.apache.beehive.netui.pageflow.validation.defaultMessages"/>
+</struts-config>

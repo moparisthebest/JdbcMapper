@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>SubmitFormBean</sessionName>
+<tester>rich</tester>
+<startDate>02 Nov 2005, 01:44:37.535 PM MST</startDate>
+<description>Test of sending a form bean to a Page Flow action in two ways: (1) through the "submitFormBean" attribute (f:attribute tag) inside of h:commandLink or h:commandButton, or (2) through an 'outputFormBean' attribute on @Jpf.RaiseAction in a backing file command handler.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is  a test of sending a form bean to a Page Flow action in two ways:
+        <ul>
+            <li>through the "submitFormBean" attribute (f:attribute tag) inside of h:commandLink or h:commandButton</li>
+            <li>through an <code>outputFormBean</code> attribute on @Jpf.RaiseAction in a backing file command handler</li>
+        </ul>
+        
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/submitFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{backing.theForm.foo}: <input id="_id0:_id1" name="_id0:_id1" type="text" value=""/>
+                <br/>
+                <br/>
+                
+                    
+                <input id="_id0:_id2" name="_id0:_id2" type="submit" value="send bean through attribute" onclick="clear__5Fid0();"/>
+                <br/>
+                <input id="_id0:_id3" name="_id0:_id3" type="submit" value="send bean through command handler" onclick="clear__5Fid0();"/>
+                <br/>
+                
+                    
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id4';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id4">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id5';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id5">send bean through command handler</a>
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0:_id1</name>
+<value>aaa</value>
+</parameter>
+<parameter>
+<name>_id0:_id2</name>
+<value>send bean through attribute</value>
+</parameter>
+<parameter>
+<name>_id0:_link_hidden_</name>
+<value></value>
+</parameter>
+<parameter>
+<name>_id0_SUBMIT</name>
+<value>1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>91</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/Controller.jpf</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/submitFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>aaa</span>
+        <br/>
+        <a href="/jsfWeb/submitFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/input.faces</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is  a test of sending a form bean to a Page Flow action in two ways:
+        <ul>
+            <li>through the "submitFormBean" attribute (f:attribute tag) inside of h:commandLink or h:commandButton</li>
+            <li>through an <code>outputFormBean</code> attribute on @Jpf.RaiseAction in a backing file command handler</li>
+        </ul>
+        
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/submitFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{backing.theForm.foo}: <input id="_id0:_id1" name="_id0:_id1" type="text" value=""/>
+                <br/>
+                <br/>
+                
+                    
+                <input id="_id0:_id2" name="_id0:_id2" type="submit" value="send bean through attribute" onclick="clear__5Fid0();"/>
+                <br/>
+                <input id="_id0:_id3" name="_id0:_id3" type="submit" value="send bean through command handler" onclick="clear__5Fid0();"/>
+                <br/>
+                
+                    
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id4';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id4">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id5';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id5">send bean through command handler</a>
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>4</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0:_id1</name>
+<value>bbb</value>
+</parameter>
+<parameter>
+<name>_id0:_id3</name>
+<value>send bean through command handler</value>
+</parameter>
+<parameter>
+<name>_id0:_link_hidden_</name>
+<value></value>
+</parameter>
+<parameter>
+<name>_id0_SUBMIT</name>
+<value>1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>97</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/begin.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/submitFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>bbb</span>
+        <br/>
+        <a href="/jsfWeb/submitFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>5</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/input.faces</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is  a test of sending a form bean to a Page Flow action in two ways:
+        <ul>
+            <li>through the "submitFormBean" attribute (f:attribute tag) inside of h:commandLink or h:commandButton</li>
+            <li>through an <code>outputFormBean</code> attribute on @Jpf.RaiseAction in a backing file command handler</li>
+        </ul>
+        
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/submitFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{backing.theForm.foo}: <input id="_id0:_id1" name="_id0:_id1" type="text" value=""/>
+                <br/>
+                <br/>
+                
+                    
+                <input id="_id0:_id2" name="_id0:_id2" type="submit" value="send bean through attribute" onclick="clear__5Fid0();"/>
+                <br/>
+                <input id="_id0:_id3" name="_id0:_id3" type="submit" value="send bean through command handler" onclick="clear__5Fid0();"/>
+                <br/>
+                
+                    
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id4';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id4">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id5';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id5">send bean through command handler</a>
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>6</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0:_id1</name>
+<value>ccc</value>
+</parameter>
+<parameter>
+<name>_id0:_link_hidden_</name>
+<value>_id0:_id4</value>
+</parameter>
+<parameter>
+<name>_id0_SUBMIT</name>
+<value>1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>62</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/begin.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/submitFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>ccc</span>
+        <br/>
+        <a href="/jsfWeb/submitFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>7</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/input.faces</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<html>
+    <head>
+    </head>
+    <body>
+        This is  a test of sending a form bean to a Page Flow action in two ways:
+        <ul>
+            <li>through the "submitFormBean" attribute (f:attribute tag) inside of h:commandLink or h:commandButton</li>
+            <li>through an <code>outputFormBean</code> attribute on @Jpf.RaiseAction in a backing file command handler</li>
+        </ul>
+        
+            <form id="_id0" name="_id0" method="post" action="/jsfWeb/submitFormBean/input.faces" enctype="application/x-www-form-urlencoded">
+                &#35;{backing.theForm.foo}: <input id="_id0:_id1" name="_id0:_id1" type="text" value=""/>
+                <br/>
+                <br/>
+                
+                    
+                <input id="_id0:_id2" name="_id0:_id2" type="submit" value="send bean through attribute" onclick="clear__5Fid0();"/>
+                <br/>
+                <input id="_id0:_id3" name="_id0:_id3" type="submit" value="send bean through command handler" onclick="clear__5Fid0();"/>
+                <br/>
+                
+                    
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id4';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id4">send bean through attribute</a>
+                <br/>
+                <a href="#" onclick="clear__5Fid0();document.forms['_id0'].elements['_id0:_link_hidden_'].value='_id0:_id5';if(document.forms['_id0'].onsubmit){document.forms['_id0'].onsubmit();}document.forms['_id0'].submit();return false;" id="_id0:_id5">send bean through command handler</a>
+            <input type="hidden" name="_id0_SUBMIT" value="1"/><input type="hidden" name="_id0:_link_hidden_"/><script type="text/javascript">
+<!--
+function clear__5Fid0() {
+  var f = document.forms['_id0'];
+  f.elements['_id0:_link_hidden_'].value=null;
+  f.target='';
+}
+clear__5Fid0();
+//-->
+</script></form>
+        
+    </body>
+</html>]]>
+</responseBody>
+</response>
+</test>
+<test>
+<testNumber>8</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/jsfWeb/submitFormBean/input.faces</uri>
+<method>POST</method>
+<parameters>
+<parameter>
+<name>_id0:_id1</name>
+<value>ddd</value>
+</parameter>
+<parameter>
+<name>_id0:_link_hidden_</name>
+<value>_id0:_id5</value>
+</parameter>
+<parameter>
+<name>_id0_SUBMIT</name>
+<value>1</value>
+</parameter>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>250210BDAD6109204529B798FDC8CFF4</value>
+</cookie>
+<cookie>
+<name>Country</name>
+<value>US</value>
+</cookie>
+<cookie>
+<name>nde-textsize</name>
+<value>16px</value>
+</cookie>
+<cookie>
+<name>Language</name>
+<value>en</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip,deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.7,ja;q=0.3</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>content-length</name>
+<value>62</value>
+</header>
+<header>
+<name>content-type</name>
+<value>application/x-www-form-urlencoded</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=250210BDAD6109204529B798FDC8CFF4; Country=US; nde-textsize=16px; Language=en</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>referer</name>
+<value>http://localhost:8080/jsfWeb/submitFormBean/begin.do</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051025 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/jsfWeb/submitFormBean/output.jsp">
+    </head>
+    <body>
+        submitted value: <span>ddd</span>
+        <br/>
+        <a href="/jsfWeb/submitFormBean/begin.do">start over</a>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>02 Nov 2005, 01:45:25.454 PM MST</endDate>
+<testCount>8</testCount>
+</recorderSession>

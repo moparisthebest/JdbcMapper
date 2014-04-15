@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004"
+    targetNamespace="http://beehive.apache.org/netui/tools/testrecorder/2004"
+    elementFormDefault="qualified">
+
+    <xs:element name="testDefinitions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="categories" type="categoriesType"/>
+                <xs:element name="tests" type="testsType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="categoriesType">
+        <xs:sequence>
+            <xs:element name="category" type="categoryType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="categoryType">
+        <xs:sequence>
+            <xs:element name="name" type="nonZeroLengthString"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="testsType">
+        <xs:sequence>
+            <xs:element name="test" type="testType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="testType">
+        <xs:sequence>
+            <xs:element name="name" type="nonZeroLengthString"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="webapp" type="nonZeroLengthString" minOccurs="1"/>
+            <xs:element name="categories" type="testCategoriesType" minOccurs="0"/>
+            <xs:element name="features" type="testFeaturesType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="testCategoriesType">
+        <xs:sequence>
+            <xs:element name="category" type="nonZeroLengthString" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="testFeaturesType">
+        <xs:sequence>
+            <xs:element name="feature" type="nonZeroLengthString" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="nonZeroLengthString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

@@ -1,0 +1,76 @@
+package PF_ReadOnlyActionWithForm;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlow source file contains actions that contain both the "form"
+ * attribute and the "read-only" attribute.  These two attrubutes are mutually
+ * exclusive.
+ *
+ * @result: Compiler should issue an error on "action1" but not "action2" as "action2"
+ * has "read-only" set to "false".
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+   {
+
+   Form1 _form1   = new Form1();
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+   protected Forward begin()
+      {
+      return new Forward("pg1");
+      }
+
+    @Jpf.Action(
+        readOnly = true,
+        useFormBean = "_form1",
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "Pg1.jsp")
+        })
+   protected Forward action1(Form1 inForm1)
+      {
+      return new Forward("success");
+      }
+
+    @Jpf.Action(
+        readOnly = false,
+        useFormBean = "_form1",
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "Pg1.jsp")
+        })
+   protected Forward action2(Form1 inForm1)
+      {
+      return new Forward("success");
+      }
+
+   /****************************************************************************
+    * Form bean
+    ***************************************************************************/
+   public static class Form1 implements java.io.Serializable
+      {
+      private String _fld1;
+
+      public String getFld1()
+         {
+         return _fld1;
+         }
+
+      public void setFld1(String inValue)
+         {
+         _fld1 = inValue;
+         }
+      }
+   }

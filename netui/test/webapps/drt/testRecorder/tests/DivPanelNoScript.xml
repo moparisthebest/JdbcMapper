@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>DivPanelNoScript</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>31 Jan 2005, 02:57:46.679 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/template/divPanelNoScript/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>950D20463B9B64BC44BE41D600BFE91A</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=950D20463B9B64BC44BE41D600BFE91A; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-df4757d:101cac39363:-7cdc</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>
+            Basic DivPanel Without RunAtClient container
+        </title>
+    </head>
+    <body>
+    <h4>Basic DivPanel</h4>
+    <p style="color:green">This test verifies that a DivPanel must be found inside
+    a ScriptContainer that has runAtClient on.
+    </p>
+        <span style="color:red;background-color:white">
+ [<b>Tag Error:1</b>, Found in tag <b>DivPanel</b>]</span><div netui-div-panel="true">
+            <div  id="page1">
+            <table><tr>
+                <td colspan="2" align="center">Page 1</td>
+            </tr><tr>
+                <td width="100pt">&nbsp</td>
+                <td width="100pt"><a href="">Next</a></td>
+            </tr></table>
+            </div>
+            <div  id="page2">
+            <table><tr>
+                <td colspan="2" align="center">Page 2</td>
+            </tr><tr>
+                <td width="100pt"><a href="">Previous</a></td>
+                <td width="100pt"><a href="">Next</a></td>
+            </tr></table>
+            </div>
+             <div  id="page3">
+            <table><tr>
+                <td colspan="2" align="center">Page 3</td>
+            </tr><tr>
+                <td width="100pt"><a href="">Previous</a></td>
+                <td width="100pt">&nbsp;</td>
+            </tr></table>
+            </div>
+        </div>
+    <div> <hr /><table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="6">Page Errors</th></tr>
+ <tr><th>Error Number</th><th>Tag Type</th><th colspan="4">Error</th></tr>
+<tr><th>1</th><th>DivPanel</th><th>Message</th><td>A DivPanel requires setting runAtClient on a ScriptContainer and a &lt;netui:scriptHeader> included in the ScriptContainer before the DivPanel.</td></tr>
+</table></div>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+netUI.netUIDivPanel = new NetUIDivPanel();
+netUI.netUIDivPanel.init();
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.page2="page2"
+netui_names.page3="page3"
+netui_names.page1="page1"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+-->
+</script></body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>31 Jan 2005, 02:57:47.400 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

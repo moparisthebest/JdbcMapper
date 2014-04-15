@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="<XDtConfig:configParameterValue paramName='Xmlencoding'/>"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee">
+    <XDtConfig:ifConfigParamNotEquals paramName="Description" value="">
+    <description><![CDATA[<XDtConfig:configParameterValue paramName="Description"/>]]></description>
+    </XDtConfig:ifConfigParamNotEquals>
+    <tlib-version><XDtConfig:configParameterValue paramName="Taglibversion"/></tlib-version>
+    <short-name><XDtConfig:configParameterValue paramName="Shortname"/></short-name>
+    <XDtConfig:ifConfigParamNotEquals paramName="Uri" value="">
+    <uri><XDtConfig:configParameterValue paramName="Uri"/></uri>
+    </XDtConfig:ifConfigParamNotEquals>
+
+  <XDtClass:forAllClasses type="javax.servlet.jsp.tagext.TagLibraryValidator" abstract="false">
+    <validator>
+        <validator-class><XDtClass:fullClassName/></validator-class>
+     <XDtClass:forAllClassTags tagName="netui:validator-init-param">
+        <init-param>
+            <param-name><XDtClass:classTagValue tagName="netui:validator-init-param" paramName="name"/></param-name>
+            <param-value><XDtClass:classTagValue tagName="netui:validator-init-param" paramName="value"/></param-value>
+        <XDtClass:ifHasClassTag tagName="netui:validator-init-param" paramName="description">
+            <description><![CDATA[<XDtClass:classTagValue tagName="netui:validator-init-param" paramName="description"/>]]></description>
+        </XDtClass:ifHasClassTag>
+        </init-param>
+     </XDtClass:forAllClassTags>
+      <description><![CDATA[<XDtClass:firstSentenceDescription/>]]></description>
+    </validator>
+  </XDtClass:forAllClasses>
+
+  <XDtClass:forAllClasses type="javax.servlet.http.HttpSessionActivationListener,javax.servlet.http.HttpSessionAttributeListener,javax.servlet.http.HttpSessionBindingListener,javax.servlet.http.HttpSessionListener,javax.servlet.ServletContextAttributeListener,javax.servlet.ServletContextListener" abstract="false">
+    <listener>
+        <listener-class><XDtClass:fullClassName/></listener-class>
+    </listener>
+  </XDtClass:forAllClasses>
+
+  <XDtNetUITldGen:forAllClasses 
+         type="javax.servlet.jsp.tagext.Tag,javax.servlet.jsp.tagext.JspTag,javax.servlet.jsp.tagext.SimpleTag,javax.servlet.jsp.tagext.TagSupport,javax.servlet.jsp.tagext.SimpleTagSupport,javax.servlet.jsp.tagext.BodyTagSupport,org.apache.beehive.netui.tags.AbstractBaseTag,org.apache.beehive.netui.tags.AbstractSimpleTag,org.apache.beehive.netui.tags.DataSourceTag,org.apache.beehive.netui.tags.databinding.base.StructuredBaseTag,org.apache.beehive.netui.tags.html.HtmlBaseTag" 
+         abstract="false"
+         extent="hierarchy">
+   <XDtClass:ifHasClassTag tagName="netui:tag">
+    <tag>
+
+    <XDtConfig:ifConfigParamGreaterOrEquals paramName="Jspversion" value="1.2">
+        <XDtClass:ifHasClassTag tagName="netui:tag" paramName="description">
+        <description><![CDATA[<XDtClass:classTagValue tagName="netui:tag" paramName="description"/>]]></description>
+        </XDtClass:ifHasClassTag>
+        <name><XDtClass:classTagValue tagName="netui:tag" paramName="name"/></name>
+        <tag-class><XDtClass:fullClassName/></tag-class>
+     <XDtClass:ifHasClassTag tagName="netui:tag" paramName="tei-class">
+        <tei-class><XDtClass:classTagValue tagName="netui:tag" paramName="tei-class"/></tei-class>
+     </XDtClass:ifHasClassTag>
+     <XDtClass:ifHasClassTag tagName="netui:tag" paramName="body-content" values="JSP,empty,scriptless,tagdependent">
+        <body-content><XDtClass:classTagValue tagName="netui:tag" paramName="body-content"/></body-content>
+     </XDtClass:ifHasClassTag>
+     <XDtClass:ifHasClassTag tagName="netui:tag" paramName="dynamic-attributes" values="true">
+        <dynamic-attributes><XDtClass:classTagValue tagName="netui:tag" paramName="dynamic-attributes"/></dynamic-attributes>
+     </XDtClass:ifHasClassTag>
+    </XDtConfig:ifConfigParamGreaterOrEquals>
+
+    <XDtNetUITldGen:forAllAttributes tagName="netui:attribute">
+        <attribute>
+        <XDtNetUITldGen:ifHasTagValue paramName="description">
+            <description><![CDATA[<XDtNetUITldGen:paramValue paramName="description"/>]]></description>
+        </XDtNetUITldGen:ifHasTagValue>
+            <name><XDtMethod:propertyName/></name>
+        <XDtNetUITldGen:ifHasTagValue paramName="required">
+            <required><XDtNetUITldGen:paramValue paramName="required" values="true,false,yes,no"/></required>
+        </XDtNetUITldGen:ifHasTagValue>
+        <XDtNetUITldGen:ifHasTagValue paramName="rtexprvalue">
+            <rtexprvalue><XDtNetUITldGen:paramValue paramName="rtexprvalue" values="true,false,yes,no"/></rtexprvalue>
+        </XDtNetUITldGen:ifHasTagValue>
+        <XDtNetUITldGen:ifHasTagValue paramName="type">
+            <type><XDtNetUITldGen:paramValue paramName="type"/></type>
+        </XDtNetUITldGen:ifHasTagValue>
+        <XDtNetUITldGen:ifHasTagValue paramName="fragment">
+            <fragment><XDtNetUITldGen:paramValue paramName="fragment" values="true,false,yes,no"/></fragment>
+        </XDtNetUITldGen:ifHasTagValue>
+        </attribute>
+</XDtNetUITldGen:forAllAttributes>
+    </tag>
+  </XDtClass:ifHasClassTag>
+  </XDtNetUITldGen:forAllClasses>
+
+  <XDtNetUITldGen:forAllFunctions type="java.lang.Object" abstract="false" extent="hierarchy">
+    <XDtClass:ifHasClassTag tagName="netui:jspfunctions">
+        <XDtNetUITldGen:forAllMethods tagName="netui:jspfunction">
+    <function>
+        <name><XDtNetUITldGen:paramValue paramName="name"/></name>
+        <function-class><XDtClass:fullClassName/></function-class>
+        <function-signature><XDtNetUITldGen:paramValue paramName="signature"/></function-signature>
+    </function>
+        </XDtNetUITldGen:forAllMethods>
+    </XDtClass:ifHasClassTag>
+  </XDtNetUITldGen:forAllFunctions>
+</taglib>
+

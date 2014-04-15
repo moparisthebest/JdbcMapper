@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+<!DOCTYPE xdoclet-module PUBLIC "-//XDoclet Team//DTD XDoclet Module 1.0//EN" "http://xdoclet.sourceforge.net/dtd/xdoclet-module_1_0.dtd">
+-->
+
+<XDtComment:comment>
+This template builds the deployment descriptor for modules
+</XDtComment:comment>
+
+<xdoclet-module>
+    <!--
+    <XDtClass:forAllClasses>
+    <XDtClass:fullClassName/>
+    </XDtClass:forAllClasses>
+    -->
+
+   <XDtClass:forAllClasses type="xdoclet.template.TemplateTagHandler" abstract="false">
+    <taghandler
+        namespace="<XDtClass:classTagValue tagName="xdoclet.taghandler" paramName="namespace" mandatory="true"/>"
+        class="<XDtClass:fullClassName/>"
+    />
+   </XDtClass:forAllClasses>
+
+   <XDtClass:forAllClasses type="xdoclet.SubTask" abstract="false">
+    <subtask
+        name="<XDtClass:classTagValue tagName="ant.element" paramName="name"  mandatory="true"/>"
+        implementation-class="<XDtClass:fullClassName/>"
+        parent-task-class="<XDtClass:classTagValue tagName="ant.element" paramName="parent" mandatory="true"/>"
+    />
+   </XDtClass:forAllClasses>
+</xdoclet-module>

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://header" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://header" xmlns:intf="http://header" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.3
+Built on Oct 05, 2005 (05:23:37 EDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://header" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="inputHeader" type="xsd:string"/>
+   <element name="echoReturnStringHeader">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="echoReturnStringHeaderResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="inputHeader1" type="xsd:string"/>
+   <element name="modifyStringHeader">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="inputHeader2" type="xsd:string"/>
+   <element name="modifyStringHeaderResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="inputHeader3" type="xsd:string"/>
+   <element name="echoStringHeaderAndResult">
+    <complexType>
+     <sequence>
+      <element name="inputString" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="inputHeader4" type="xsd:string"/>
+   <element name="echoStringHeaderAndResultResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="header1" type="xsd:string"/>
+   <element name="header2" type="xsd:string"/>
+   <element name="swapHeaderStrings">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="header3" type="xsd:string"/>
+   <element name="header4" type="xsd:string"/>
+   <element name="swapHeaderStringsResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="setHeaderStrings">
+    <complexType>
+     <sequence>
+      <element name="setValue" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="header5" type="xsd:string"/>
+   <element name="header6" type="xsd:string"/>
+   <element name="setHeaderStringsResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="inputHeader5" type="xsd:int"/>
+   <element name="echointHeader">
+    <complexType>
+     <sequence>
+      <element name="inputint" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="inputHeader6" type="xsd:int"/>
+   <element name="echointHeaderResponse">
+    <complexType>
+     <sequence>
+      <element name="return" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="swapHeaderStringsRequest">
+
+      <wsdl:part element="impl:header1" name="header1"/>
+
+      <wsdl:part element="impl:header2" name="header2"/>
+
+      <wsdl:part element="impl:swapHeaderStrings" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echointHeaderRequest">
+
+      <wsdl:part element="impl:inputHeader5" name="inputHeader"/>
+
+      <wsdl:part element="impl:echointHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setHeaderStringsResponse">
+
+      <wsdl:part element="impl:header5" name="header1"/>
+
+      <wsdl:part element="impl:header6" name="header2"/>
+
+      <wsdl:part element="impl:setHeaderStringsResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoReturnStringHeaderRequest">
+
+      <wsdl:part element="impl:inputHeader" name="inputHeader"/>
+
+      <wsdl:part element="impl:echoReturnStringHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echointHeaderResponse">
+
+      <wsdl:part element="impl:inputHeader6" name="inputHeader"/>
+
+      <wsdl:part element="impl:echointHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoStringHeaderAndResultResponse">
+
+      <wsdl:part element="impl:inputHeader4" name="inputHeader"/>
+
+      <wsdl:part element="impl:echoStringHeaderAndResultResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyStringHeaderRequest">
+
+      <wsdl:part element="impl:inputHeader1" name="inputHeader"/>
+
+      <wsdl:part element="impl:modifyStringHeader" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoReturnStringHeaderResponse">
+
+      <wsdl:part element="impl:echoReturnStringHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="setHeaderStringsRequest">
+
+      <wsdl:part element="impl:setHeaderStrings" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="swapHeaderStringsResponse">
+
+      <wsdl:part element="impl:header3" name="header1"/>
+
+      <wsdl:part element="impl:header4" name="header2"/>
+
+      <wsdl:part element="impl:swapHeaderStringsResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="echoStringHeaderAndResultRequest">
+
+      <wsdl:part element="impl:inputHeader3" name="inputHeader"/>
+
+      <wsdl:part element="impl:echoStringHeaderAndResult" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifyStringHeaderResponse">
+
+      <wsdl:part element="impl:inputHeader2" name="inputHeader"/>
+
+      <wsdl:part element="impl:modifyStringHeaderResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="HeaderDocLitEndpoint">
+
+      <wsdl:operation name="echoReturnStringHeader">
+
+         <wsdl:input message="impl:echoReturnStringHeaderRequest" name="echoReturnStringHeaderRequest"/>
+
+         <wsdl:output message="impl:echoReturnStringHeaderResponse" name="echoReturnStringHeaderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyStringHeader">
+
+         <wsdl:input message="impl:modifyStringHeaderRequest" name="modifyStringHeaderRequest"/>
+
+         <wsdl:output message="impl:modifyStringHeaderResponse" name="modifyStringHeaderResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoStringHeaderAndResult">
+
+         <wsdl:input message="impl:echoStringHeaderAndResultRequest" name="echoStringHeaderAndResultRequest"/>
+
+         <wsdl:output message="impl:echoStringHeaderAndResultResponse" name="echoStringHeaderAndResultResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="swapHeaderStrings">
+
+         <wsdl:input message="impl:swapHeaderStringsRequest" name="swapHeaderStringsRequest"/>
+
+         <wsdl:output message="impl:swapHeaderStringsResponse" name="swapHeaderStringsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setHeaderStrings">
+
+         <wsdl:input message="impl:setHeaderStringsRequest" name="setHeaderStringsRequest"/>
+
+         <wsdl:output message="impl:setHeaderStringsResponse" name="setHeaderStringsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echointHeader">
+
+         <wsdl:input message="impl:echointHeaderRequest" name="echointHeaderRequest"/>
+
+         <wsdl:output message="impl:echointHeaderResponse" name="echointHeaderResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="HeaderDocLitEndpointSoapBinding" type="impl:HeaderDocLitEndpoint">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="echoReturnStringHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoReturnStringHeaderRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echoReturnStringHeaderRequest" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoReturnStringHeaderResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyStringHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modifyStringHeaderRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:modifyStringHeaderRequest" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="modifyStringHeaderResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:modifyStringHeaderResponse" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echoStringHeaderAndResult">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echoStringHeaderAndResultRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echoStringHeaderAndResultRequest" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="echoStringHeaderAndResultResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echoStringHeaderAndResultResponse" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="swapHeaderStrings">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="swapHeaderStringsRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:swapHeaderStringsRequest" namespace="http://header" part="header1" use="literal">
+
+            </wsdlsoap:header>
+
+            <wsdlsoap:header message="impl:swapHeaderStringsRequest" namespace="http://header" part="header2" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="swapHeaderStringsResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:swapHeaderStringsResponse" namespace="http://header" part="header1" use="literal">
+
+            </wsdlsoap:header>
+
+            <wsdlsoap:header message="impl:swapHeaderStringsResponse" namespace="http://header" part="header2" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setHeaderStrings">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setHeaderStringsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setHeaderStringsResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:setHeaderStringsResponse" namespace="http://header" part="header1" use="literal">
+
+            </wsdlsoap:header>
+
+            <wsdlsoap:header message="impl:setHeaderStringsResponse" namespace="http://header" part="header2" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="echointHeader">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="echointHeaderRequest">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echointHeaderRequest" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:input>
+
+         <wsdl:output name="echointHeaderResponse">
+
+            <wsdlsoap:body parts="parameters" use="literal"/>
+
+            <wsdlsoap:header message="impl:echointHeaderResponse" namespace="http://header" part="inputHeader" use="literal">
+
+            </wsdlsoap:header>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="HeaderDocLitEndpointService">
+
+      <wsdl:port binding="impl:HeaderDocLitEndpointSoapBinding" name="HeaderDocLitEndpoint">
+
+         <wsdlsoap:address location="http://localhost:8080/ServiceControlDRT/header/HeaderDocLitEndpoint.jws"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

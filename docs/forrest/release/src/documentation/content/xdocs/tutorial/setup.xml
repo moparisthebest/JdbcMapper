@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+                          "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Beehive Tutorial + Tomcat Setup</title>
+    </header>
+    <body>
+        <p>
+        The Beehive tutorials can be run on many different J2EE / Servlet application containers.  Often, the tutorials use Tomcat as an
+        example application container during discussions of deployment and URLs.  The following steps are useful for configuring
+        Tomcat to run the Beehive tutorials.  Feel free to switch containers; just be sure to follow your application 
+        container's deployment and URL address instructions
+        </p>
+        <p>
+        Because the Beehive NetUI requires JSP 2.0 and Servlet 2.4 features, the 5.0 version of Tomcat is the minimum container for running
+        Beehive-enabled applications.
+        </p>
+        <p>
+        (1) Install the latest Tomcat 5.x version -- download
+            <a class="fork" href="site:tomcatdownload">http://jakarta.apache.org/site/binindex.cgi#tomcat</a>
+        </p>
+        <p>
+        (2) Set the <code>CATALINA_HOME</code> environmental variable in your shell
+        </p>
+        <p>
+        (3) Optional.  To easily deploy applications on Tomcat at build time, it is often useful to enable the <code>manager</code> username and role 
+        in the <code>$CATALINA_HOME/conf/tomcat-users.xml</code> file.  This allows the <code>manager</code> role to be used in conjunction with Tomcat's 
+        Ant tasks for deploying, undeploying, and redeploying web applications.  Note, for security reasons, the <code>manager</code> role should often 
+        be enabled before deploying applications into production on Tomcat.  An example <code>tomcat-users-xml</code> file is below; new XML elements 
+        are shown below in <strong>bold</strong> type.
+        </p>
+        <source>
+&lt;?xml version='1.0' encoding='utf-8'?>
+&lt;tomcat-users>
+  &lt;role rolename="tomcat"/>
+  &lt;role rolename="role1"/>
+  <strong>&lt;role rolename="manager"/></strong>
+  &lt;user username="tomcat" password="tomcat" roles="tomcat"/>
+  &lt;user username="role1" password="tomcat" roles="role1"/>
+  &lt;user username="both" password="tomcat" roles="tomcat,role1"/>
+  <strong>&lt;user username="manager" password="manager" roles="manager"/></strong>
+&lt;/tomcat-users>
+</source>
+    </body>
+</document>

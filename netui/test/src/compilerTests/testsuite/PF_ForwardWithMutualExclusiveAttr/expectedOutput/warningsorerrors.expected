@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardWithMutualExclusiveAttr\Controller.java:39: Only one of attributes "path", "tilesDefinition", "returnAction", "navigateTo", or "action" may be present.
+    protected Forward page1()
+                      ^
+1 error

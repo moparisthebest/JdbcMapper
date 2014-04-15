@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/distribution-netui-test-import" default="usage" basedir=".">
+  
+    <property environment="os"/>
+    <import file="../../test-imports.xml"/>
+
+    <!-- todo: change this to netui.test.dir -->
+    <property name="test.dir" location="${test.home}/netui"/>
+
+    <property name="netui.test.dir" location="${test.home}/netui"/>
+    <property name="netui.ant.dir" location="${netui.test.dir}/ant"/> 
+
+    <!-- this property is required by the junitCore.xml Ant file -->
+    <property name="test.classes.dir" location="${netui.test.dir}/junit"/>
+
+    <!-- various Log4J config files -->
+    <property name="log4jconfig.verbose.junit" location="${test.dir}/conf/junitLogCfgVerbose.xml"/>
+    <property name="log4jconfig.junit" location="${test.dir}/conf/junitLogCfg.xml"/>
+
+    <!-- paths to various NetUI runtimes -->
+    <property name="myfaces.dir" location="${test.dir}/external/jsf/myfaces-1.0.9/lib"/>
+    <property name="struts11.dir" location="${test.dir}/external/struts/struts1.1"/>
+    <property name="struts12.dir" location="${test.dir}/external/struts/struts1.2"/>
+
+    <!-- properties required by the test recorder -->
+    <property name="netui.testResults.dir" location="${test.result.root}/netui"/>
+    
+    <property file="compiler-test.properties"/>
+    
+    <path id="compiler-test.dependency.path">
+        <pathelement location="${test.dir}/junit/compilerTests" />
+    </path>
+
+    <path id="junit-tests.dependency.path">
+        <pathelement path="${test.dir}/junit/junitTests"/>
+    </path>
+    
+    <path id="ant-all.dependency.path">
+        <fileset dir="${os.ANT_HOME}/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="webapp.dependency.path">
+        <fileset dir="${dist.home}/lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="junit.dependency.path">
+        <pathelement path="${test.dir}/junit/lib/junit.jar"/>
+    </path>
+    
+    <path id="strutstestcase.dependency.path">
+        <fileset dir="${test.dir}/external/strutstestcase">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="log4j.dependency.path">
+        <pathelement path="${dist.home}/lib/common/log4j-1.2.8.jar"/>
+    </path>
+
+    <fileset id="xbean.fileset" file="../../external/apache-xbean.jar"/>
+
+    <fileset id="jsr173.fileset" file="../../external/jsr173_1.0_api.jar"/>
+
+    <path id="xbean.dependency.path">
+        <fileset refid="xbean.fileset"/>
+        <fileset refid="jsr173.fileset"/>
+    </path>
+
+    <path id="servlet.dependency.path">
+       <pathelement path="${servlet24.jar}"/>
+       <pathelement path="${jsp20.jar}"/>
+    </path>
+
+    <path id="netui-compiler.dependency.path">
+        <pathelement location="${dist.home}/netui/beehive-netui-compiler.jar"/>
+    </path>
+
+    <path id="velocity.dependency.path">
+        <pathelement location="${dist.home}/lib/common/velocity-dep-1.4.jar"/>
+    </path>
+    
+</project>

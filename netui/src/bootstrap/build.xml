@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/Bootstrap" default="build" basedir=".">
+
+    <import file="../../netui-imports.xml"/>
+
+    <property name="module.name" value="bootstrap"/>
+    <property name="module.dir" location="${src.dir}/${module.name}"/>
+    <property name="this.output.dir" location="${classes.dir}/${module.name}"/>
+    <property name="xdoclet.metainf.dir" location="${this.output.dir}/META-INF"/>
+    <property name="xdoclet.template" location="${module.dir}/xdoclet-xml.xdt"/>
+
+    <path id="module.classpath">
+        <path refid="ant-jar.dependency.path"/>
+        <path refid="webdoclet.dependency.path"/>
+    </path>
+
+    <target name="build">
+        <echo>compile module: ${module.name}</echo>
+        <property name="classpath" refid="module.classpath"/>
+        <echo>module classpath: ${classpath}</echo>
+        <echo>debug: ${compile.debug}</echo>
+        <echo>src.dir: ${src.dir}</echo>
+
+        <mkdir dir="${this.output.dir}"/>
+
+        <javac srcdir="${module.dir}/"
+               destdir="${this.output.dir}"
+               classpathref="module.classpath"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               optimize="${compile.optimize}"
+               source="${compile.source}"
+               target="${compile.target}">
+            <include name="**/*.java"/>
+        </javac>
+
+        <copy todir="${this.output.dir}">
+            <fileset dir="${module.dir}" includes="**/*.properties"/>
+            <fileset dir="${module.dir}" includes="**/*.xml">
+                <exclude name="build.xml"/>
+            </fileset>
+            <fileset dir="${module.dir}" includes="**/*.xdt"/>
+            <fileset dir="${module.dir}" includes="**/*.xdoclet"/>
+        </copy>
+
+        <taskdef name="xdoclet" classname="xdoclet.DocletTask" classpathref="webdoclet.dependency.path"/>
+        <mkdir dir="${xdoclet.metainf.dir}"/>
+        <xdoclet destdir="${xdoclet.metainf.dir}" verbose="true">
+            <fileset dir="${module.dir}">
+                <include name="org/apache/beehive/netui/tools/**/*TagsHandler.java" />
+                <include name="org/apache/beehive/netui/tools/**/*SubTask.java" />
+            </fileset>
+            <template templateFile="${xdoclet.template}" destinationFile="xdoclet.xml"/>
+        </xdoclet>
+
+        <jar jarfile="${jars.dir}/bootstrap.jar" basedir="${this.output.dir}">
+            <manifest>
+                <attribute name="Extension-Name" value="Beehive NetUI Tools"/>
+                <attribute name="Specification-Title" value="Beehive NetUI Tools"/>
+                <attribute name="Specification-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Specification-Version" value="${beehive.version}"/>
+                <attribute name="Implementation-Title" value="Beehive NetUI Tools"/>
+                <attribute name="Implementation-Vendor" value="Apache Software Foundation"/>
+                <attribute name="Implementation-Version" value="${beehive.version}"/>
+                <attribute name="Beehive-Version" value="${beehive.version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${classes.dir}/${module.name}"/>
+        <delete dir="${jars.dir}/bootstrap.jar"/>
+    </target>
+
+</project>

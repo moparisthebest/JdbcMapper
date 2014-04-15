@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<project name="JdbcControl Container Cactus Unit Tests" basedir=".">
+
+    <dirname property="my.home" file="${ant.file}"/>
+    <!--
+    <property name="jdbcc.home" location="${my.home}/../.."/>
+    <import file="${jdbcc.home}/jdbccontrol-imports.xml"/>
+    -->
+    <import file="../../ant/test-imports.xml"/>
+
+    <property environment="os"/>
+    <property name="cactus.home" location="${os.CACTUS_HOME}"/>
+    <property name="catalina.home" location="${os.CATALINA_HOME}"/>
+
+    <!-- Generic properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="off"/>
+    <property name="deprecation" value="off"/>
+
+    <property name="src.cactus.dir" location="${my.home}/src"/>
+    <property name="src.webapp.dir" location="${my.home}/webapp"/>
+
+    <!-- Global project properties -->
+    <property name="project.name.text" value="JdbcControl Container Test"/>
+    <property name="project.name.file" value="jdbccontrol"/>
+    <property name="project.version" value="1.7"/>
+
+    <!-- Libraries required for the Cactus tests -->
+    <property name="aspectjrt.jar"
+        location="${cactus.home}/lib/aspectjrt-1.2.1.jar"/>
+    <property name="cactus.jar"
+        location="${cactus.home}/lib/cactus-1.7.jar"/>
+    <property name="cactus.ant.jar"
+        location="${cactus.home}/lib/cactus-ant-1.7.jar"/>
+    <property name="commons.httpclient.jar"
+        location="${cactus.home}/lib/commons-httpclient-2.0.2.jar"/>
+    <property name="commons.logging.jar"
+        location="${cactus.home}/lib/commons-logging-1.0.4.jar"/>
+    <property name="junit.jar"
+        location="${cactus.home}/lib/junit-3.8.1.jar"/>
+    <path id="cactus.classpath">
+        <pathelement location="${aspectjrt.jar}"/>
+        <pathelement location="${cactus.jar}"/>
+        <pathelement location="${cactus.ant.jar}"/>
+        <pathelement location="${commons.httpclient.jar}"/>
+        <pathelement location="${commons.logging.jar}"/>
+        <pathelement location="${junit.jar}"/>
+    </path>
+
+    <!-- load the ant cactus tasks -->
+    <taskdef resource="cactus.tasks" classpathref="cactus.classpath"/>
+    <taskdef name="apt" classname="org.apache.beehive.controls.runtime.generator.AptTask"
+        classpathref="controls.dependency.path" onerror="report"/>
+
+    <!-- Destination locations for the build -->
+    <property name="module.name" value="jdbc-container"/>
+    <property name="module.dir" location="${test.src.dir}/jdbc/${module.name}"/>
+    <property name="module.classes.dir" location="${test.classes.dir}/${module.name}"/>
+    <property name="module.gensrc.dir" location="${test.classes.dir}/${module.name}-generated-src"/>
+    <property name="module.classes.cactus.dir" location="${module.classes.dir}/cactus"/>
+
+    <!--
+    <property name="target.dir" location="${jdbcc.home}/build/container"/>
+    <property name="target.gensrc.dir" location="${jdbcc.home}/build/container/gensrc"/>
+    <property name="target.classes.dir" location="${target.dir}/classes"/>
+    <property name="target.classes.cactus.dir" location="${target.classes.dir}/cactus"/>
+    -->
+
+    <!-- class path for running these tests -->
+    <path id="test.classpath">
+        <!--<pathelement location="${testcontrols.jar}"/>-->
+        <path refid="test-controls.dependency.path"/>
+        <pathelement location="${module.classes.cactus.dir}"/>
+        <!--<pathelement location="${target.classes.cactus.dir}"/>-->
+        <pathelement location="${test.classes.dir}/junitTests"/>
+        <!-- <pathelement location="${jdbcc.build.dir}/test/classes/units"/> -->
+        <!--<pathelement location="${jdbcc.jar}"/>-->
+        <path refid="jdbc-control.dependency.path"/>
+        <path refid="controls.dependency.path"/>
+        <path refid="xbean.dependency.path"/>
+        <path refid="log4j.dependency.path"/>
+        <path refid="velocity.dependency.path"/>
+        <path refid="tools.dependency.path"/>
+        <path refid="derby.dependency.path"/>
+        <path refid="junit.dependency.path"/>
+        <path refid="commons-discovery.dependency.path"/>
+        <path refid="commons-codec.dependency.path"/>
+    </path>
+
+
+    <!--
+    ========================================================================
+    Clean generated files (including distributables)
+    ========================================================================
+    -->
+    <target name="clean" description="Clean all generated files">
+        <delete dir="${module.classes.dir}"/>
+        <delete dir="${module.gensrc.dir}"/>
+        <delete dir="${module.classes.cactus.dir}"/>
+    </target>
+
+
+    <!--
+    ========================================================================
+    Build the catus test file.
+    ========================================================================
+    -->
+    <target name="compile.cactus">
+
+        <mkdir dir="${module.classes.cactus.dir}"/>
+        <apt srcdir="${src.cactus.dir}"
+             gendir="${module.gensrc.dir}"
+             destdir="${module.classes.cactus.dir}"
+             compileByExtension="true"
+             debug="${compiler.debug}"
+             srcExtensions="*.jcx,*.jcs,*.java">
+            <classpath>
+                <path refid="cactus.classpath"/>
+                <path refid="test.classpath"/>
+            </classpath>
+         </apt>
+    </target>
+
+    <!--
+    ========================================================================
+    Run the tests on the containers for which the Ant property
+    "cactus.home.[container name]" has been defined.
+    ========================================================================
+    -->
+    <target name="test.prepare" depends="test.war">
+        <!-- Prepare the directories for the JUnit reports -->
+    </target>
+
+
+    <!--
+    ========================================================================
+    Create the war file that will hold the Cactus tests. At this point in
+    time, as there isn't a <cactifyear> Ant task, we need to create
+    manually a war file even if our application doesn't need one.
+    ========================================================================
+    -->
+    <target name="test.war" depends="compile.cactus">
+
+        <war warfile="${test.lib.dir}/${project.name.file}.war"
+             webxml="${src.webapp.dir}/WEB-INF/web.xml">
+        </war>
+
+        <!-- Cactify the web-app archive -->
+        <cactifywar srcfile="${test.lib.dir}/${project.name.file}.war"
+                    destfile="${test.lib.dir}/${project.name.file}-cactified.war"
+                    mergewebxml="${src.webapp.dir}/WEB-INF/cactus-web.xml">
+
+            <classes dir="${module.classes.cactus.dir}"/>
+            <classes dir="${test.classes.dir}/junitTests"/>
+            <classes dir="${test.classes.dir}/controls"/>
+
+            <!-- Needed for Clover coverage reports -->
+            <lib file="${clover.jar}"/>
+
+            <lib file="${build.lib.dir}/${jdbccontrol.jar.name}"/>
+            <lib file="${beehive.home}/controls/build/jars/controls.jar"/>
+            <lib file="${beehive.home}/external/xmlbeans/apache-xbean.jar"/>
+            <lib file="${beehive.home}/external/commons/commons-codec-1.3.jar"/>
+            <lib file="${beehive.home}/external/commons/commons-discovery-0.2.jar"/>
+            <lib file="${beehive.home}/external/log4j/log4j-1.2.8.jar"/>
+            <lib file="${beehive.home}/installed/jsr173/jsr173_1.0_api.jar"/>
+            <lib file="${beehive.home}/external/derby/derby_46005.jar"/>
+        </cactifywar>
+    </target>
+
+    <!--
+    ========================================================================
+    Run the cactus tests.
+    ========================================================================
+    -->
+    <target name="test" depends="clean, test.prepare"
+        description="Run the tests on the defined containers">
+
+        <!-- NOTE: Temporary location for now -->
+        <property name="cactus.testlog.dir" location="${test.lib.dir}/jdbc-container-logs"/>
+        <property name="test.derby.dir" location="${test.lib.dir}/derby"/>
+        <mkdir dir="${cactus.testlog.dir}"/>
+        <mkdir dir="${test.derby.dir}"/>
+
+        <!-- Run the tests -->
+        <cactus warfile="${test.lib.dir}/${project.name.file}-cactified.war"
+            fork="yes" failureproperty="tests.failed">
+            <sysproperty key="derby.system.home" value="${test.derby.dir}"/>
+            <classpath>
+                <path refid="cactus.classpath"/>
+                <path refid="test.classpath"/>
+            </classpath>
+            <containerset>
+
+                <!-- tomcat5x -->
+                <!-- <tomcat5x dir="${catalina.home}" port="8080" if="tomcat5x"> -->
+                <tomcat5x dir="${catalina.home}">
+                   <conf dir="${my.home}/webapp/conf"/>
+                </tomcat5x>
+
+            </containerset>
+            <formatter type="brief" usefile="false"/>
+            <formatter type="xml"/>
+            <batchtest todir="${cactus.testlog.dir}">
+                <fileset dir="${src.cactus.dir}">
+                    <include name="**/Test*.java"/>
+                    <exclude name="**/Test*All.java"/>
+                    <exclude name="**/Test*ClientInitializer.java"/>
+                </fileset>
+            </batchtest>
+        </cactus>
+
+        <!-- Generate the JUnit reports -->
+        <junitreport todir="${cactus.testlog.dir}">
+            <fileset dir="${cactus.testlog.dir}" includes="TEST-*.xml"/>
+            <report todir="${cactus.testlog.dir}" format="frames"/>
+        </junitreport>
+
+        <fail if="tests.failed">At least one test failed!</fail>
+    </target>
+
+</project>

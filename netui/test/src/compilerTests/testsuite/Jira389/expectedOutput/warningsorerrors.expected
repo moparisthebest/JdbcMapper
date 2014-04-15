@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\Jira389\Controller.java:20: Attribute "bundlePath" must be present.
+public class Controller extends PageFlowController
+       ^
+1 error

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Development and Production Modes</title>
+	</header>
+	<body>
+	<section>
+		<title>Development and Production Modes</title>
+		<p>Beehive applications can be run in either <strong>development</strong> or 
+			<strong>production</strong> mode:</p>
+		<p>In <strong>development</strong> mode, if the tag <code>&lt;netui:exceptions showDevModeStackTrace="true"/></code>
+			is present on a JSP and an exception occurs, then the stack trace will be 
+			displayed.</p>
+		<p>In <strong>production</strong> mode, the opposite is true: if the tag &lt;netui:exceptions showDevModeStackTrace="true"/>
+			is present and an exception occurs, then the stack trace <em>won't</em> be 
+			displayed.</p>
+		<p>By default, applications run in production mode, i.e., exception stack traces are not
+			shown.</p>
+		<p>Similarly, assertions are 
+			disabled by default.</p>
+		<note>If you want to display the stack trace for exceptions in all cases (whether you're in production mode or development mode), you can 
+			set the <code>&lt;netui:exceptions></code> tag's <code>showStackTrace</code> attribute
+			to "<code>true</code>".
+			<br/><br/>
+			<code>&lt;netui:exceptions showStackTrace="true"></code>
+			</note>
+		</section>
+		<section><title>Controlling the Visibility of Assertions and Exceptions</title>
+		<p>Beehive uses two switches to control the visibility of assertions and exceptions.</p>
+		<dl><dt><strong>-ea</strong></dt>
+			<dd>Controls whether assertions are enabled or not.  Assertions are
+				disabled by default.  If assertions are enabled, then Beehive 
+				assumes development mode as well: i.e., exception stack traces are
+				made visible.  (See below for
+				enabling assertions but disabling exception stack traces.)</dd></dl>
+		<dl><dt><strong>-beehive.productionmode</strong></dt>
+			<dd>Controls whether exception stack traces are displayed by the tag
+				&lt;netui:exceptions showDevModeStackTrace="true"/>.
+				By default, stack traces are not displayed. 
+				</dd></dl>
+		<dl>
+			<dt>
+				<strong>
+					<code>export JAVA_OPTS=</code>
+				</strong>
+			</dt>
+			<dd>Same as the 'default' setting. In Tomcat, this leaves assertions disabled and 
+			results in Beehive assuming production mode. If you have 
+			&lt;netui:exceptions showDevModeStackTrace="true"/> in a page and 
+			an exception occurs, you won't see the stack trace. </dd>
+		</dl>
+		<dl>
+			<dt>
+				<strong>
+					<code>export JAVA_OPTS=-ea</code>
+				</strong>
+			</dt>
+			<dd>Using this setting for Tomcat, assertions are enabled and Beehive 
+				assumes 
+				development mode. If you have &lt;netui:exceptions 
+				showDevModeStackTrace="true"/> in one of your pages and an 
+				exception occurs, then you will see the stack trace.</dd>
+		</dl>
+		<dl>
+			<dt>
+				<strong>
+					<code>export JAVA_OPTS="-ea -Dbeehive.productionmode=true"</code>
+				</strong>
+			</dt>
+			<dd>This is a case 
+			where the assumption made by Beehive is overridden: assertions are 
+			enabled, but Beehive will run in production mode. If you have 
+			&lt;netui:exceptions showDevModeStackTrace="true"/> in a page and 
+			an exception occurs, you won't see the stack trace.</dd>
+		</dl>
+</section>
+	</body>
+	<footer>
+		<legal>Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+	&copy; 2004, Apache Software Foundation
+	</legal>
+	</footer>
+</document>

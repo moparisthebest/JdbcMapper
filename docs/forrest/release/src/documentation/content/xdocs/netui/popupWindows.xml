@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Popup Windows</title>
+	</header>
+	<body>
+		<section id="intro">
+			<title>Introduction</title>
+		    <p>
+                The following topic explains how to collect data from a
+                <a href="site:docs/pageflow/netuiBasic/nestedPageFlow">nested page flow</a> and 'return' the data to the
+                nesting/main page flow.  The nested page flow can appear as a popup window if so desired.
+            </p>
+		</section>
+		<section id="single_pageflow">
+			<title>Submit/Display Cycle in a Single Page Flow</title>
+			<p>Before we get to nested page flows and popup windows, lets first take a look at the 
+				basic page flow submission cycle.  Below is a diagram of the basic cycle.</p>
+			<p><img src="images/nested_1.png" alt="singlepageflow"/></p>
+<p>Below is the code for the basic cycle: (1) <code>index.jsp</code> contains the form for 
+	collecting data, (2) the submission is handled by the method <code>submit()</code>,
+	and (3) the submitted data is displayed by <code>results.jsp</code>.</p>
+<p><strong>index.jsp</strong></p>
+	<source>    &lt;netui:form action="submit">
+      Name:            &lt;netui:textBox dataSource="actionForm.name"/>
+      Favorite Color:  &lt;netui:textBox dataSource="actionForm.color"/>
+      &lt;br/>
+      &lt;netui:button type="submit" value="submit"/>
+    &lt;/netui:form></source>
+				<p><strong>Controller.java</strong></p>
+			<source>...
+				
+@Jpf.Controller(
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp")
+    }
+)
+public class Controller 
+    extends PageFlowController
+{
+
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(
+                name = "success",
+                path = "results.jsp"
+            )
+        }
+    )
+    protected Forward submit(SubmitForm form)
+    {
+        return new Forward("success", "form", form );
+    }
+
+    public static class SubmitForm
+    {
+        private String _name;
+        private String _color;
+
+        public String getName()
+        {
+            return _name;
+        }
+
+        public void setName(String value)
+        {
+            _name = value;
+        }
+
+        public String getColor()
+        {
+            return _color;
+        }
+
+        public void setColor(String value)
+        {
+            _color = value;
+        }
+    }
+}</source>
+<p><strong>results.jsp</strong></p>
+<source>    Submitted Name: ${pageInput.form.name}
+    &lt;br/>
+    Submitted Color: ${pageInput.form.color}
+    &lt;br/>
+    &lt;br/>
+    &lt;netui:anchor action="begin">[start over]&lt;/netui:anchor></source>
+		</section>
+		<section id="nesting_nested_pageflows">
+			<title>Submit/Display Cycle with Nested Page Flow</title>
+			<p>In this section we introduce a nested page flow to help collect data from the user.</p>
+			<p>When the user clicks the "get color" button (see the <code>index.jsp</code>
+				page below), an instance of a nested page flow is created (GetColor.java).
+				When the user submits the form within the nested page flow, the data is 'returned'
+				to populate the form within the main/nesting page flow.</p>
+				<p>The diagram below shows how the user moves into the nested page flow, and 
+					then back into the main/nesting page flow.</p>
+			<p><img alt="nested_2" src="images/nested_2.png"/></p>
+			<p>The code for the main and nested page flow follows. <!--[todo: more description of 
+				this code]--></p>
+			<p><strong>index.jsp</strong></p>
+			<source>    &lt;netui:form action="submit">
+      Name:            &lt;netui:textBox dataSource="actionForm.name"/>
+      Favorite Color:  &lt;netui:textBox dataSource="actionForm.color"/>
+      &lt;br/>
+      <strong>&lt;netui:button type="submit" value="get color" action="getColor"/></strong>
+      &lt;netui:button type="submit" value="submit"/>
+    &lt;/netui:form></source>
+<p><strong>Controller.java</strong></p>
+<source>...
+
+public class Controller 
+    extends PageFlowController
+{
+
+    ...
+
+    <strong>/**
+     * This action forwards to the nested page flow to gather the favorite color.
+     */
+    protected Forward getColor(SubmitForm form)
+    {
+        return new Forward("getColorFlow");
+    }
+
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(
+                name="success",
+                navigateTo=Jpf.NavigateTo.currentPage
+            )
+        }
+    )
+    protected Forward colorSuccess( String color )
+    {
+        SubmitForm previousForm = ( SubmitForm ) getPreviousFormBean();
+        previousForm.setColor( color );
+        return new Forward( "success", previousForm );
+    }</strong>
+
+    ...
+
+}</source>
+<p><strong>results.jsp</strong></p>
+<source>[unchanged from above]</source>
+<p><strong>getColor/index.jsp</strong></p>
+<source>      &lt;netui:form action="submitColor">
+        Color:&lt;br/>
+          &lt;netui:select dataSource="actionForm.color" size="5">
+            &lt;netui:selectOption value="red" />
+            &lt;netui:selectOption value="blue" />
+            &lt;netui:selectOption value="green" />
+            &lt;netui:selectOption value="yellow" />
+            &lt;netui:selectOption value="orange" />
+          &lt;/netui:select>
+        &lt;br/>&nbsp;
+        &lt;netui:button type="submit" value="submit"/>
+      &lt;/netui:form></source>
+<p><strong>getColor/GetColor.java</strong></p>
+<source>package getColor;
+
+import javax.servlet.http.HttpSession;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts.action.ActionMapping;
+
+
+@Jpf.Controller(
+    nested=true,
+    simpleActions={
+        @Jpf.SimpleAction(name="begin", path="index.jsp")
+    }
+)
+public class GetColor extends PageFlowController
+{
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(
+                name="done", 
+                returnAction="colorSuccess",
+                outputFormBeanType=String.class)
+        }
+    )
+    protected Forward submitColor( ColorForm form )
+    {
+        return new Forward( "done", form.getColor() );
+    }
+
+    public static class ColorForm
+    {
+        private String _color;
+
+        public String getColor()
+        {
+            return _color;
+        }
+
+        public void setColor(String value)
+        {
+            _color = value;
+        }
+    }
+}</source>
+		</section>
+		<section id="popups">
+			<title>Submit/Display Cycle with Nested Page Flow (Popup Window Enabled)</title>
+            <p>This section explains how to make the nested page flow appear as a popup window.</p> 
+<section id="popup_attribute"><title>The Popup Attribute</title>
+	<p>If you want your nested page flow to run inside a popup window set the popup attribute to "true"
+</p>
+<source>      &lt;netui:button type="submit" value="Pick Color" action="getColor" <strong>popup="true"</strong>>
+          &lt;netui:configurePopup location="false" width="550" height="150">
+          &lt;/netui:configurePopup>
+      &lt;/netui:button></source>
+
+<p>This attribute is legal on all tags that can raise an action, except for <a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/imageButton.html">&lt;netui:imageButton></a>.
+</p>
+<ol>
+	<li><a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/anchor.html">&lt;netui:anchor></a></li>
+	<li><a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/imageAnchor.html">&lt;netui:imageAnchor></a></li>
+	<li><a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/button.html">&lt;netui:button></a></li>
+	<li><a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/area.html">&lt;netui:area></a></li>
+	</ol>
+<p>Note - Popup window support uses JavaScript behind the scenes.  <a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/imageButton.html">&lt;netui:imageButton></a> is used for submitting a form <em>without</em> JavaScript, and thus cannot accept the <code>popup</code> attribute.</p>
+</section>
+	<section id="configurePopupTag"><title>The &lt;netui:configurePopupTag></title>
+	<p>Use the <a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/configurePopup.html">&lt;netui:configurePopup></a>
+	tag to determine the shape of the popup window.</p>
+	<source>      &lt;netui:button type="submit" value="Pick Color" action="getColor" popup="true">
+          <strong>&lt;netui:configurePopup location="false" width="550" height="150">
+          &lt;/netui:configurePopup></strong>
+      &lt;/netui:button></source>
+		</section>
+		<section id="retrievePopupOutputTag"><title>The &lt;netui:retrievePopupOutput></title>
+			<p>To access values returned by the nested page flow use the <a href="apidocs/taglib/beehive.apache.org/netui/tags-html-1.0/retrievePopupOutput.html">&lt;netui:retrievePopupOutput></a> tag,
+for example,</p>
+			<source>&lt;netui:retrievePopupOutput dataSource="outputFormBean.color" tagIdRef="colorField"/></source>
+			<p>Include multiple instances of the tag to set multiple fields.</p>
+			<p><strong>Note</strong> - the &lt;netui:retrievePopupOutput> tag must be nested inside 
+				the &lt;netui:configurePopup> tag even if the &lt;netui:configurePopup> tag has no attributes</p>
+			<p>The &lt;netui:retrievePopupOutput> tag has two attributes, <code>dataSource</code>
+				and <code>tagIdRef</code>, both of which are required.  Both accept expressions that
+				can be evaluated at runtime.</p>
+			<p><strong>Note</strong> - '<code>outputFormBean</code>' is a special databinding context 
+				that applies in this situation.  It is the "return value" of the nested page 
+				flow: It receives the value generated by the 'outputFormBean' 
+				(or 'outputFormBeanType') in the returnAction forward from the nested page flow. 
+				This databinding context is only legal when used in the &lt;netui:retrievePopupOutput> tag.</p>
+			</section>
+			<section id="_auto"><title>The <code>_auto</code> Global Forward</title>
+				<p>If you are returning data from the nested flow it is passed as a bean to 
+					the action in the nesting page flow, for example</p>
+				<source>        @Jpf.Action()
+        public Forward nestedPageFlowGotColor(GetColor.ColorForm colorForm)
+        {
+            return new Forward("_auto");
+        }</source>
+		<p>Here is what the code looks like in the nested page flow</p>	
+<source>        @Jpf.Action(
+            forwards={
+                @Jpf.Forward(name="success",
+                             returnAction="nestedPageFlowGotColor", 
+                             outputFormBeanType=ColorForm.class
+                )
+            }
+        )
+        public Forward done( ColorForm returnForm )
+        {
+            return new Forward("success", returnForm);
+        }</source>
+		<p>
+The bean returned to the nesting flow is accessed in the page using the special data binding 
+context, <code>outputFormBean</code></p>
+		
+				
+					</section>
+	</section>
+	</body>
+</document>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>GetURLTemplates</sessionName>
+<tester>crogers</tester>
+<startDate>15 Nov 2005, 03:11:05.989 PM MST</startDate>
+<description>Get the set of URLTemplate objects from the URLTemplateFactory and display them.</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/urlTemplates/getTemplates/Controller.jpf</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>422DDF5793A68A8399E5DEEFE58F5386</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>accept</name>
+<value>*/*</value>
+</header>
+<header>
+<name>accept-encoding</name>
+<value>gzip, deflate</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us</value>
+</header>
+<header>
+<name>connection</name>
+<value>Keep-Alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>JSESSIONID=422DDF5793A68A8399E5DEEFE58F5386</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; InfoPath.1)</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+>
+<html lang="en">
+
+  <head>
+    <title>getURLTemplates() Test</title>
+  </head>
+  <body>
+    <h1>URLTemplatesFactory.getURLTemplates() Test</h1>
+
+    <p>
+    Simple test to get the set of URLTemplate objects from the factory
+    after the url template config file has been loaded.
+
+    <pre>default = {url:scheme}://{url:domain}:{url:port}/{url:path}?{url:queryString}
+jpf-action = http://{url:domain}:{url:port}/{url:path}?URLTEMPLATE=action&{url:queryString}
+jpf-resource = http://{url:domain}:{url:port}/{url:path}?URLTEMPLATE=resource&{url:queryString}
+jpf-secure-action = https://{url:domain}:8443/{url:path}?URLTEMPLATE=secure-action&{url:queryString}
+jpf-secure-resource = https://{url:domain}:8443/{url:path}?URLTEMPLATE=secure-resource&{url:queryString}
+</pre>
+  </body>
+
+</html>]]>
+</responseBody>
+</response>
+</test>
+</tests>
+<endDate>15 Nov 2005, 03:11:25.878 PM MST</endDate>
+<testCount>1</testCount>
+</recorderSession>

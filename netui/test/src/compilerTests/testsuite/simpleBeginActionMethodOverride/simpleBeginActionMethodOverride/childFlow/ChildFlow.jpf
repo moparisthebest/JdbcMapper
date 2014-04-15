@@ -1,0 +1,26 @@
+package simpleBeginActionMethodOverride.childFlow;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import simpleBeginActionMethodOverride.ParentFlow;
+
+@Jpf.Controller(
+)
+public class ChildFlow
+    extends ParentFlow
+{
+   
+        @Jpf.Action(forwards = { 
+        @Jpf.Forward(name = "success",
+                     path = "index.jsp")
+    })
+
+    protected Forward begin()
+    {
+        Forward forward = new Forward("success");        
+        return forward;
+    }
+}

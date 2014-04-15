@@ -1,0 +1,400 @@
+##
+## The Velocity code generation template for the JavaBean BeanInfo generated from a Control public
+## or extension interface.
+##
+## Licensed to the Apache Software Foundation (ASF) under one or more
+## contributor license agreements.  See the NOTICE file distributed with
+## this work for additional information regarding copyright ownership.
+## The ASF licenses this file to You under the Apache License, Version 2.0
+## (the "License"); you may not use this file except in compliance with
+## the License.  You may obtain a copy of the License at
+## 
+##     http://www.apache.org/licenses/LICENSE-2.0
+## 
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+## $Header:$
+##
+## The following context variables are used by this template:
+##      $bean - a ControlBean instance that defines the attributes of the bean
+##      $intf - a ControlInterface instance that defines the attributes of the public interface
+##
+## The initFeatureDescriptor macro will initialize the contents of a FeatureDescriptor using
+## a FeatureInfo annotation instance.
+##
+## The localizeString is used to inject code to do resource bundle lookup on string values that
+## begin/end with '%'.   See org.apache.beehive.controls.runtime.ControlBeanInfo.localizeString()
+## for details
+##
+#macro (localizeString $string)
+#if ($string.startsWith('%') && $string.endsWith('%')) localizeString("$string") #else "$string" #end
+#end
+#macro (initFeatureDescriptor $featureDesc $featureInfo $defaultName)
+#if (! $featureInfo.name().equals(""))
+${featureDesc}.setName(#localizeString("$featureInfo.name()"));
+#else
+${featureDesc}.setName("$defaultName");
+#end
+#if (! $featureInfo.displayName().equals(""))
+${featureDesc}.setDisplayName(#localizeString("$featureInfo.displayName()"));
+#else
+${featureDesc}.setDisplayName("$defaultName");
+#end
+${featureDesc}.setShortDescription(#localizeString("$featureInfo.shortDescription()"));
+${featureDesc}.setExpert($featureInfo.isExpert());
+${featureDesc}.setHidden($featureInfo.isHidden());
+${featureDesc}.setPreferred($featureInfo.isPreferred());
+##
+## Reading arrays of annotation type instances is broken under JDK1.5.0b51
+##
+###foreach ($featureAttr in $featureInfo.attributes())
+##${featureDesc}.setValue("$featureAttr.name()","$featureAttr.value()");
+###end
+#end
+##
+## Begin - Main body for ControlBeanInfo class template
+##
+#if (!$bean.isRootPackage())
+package $bean.package;
+#end
+
+import java.beans.BeanDescriptor;
+import java.beans.EventSetDescriptor;
+import java.beans.IntrospectionException;
+import java.beans.MethodDescriptor;
+import java.beans.ParameterDescriptor;
+import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditor;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+
+import org.apache.beehive.controls.api.ControlException;
+import org.apache.beehive.controls.runtime.bean.BeanPersistenceDelegate;
+import org.apache.beehive.controls.runtime.packaging.ControlEventSetDescriptor;
+
+@SuppressWarnings("all")
+public class ${bean.shortName}BeanInfo
+#if ($intf.superClass)
+    extends ${bean.superClass.className}BeanInfo
+#else
+    extends org.apache.beehive.controls.runtime.bean.ControlBeanInfo
+#end
+{
+    #if ($intf.operations.size() != 0 || $intf.eventSets.size() != 0)
+    #declareMethodStatics()
+
+    static
+    {
+        #initMethodStatics()
+    }
+    #end
+
+    /**
+     * Default null-arg constructor used to create a new BeanInfo instance
+     */
+    public ${bean.shortName}BeanInfo()
+    {
+        super(${bean.className}.class);
+    }
+
+    /**
+     * Protected constructor used if this BeanInfo class is extended.
+     */
+    protected ${bean.shortName}BeanInfo(Class beanClass)
+    {
+        super(beanClass);
+    }
+
+    // java.beans.BeanInfo.getBeanDescriptor
+    public BeanDescriptor getBeanDescriptor()
+    {
+        BeanDescriptor bd = new BeanDescriptor(${bean.className}.class);
+        #if ($intf.featureInfo)
+            #initFeatureDescriptor("bd" $intf.featureInfo $bean.shortName)
+        #else
+            bd.setName(#localizeString("$bean.shortName"));
+            bd.setDisplayName(#localizeString("$bean.shortName"));
+        #end
+
+        //
+        // The org.apache.beehive.controls.runtime.bean.BeanPersistenceDelegate class
+        // implements the XMLDecode delegation model for all Control JavaBean types. It
+        // provides optimized XML persistance based upon the Control runtime architecture.
+        // The 'persistenceDelegate' attribute of a BeanDescriptor is used by XMLEncoder to
+        // locate a delegate for a particular JavaBean type.
+        //
+        bd.setValue("persistenceDelegate", new BeanPersistenceDelegate());
+
+        return bd;
+    }
+
+    /**
+     * Stores MethodDescriptor descriptors for this bean and its superclasses into
+     * an array, starting at the specified index
+     */
+    protected void initMethodDescriptors(MethodDescriptor [] methodDescriptors, int index)
+                   throws java.beans.IntrospectionException
+    {
+        #if ($intf.operations.size() > 0)
+        String [] __bc_paramNames;
+        ParameterDescriptor [] __bc_paramDescriptors;
+        MethodDescriptor md;
+        #end
+
+        #foreach ($operation in $intf.operations)
+            //
+            // Declare MethodDescriptor for ${operation.name}(${operation.argList})
+            //
+            __bc_paramNames = _methodParamMap.get($operation.methodField);
+            __bc_paramDescriptors = new ParameterDescriptor[__bc_paramNames.length];
+            for (int j = 0; j < __bc_paramNames.length; j++)
+            {
+                __bc_paramDescriptors[j] = new ParameterDescriptor();
+                __bc_paramDescriptors[j].setName(__bc_paramNames[j]);
+                __bc_paramDescriptors[j].setDisplayName(__bc_paramNames[j]);
+            }
+            md = new MethodDescriptor($operation.methodField, __bc_paramDescriptors);
+            #if ($operation.featureInfo)
+                #initFeatureDescriptor("md" $operation.featureInfo $operation.name)
+            #end
+            methodDescriptors[index++] = md;
+
+        #end
+
+        #if ($intf.superClass)
+        //
+        // Add method descriptors from parent BeanInfo
+        //
+        super.initMethodDescriptors(methodDescriptors, index);
+        #end
+    }
+
+    public MethodDescriptor [] getMethodDescriptors()
+    {
+        MethodDescriptor [] __bc_methodDescriptors = new MethodDescriptor[$intf.operationCount];
+        try
+        {
+            initMethodDescriptors(__bc_methodDescriptors, 0);
+        }
+        catch (java.beans.IntrospectionException __bc_ie)
+        {
+            throw new ControlException("Unable to create MethodDescriptor", __bc_ie);
+        }
+        return __bc_methodDescriptors;
+    }
+
+    /**
+     * Stores PropertyDescriptor descriptors for this bean and its superclasses into
+     * an array, starting at the specified index
+     */
+    protected void initPropertyDescriptors(PropertyDescriptor [] propDescriptors, int index)
+                   throws java.beans.IntrospectionException
+    {
+        PropertyDescriptor pd;
+
+        #foreach ($propertySet in $intf.propertySets)
+            #foreach ($property in $propertySet.properties)
+                #if ($property.getType().equals("boolean"))
+                    #set ( $getterName = "is${property.accessorName}" )
+                #else
+                    #set ( $getterName = "get${property.accessorName}" )
+                #end
+                #if ($propertySet.hasSetters())
+                  #set ( $setterName = "set${property.accessorName}" )
+                  #if ($propertySet.isOptional())
+                pd = new PropertyDescriptor(#localizeString("$property.name"), ${bean.className}.class, null, "$setterName");
+                  #else
+                pd = new PropertyDescriptor(#localizeString("$property.name"), ${bean.className}.class, "$getterName", "$setterName");
+                  #end
+                #else
+                 #if (! $propertySet.isOptional())
+                pd = new PropertyDescriptor(#localizeString("$property.name"), ${bean.className}.class, "$getterName", null );
+                 #end
+                #end
+                #if ($propertySet.hasSetters() || !$propertySet.isOptional())
+                  #if ($property.propertyInfo)
+                    pd.setBound($property.propertyInfo.bound());
+                    pd.setConstrained($property.propertyInfo.constrained());
+                    #if ($property.editorClass)
+                    pd.setPropertyEditorClass(${property.editorClass}.class);
+                    #end
+                  #end
+                  #if ($property.featureInfo)
+                    #initFeatureDescriptor("pd" $property.featureInfo $property.name)
+                  #end
+                propDescriptors[index++] = pd;
+                #end
+            #end
+        #end
+
+        #if ($intf.interfaceProperties.size() > 0)
+        //
+        // add property descriptors for any getter/setters defined in control interface
+        //
+        #end
+        #foreach ($intfprop in $intf.interfaceProperties)
+          #if ($intfprop.getterName && $intfprop.setterName)
+                pd = new PropertyDescriptor(#localizeString("$intfprop.name"), ${bean.className}.class, "$intfprop.getterName", "$intfprop.setterName");
+                propDescriptors[index++] = pd;
+          #elseif ($intfprop.getterName)
+                pd = new PropertyDescriptor(#localizeString("$intfprop.name"), ${bean.className}.class, "$intfprop.getterName", null);
+                propDescriptors[index++] = pd;
+          #elseif ($intfprop.setterName)
+                pd = new PropertyDescriptor(#localizeString("$intfprop.name"), ${bean.className}.class, null, "$intfprop.setterName");
+                propDescriptors[index++] = pd;
+          #end
+        #end
+
+        #if ($intf.superClass)
+        //
+        // Add property descriptors from parent BeanInfo
+        //
+        super.initPropertyDescriptors(propDescriptors, index);
+        #end
+    }
+
+    // java.beans.BeanInfo.getPropertyDescriptors
+    public PropertyDescriptor [] getPropertyDescriptors()
+    {
+        PropertyDescriptor [] __bc_propDescriptors = new PropertyDescriptor[$intf.propertyCount];
+        try
+        {
+            initPropertyDescriptors(__bc_propDescriptors, 0);
+        }
+        catch (java.beans.IntrospectionException __bc_ie)
+        {
+            throw new ControlException("Unable to create PropertyDescriptor", __bc_ie);
+        }
+        return __bc_propDescriptors;
+    }
+
+    #foreach ($eventSet in $intf.eventSets)
+    //
+    // Adds the EventDescriptors for $eventSet.shortName to the EventDescriptor array, starting
+    // at index
+    //
+    protected void ${eventSet.infoInitializer}(MethodDescriptor [] eventDescriptors, int index)
+    {
+        String [] __bc_paramNames;
+        ParameterDescriptor [] __bc_paramDescriptors;
+        MethodDescriptor md;
+
+        //
+        // Build a method descriptor for each event method in the event set
+        //
+        #foreach ($event in $eventSet.events)
+
+            //
+            // Declare MethodDescriptor for ${event.name}(${event.argList})
+            //
+            __bc_paramNames = _methodParamMap.get($event.methodField);
+            __bc_paramDescriptors = new ParameterDescriptor[__bc_paramNames.length];
+            for (int k = 0; k < __bc_paramNames.length; k++)
+            {
+                __bc_paramDescriptors[k] = new ParameterDescriptor();
+                __bc_paramDescriptors[k].setName(__bc_paramNames[k]);
+                __bc_paramDescriptors[k].setDisplayName(__bc_paramNames[k]);
+            }
+            md = new MethodDescriptor($event.methodField, __bc_paramDescriptors);
+            #if ($event.featureInfo)
+                #initFeatureDescriptor("md" $event.featureInfo $event.name)
+            #end
+            eventDescriptors[index++] = md;
+        #end
+
+        #if ($eventSet.superEventSet)
+        //
+        // Add events from the parent EventSet
+        //
+        ${eventSet.superEventSet.infoInitializer}(eventDescriptors, index);
+        #end
+    }
+
+    #end
+
+    protected void initEventSetDescriptors(EventSetDescriptor [] eventSetDescriptors, int index)
+                   throws java.beans.IntrospectionException
+    {
+        #if ($intf.eventSets.size() > 0)
+        MethodDescriptor [] __bc_eventDescriptors;
+        EventSetDescriptor __bc_esd;
+        Method __bc_addListener, __bc_removeListener, __bc_getListeners;
+        Class __bc_eventIntf;
+        #end
+
+        #foreach ($eventSet in $intf.eventSets)
+            __bc_eventIntf = ${eventSet.className}.class;
+
+            //
+            // Find the add/remove listener methods
+            //
+            try
+            {
+                __bc_addListener =
+                    ${bean.className}.class.getDeclaredMethod("$eventSet.addListenerMethod",
+                                                               new Class [] { __bc_eventIntf });
+                __bc_removeListener =
+                    ${bean.className}.class.getDeclaredMethod("$eventSet.removeListenerMethod",
+                                                               new Class [] { __bc_eventIntf });
+                __bc_getListeners =
+                    ${bean.className}.class.getDeclaredMethod("$eventSet.getListenersMethod",
+                                                               new Class [] {});
+            }
+            catch (NoSuchMethodException __bc_nsme)
+            {
+                // This is moderately lame, but there is no checked exception declared for this
+                // method.  This could only happen as a result of a mismatch between bean class
+                // and introspector codegen.
+                throw new ControlException("Unable to locate listener method", __bc_nsme);
+            }
+
+            //
+            // Build the MethodDescriptor array contain all event set events
+            //
+            __bc_eventDescriptors = new MethodDescriptor[$eventSet.eventCount];
+            ${eventSet.infoInitializer}(__bc_eventDescriptors, 0);
+
+            try
+            {
+                __bc_esd = new ControlEventSetDescriptor(localizeString("$eventSet.descriptorName"),
+                            __bc_eventIntf, __bc_eventDescriptors, __bc_addListener, __bc_removeListener, __bc_getListeners);
+                #if ($eventSet.featureInfo)
+                    #initFeatureDescriptor("esd" $eventSet.featureInfo $eventSet.descriptorName)
+                #end
+                __bc_esd.setUnicast($eventSet.unicast);
+            }
+            catch (IntrospectionException __bc_ie)
+            {
+                throw new ControlException("Unable to create EventDescriptor", __bc_ie);
+            }
+            eventSetDescriptors[index++] = __bc_esd;
+
+        #end
+
+        #if ($intf.superClass)
+        //
+        // Add event set descriptors from parent BeanInfo
+        //
+        super.initEventSetDescriptors(eventSetDescriptors, index);
+        #end
+    }
+
+    // java.beans.BeanInfo.getEventSetDescriptors
+    public EventSetDescriptor [] getEventSetDescriptors()
+    {
+        EventSetDescriptor [] __bc_eventSetDescriptors = new EventSetDescriptor[$intf.eventSetCount];
+        try
+        {
+            initEventSetDescriptors(__bc_eventSetDescriptors, 0);
+        }
+        catch (java.beans.IntrospectionException __bc_ie)
+        {
+            throw new ControlException("Unable to create EventSetDescriptor", __bc_ie);
+        }
+        return __bc_eventSetDescriptors;
+    }
+}

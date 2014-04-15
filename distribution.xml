@@ -1,0 +1,735 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+-->
+
+<!-- 
+    Beehive distribution build file.
+
+    This build file contains the logic associated with creating Beehive distributions.  
+A distribution may take one of the following forms:
+
+  - binary distribution (samples + runtime)
+  - library distribution (runtime)
+  - documentation distribution (doc)
+  - source distribution (source code)
+-->
+<project name="Beehive/Distribution" default="usage" basedir=".">
+
+    <import file="beehive-imports.xml"/>
+
+    <property name="dist.src.name" value="${dist.name}-src"/>
+    <property name="dist.lib.name" value="${dist.name}-lib"/>
+    <property name="dist.docs.name" value="${dist.name}-docs"/>
+
+    <property name="beehive.user.dir" location="${beehive.home}/user"/>
+    <property name="dist.base.dir" location="${beehive.home}/build/dist"/>
+
+    <property name="dist.dir" location="${dist.base.dir}/${dist.name}"/>
+    <property name="dist.lib.dir" location="${dist.base.dir}/${dist.lib.name}"/>
+    <property name="dist.src.dir" location="${dist.base.dir}/${dist.src.name}" />
+    <property name="dist.archives.dir" location="${dist.base.dir}/archives"/>
+    <property name="dist.tmp.dir" location="${beehive.home}/build/tmp-dist/"/>
+
+    <!-- files to dynamically pull together slightly different readmes when building distributions -->
+    <property name="dist.readme.template" location="${beehive.home}/docs/dist-docs/README.txt"/> 
+    <property name="dist.src.readme.template" location="${beehive.home}/README.txt"/> 
+    <property name="dist.readme.rev.trailer" location="${beehive.home}/docs/dist-docs/rev-readme-trailer.txt"/>
+    <property name="dist.readme.toplvl.trailer" location="${beehive.home}/docs/dist-docs/toplvl-readme-trailer.txt"/>
+
+    <property name="release.docs.build.dir" location="${beehive.home}/build/release-docs"/>
+
+    <!-- Properties used by the "build.dist*.{tgz,zip}" targets for translating end-of-line characters in text files -->
+    <property name="text.file.includes.unix" value="**/*.beaninfo,**/*.css,**/*.dtd,**/*.html,**/*.inc,**/*.java,**/*.jcs,**/*.jcx,**/*.jj,**/*.jpf,**/*.jpfs,**/*.js,**/*.jsfb,**/*.jsp,**/*.jspf,**/*.jspx,**/*.log,**/*.properties,**/*.sql,**/*.tag,**/*.tld,**/*.txt,**/*.TXT,**/*.wsdd,**/*.wsdl,**/*.xml,**/*.xsd,**/*.xsdconfig,**/*.xsl,**/*.xslt,**/Global.app"/>
+    <property name="text.file.includes.dos" value="**/*.bat,**/*.cmd,${text.file.includes.unix}"/>
+
+    <!-- ============================================= -->
+    <!--                                               -->
+    <!-- Distribution targets                          -->
+    <!--                                               -->
+    <!-- ============================================= -->
+    <target name="build.dist" description="Builds a Beehive distribution">
+        <mkdir dir="${dist.dir}"/>
+
+        <antcall target="build.dist.core"/>
+        <antcall target="build.dist.samples"/>
+        <antcall target="build.dist.docs"/>
+
+        <update-dist-readme/>
+
+        <antcall target="verify.dist.samples"/>
+    </target>
+
+    <target name="minprod.dist" description="Build a minimal distribution">
+        <property name="skip.samples.verify" value="true"/>
+        <property name="skip.docs.build" value="true"/>
+
+        <antcall target="build.dist"/>
+    </target>
+
+    <target name="verify.dist.samples" unless="skip.samples.verify" description="Verify the builds for the samples for a Beehive distribution">
+        <property name="samples.verify.dir" location="${dist.tmp.dir}/samples-build-verification"/>
+        <copy todir="${samples.verify.dir}">
+            <fileset dir="${dist.dir}"/>
+        </copy>
+
+        <ant dir="${samples.verify.dir}/samples/netui-blank" antfile="build.xml" target="build" inheritAll="false"/>
+        <ant dir="${samples.verify.dir}/samples/controls-blank" antfile="build.xml" target="build" inheritAll="false"/>
+
+        <ant dir="${samples.verify.dir}/samples/petstoreWeb" antfile="build.xml" target="build" inheritAll="false">
+            <property name="derby.jar" location="${beehive.home}/external/derby/derby_46005.jar"/>
+        </ant>
+
+        <ant dir="${samples.verify.dir}/samples/netui-samples" antfile="build.xml" target="build" inheritAll="false"/>
+        <ant dir="${samples.verify.dir}/samples/netui-jsf" antfile="build.xml" target="build-myfaces" inheritAll="false">
+            <property name="myfaces.dir" location="${myfaces.dir}"/>
+        </ant>
+
+        <ant dir="${samples.verify.dir}/samples/controls-spring" antfile="build.xml" target="build" inheritAll="false"/>
+    </target>
+
+    <!-- target for building libraries -->
+    <target name="build.lib">
+        <copy todir="${lib.dir}/common" failOnError="true">
+            <fileset refid="commons-codec.fileset"/>
+            <fileset refid="commons-discovery.fileset"/>
+            <fileset refid="commons-logging.fileset"/>
+            <fileset refid="log4j.fileset"/>
+            <fileset refid="velocity.fileset"/>
+        </copy>
+
+        <copy todir="${lib.dir}/controls" failOnError="true">
+            <fileset refid="controls.fileset"/>
+            <fileset refid="system-controls.fileset"/>
+        </copy>
+
+        <copy todir="${lib.dir}/netui" failOnError="true" flatten="true">
+            <fileset dir="${beehive.home}/netui/build/dist/compiler">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="${beehive.home}/netui/build/dist/webapp">
+                <include name="web/WEB-INF/lib/*.jar"/>
+                <exclude name="web/WEB-INF/lib/commons-codec-2.3.jar"/>
+                <exclude name="web/WEB-INF/lib/commons-discovery-0.2.jar"/>
+                <exclude name="web/WEB-INF/lib/commons-logging.jar"/>
+                <exclude name="web/WEB-INF/lib/beehive-controls.jar"/>
+                <exclude name="web/WEB-INF/lib/beehive-*-control.jar"/>
+                <exclude name="web/WEB-INF/lib/log4j*.jar"/>
+            </fileset>
+        </copy>
+
+        <!-- this directory structure can't be flattened -->
+        <copy todir="${lib.dir}/netui/resources" failOnError="true">
+            <fileset dir="${beehive.home}/netui/build/dist/webapp/web/resources">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build.dist.lib" description="Builds a Beehive library distribution">
+        <mkdir dir="${dist.lib.dir}"/>
+
+        <!-- build libraries for distribution -->
+        <antcall target="build.lib">
+          <param name="lib.dir" value="${dist.lib.dir}/lib"/>
+        </antcall>
+
+        <copy todir="${dist.lib.dir}/" failOnError="true">
+            <fileset dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </fileset>
+        </copy>
+
+        <!-- copy the readme and update it to include the revision number -->
+        <copy file="${dist.readme.template}" tofile="${dist.lib.dir}/README.txt" overwrite="true" verbose="true"/>
+        <build-dist-readme readmedir="${dist.lib.dir}" revtrailer="${dist.readme.rev.trailer}"/>
+    </target>
+
+    <!-- Builds a src dist with only src files found in our jar files, no tests, ant scripts, docs, etc.
+         Intended to allow a user to attach the beehive src to their debugger.
+      -->
+    <target name="build.dist.src" description="Builds a Beehive source distribution">
+
+        <mkdir dir="${dist.src.dir}"/>
+        <copy todir="${dist.src.dir}" failOnError="true">
+            <fileset dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </fileset>
+        </copy>
+        <copy todir="${dist.src.dir}/src" failOnError="true">
+            <fileset dir="${beehive.home}">
+                <include name="controls/src/**"/>
+                <include name="netui/src/**"/>
+                <include name="system-controls/src/ejb/**"/>
+                <include name="system-controls/src/jms/**"/>
+                <include name="system-controls/src/jdbc/**"/>
+                <exclude name="**/build.xml"/>
+                <exclude name="netui/src/bootstrap/**"/>
+                <exclude name="netui/src/compiler-xdoclet/**"/>
+                <exclude name="netui/src/jar-assembly/**"/>
+                <exclude name="netui/src/javascript/**"/>
+                <exclude name="netui/src/pageflow-jdk14/**"/>
+                <exclude name="netui/src/simple-tags/**"/>
+                <exclude name="netui/src/testRecorder/**"/>
+                <exclude name="netui/src/tomcat-*/**"/>
+                <exclude name="netui/src/webapp-template/**"/>
+            </fileset>
+            <!-- 
+                 this fileset is separate from the previous one because the previous one omits 
+                 all **/build/** directories which skips the generated Control JavaBean source files
+              -->
+            <fileset dir="${beehive.home}">
+                <include name="system-controls/build/gensrc/ejb-control/**"/>
+                <include name="system-controls/build/gensrc/jdbc-control/**"/>
+                <include name="system-controls/build/gensrc/jms-control/**"/>
+            </fileset>
+        </copy>
+
+        <!-- copy the readme and update it to include the revision number -->
+        <copy file="${dist.src.readme.template}" tofile="${dist.src.dir}/README.txt" overwrite="true" verbose="true"/>
+        <build-dist-readme readmedir="${dist.src.dir}" trailerprefix="" revtrailer="${dist.readme.rev.trailer}"/>
+
+        <!-- put an exact copy of the src readme one dir up so it will appear outside the archive as well -->
+        <copy file="${dist.src.dir}/README.txt" tofile="${dist.base.dir}/README-src.txt" overwrite="true" verbose="true"/>
+    </target>
+
+    <target name="build.dist.core">
+        <!-- copy the required libraries into dist/ -->
+        <antcall target="build.lib">
+          <param name="lib.dir" value="${dist.dir}/lib"/>
+        </antcall>
+ 
+        <!-- copy the required Ant build files dist/ -->
+        <copy todir="${dist.dir}/ant" failOnError="true">
+            <fileset file="ant/beehive-tools.xml"/>
+            <fileset file="user/beehive-runtime.xml"/>
+        </copy>
+        <copy todir="${dist.dir}" file="user/beehive-imports.xml" failOnError="true"/>
+
+        <copy todir="${dist.dir}" failOnError="true">
+            <fileset dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </fileset>
+        </copy>
+
+        <!-- copy this now, at the end of build.dist we will add in the revision # info -->
+        <copy file="${dist.readme.template}" tofile="${dist.dir}/README.txt" overwrite="true" verbose="true"/>
+    </target>
+
+    <target name="build.dist.samples" description="Build the samples for the distribution">
+        <ant dir="samples" antfile="build.xml" target="clean" inheritAll="false"/>
+        <ant dir="samples" antfile="build.xml" target="build" inheritAll="false"/>
+        <ant dir="samples" antfile="build.xml" target="clean" inheritAll="false"/>
+
+        <copy todir="${dist.dir}/samples/petstoreWeb" failOnError="true">
+            <fileset dir="samples/petstoreWeb">
+                <exclude name="build"/>
+                <exclude name="build.properties"/>
+                <exclude name="build-dist.properties"/>
+            </fileset>
+        </copy>
+
+        <!-- rename build-dist.properties to build.properties -->
+        <copy tofile="${dist.dir}/samples/petstoreWeb/build.properties" 
+              file="${beehive.home}/samples/petstoreWeb/build-dist.properties" failOnError="true"/>
+
+        <!-- Build the netui-blank distro -->
+        <antcall target="create.netui-blank"/>
+
+        <copy todir="${dist.dir}/samples/netui-samples" failOnError="true">
+            <fileset dir="samples/netui-samples"/>
+        </copy>
+
+        <copy todir="${dist.dir}/samples/netui-jsf" failOnError="true">
+            <fileset dir="samples/netui-jsf"/>
+        </copy>
+
+        <copy todir="${dist.dir}/samples/controls-blank" failOnError="true">
+            <fileset dir="samples/controls-blank"/>
+        </copy>
+
+        <copy todir="${dist.dir}/samples/controls-spring" failOnError="true">
+            <fileset dir="samples/controls-spring"/>
+        </copy>
+
+        <!-- Create the samples/README.txt file from the user/samples-README.txt file -->
+        <copy tofile="${dist.dir}/samples/README.txt" failOnError="true">
+            <fileset file="user/samples-README.txt"/>
+        </copy>
+    </target>
+
+    <target name="build.dist.docs" unless="skip.docs.build" description="Build the documentation for a Beehive distribution">
+        <antcall target="build.release.docs"/>
+        
+        <copy todir="${dist.dir}/docs" failOnError="true">
+            <fileset dir="${release.docs.build.dir}"/>
+        </copy>
+
+        <copy todir="${dist.dir}/docs" failOnError="true">
+            <fileset dir="${beehive.home}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </fileset>
+        </copy>
+
+        <!-- copy the readme and update it to include the revision number -->
+        <copy file="${dist.readme.template}" tofile="${dist.dir}/docs/README.txt" overwrite="true" verbose="true"/>
+        <build-dist-readme readmedir="${dist.dir}/docs" revtrailer="${dist.readme.rev.trailer}"/>
+    </target>
+
+    <target name="create.netui-blank">
+        <copy todir="${dist.dir}/samples/netui-blank/src">
+            <fileset dir="${beehive.home}/netui/build/dist/webapp/src" includes="**"/>
+        </copy>
+
+        <copy todir="${dist.dir}/samples/netui-blank/">
+            <fileset dir="${beehive.home}/samples/netui-blank" includes="**"/>
+        </copy>
+
+        <copy todir="${dist.dir}/samples/netui-blank/web">
+            <fileset dir="${beehive.home}/netui/build/dist/webapp/web" includes="**">
+                <exclude name="WEB-INF/classes/"/>
+                <exclude name="WEB-INF/lib/"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build.release.docs" unless="skip.docs" description="Builds documentation for a Beehive distribution">
+        <property name="release.docs.build.dir" location="${build.dir}/docs"/>
+        <mkdir dir="${release.docs.build.dir}"/>
+
+        <!-- generate the Beehive documentation -->
+        <ant antfile="build.xml" target="docs" inheritAll="false"/>    
+
+        <copy todir="${release.docs.build.dir}" failOnError="true">
+            <fileset dir="docs/forrest/release/build/site"/>
+        </copy>
+
+        <copy todir="${release.docs.build.dir}/netui/apidocs/javadoc" failOnError="true">
+            <fileset dir="netui/build/docs/apidocs"/>
+        </copy>
+
+        <copy todir="${release.docs.build.dir}/netui/apidocs/taglib" failOnError="true" overwrite="true">
+            <fileset dir="netui/build/docs/taglib"/>
+        </copy>
+
+        <copy todir="${release.docs.build.dir}/controls/apidocs/javadoc" failOnError="true">
+            <fileset dir="controls/build/docs/apidocs"/>
+        </copy>
+
+        <copy todir="${release.docs.build.dir}/system-controls/jdbc/apidocs/javadoc" failOnError="true">
+            <fileset dir="system-controls/build/docs/jdbc/apidocs"/>
+        </copy>
+
+        <copy todir="${release.docs.build.dir}/system-controls/ejb/apidocs/javadoc" failOnError="true">
+            <fileset dir="system-controls/build/docs/ejb/apidocs"/>
+        </copy>
+
+        <copy todir="${release.docs.build.dir}/system-controls/jms/apidocs/javadoc" failOnError="true">
+            <fileset dir="system-controls/build/docs/jms/apidocs"/>
+        </copy>
+    </target>		
+
+    <!-- 
+        Took off the long depends list so this can be called in a chain without reinvoking all the targets it depends on.
+
+        prereq: Now you manually have to ensure that build.dist, build.dist.lib and build.dist.src are done before calling this.
+      -->
+    <target name="build.dist.archives" description="Builds all Beehive distribution archives in .zip and .tar.gz formats">
+        <fail unless="beehive.version" message="Could not build distribution archives; beehive.version property not specified!"/>
+        <check-exists file="${dist.dir}" type="dir"/>
+        <check-exists file="${dist.lib.dir}" type="dir"/>
+        <check-exists file="${dist.src.dir}" type="dir"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <copy file="${dist.base.dir}/README.txt" tofile="${dist.archives.dir}/README.txt" overwrite="true" verbose="true"/>
+        <copy file="${dist.base.dir}/README-src.txt" tofile="${dist.archives.dir}/README-src.txt" overwrite="true" verbose="true"/>
+
+        <antcall target="build.dist.zip"/>
+        <antcall target="build.dist.tgz"/>
+        <antcall target="build.dist.lib.zip"/>
+        <antcall target="build.dist.lib.tgz"/>
+        <antcall target="build.dist.docs.zip"/>
+        <antcall target="build.dist.docs.tgz"/>
+        <antcall target="build.dist.src.zip"/>
+        <antcall target="build.dist.src.tgz"/>
+
+        <!-- verify the distribution archives once they've been created -->
+        <antcall target="verify.dist.archives"/>
+    </target>
+
+    <!-- ============================================= -->
+    <!--                                               -->
+    <!-- Distribution Archives                         -->
+    <!--                                               -->
+    <!-- ============================================= -->
+
+    <target name="build.dist.zip" description="Builds a distribution zip archive">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to CRLF line endings. -->
+        <fixcrlf eol="crlf" srcdir="${dist.base.dir}/${dist.name}" includes="${text.file.includes.dos}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+
+        <!-- exclude the docs/*txt files to eliminate redundant readmes, notices, licenses, etc. -->
+        <zip destfile="${dist.archives.dir}/${dist.name}.zip">
+            <zipfileset dir="${dist.base.dir}/${dist.name}" prefix="${dist.name}">
+                <include name="**"/>
+                <exclude name="svn.rev"/>
+                <exclude name="docs/*.txt"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="build.dist.tgz" description="Builds a distribution .tar.gz archive">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to LF line endings. -->
+        <fixcrlf eol="lf" srcdir="${dist.base.dir}/${dist.name}" includes="${text.file.includes.unix}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <!-- exclude the docs/*txt files to eliminate redundant readmes, notices, licenses, etc. -->
+        <tar destfile="${dist.archives.dir}/${dist.name}.tar.gz" compression="gzip">
+            <tarfileset dir="${dist.base.dir}/${dist.name}" prefix="${dist.name}">
+                <include name="**"/>
+                <exclude name="svn.rev"/>
+                <exclude name="docs/*.txt"/>
+            </tarfileset>
+        </tar>
+    </target>
+
+    <!-- ============================================= -->
+    <!--                                               -->
+    <!-- Library Distribution Archives                 -->
+    <!--                                               -->
+    <!-- ============================================= -->
+
+    <target name="build.dist.lib.zip" description="Builds a Beehive library distribution zipfile">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to CRLF line endings. -->
+        <fixcrlf eol="crlf" srcdir="${dist.base.dir}/${dist.lib.name}" includes="${text.file.includes.dos}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <zip destfile="${dist.archives.dir}/${dist.lib.name}.zip">
+            <zipfileset dir="${dist.base.dir}/${dist.lib.name}" prefix="${dist.lib.name}">
+                <include name="**"/>
+                <exclude name="svn.rev"/>
+                <exclude name="docs/*.txt"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="build.dist.lib.tgz" description="Builds a Beehive library distribution tarball (.tar.gz)">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to LF line endings. -->
+        <fixcrlf eol="lf" srcdir="${dist.base.dir}/${dist.lib.name}" includes="${text.file.includes.unix}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <tar destfile="${dist.archives.dir}/${dist.lib.name}.tar.gz" compression="gzip">
+            <tarfileset dir="${dist.base.dir}/${dist.lib.name}" prefix="${dist.lib.name}">
+                <include name="**"/>
+                <exclude name="svn.rev"/>
+                <exclude name="docs/*.txt"/>
+            </tarfileset>
+        </tar>
+    </target>
+
+    <!-- ============================================= -->
+    <!--                                               -->
+    <!-- Docs Distribution Archives                    -->
+    <!--                                               -->
+    <!-- ============================================= -->
+    <target name="build.dist.docs.zip" description="Builds a Beehive distribution docs zipfile">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to CRLF line endings. -->
+        <fixcrlf eol="crlf" srcdir="${dist.dir}/docs" includes="${text.file.includes.dos}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <zip destfile="${dist.archives.dir}/${dist.docs.name}.zip">
+            <zipfileset dir="${dist.dir}" prefix="${dist.docs.name}">
+                <include name="docs/**"/>
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+                <include name="README.txt"/>
+                <exclude name="svn.rev"/>
+                <exclude name="docs/*.txt"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="build.dist.docs.tgz" description="Builds a Beehive distribution docs tarball (.tar.gz)">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to LF line endings. -->
+        <fixcrlf eol="lf" srcdir="${dist.dir}/docs" includes="${text.file.includes.unix}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+
+        <tar destfile="${dist.archives.dir}/${dist.docs.name}.tar.gz" compression="gzip">
+            <tarfileset dir="${dist.dir}" prefix="${dist.docs.name}">
+                <include name="docs/**"/>
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+                <include name="README.txt"/>
+                <exclude name="docs/*.txt"/>
+            </tarfileset>
+        </tar>
+    </target>        
+
+    <!-- ============================================= -->
+    <!--                                               -->
+    <!-- Source Distribution Archives                  -->
+    <!--                                               -->
+    <!-- ============================================= -->
+
+    <target name="build.dist.src.zip" description="Builds a Beehive source distribution zipfile">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to CRLF line endings. -->
+        <fixcrlf eol="crlf" srcdir="${dist.base.dir}/${dist.src.name}" includes="${text.file.includes.dos}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <zip destfile="${dist.archives.dir}/${dist.src.name}.zip">
+            <zipfileset dir="${dist.base.dir}/${dist.src.name}" prefix="${dist.src.name}/">
+                <include name="src/**"/>
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+                <include name="README.txt"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="build.dist.src.tgz" description="Builds a Beehive source distribution tarball (.tar.gz)">
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <!-- Change all text files to LF line endings. -->
+        <fixcrlf eol="lf" srcdir="${dist.base.dir}/${dist.src.name}" includes="${text.file.includes.unix}"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <tar destfile="${dist.archives.dir}/${dist.src.name}.tar.gz" compression="gzip">
+            <tarfileset dir="${dist.base.dir}/${dist.src.name}" prefix="${dist.src.name}/">
+                <include name="src/**"/>
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+                <include name="README.txt"/>
+            </tarfileset>
+        </tar>
+    </target>
+
+    <!-- prereq: you must have built the archives with build.dist.archives already -->
+    <target name="verify.dist.archives" description="Verifies all Beehive distribution archives (.zip, .tar.gz, src, etc)">
+        <verify-archive filebase="${dist.name}"/>
+        <verify-archive filebase="${dist.lib.name}"/>
+        <verify-archive filebase="${dist.docs.name}"/>
+        <verify-archive filebase="${dist.src.name}"/>
+    </target>
+
+    <target name="build.livesite" description="Builds a zipfile of the current live site.">
+        <property name="tmpdocsdir" location="${dist.tmp.dir}/${dist.docs.name}" />
+        <copy todir="${tmpdocsdir}">
+           <fileset dir="${dist.dir}/docs" />
+        </copy>
+
+        <fail unless="beehive.version" message="Could not build distribution archive; beehive.version was not specified"/>
+
+        <mkdir dir="${dist.archives.dir}"/>
+        <zip destfile="${dist.archives.dir}/site.zip" basedir="${dist.tmp.dir}/${dist.docs.name}/" />
+
+        <delete dir="${tmpdocsdir}" />
+    </target>
+
+    <target name="clean.dist" description="Cleans a Beehive distribution build">
+        <delete dir="${dist.archives.dir}"/>
+        <delete dir="${dist.base.dir}"/>
+        <delete dir="${dist.src.dir}"/>
+        <delete dir="${dist.tmp.dir}"/>
+
+        <ant dir="${beehive.home}/test/dist-test" antfile="build.xml" target="clean" inheritall="false"/>
+    </target>
+
+    <!-- ===========================================  -->
+    <!--                                              -->
+    <!-- Build Test Module for Distribution Test      -->
+    <!-- This target needs some precursor targets run.-->
+    <!-- These targets need to be run from trunk/root -->
+    <!-- build.xml: clean, deploy                     -->
+    <!--                                              -->
+    <!-- Once the target is finished, the test dist   -->
+    <!-- can be found in trunk/build/testDistArchives.-->
+    <!--                                              -->
+    <!-- ===========================================  -->
+    <target name="build.test.dist" description="Build and package the test module for testing distribution">
+        <echo>distribution name: ${dist.name}</echo>
+
+        <ant  dir="${beehive.home}/test/dist-test" antfile="build.xml" target="build" inheritall="false">
+            <property name="dist.name" value="${dist.name}"/>
+        </ant>
+    </target>
+
+    <!-- prereq: before doing this, you will need to do a build.dist and build.test.dist -->
+    <target name="run.test.dist" description="Run the beehive tests against the archive files">
+        <echo>distribution directory: ${dist.dir}</echo>
+        <echo>distribution name: ${dist.name}</echo>
+
+       <ant dir="${beehive.home}/test/dist-test" antfile="build.xml" target="run" inheritall="false">
+           <property name="beehive.dist.dir" value="${dist.dir}"/> 
+           <property name="beehive.dist.name" value="${dist.name}"/> 
+       </ant>
+    </target>
+
+    <target name="rat" description="Run the RAT tool to verify a distribution">
+        <fail unless="os.RAT_HOME" message="To run RAT, set the RAT_HOME environment variable"/>
+
+        <property name="rat.jar" location="${os.RAT_HOME}/rat-0.2-SNAPSHOT.jar"/>
+        <echo>Run RAT on ${dist.base.dir}/${dist.lib.name}.  Output in build/rat-${dist.lib.name}.txt</echo>
+        <java jar="${rat.jar}" fork="true" output="build/rat-${dist.lib.name}.txt">
+            <arg line="${dist.base.dir}/${dist.lib.name}"/>
+        </java>
+
+        <echo>Run RAT on ${dist.base.dir}/${dist.name}.  Output in build/rat-${dist.name}.txt</echo>
+        <java jar="${rat.jar}" fork="true" output="build/rat-${dist.name}.txt">
+            <arg line="${dist.base.dir}/${dist.name}"/>
+        </java>
+
+        <echo>Run RAT on ${dist.base.dir}/${dist.src.name}.  Output in build/rat-${dist.src.name}.txt</echo>
+        <java jar="${rat.jar}" fork="true" output="build/rat-${dist.src.name}.txt">
+            <arg line="${dist.base.dir}/${dist.src.name}"/>
+        </java>
+
+        <echo>Run RAT on ${dist.base.dir}/${dist.docs.name}.  Output in build/rat-${dist.docs.name}.txt</echo>
+        <java jar="${rat.jar}" fork="true" output="build/rat-${dist.docs.name}.txt">
+            <arg line="${dist.base.dir}/${dist.docs.name}"/>
+        </java>
+    </target>
+
+    <!-- ============================================= -->
+    <!--                                               -->
+    <!-- Local macrodefs                               -->
+    <!--                                               -->
+    <!-- ============================================= -->
+
+    <macrodef name="update-dist-readme">
+        <sequential>
+            <!-- update the readme to include the revision number -->
+            <build-dist-readme readmedir="${dist.dir}" revtrailer="${dist.readme.rev.trailer}"/>
+
+            <!-- build a slightly different readme that sits outside the archive -->
+            <copy file="${dist.dir}/README.txt" tofile="${dist.base.dir}/README.txt" overwrite="true" verbose="true"/>
+            <concat destfile="${dist.base.dir}/README.txt" append="true">
+                <fileset file="${dist.readme.toplvl.trailer}"/>
+            </concat>
+            <!-- make sure we have consistent eol's after the concat, in case we get mixtures from the different files -->
+            <fixcrlf eol="crlf" srcdir="${dist.base.dir}" includes="README.txt"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build-dist-readme">
+        <attribute name="readmedir"/>
+        <attribute name="readme" default="README.txt"/>
+        <attribute name="revtrailer"/>
+        <attribute name="trailerprefix" default="  "/> <!-- characters prefixed to each line read from revtrailer -->
+
+        <sequential>
+            <echo message="Adding revision to file @{readmedir}/@{readme}"/>
+            <check-exists file="@{readmedir}/@{readme}"/>
+            <check-exists file="@{revtrailer}"/>
+            <check-exists file="build/svn.rev"/>
+
+            <!-- load the revision # into a property -->
+            <loadfile property="beehive.rev" srcFile="build/svn.rev">
+                <filterchain>
+                    <tokenfilter>
+                        <!-- strip off everything before the revision flagged by the preceeding # -->
+                        <containsregex pattern=".*#" replace=""/>
+                    </tokenfilter>
+                </filterchain>
+            </loadfile>
+
+            <!-- append the beehive revision trailer to the readme, then we can substitute in the rev # -->
+            <concat destfile="@{readmedir}/@{readme}" append="true">
+                <fileset file="@{revtrailer}"/>
+                <filterchain>
+                    <prefixlines prefix="@{trailerprefix}"/>
+                </filterchain>
+            </concat>
+
+            <!-- substitute the beehive svn revision number into the tag in the readme file -->
+            <replace file="@{readmedir}/@{readme}" token="@BEEHIVE_REV@" value="${beehive.rev}"/>
+
+            <!-- make sure we have consistent eol's after the concats, in case we get mixtures from the different files -->
+            <fixcrlf eol="crlf" srcdir="@{readmedir}" includes="@{readme}"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="verify-archive">
+        <attribute name="filebase"/>
+        <sequential>
+            <!-- check the zip file -->
+            <echo message="${line.separator}Verifying archive @{filebase}.zip"/>
+            <delete dir="${dist.tmp.dir}/@{filebase}"/>
+            <mkdir dir="${dist.tmp.dir}/@{filebase}"/>
+
+            <unzip src="${dist.archives.dir}/@{filebase}.zip" dest="${dist.tmp.dir}"/>
+            <check-exists file="${dist.tmp.dir}/@{filebase}/LICENSE.txt"/>
+            <check-exists file="${dist.tmp.dir}/@{filebase}/NOTICE.txt"/>
+            <check-exists file="${dist.tmp.dir}/@{filebase}/README.txt"/>
+            <delete dir="${dist.tmp.dir}/@{filebase}"/>
+
+            <!-- check .tar.gz archives -->
+            <echo message="${line.separator}Verifying archive @{filebase}.tar.gz"/>
+            <mkdir dir="${dist.tmp.dir}/@{filebase}"/>
+
+            <untar src="${dist.archives.dir}/@{filebase}.tar.gz" dest="${dist.tmp.dir}" compression="gzip"/>
+
+            <check-exists file="${dist.tmp.dir}/@{filebase}/LICENSE.txt"/>
+            <check-exists file="${dist.tmp.dir}/@{filebase}/NOTICE.txt"/>
+            <check-exists file="${dist.tmp.dir}/@{filebase}/README.txt"/>
+            <delete dir="${dist.tmp.dir}/@{filebase}"/>
+        </sequential>
+    </macrodef>
+
+    <!-- Do a chk to see if a file exists, but allow turning this off with the docheck attribute.
+         Doing this instead of the simple available/fail pattern to reduce the number of properties being used.
+      -->
+    <macrodef name="check-exists">
+        <attribute name="file"/>
+        <attribute name="type" default="file"/>
+        <attribute name="docheck" default="true"/>
+        <sequential>
+            <fail message="Required file @{file} could not be found!">
+                <condition>
+                    <and>
+                        <istrue value="@{docheck}"/>
+                        <not>
+                            <available file="@{file}" type="@{type}"/>
+                        </not>
+                    </and>
+                </condition>
+            </fail>
+        </sequential>
+    </macrodef>
+
+</project>

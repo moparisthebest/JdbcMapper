@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<Context path="/JdbcControlSample" docBase="/d:/beeline/samples/jdbcControlSample" debug="5" reloadable="true" crossContext="true">
+
+  <Logger className="org.apache.catalina.logger.FileLogger" prefix="localhost_dataWeb_log." suffix=".txt" timestamp="true"/>
+
+  <Resource name="jdbc/JdbcControlSampleDB" auth="Container" type="javax.sql.DataSource"/>
+
+  <ResourceParams name="jdbc/JdbcControlSampleDB">
+          
+    <parameter>
+      <name>factory</name>
+      <value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
+    </parameter>
+
+    <parameter>
+       <name>driverClassName</name>
+       <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+    </parameter>
+
+    <parameter>
+      <name>url</name>
+      <value>jdbc:derby:JdbcControlSampleDB;create=true</value>
+    </parameter>
+
+        <!-- Maximum number of dB connections in pool. Make sure you
+         configure your mysqld max_connections large enough to handle
+         all of your db connections. Set to 0 for no limit.
+         -->
+    <parameter>
+      <name>maxActive</name>
+      <value>100</value>
+    </parameter>
+
+    <!-- Maximum number of idle dB connections to retain in pool.
+         Set to 0 for no limit.
+         -->
+    <parameter>
+      <name>maxIdle</name>
+      <value>30</value>
+    </parameter>
+
+    <!-- Maximum time to wait for a dB connection to become available
+         in ms, in this example 10 seconds. An Exception is thrown if
+         this timeout is exceeded.  Set to -1 to wait indefinitely.
+         -->
+    <parameter>
+      <name>maxWait</name>
+      <value>10000</value>
+    </parameter>
+
+  </ResourceParams>
+</Context>

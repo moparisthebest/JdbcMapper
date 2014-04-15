@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>IdMapNonCtrls</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>29 Mar 2005, 09:42:08.439 AM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/idmap/nonCtrls/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>BA2FBB0E95DC2FF882CECA0FB3BF9B48</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=BA2FBB0E95DC2FF882CECA0FB3BF9B48; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1b325bd5:102ef2c7065:-7bc6</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/idmap/nonCtrls/index.jsp">
+    &lt;/head>
+    &lt;body id="body">
+        &lt;p style="color: green">This test sets the tagId on all of the
+	non-HTML Controls.  This we lookup each and verify that we find
+	them based upon the tagId.
+        &lt;/p>
+	&lt;a id="anchor" href="/coreWeb/idmap/nonCtrls/begin.do">Begin&lt;/a>&lt;br>
+	&lt;area id="area" href="/coreWeb/idmap/nonCtrls/begin.do">&lt;br>
+        &lt;span id="span">span&lt;/span>&lt;br>
+	&lt;img src="/coreWeb/idmap/nonCtrls/alien.gif" id="image">&lt;br>
+	&lt;input type="image" id="imageButton" src="/coreWeb/idmap/nonCtrls/alien.gif">&lt;br>
+	&lt;a id="imageAnchor" href="/coreWeb/idmap/nonCtrls/begin.do">&lt;img src="/coreWeb/idmap/nonCtrls/alien.gif">&lt;/a>&lt;br>
+        &lt;hr>
+        &lt;p style="color: green">Below we sure for each of the non-HTML Controls
+	using the tagId.  All should be false.  &lt;b>Note:&lt;/b> under FireFox
+	the area tag will be reported as true.  This does work under IE.  After
+	the lookups we will dump the IdMap.
+        &lt;/p>
+        &lt;p id="javaOut">&lt;/p>
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.imageButton="imageButton"
+netui_names.image="image"
+netui_names.imageAnchor="imageAnchor"
+netui_names.area="area"
+netui_names.span="span"
+netui_names.body="body"
+netui_names.anchor="anchor"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>&lt;/body>
+    &lt;script language="JavaScript" type="text/JavaScript">
+
+    var p = document.getElementById("javaOut");
+
+    var val = "&lt;b>Document Access&lt;/b>&lt;br>";
+
+    val = val + "Body by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("body")) == null) + "&lt;/b>&lt;br>";
+    val = val + "Anchor by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("anchor")) == null) + "&lt;/b>&lt;br>";
+    val = val + "Area by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("area")) == null) + "&lt;/b>&lt;br>";
+    val = val + "Span by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("span")) == null) + "&lt;/b>&lt;br>";
+    val = val + "Image by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("image")) == null) + "&lt;/b>&lt;br>";
+    val = val + "ImageButton by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("imageButton")) == null) + "&lt;/b>&lt;br>";
+    val = val + "ImageAnchor by id is null: &lt;b>" +
+        (document.getElementById(lookupIdByTagId("imageAnchor")) == null) + "&lt;/b>&lt;br>";
+
+    val = val + "&lt;br>";
+    if (typeof(netui_tagIdMap) != "undefined") {
+       val = val + "&lt;b>tagIdMap:&lt;/b>&lt;br>";
+       for (var x in netui_tagIdMap) {
+           val = val + "Name '" + x + "' value '" + netui_tagIdMap[x] + "'&lt;br>";
+       }
+       val = val + "&lt;br>";
+    }
+    else {
+       val = val + "tagIdMap is &lt;b>undefined&lt;/b>&lt;br>";
+    }
+
+    p.innerHTML = val;
+
+    &lt;/script>
+
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>29 Mar 2005, 09:42:09.310 AM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

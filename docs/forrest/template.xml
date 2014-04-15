@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<!--
+  This template can be used as the starting point for authoring Beehive documentation.  Just remember
+  to author the Forrest subset of XHTML.  More information can be found here:
+
+    http://forrest.apache.org/docs_0_70/index.html    
+
+  -->
+<document>
+    <header>
+        <title>Your Title Here</title>
+    </header>
+    <body>
+        <section id="overview">
+            <title>Overview</title>
+            <p>
+            TODO: overview
+            </p>
+        </section>
+        <section id="your-content">
+            <title>Content</title>
+            <p>
+            TODO: content
+            </p>
+            <section id="nested-content">
+                <title>Nested Content</title>
+                <p>
+                TODO: nested content
+                </p>
+            </section>
+            <section id="jsp">
+                <title>Nested Content</title>
+                <source><![CDATA[
+
+<netui:span value="${pageScope.foo}"/>
+                ]]></source>
+            </section>
+            <section id="java">
+                <title>Nested Content</title>
+                <source>
+public class Foo 
+    extends Bar {
+
+    private String baz;
+
+    public String doBlee() {
+        return baz;
+    }
+}
+                </source>
+            </section>
+        </section>
+    </body>
+</document>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testDefinitions xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004">
+    <categories>
+        <category>
+            <name>drt</name>
+            <description>drt</description>
+        </category>
+        <category>
+            <name>bvt</name>
+            <description>bvt</description>
+        </category>
+    </categories>
+    <tests>
+        <test>
+            <name>Login</name>
+            <description>Test of login and logout under Tomcat.</description>
+            <webapp>tomcatWeb</webapp>
+            <categories>
+                <category>bvt</category>
+            </categories>
+           <features>
+              <feature>Login</feature>
+           </features>
+        </test>
+        <test>
+           <name>RolesAllowed</name>
+           <description>Test of the rolesAllowed attribute on @Jpf.Action and @Jpf.SimpleAction.</description>
+           <webapp>tomcatWeb</webapp>
+           <categories>
+              <category>bvt</category>
+           </categories>
+           <features>
+              <feature>Roles</feature>
+           </features>
+        </test>
+        <test>
+           <name>SecureLinks</name>
+           <description>Test of rendering secure links in various tags, based on security-constraints in web.xml for the referenced actions.</description>
+           <webapp>tomcatWeb</webapp>
+           <categories>
+              <category>bvt</category>
+           </categories>
+           <features>
+              <feature>Security</feature>
+           </features>
+        </test>
+        <test>
+           <name>Security</name>
+           <description>Test of rendering secure links based on security-constraints in web.xml for the actions specified in the tags.</description>
+           <webapp>tomcatWeb</webapp>
+           <categories>
+              <category>bvt</category>
+           </categories>
+           <features>
+              <feature>Security</feature>
+           </features>
+        </test>
+    </tests>
+</testDefinitions>

@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<!--
+  This Ant build file contains <macrodef>s that are used to build
+  Beehive-related source artifacts.
+-->
+<project name="Beehive/WSC/Tools" default="usage">
+
+   <macrodef name="generate-wsc">
+        <attribute name="wsdlsrc" description="Location of the WSDL file to process, may be a file, directory or URL. Required."/>
+        <attribute name="wscgendir" description="Location to generate WSC, must be a directory. Required."/>
+        <attribute name="tempdir" description="The temporary directory for generated files.  Required."/>
+        <attribute name="destdir" description="The destination directory for compiled class files.  Required."/>
+        <attribute name="copywsdl" default="false" description="Copy WSDL file used to generate WSC to WSC generation location. Optional; default false."/>
+        <attribute name="packagename" default="" description="Name of Java package for generated WSC. Optional; default none."/>
+        <attribute name="nocompile" default="false" description="Flag to decide whether to skip compilation.  Optional; defaults to false"/>
+        <attribute name="servicename" default="" description="If WSDL contains multiple services, use to specify service name for WSC generation. Optional; default none."/>
+        <attribute name="servicenamespace" default="" description="If WSDL contains multiple services, use to specify namespace of service. Optional; default none."/>
+        <attribute name="serviceport" default="" description="If service contains multiple ports, use to specify port name. Optional; default none."/>
+        <attribute name="wsdlruntimepath" default="" description="Location of WSDL at runtime. Optional, default; auto generated."/>
+        <attribute name="classpathref" description="The classpath reference for building the controls.  Required."/>
+
+        <sequential>
+                <!--
+            <fail unless="os.AXIS_HOME"
+                  message="AXIS_HOME must be set in you environment"/>
+            -->
+            <fail unless="axis.home"
+                  message="axis.home must be set to your Apache Axis installation directory"/>
+
+            <path id="_wscgen.classpath">
+                <path refid="@{classpathref}"/>
+                <path refid="wsc.dependency.path"/>
+                <fileset dir="${axis.home}/lib">
+                   <include name="*.jar"/>
+               </fileset>
+                <path refid="velocity.dependency.path"/>
+            </path>
+
+            <taskdef name="wsc-gen"
+                     classname="org.apache.beehive.controls.system.webservice.generator.WebServiceControlGeneratorTask"
+                     classpathref="_wscgen.classpath" onerror="fail"/>
+
+            <echo></echo>
+            <echo>    wsdlsrc: @{wsdlsrc}</echo>
+            <echo>    wscgendir: @{wscgendir}</echo>
+            <echo>    destdir: @{destdir}</echo>
+            <echo>    tempdir: @{tempdir}</echo>
+            <echo></echo>
+
+            <!-- generate the wsc -->
+            <wsc-gen wsdlSrc="@{wsdlsrc}" destdir="@{wscgendir}"
+                     copyWsdl="@{copywsdl}" destPackageName="@{packagename}"
+                     serviceName="@{servicename}" serviceNamespace="@{servicenamespace}"
+                     servicePort="@{serviceport}" wsdlRuntimePath="@{wsdlruntimepath}"/>
+
+            <!-- if nocompile is false, compile the wsc -->
+            <condition property="_do_wsc_compile">
+                <isfalse value="@{nocompile}"/>
+            </condition>
+            <antcall target="_build_wsc">
+                <param name="_srcdir" value="@{wscgendir}"/>
+                <param name="_tempdir" value="@{tempdir}"/>
+                <param name="_destdir" value="@{destdir}"/>
+                <param name="_srcdir" value="@{wscgendir}"/>
+                <param name="_copywsdl" value="@{copywsdl}"/>
+                <param name="_cpref" value="@{classpathref}"/>
+            </antcall>
+        </sequential>
+    </macrodef>
+
+    <!-- used by the generate-wsc macro to compile the WSC -->
+    <target name="_build_wsc" if="_do_wsc_compile">
+
+        <path id="_wscbuild.classpath">
+            <path refid="${_cpref}"/>
+            <path refid="wsc.dependency.path"/>
+            <fileset dir="${axis.home}/lib">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+
+        <build-controls srcdir="${_srcdir}" tempdir="${_tempdir}"
+                        destdir="${_destdir}" classpathref="_wscbuild.classpath"/>
+
+        <condition property="_do_copy_wsdl">
+            <istrue value="${_copywsdl}"/>
+        </condition>
+        <antcall target="_copywsdl">
+            <param name="_wsdl_srcdir" value="${_srcdir}"/>
+            <param name="_wsdl_destdir" value="${_destdir}"/>
+        </antcall>
+    </target>
+
+    <!-- used by the _build_wsc target to optionally copy WSDL file to runtime location -->
+    <target name="_copywsdl" if="_do_copy_wsdl">
+        <copy todir="${_wsdl_destdir}">
+            <fileset dir="${_wsdl_srcdir}" includes="**/*.wsdl"/>
+        </copy>
+    </target>
+</project>

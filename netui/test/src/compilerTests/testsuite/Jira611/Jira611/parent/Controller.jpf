@@ -1,0 +1,24 @@
+package Jira611.parent;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+@Jpf.Controller
+public abstract class Controller extends PageFlowController
+{
+    @Jpf.Action
+    public abstract Forward abstractAction();
+
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="ab", path="abstractAction.do")
+        }
+    )
+    public Forward forwardToAbstractAction()
+    {
+        return new Forward( "ab" );
+    }
+} 

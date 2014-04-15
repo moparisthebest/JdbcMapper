@@ -1,0 +1,41 @@
+package PF_ActionMethodWithNonformArg;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file declares a valid Forward method "page1" that
+ * takes a single parameter that should be an Object.  However the object
+ * passed is a primative "int".
+ *
+ * @result: The compiler should catch this and issue an error.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "begin",
+                path = "Begin.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("begin");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "page1",
+                path = "Page1.jsp")
+        })
+    protected Forward page1(int inForm)
+        {
+        int    theForm = inForm;
+        return new Forward("page1");
+        }
+    }

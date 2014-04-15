@@ -1,0 +1,101 @@
+
+
+body
+{
+background-color: #ffffff;
+background-repeat: no-repeat;
+font-family: Arial, Verdana;
+font-size: 14px;
+font-style: normal;
+font-weight: normal;
+/* color: #333333; */
+/* margin-top: 10px; */
+/* margin-left: 10px; */
+/* margin-right: 10px; */
+/* margin-bottom: 10px; */
+}
+
+
+/* Style for in-page header of the generated rowset pages */
+.pagehead
+{
+font-size: 16px;
+font-weight: bold;
+}
+
+
+/* Table row style referenced in generated various generated pages */
+.tablebody
+{
+/* background-color: #CCDDEE; */
+color: #111111;
+font-size: 14px;
+text-align: left;
+vertical-align: middle;
+padding: 5px 10px 5px 10px;
+}
+
+
+/* Grid header style referenced in gridStyle tag for generated rowset pages */
+.tablehead
+{
+background-color: #CCDDEE;
+color: #555588;
+font-size: 14px;
+text-align: left;
+vertical-align: baseline;
+line-height: 18px;
+border-color: #999999;
+border-style: solid;
+border-width: 1px;
+padding-left: 10px;
+}
+
+
+/* Grid base row style referenced in gridStyle tag for generated rowset pages */
+.data-td
+{
+background-color: #FFFFFF;
+color: #111111;
+font-size: 14px;
+text-align: left;
+border-color: #999999;
+border-style: solid;
+border-width: 1px;
+padding-left: 12px;
+}
+
+
+/* Grid alternate row style referenced in gridStyle tag for generated rowset pages */
+.data-alt-td
+{
+background-color: #CCDDEE;
+color: #111111;
+font-size: 14px;
+text-align: left;
+border-color: #999999;
+border-style: solid;
+border-width: 1px;
+padding-left: 12px;
+}
+
+
+/* Used for prompts in generated pages */
+.prompt
+{
+color: #993333;
+font-style: italic;
+}
+
+
+A:hover {
+color: #9999FF;
+background: transparent;
+text-decoration: underline;
+}
+
+
+A:visited, A:link, A:active {
+color: #7777AA;
+text-decoration: underline;
+}

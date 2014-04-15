@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+                          "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+    <header>
+        <title>Installation</title>
+    </header>
+    <body>
+        <p>
+            This document explains how to install a Beehive distribution on your machine.  Once you have completed the basic 
+            setup steps, your environment will be setup for building Beehive applications.  
+        </p>
+            <p>(1) The following software is required for developing Beehive applications:</p>
+            <ul>
+                <li>Beehive Binary Distribution -- download from <a class="fork" href="site:beehive-release/current">http://beehive.apache.org/releases/release-1.0.2.cgi</a></li>
+                <li>Ant 1.6.2 -- download from <a class="fork" href="site:ant16/download">http://ant.apache.org/bindownload.cgi</a></li>
+                <li>J2SE 5.0 JDK -- download from <a class="fork" href="site:java5download">http://java.sun.com/j2se/1.5.0/download.jsp</a></li>
+            </ul>
+            <p>(2) Make sure that the following environmental variables are set in your shell.</p>
+                <ul>
+                    <li><code>ANT_HOME</code></li>
+                    <li><code>JAVA_HOME</code></li>
+                </ul>
+            <p>Example values for these variables could be:</p>
+<source>
+ANT_HOME = /home/foo/java/apache-ant-1.6.2
+JAVA_HOME = /home/foo/java/jdk1.5.0_04
+</source>
+            <p>(3) Ensure that <code>$JAVA_HOME/bin</code> and <code>$ANT_HOME/bin</code> are on your <code>$PATH</code>.</p>
+            <p>
+               You are now ready to begin developing Beehive applications!  
+               If you plan on running the Beehive tutorials, follow the tutorial specific steps 
+               <a href="site:docs/tutorials/setup">here</a>.
+            </p>
+            <p>
+               Information on tutorials and samples is <a href="site:docs/samples/index">here</a>.
+            </p>
+    </body>
+    <footer>
+        <legal>
+        Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/> &copy; 2004, Apache Software Foundation
+        </legal>
+    </footer>
+</document>

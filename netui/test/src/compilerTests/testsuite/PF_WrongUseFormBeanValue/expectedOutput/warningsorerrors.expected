@@ -1,0 +1,7 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_WrongUseFormBeanValue\Controller.java:45: Field BlahBlah does not exist.
+   public Forward action1(FormOne inForm)
+                  ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_WrongUseFormBeanValue\Controller.java:58: The useFormBean attribute points to a member of type PF_WrongUseFormBeanValue.Controller.FormOne, which requires that this action method accept an argument of type PF_WrongUseFormBeanValue.Controller.FormOne.
+   public Forward action2()
+                  ^
+2 errors

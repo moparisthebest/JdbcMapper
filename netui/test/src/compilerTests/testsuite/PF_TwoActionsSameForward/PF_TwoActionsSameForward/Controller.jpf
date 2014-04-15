@@ -1,0 +1,40 @@
+package PF_TwoActionsSameForward;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file is designed to compile cleanly.  This test is
+ * used for testing compiler behavior that does not have anything to do with the
+ * contents of a .jpf file.  Like write access to the WEB-INF directory.
+ *
+ * @result: This test must compile cleanly.
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+    {
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward begin()
+        {
+        return new Forward("pg1");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "pg1",
+                path = "Pg1.jsp")
+        })
+    protected Forward page1()
+        {
+        return new Forward("pg1");
+        }
+    }

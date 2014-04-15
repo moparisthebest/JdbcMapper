@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ActionMethodWithNonformArg\Controller.java:36: Type int is not valid as the form bean for an action.
+    protected Forward page1(int inForm)
+                      ^
+1 error

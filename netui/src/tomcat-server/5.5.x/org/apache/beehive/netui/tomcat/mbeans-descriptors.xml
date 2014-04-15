@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE mbeans-descriptors PUBLIC
+ "-//Apache Software Foundation//DTD Model MBeans Configuration File"
+ "http://jakarta.apache.org/commons/dtds/mbeans-descriptors.dtd">
+
+<!--
+     Descriptions of JMX MBeans for pageflows
+ -->
+
+<mbeans-descriptors>
+
+
+  <mbean         name="PageflowValve"
+            className="org.apache.catalina.mbeans.ClassNameMBean"
+          description="Helper valve to enable pageflows in tomcat"
+               domain="Catalina"
+                group="Valve"
+                 type="org.apache.beehive.netui.tomcat.PageflowValve">
+
+    <attribute   name="className"
+          description="Fully qualified class name of the managed object"
+                 type="java.lang.String"
+            writeable="false"/>
+
+    <attribute   name="debug"
+          description="The debugging detail level for this component"
+                 type="int"/>
+
+  </mbean>
+
+</mbeans-descriptors>

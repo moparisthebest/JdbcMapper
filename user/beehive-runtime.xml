@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+<project name="Beehive/RuntimeDeploy" default="usage" basedir=".">
+
+    <target name="deploy.beehive.webapp.runtime" description="Deploy the Beehive webapp runtime given a webapp root as -Dwebapp.dir">
+        <available property="webapp.dir.available" file="${webapp.dir}" type="dir"/>
+        <fail unless="webapp.dir.available" message="Can't find the webapp directory ${webapp.dir}"/>
+
+        <echo>Deploy NetUI to webapp rooted at: ${webapp.dir}</echo>
+
+        <copy todir="${webapp.dir}/WEB-INF/lib">
+            <fileset dir="../lib/netui">
+                <include name="*.jar"/>
+                <exclude name="beehive-*-compiler.jar"/>
+            </fileset>
+            <fileset dir="../lib/common">
+                <include name="*.jar"/>
+                <exclude name="commons-cli*.jar"/>
+                <exclude name="velocity-*.jar"/>
+            </fileset>
+            <fileset dir="../lib/controls">
+                <include name="*.jar"/>
+                <exclude name="beehive-*-control.jar"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${webapp.dir}/resources/">
+            <fileset dir="../lib/netui/resources">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${webapp.dir}/WEB-INF" overwrite="false">
+            <fileset file="../samples/netui-blank/web/WEB-INF/beehive-netui-validator-rules.xml"/>
+            <fileset file="../samples/netui-blank/web/WEB-INF/validator-rules.xml"/>
+        </copy>
+    </target>
+
+    <target name="deploy.beehive.controls.runtime" description="Deploy the Beehive Controls runtime given a destination directory as -Ddest.dir">
+        <available property="dest.dir.available" file="${dest.dir}" type="dir"/>
+        <fail unless="dest.dir.available" message="Can't find the JAR destination directory ${dest.dir}"/>
+
+        <echo>Deploy Controls runtime to destination directory ${dest.dir}</echo>
+
+        <copy todir="${dest.dir}">
+            <fileset dir="../lib/common">
+                <include name="commons-discovery-0.2.jar"/>
+                <exclude name="commons-cli*.jar"/>
+            </fileset>
+            <fileset dir="../lib/controls">
+                <include name="beehive-controls.jar"/>
+                <exclude name="beehive-*-control.jar"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="usage" description="Print the usage for this Ant file">
+        <java fork="no" classname="org.apache.tools.ant.Main">
+            <arg line="-f ${ant.file} -projecthelp"/>
+        </java>
+    </target>
+
+</project>

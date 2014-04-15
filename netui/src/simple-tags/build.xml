@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+ -->
+
+<project name="Beehive/NetUI/Simple-Tags" default="build" basedir=".">
+
+    <import file="../../netui-imports.xml"/>
+
+    <property name="module.name" value="simple-tags"/>
+    <property name="module.dir" location="${src.dir}/${module.name}"/>
+    <path id="module.classpath">
+        <path refid="servlet.dependency.path"/>
+        <path refid="xbean.dependency.path"/>
+        <path refid="${struts.dependency.path.ref}"/>
+        <pathelement path="${classes.dir}/util"/>
+        <pathelement path="${classes.dir}/simple-tags"/>
+        <pathelement path="${classes.dir}/pageflow"/>
+        <pathelement path="${classes.dir}/scoping"/>
+        <pathelement path="${classes.dir}/core"/>
+    </path>
+
+    <target name="build">
+        <echo>compile module: ${module.name}</echo>
+        <property name="classpath" refid="module.classpath"/>
+        <echo>module classpath: ${classpath}</echo>
+        <echo>debug: ${compile.debug}</echo>
+
+        <mkdir dir="${classes.dir}/${module.name}"/>
+
+        <javac srcdir="${module.dir}"
+               destdir="${classes.dir}/${module.name}"
+               classpathref="module.classpath"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               optimize="${compile.optimize}"
+               source="${compile.source}"
+               target="${compile.target}">
+            <include name="**/*.java"/>
+        </javac>
+
+        <copy todir="${classes.dir}/${module.name}">
+            <fileset dir="${module.dir}" includes="**/*.properties"/>
+            <fileset dir="${module.dir}" includes="**/*.gif"/>
+        </copy>
+
+        <echo>Generate TLD</echo>
+        <taskdef name="webdoclet" classname="xdoclet.modules.web.WebDocletTask" classpathref="webdoclet.dependency.path"/>
+        <webdoclet
+                destdir="${build.lib.dir}"
+                excludedtags="@version,@author,@todo"
+                force="true"
+                verbose="true">
+
+            <fileset dir="${src.dir}/simple-tags">
+                <include name="**/*.java"/>
+            </fileset>
+
+            <netuitldgen 
+                 xmlencoding="UTF-8"
+                 taglibversion="1.0"
+                 jspversion="1.2" 
+                 shortname="netui" 
+                 uri="http://beehive.apache.org/netui/simple-tags-0.9"
+                 description="NetUI Simple Tags."
+                 filename="${netui-tags-simple.tld.name}"
+                 destdir="${jars.dir}"
+                 validateXml="true"
+                 packageName="org.apache.beehive.netui.simpletags"
+            />
+         </webdoclet>
+
+    </target>
+
+    <target name="clean">
+        <delete dir="${classes.dir}/${module.name}"/>
+        <delete dir="${jars.dir}/${netui-tags-simple.tld.name}"/>
+    </target>
+
+</project>

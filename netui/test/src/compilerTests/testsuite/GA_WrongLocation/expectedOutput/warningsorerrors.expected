@@ -1,0 +1,13 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\GA_WrongLocation\Global.java:34: warning: File "Page1.jsp" could not be found in the web application.
+    protected Forward page1()
+                      ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\GA_WrongLocation\Global.java:49: warning: File "Page2.jsp" could not be found in the web application.
+    protected Forward page2()
+                      ^
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\GA_WrongLocation\Global.java:22: Global.app must be in the /WEB-INF/src/global directory.
+public class Global extends GlobalApp
+       ^
+Note: [LOCAL_PATH]\WEB-INF\.tmpbeansrc\GA_WrongLocation\Global.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 error
+2 warnings

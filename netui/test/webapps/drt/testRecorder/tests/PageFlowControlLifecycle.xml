@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recorderSession xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+<sessionName>PageFlowControlLifecycle</sessionName>
+<tester>ekoneil</tester>
+<startDate>17 Jan 2006, 10:44:26.213 AM MST</startDate>
+<description>ekoneil</description>
+<tests>
+<test>
+<testNumber>1</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/controls/lifecycle/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>551FF8A9199B35CC550A149ADCFF4CCF</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=551FF8A9199B35CC550A149ADCFF4CCF; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>-32a8799b:108d968db46:-795c</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>Control Lifecycle Test</title>
+    </head>
+    <body>
+        <p style="color:green">This test will call a method on a control in the three blocks
+	that can run control code in a page flow, the onCreate, the Action and during JSP rendering.
+	The table below contains an echo'd message from a control.  Each line represents calling the control
+	at various stages of the page flow life cycle for rendering a page.
+	</p>
+	<table>
+        <tr><td>onCreate message</td><td>'Echo: 'onCreate -- controls.lifecycle.ControlLifecycleController''</td></tr>
+        <tr><td>begin message</td><td>'Echo: 'begin.do -- controls.lifecycle.ControlLifecycleController''</td></tr>
+        <tr><td>property access message</td><td>'Echo: 'get property -- controls.lifecycle.ControlLifecycleController''</td></tr>
+	</table>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>2</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/controls/lifecycle/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>551FF8A9199B35CC550A149ADCFF4CCF</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>cache-control</name>
+<value>max-age=0</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=551FF8A9199B35CC550A149ADCFF4CCF; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>-32a8799b:108d968db46:-795c</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>Control Lifecycle Test</title>
+    </head>
+    <body>
+        <p style="color:green">This test will call a method on a control in the three blocks
+	that can run control code in a page flow, the onCreate, the Action and during JSP rendering.
+	The table below contains an echo'd message from a control.  Each line represents calling the control
+	at various stages of the page flow life cycle for rendering a page.
+	</p>
+	<table>
+        <tr><td>onCreate message</td><td>'Echo: 'onCreate -- controls.lifecycle.ControlLifecycleController''</td></tr>
+        <tr><td>begin message</td><td>'Echo: 'begin.do -- controls.lifecycle.ControlLifecycleController''</td></tr>
+        <tr><td>property access message</td><td>'Echo: 'get property -- controls.lifecycle.ControlLifecycleController''</td></tr>
+	</table>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+<test>
+<testNumber>3</testNumber>
+<request>
+<protocol>HTTP</protocol>
+<protocolVersion>1.1</protocolVersion>
+<host>localhost</host>
+<port>8080</port>
+<uri>/coreWeb/controls/lifecycle/begin.do</uri>
+<method>GET</method>
+<parameters>
+</parameters>
+<cookies>
+<cookie>
+<name>JSESSIONID</name>
+<value>551FF8A9199B35CC550A149ADCFF4CCF</value>
+</cookie>
+</cookies>
+<headers>
+<header>
+<name>---------------</name>
+<value>------------</value>
+</header>
+<header>
+<name>accept</name>
+<value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</value>
+</header>
+<header>
+<name>accept-charset</name>
+<value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</value>
+</header>
+<header>
+<name>accept-language</name>
+<value>en-us,en;q=0.5</value>
+</header>
+<header>
+<name>cache-control</name>
+<value>max-age=0</value>
+</header>
+<header>
+<name>connection</name>
+<value>keep-alive</value>
+</header>
+<header>
+<name>cookie</name>
+<value>$Version=0; JSESSIONID=551FF8A9199B35CC550A149ADCFF4CCF; $Path=/coreWeb</value>
+</header>
+<header>
+<name>host</name>
+<value>localhost:8080</value>
+</header>
+<header>
+<name>keep-alive</name>
+<value>300</value>
+</header>
+<header>
+<name>testrecorder.playback.testid</name>
+<value>-32a8799b:108d968db46:-795c</value>
+</header>
+<header>
+<name>user-agent</name>
+<value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20051107 Firefox/1.5</value>
+</header>
+</headers>
+</request>
+<response>
+<statusCode>200</statusCode>
+<reason></reason>
+<responseBody>
+<![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>Control Lifecycle Test</title>
+    </head>
+    <body>
+        <p style="color:green">This test will call a method on a control in the three blocks
+	that can run control code in a page flow, the onCreate, the Action and during JSP rendering.
+	The table below contains an echo'd message from a control.  Each line represents calling the control
+	at various stages of the page flow life cycle for rendering a page.
+	</p>
+	<table>
+        <tr><td>onCreate message</td><td>'Echo: 'onCreate -- controls.lifecycle.ControlLifecycleController''</td></tr>
+        <tr><td>begin message</td><td>'Echo: 'begin.do -- controls.lifecycle.ControlLifecycleController''</td></tr>
+        <tr><td>property access message</td><td>'Echo: 'get property -- controls.lifecycle.ControlLifecycleController''</td></tr>
+	</table>
+    </body>
+
+</html>]]>
+</responseBody>
+</response>
+<testResults><testStatus>fail</testStatus>
+</testResults></test>
+</tests>
+<endDate>17 Jan 2006, 10:44:27.825 AM MST</endDate>
+<sessionStatus>fail</sessionStatus>
+<testCount>3</testCount>
+<passedCount>0</passedCount>
+<failedCount>3</failedCount>
+</recorderSession>

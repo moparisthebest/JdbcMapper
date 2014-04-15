@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<!-- ================================================================
+
+  A project tests Beehive controls distribution  
+
+================================================================ -->
+<project name="Beehive/Controls/distribution-test" default="usage" basedir=".">
+
+    <import file="${dist.home}/beehive-imports.xml"/>
+    <import file="../../test-imports.xml"/>
+    <import file="common/controls-test-imports.xml"/>
+
+    <property name="log.dir" location="testResults/controls"/>
+
+    <path id="test-junit.dependency.path">
+        <pathelement location="jars/beehive-controls-junit-tests.jar"/>
+        <pathelement location="classes"/>
+        <path refid="junit.dependency.path"/>
+        <path refid="controls.dependency.path"/>
+        <path refid="commons.dependency.path"/>
+    </path>
+
+    <!-- ================================================================ -->
+    <!--                                                                  -->
+    <!-- Target to run all tests                                          -->
+    <!--                                                                  -->
+    <!-- ================================================================ -->
+    <target name="run.tests" description="Run all tests">
+        <mkdir dir="${log.dir}"/>
+
+        <junit printsummary="yes" showOutput="true" failureproperty="controls.junit.failure" errorproperty="controls.junit.error">
+            <classpath refid="test-junit.dependency.path"/>
+            <formatter type="plain"/>
+            <batchtest fork="yes" todir="${log.dir}">
+                <fileset dir="classes">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <fail if="controls.junit.failure" message="Controls JUnit tests had a failure"/>
+        <fail if="controls.junit.error" message="Controls JUnit tests had an error"/>
+    </target>
+
+    <target name="clean" >
+        <delete dir="testResults/controls/"/>
+    </target>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message=""/>
+        <echo message="Test Controls Distribution"/>
+        <echo message="================================================================"/>
+        <echo message="|                          Usage                               |"/>
+        <echo message="================================================================"/>
+        <echo message="                                                                "/>
+        <echo message="run.tests        - run checkin.tests and detailed.tests.        "/>
+        <echo message=""/>
+        <echo message=""/>
+    </target>
+
+</project>

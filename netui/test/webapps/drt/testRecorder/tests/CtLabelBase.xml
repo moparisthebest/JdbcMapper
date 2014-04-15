@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>CtLabelBase</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>29 Mar 2005, 12:28:22.561 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/coretags/label/base/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1E32E05DC8FDCD5E3D746A21B1D11938</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=1E32E05DC8FDCD5E3D746A21B1D11938; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-44f7ea7d:102efc67118:-7d83</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+&lt;html lang="en" netui:idScope="n0">
+
+    &lt;head>
+        &lt;base href="http://localhost:8080/coreWeb/coretags/label/base/index.jsp">
+    &lt;/head>
+    &lt;body>
+        &lt;p style="color: green">This test verifies the base behavior of the
+	label.  The label uses the for attribute as an IDREF to map the
+	label to an HTML control ID attribute.  This requires that the
+	for attribute be encoded to in the same way the tagId is encoded.
+        &lt;/p>
+        &lt;form name="n0.form" id="n0.form" action="/coreWeb/coretags/label/base/postForm.do" method="post">
+            &lt;table>
+                &lt;tr valign="top">
+                    &lt;td>&lt;label for="n0.textbox">TextBox:&lt;/label>&lt;/td>
+                    &lt;td>
+                    &lt;input type="text" name="{actionForm.text1}" id="n0.textbox">
+                    &lt;/td>
+                &lt;/tr>
+                &lt;tr valign="top">
+                    &lt;td>&lt;label for="n0.select">Select:&lt;/label>&lt;/td>
+                    &lt;td>
+                    &lt;input type="hidden" name="wlw-select_key:{actionForm.text2}OldValue" value="true">
+&lt;select name="wlw-select_key:{actionForm.text2}" id="n0.select">
+&lt;option value="Option 1">Option 1&lt;/option>
+&lt;option value="Option 2">Option 2&lt;/option>
+&lt;option value="Option 3">Option 3&lt;/option>
+&lt;option value="Option 4">Option 4&lt;/option>&lt;/select>
+                    &lt;/td>
+                &lt;/tr>
+                &lt;tr valign="top">
+                    &lt;td>&lt;label for="n0.textArea">TextArea:&lt;/label>&lt;/td>
+                    &lt;td>
+                    &lt;textarea name="{actionForm.text3}" id="n0.textArea">&lt;/textarea>
+                    &lt;/td>
+                &lt;/tr>
+                &lt;tr valign="top">
+                    &lt;td>&lt;label for="n0.check1">Check One:&lt;/label>&lt;/td>
+                    &lt;td>
+                    &lt;input type="hidden" name="wlw-checkbox_key:{actionForm.check1}OldValue" value="false">&lt;input type="checkbox" name="wlw-checkbox_key:{actionForm.check1}" id="n0.check1">
+                    &lt;/td>
+                &lt;/tr>
+                &lt;tr valign="top">
+                    &lt;td>&lt;label for="n0.check2">Check Two:&lt;/label>&lt;/td>
+                    &lt;td>
+                    &lt;input type="hidden" name="wlw-checkbox_key:{actionForm.check2}OldValue" value="false">&lt;input type="checkbox" name="wlw-checkbox_key:{actionForm.check2}" id="n0.check2">
+                    &lt;/td>
+            &lt;/table>
+            &lt;br>
+            &amp;nbsp;
+            &lt;input type="submit" value="postForm">
+        &lt;/form>
+    &lt;script language="JavaScript" type="text/JavaScript">
+&lt;!--
+
+// **** Start the NetUI Framework Generated JavaScript ****
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_names == null)
+   var netui_names = new Object();
+netui_names.n0__check1="wlw-checkbox_key:{actionForm.check1}"
+netui_names.n0__textbox="{actionForm.text1}"
+netui_names.n0__form="n0.form"
+netui_names.n0__check2="wlw-checkbox_key:{actionForm.check2}"
+netui_names.n0__textArea="{actionForm.text3}"
+netui_names.n0__select="wlw-select_key:{actionForm.text2}"
+
+
+// Build the netui_names table to map the tagId attributes
+// to the real id written into the HTML
+if (netui_tagIdNameMap == null)
+   var netui_tagIdNameMap = new Object();
+netui_tagIdNameMap.n0___check1="wlw-checkbox_key:{actionForm.check1}"
+netui_tagIdNameMap.n0___textbox="{actionForm.text1}"
+netui_tagIdNameMap.n0___form="n0.form"
+netui_tagIdNameMap.n0___check2="wlw-checkbox_key:{actionForm.check2}"
+netui_tagIdNameMap.n0___textArea="{actionForm.text3}"
+netui_tagIdNameMap.n0___select="wlw-select_key:{actionForm.text2}"
+
+
+// method which will return a real id for a tagId,
+// the tag parameter will be used to find the idScope for
+// containers that may scope their ids
+function getNetuiTagName(id, tag)
+{
+   var idScope = getScopeId(tag);
+   if (idScope == "")
+      return netui_names[id];
+   else
+      return netui_names[idScope  + "__" + id];
+}
+
+// This method will walk the hierarchy from the pass element looking for a idScope.
+// The first idScope found will be returned or the empty string if a idScope is not found.
+function getScopeId(tag)
+{
+   if (tag == null || tag.getAttribute == null)
+      return "";
+   try {
+      var attrVal = tag.getAttribute("netui:idScope");
+   } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+   if (attrVal != null)
+      return attrVal;
+   return getScopeId(tag.parentNode);
+}
+
+// lookup by tagId to "real id"
+function lookupIdByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,".");
+   return (idScope == "") ? id : idScope + id;
+}
+
+// lookup by tagId to "real name"
+function lookupNameByTagId(id, tag)
+{
+   var idScope = lookupIdScope(tag,"_");
+   if (idScope == "")
+      return netui_tagIdNameMap[id];
+   else
+      return netui_tagIdNameMap[idScope  + "__" + id];
+}
+
+//Non-Legacy lookup method creating a fully qualified scope id
+function lookupIdScope(tag,sep)
+{
+   var val = "";
+   if (sep == null) sep = "";
+   while (tag != null &amp;&amp; tag.getAttribute != null) {
+      try {
+         var attrVal = tag.getAttribute("netui:idScope");
+      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }
+      if (attrVal != null)
+         val = attrVal + sep + val;
+      tag = tag.parentNode;
+   }
+   return val;
+}
+-->
+&lt;/script>&lt;/body>
+&lt;/html></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>29 Mar 2005, 12:28:23.462 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

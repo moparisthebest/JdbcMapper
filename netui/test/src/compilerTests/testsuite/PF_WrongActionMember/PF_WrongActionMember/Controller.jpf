@@ -1,0 +1,43 @@
+package PF_WrongActionMember;
+
+import org.apache.beehive.netui.pageflow.*;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This PageFlowController file contains the following syntax error:
+ *  - There is a jpf:controller nested="true" annotation on the "page1" Forward
+ *    method and this is invalid.
+ *
+ * @result: The compiler should catch these error and issue error message.
+ *
+ *
+ ******************************************************************************/
+@Jpf.Controller()
+public class Controller extends PageFlowController
+ {
+		@Jpf.Action(
+				forwards = {
+						@Jpf.Forward(
+								name = "pg1",
+								path = "Pg1.jsp")
+				})
+				protected Forward begin()
+		{
+			return new Forward("pg1");
+		}
+		
+		@Jpf.Action(
+				forwards = {
+						@Jpf.Forward(
+								name = "pg1",
+								path = "Pg1.jsp")
+				})
+				@Jpf.Controller(
+						nested = true)
+						protected Forward page1()
+		{
+			return new Forward("pg1");
+		}
+}

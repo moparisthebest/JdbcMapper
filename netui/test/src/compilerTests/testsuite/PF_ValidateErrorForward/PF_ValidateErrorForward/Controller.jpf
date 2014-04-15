@@ -1,0 +1,76 @@
+package PF_ValidateErrorForward;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.ActionNotFoundException;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This test specifies a validateErrorForward.
+ *
+ * @result: This should compile cleanly.
+ *
+ ******************************************************************************/
+
+    @Jpf.Controller
+public class Controller extends PageFlowController
+   {
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "gotoPg1",
+                path = "Pg1.jsp")
+        })
+   public Forward begin()
+      {
+      return new Forward("gotoPg1");
+      }
+
+    @Jpf.Action(
+	validationErrorForward = @Jpf.Forward(name="failure", path="action2.do"),
+        forwards = {
+            @Jpf.Forward(
+                name = "gotoPg1",
+                path = "Pg1.jsp")
+        })
+   public Forward action1()
+      {
+      return new Forward("gotoPg1");
+      }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "gotoPg1",
+                path = "Pg1.jsp")
+        })
+   public Forward action2()
+      {
+      return new Forward("gotoPg1");
+      }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "gotoPg1",
+                path = "Pg1.jsp")
+        })
+   public Forward action3()
+      {
+      return new Forward("gotoPg1");
+      }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "gotoPg1",
+                path = "Pg1.jsp")
+        })
+   public Forward action4()
+      {
+      return new Forward("gotoPg1");
+      }
+   }

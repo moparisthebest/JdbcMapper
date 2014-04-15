@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>BundleDeclareBundleTagError</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>08 Jul 2004, 07:53:57.281 AM GMT-07:00</ses:startDate>
+   <ses:description>Error tests using the declareBundle tag</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/bundle/declarebundleerror/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>CE16F3B73132FBDFB6492A6189725952</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=CE16F3B73132FBDFB6492A6189725952</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040614 Firefox/0.9</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>declareBundle Binding Error Tests</title>
+    
+    
+    
+    
+  </head>
+  <body>
+    <b>Bundle Binding Tests</b>
+<b>Empty declareBundle.name attribute</b><br/>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>DeclareBundle</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">The name attribute is "" and must be a String with length greater than zero.</td></tr>
+</table></span>
+
+<br/>
+<br/>
+<b>Empty declareBundle.bundlePath attribute</b><br/>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>DeclareBundle</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">The resourcePath attribute is "" and must be a String that references a Java properties file.</td></tr>
+</table></span>
+
+<br/>
+<b>Empty declareBundle.bundlePath and declareBundle.name attributes</b><br/>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>DeclareBundle</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">The resourcePath attribute is "" and must be a String that references a Java properties file.</td></tr>
+</table></span>
+
+<br/>
+
+<b>Whacking the BundleContext.KEY attribute with another type</b><br/>
+<span> <table border="1" cellspacing="0" style="color:red;background-color:white">
+ <tr><th colspan="5">Tag Error</th></tr>
+ <tr><th>Tag</th><td>DeclareBundle</td>
+ <th>Errors</th><td colspan="2">1</td></tr>
+ <tr><th>Tag Error</th><th>Message</th><td colspan="3">The PageContext contains an attribute under the BundleContex key of the wrong type "java.util.ArrayList".  This object must be removed before the bundle binding context can be enabled.</td></tr>
+</table></span>
+
+<br/>
+<br/>
+  </body>
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>08 Jul 2004, 07:54:00.468 AM GMT-07:00</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>

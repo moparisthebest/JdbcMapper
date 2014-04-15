@@ -1,0 +1,28 @@
+package PF_NonPublicForm;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ * @desc: Define an action which takes a form as a parameter. however, the form is a private inner class.
+ *
+ * @result:
+ */
+@Jpf.Controller()
+public class Controller extends PageFlowController
+{
+    private static class MyForm {}
+
+    @Jpf.Action(
+        forwards={
+           @Jpf.Forward(name="index", path="index.jsp")
+        }
+    )
+    protected Forward begin(MyForm form)
+    {
+        return new Forward("index");
+    }
+
+
+}

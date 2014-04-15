@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Altering a Page Flow</title>
+  </header>
+  <body>
+
+  <section id="introduction">
+    <title>Introduction</title>
+
+    <p>
+    In the previous pages, you were shown how to stitch together a controller class
+    and a set of JSPs.  One of the most powerful features of the Beehive way
+    of building applications is being able to change the flow by editing only the
+    controller class file, without having to touch the JSPs.
+    </p>
+
+  </section>
+
+  <section id="logical_flow_change">
+    <title>Logical Flow Change</title>
+
+    <p>
+    Sometime after deploying the application, it is decided that before allowing a
+    user to login, they must first be presented a page describing the terms of 
+    service for using the application.  Additionally, a decision is made to remove the 
+	<code>thanks.jsp</code> file and have
+    the "Sign Up" action automatically log-in the new user so they don't have
+    to traverse the login screen.  In short, after (successfully) completing signup.jsp, the user
+	is taken directly to mypage.jsp.
+    </p>
+
+    <p>
+    The original logical flow looked like this:
+    </p>
+
+    <p>
+      <img src="images/logical-flow-1.png" alt="logical flow, before alteration"/>
+    </p>
+
+    <p>
+    After these changes, the logical flow now resembles:
+    </p>
+
+    <p>
+      <img src="images/logical-flow-2.png" alt="logical flow, after alteration"/>
+    </p>
+ 
+  </section>
+
+  <section id="impl_flow_change">
+    <title>Implementation Flow Change</title>
+
+    <p>
+    To accommodate the new logical flow, the implementation flow model originally looked like this:
+    </p>
+
+    <p>
+      <img src="images/impl-flow-1.png" alt="logical flow, after alteration"/>
+    </p>
+
+    <p>
+    After removing <code>thanks.jsp</code>, adding <code>terms.jsp</code>, adding an
+    <code>acceptTerms()</code> method, and re-routing the post-signup flow, looks like:
+    </p>
+
+    <p>
+      <img src="images/impl-flow-2.png" alt="logical flow, after alteration"/>
+    </p>
+ 
+  </section>
+
+  <section id="changes_to_jsp">
+    <title>Changes Required in the JSPs</title>
+
+    <p>
+    Strictly speaking, no changes to JSP content are required.  Only deletion of the 
+    unused <code>thanks.jsp</code> and creation of the <code>terms.jsp</code> is
+    all that is required. 
+    </p>
+
+    <p>
+    <strong>Note:</strong>, The <code>signup.jsp</code> page
+    that previously would direct a user to <code>thanks.jsp</code> but will now
+    send him to <code>mypage.jsp</code> requires <em>absolutely no changes</em>.
+    </p>
+
+    <p>
+    The <code>terms.jsp</code> page would include a link through a new <code>acceptTerms()</code>
+    controller method, similar to:
+    </p>
+<source>
+  &lt;netui:anchor action="acceptTerms"&gt;Accept these Terms of Service&lt;/netui:anchor&gt;
+</source>
+
+  </section>
+
+  <section id="changes_to_controller">
+    <title>Changes Required in the Controller Class</title>
+
+    <p>
+    To change the flow, a few simple edits of the controller class are all that is required.
+    </p>
+
+    <section id="redirecting_login">
+      <title>Redirect <code>login()</code></title>
+
+      <p>
+      Previously, the <code>login()</code> controller method was defined to statically
+      return the forward to <code>login.jsp</code>.  
+      </p>
+
+<source>
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", path="<strong>login.jsp</strong>")
+        }
+    )
+    public Forward login()
+    {
+        return new Forward( "success" );
+    }
+</source>
+
+      <p>
+      By changing the <code>path</code> property of the <code>Jpf.Forward</code> associated
+      with this page, all links that previously took the user to <code>login.jsp</code> will
+      now direct him to <code>terms.jsp</code>.
+      </p>
+
+<source>
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", path="<strong>terms.jsp</strong>")
+        }
+    )
+    public Forward login()
+    {
+        return new Forward( "success" );
+    }
+</source>
+
+      <p>
+      The <code>terms.jsp</code> page links through a new <code>acceptTerms()</code> 
+      controller method which simply is a static forward to <code>login.jsp</code>.      
+      </p>
+
+<source>
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", path="login.jsp")
+        }
+    )
+    public Forward acceptTerms()
+    {
+        return new Forward( "success" );
+    }
+</source>
+
+      <p>
+      This biggest change in the controller class is in the <code>processSignUp()</code>
+      controller method.  Instead of just recording the user's information, it now must
+      also perform the logic of logging in the user automatically.  Additionally, the
+      forward returned by it will send the user directly to <code>mypage.jsp</code>
+      instead of the now unused <code>thanks.jsp</code> page.
+      </p>
+
+<source>
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", path="<strong>mypage.jsp</strong>")
+        }
+    )
+    public Forward processSignUp(SignUpForm form)
+    {
+        // record the user's sign-up information.
+        ... 
+
+        // perform automatic login for the user.
+        getSession().setAttribute( "authenticated_user", form.getUsername() );
+        return new Forward( "success" );
+    }
+</source>
+
+      <p>
+      The flow has successfully be altered to now include a jump through the site's
+      terms-of-service and automatically logging-in newly signed-up users.
+      </p>
+
+    </section>
+
+  </section>
+
+
+
+
+  </body>
+  <footer>
+    <legal>
+      Java, J2EE, and JCP are trademarks or registered trademarks of Sun Microsystems, Inc. in the United States and other countries.<br/>
+      &copy; 2004, Apache Software Foundation 
+    </legal>
+  </footer>
+</document>

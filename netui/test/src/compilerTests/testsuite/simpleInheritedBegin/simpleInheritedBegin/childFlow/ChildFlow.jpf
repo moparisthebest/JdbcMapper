@@ -1,0 +1,18 @@
+package simpleInheritedBegin.childFlow;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+import simpleInheritedBegin.ParentFlow;
+
+
+
+@Jpf.Controller()
+
+public class ChildFlow
+    extends ParentFlow
+{
+
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://beehive.apache.org/netui/tools/testrecorder/2004/server"
+    targetNamespace="http://beehive.apache.org/netui/tools/testrecorder/2004/server"
+    elementFormDefault="qualified">
+
+    <xs:element name="serverDefinition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="nonZeroLengthString"/>
+                <xs:element name="hostname" type="nonZeroLengthString"/>
+                <xs:element name="port" type="xs:int"/>
+                <xs:element name="webapps" type="webappsDefType" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="webappsDefType">
+        <xs:sequence>
+            <xs:element name="webapp" type="webappDefType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="webappDefType">
+        <xs:sequence>
+            <xs:element name="name" type="nonZeroLengthString"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="contextRoot" type="nonZeroLengthString"/>
+            <xs:element name="servletURI" type="nonZeroLengthString" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="nonZeroLengthString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

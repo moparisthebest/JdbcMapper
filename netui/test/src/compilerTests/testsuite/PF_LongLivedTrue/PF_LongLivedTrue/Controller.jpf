@@ -1,0 +1,42 @@
+package PF_LongLivedTrue;
+
+import org.apache.beehive.netui.pageflow.PageFlowController;
+import org.apache.beehive.netui.pageflow.Forward;
+import org.apache.beehive.netui.pageflow.annotations.Jpf;
+
+/**
+ *******************************************************************************
+ *
+ * @desc: This test tests the longLived=true ; a jpf:controller attribute.
+ *
+ * @result: The compiler should compile cleanly.
+ *
+ ******************************************************************************/
+
+    @Jpf.Controller(
+        longLived = true)
+public class Controller extends PageFlowController
+    {
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "Pg1.jsp")
+        })
+    public Forward begin()
+        {
+        return new Forward("success");
+        }
+
+    @Jpf.Action(
+        forwards = {
+            @Jpf.Forward(
+                name = "success",
+                path = "Pg1.jsp")
+        })
+    protected Forward Action1()
+        {
+        return new Forward("success");
+        }
+    }

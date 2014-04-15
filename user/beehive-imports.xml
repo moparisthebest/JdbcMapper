@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   
+       http://www.apache.org/licenses/LICENSE-2.0
+   
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+   $Header:$
+ -->
+
+<!--
+  This Ant build file contains a set of common paths and targets
+  that can be used to build Beehive source files.
+-->
+<project name="beehive-imports" default="" basedir=".">
+
+    <property environment="os"/>
+
+    <dirname property="this.dir" file="${ant.file.beehive-imports}"/>
+
+    <path id="controls.dependency.path">
+        <pathelement location="${this.dir}/lib/controls/beehive-controls.jar"/>
+    </path>
+
+    <path id="netui-compiler.dependency.path">
+        <pathelement location="${this.dir}/lib/netui/beehive-netui-compiler.jar"/>
+    </path>
+
+    <path id="velocity.dependency.path">
+        <pathelement location="${this.dir}/lib/common/velocity-dep-1.4.jar"/>
+    </path>
+
+    <macrodef name="deploy-netui">
+        <attribute name="webappDir"/>
+        <sequential>
+            <echo>Deploy NetUI to webapp @{webappDir}</echo>
+            <ant dir="${this.dir}/ant" antfile="beehive-runtime.xml" target="deploy.beehive.webapp.runtime" inheritAll="false">
+                <property name="webapp.dir" location="@{webappDir}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="deploy-controls">
+        <attribute name="destDir"/>
+        <sequential>
+            <echo>Deploy Controls runtime to destination directory @{destDir}</echo>
+            <ant dir="${this.dir}/ant" antfile="beehive-runtime.xml" target="deploy.beehive.controls.runtime" inheritAll="false">
+                <property name="dest.dir" location="@{destDir}"/>
+            </ant>
+        </sequential>
+    </macrodef>
+
+    <target name="new.netui.webapp" description="Create a new NetUI-enabled Beehive webapp">
+        <input message="Provide a fully-qualified web project path (like c:\java\projects\fooWeb):" addproperty="webapp.dir"/>
+
+        <copy todir="${webapp.dir}">
+            <fileset dir="${basedir}/samples/netui-blank">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+   
+        <echo>
+Created a NetUI-enabled in ${webapp.dir}.  
+
+Set the appropriate properties in ${webapp.dir}/build.properties.  
+
+Then run "ant build" in ${webapp.dir} to copy the runtime JARs and build the project.
+        </echo>
+    </target>
+
+    <target name="usage" description="Print the usage for this build.xml">
+        <java fork="no" classname="org.apache.tools.ant.Main">
+            <arg line="-f ${ant.file} -projecthelp"/>
+        </java>
+    </target>
+
+</project>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>DataGridCustomHeaderStyle</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>26 Apr 2005, 06:54:54.801 PM MDT</ses:startDate>
+   <ses:description>ekoneil</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/misc/customHeaderStyle.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>B03D7B9751C39776E6BE33B89A758571</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=B03D7B9751C39776E6BE33B89A758571; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>1be1c38c:1038123d4ed:-7fe3</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20040913 Firefox/0.10.1</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+  <head>
+    <title>CSS Prefix Test</title>
+        <style type="text/css">
+        .foo-header {
+            background-color: #5f7797;
+        }
+        .foo-even {
+            background-color: #ffffff;
+        }
+        .foo-odd {
+            background-color: #bfc4cb;
+        }
+        .custom-header {
+            background-color: #770011;
+        }
+        </style>
+  </head>
+  <body>
+    <p>
+    
+
+
+
+
+
+
+    <br/>
+    Page 1 of 1&nbsp;&nbsp;&nbsp;
+<table class="foo">
+
+    
+        
+    
+    
+<tr class="foo-header">
+        <th class="custom-header">Symbol</th>
+
+
+        <th class="foo">Price</th>
+
+
+        <th class="foo">Web</th>
+
+
+    
+</tr>
+        
+    
+    
+        
+<tr class="foo-even">
+            <td class="foo"><span>BEAS</span></td>
+
+            <td class="foo"><span>14.35</span></td>
+
+            <td class="foo"><a href="http://www.bea.com?rowid=0&amp;symbol=BEAS"><span>BEA Systems</span></a></td>
+
+        
+</tr>
+<tr class="foo-odd">
+            <td class="foo"><span>CSCO</span></td>
+
+            <td class="foo"><span>19.42</span></td>
+
+            <td class="foo"><a href="http://www.cisco.com?rowid=1&amp;symbol=CSCO"><span>Cisco Systems</span></a></td>
+
+        
+</tr>
+<tr class="foo-even">
+            <td class="foo"><span>GE</span></td>
+
+            <td class="foo"><span>59.42</span></td>
+
+            <td class="foo"><a href="http://www.ge.com?rowid=2&amp;symbol=GE"><span>General Electric</span></a></td>
+
+        
+</tr>
+<tr class="foo-odd">
+            <td class="foo"><span>RHAT</span></td>
+
+            <td class="foo"><span>18.2</span></td>
+
+            <td class="foo"><a href="http://www.redhat.com?rowid=3&amp;symbol=RHAT"><span>RedHat Systems</span></a></td>
+
+        
+</tr>
+<tr class="foo-even">
+            <td class="foo"><span>YHOO</span></td>
+
+            <td class="foo"><span>48.16</span></td>
+
+            <td class="foo"><a href="http://www.yahoo.com?rowid=4&amp;symbol=YHOO"><span>Yahoo Inc</span></a></td>
+
+        
+</tr>
+    </table>
+
+
+    </p>
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>26 Apr 2005, 06:54:54.871 PM MDT</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>1</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>1</ses:failedCount>
+</ses:recorderSession>

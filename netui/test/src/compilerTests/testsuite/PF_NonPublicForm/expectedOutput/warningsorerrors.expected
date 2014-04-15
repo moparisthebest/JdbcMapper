@@ -1,0 +1,4 @@
+[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_NonPublicForm\Controller.java:22: Argument type PF_NonPublicForm.Controller.MyForm is not public.
+    protected Forward begin(MyForm form)
+                      ^
+1 error

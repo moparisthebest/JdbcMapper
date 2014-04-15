@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>ValidateThroughAction</ses:sessionName>
+   <ses:tester>rich</ses:tester>
+   <ses:startDate>11 Feb 2005, 07:14:47.792 PM MST</ses:startDate>
+   <ses:description>rich</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/validation/declarativeValidation/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2FB79E4AD0F13D9C8B2A66C5A1D37235</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=2FB79E4AD0F13D9C8B2A66C5A1D37235; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1dd5eec:1020442d225:-7708</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/validation/declarativeValidation/index.jsp">
+    </head>
+    <body>
+        <h3>Declarative Validation</h3>
+
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            page flow 'str' property: <input type="text" name="{pageFlow.str}">
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+        
+        Which type of validation?
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            <input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="actionLevelValidate"><span>action-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="classLevelValidate"><span>class-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="formLevelValidate" checked><span>form-level validation</span><br>
+
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+
+        <form action="/coreWeb/validation/declarativeValidation/formLevelValidate.do" method="post">
+            <table>
+                <tr>
+                    <td>minlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.minLength}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>maxlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.maxLength}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>mask=a*b:</td>
+                    <td>
+                        <input type="text" name="{actionForm.mask}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=int:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeInt}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=short:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeShort}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=long:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeLong}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=double:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeDouble}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=float:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeFloat}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=byte:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeByte}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>date=MM-dd-YYYY:</td>
+                    <td>
+                        <input type="text" name="{actionForm.date}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>range 1-10:</td>
+                    <td>
+                        <input type="text" name="{actionForm.range}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>credit card:</td>
+                    <td>
+                        <input type="text" name="{actionForm.creditCard}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>email:</td>
+                    <td>
+                        <input type="text" name="{actionForm.email}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>valid when pageFlow.str==actionForm.validWhenPageFlowProp:</td>
+                    <td>
+                        <input type="text" name="{actionForm.validWhenPageFlowProp}">
+                        
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="formLevelValidate">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/validation/declarativeValidation/begin.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{pageFlow.str}</ses:name>
+                  <ses:value>aaa</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2FB79E4AD0F13D9C8B2A66C5A1D37235</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>22</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=2FB79E4AD0F13D9C8B2A66C5A1D37235; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1dd5eec:1020442d225:-7708</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/validation/declarativeValidation/index.jsp">
+    </head>
+    <body>
+        <h3>Declarative Validation</h3>
+
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            page flow 'str' property: <input type="text" name="{pageFlow.str}" value="aaa">
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+        
+        Which type of validation?
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            <input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="actionLevelValidate"><span>action-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="classLevelValidate"><span>class-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="formLevelValidate" checked><span>form-level validation</span><br>
+
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+
+        <form action="/coreWeb/validation/declarativeValidation/formLevelValidate.do" method="post">
+            <table>
+                <tr>
+                    <td>minlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.minLength}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>maxlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.maxLength}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>mask=a*b:</td>
+                    <td>
+                        <input type="text" name="{actionForm.mask}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=int:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeInt}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=short:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeShort}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=long:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeLong}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=double:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeDouble}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=float:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeFloat}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=byte:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeByte}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>date=MM-dd-YYYY:</td>
+                    <td>
+                        <input type="text" name="{actionForm.date}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>range 1-10:</td>
+                    <td>
+                        <input type="text" name="{actionForm.range}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>credit card:</td>
+                    <td>
+                        <input type="text" name="{actionForm.creditCard}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>email:</td>
+                    <td>
+                        <input type="text" name="{actionForm.email}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>valid when pageFlow.str==actionForm.validWhenPageFlowProp:</td>
+                    <td>
+                        <input type="text" name="{actionForm.validWhenPageFlowProp}">
+                        
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="formLevelValidate">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/validation/declarativeValidation/begin.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>wlw-radio_button_group_key:{pageFlow.selectedAction}</ses:name>
+                  <ses:value>actionLevelValidate</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2FB79E4AD0F13D9C8B2A66C5A1D37235</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>78</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=2FB79E4AD0F13D9C8B2A66C5A1D37235; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1dd5eec:1020442d225:-7708</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/validation/declarativeValidation/index.jsp">
+    </head>
+    <body>
+        <h3>Declarative Validation</h3>
+
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            page flow 'str' property: <input type="text" name="{pageFlow.str}" value="aaa">
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+        
+        Which type of validation?
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            <input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="actionLevelValidate" checked><span>action-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="classLevelValidate"><span>class-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="formLevelValidate"><span>form-level validation</span><br>
+
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+
+        <form action="/coreWeb/validation/declarativeValidation/actionLevelValidate.do" method="post">
+            <table>
+                <tr>
+                    <td>minlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.minLength}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>maxlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.maxLength}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>mask=a*b:</td>
+                    <td>
+                        <input type="text" name="{actionForm.mask}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=int:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeInt}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=short:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeShort}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=long:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeLong}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=double:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeDouble}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=float:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeFloat}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=byte:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeByte}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>date=MM-dd-YYYY:</td>
+                    <td>
+                        <input type="text" name="{actionForm.date}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>range 1-10:</td>
+                    <td>
+                        <input type="text" name="{actionForm.range}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>credit card:</td>
+                    <td>
+                        <input type="text" name="{actionForm.creditCard}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>email:</td>
+                    <td>
+                        <input type="text" name="{actionForm.email}">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>valid when pageFlow.str==actionForm.validWhenPageFlowProp:</td>
+                    <td>
+                        <input type="text" name="{actionForm.validWhenPageFlowProp}">
+                        
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="actionLevelValidate">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/validation/declarativeValidation/actionLevelValidate.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.creditCard}</ses:name>
+                  <ses:value>4444444444444447</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.date}</ses:name>
+                  <ses:value>invalid</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.email}</ses:name>
+                  <ses:value>invalid</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.mask}</ses:name>
+                  <ses:value>aaa</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.maxLength}</ses:name>
+                  <ses:value>aaa</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.minLength}</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.range}</ses:name>
+                  <ses:value>11</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeByte}</ses:name>
+                  <ses:value>128</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeDouble}</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeFloat}</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeInt}</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeLong}</ses:name>
+                  <ses:value>a</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeShort}</ses:name>
+                  <ses:value>32768</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.validWhenPageFlowProp}</ses:name>
+                  <ses:value>aa</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2FB79E4AD0F13D9C8B2A66C5A1D37235</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>436</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=2FB79E4AD0F13D9C8B2A66C5A1D37235; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1dd5eec:1020442d225:-7708</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/validation/declarativeValidation/index.jsp">
+    </head>
+    <body>
+        <h3>Declarative Validation</h3>
+
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            page flow 'str' property: <input type="text" name="{pageFlow.str}" value="aaa">
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+        
+        Which type of validation?
+        <form action="/coreWeb/validation/declarativeValidation/begin.do" method="post">
+            <input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="actionLevelValidate" checked><span>action-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="classLevelValidate"><span>class-level validation</span><br>
+<input type="radio" name="wlw-radio_button_group_key:{pageFlow.selectedAction}" value="formLevelValidate"><span>form-level validation</span><br>
+
+            <input type="submit" value="submit">
+        </form>
+        <hr/>
+
+        <form action="/coreWeb/validation/declarativeValidation/actionLevelValidate.do" method="post">
+            <table>
+                <tr>
+                    <td>minlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.minLength}" value="a">
+                        This field cannot be less than 2 characters.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>maxlength=2:</td>
+                    <td>
+                        <input type="text" name="{actionForm.maxLength}" value="aaa">
+                        This field cannot be greater than 2 characters.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>mask=a*b:</td>
+                    <td>
+                        <input type="text" name="{actionForm.mask}" value="aaa">
+                        This field is invalid.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=int:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeInt}" value="a">
+                        This field must be an integer.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=short:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeShort}" value="32768">
+                        This field must be a short.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=long:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeLong}" value="a">
+                        This field must be a long.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=double:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeDouble}" value="a">
+                        This field must be a double.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=float:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeFloat}" value="a">
+                        This field must be a float.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>type=byte:</td>
+                    <td>
+                        <input type="text" name="{actionForm.typeByte}" value="128">
+                        This field must be a byte.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>date=MM-dd-YYYY:</td>
+                    <td>
+                        <input type="text" name="{actionForm.date}" value="invalid">
+                        This field is not a date.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>range 1-10:</td>
+                    <td>
+                        <input type="text" name="{actionForm.range}" value="11">
+                        This field is not in the range 1 through 10.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>credit card:</td>
+                    <td>
+                        <input type="text" name="{actionForm.creditCard}" value="4444444444444447">
+                        This field is not a valid credit card number.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>email:</td>
+                    <td>
+                        <input type="text" name="{actionForm.email}" value="invalid">
+                        This field is not a valid e-mail address.
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>valid when pageFlow.str==actionForm.validWhenPageFlowProp:</td>
+                    <td>
+                        <input type="text" name="{actionForm.validWhenPageFlowProp}" value="aa">
+                        pageFlow.str must be the same as this
+
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="actionLevelValidate">
+        </form>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/validation/declarativeValidation/actionLevelValidate.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>{actionForm.creditCard}</ses:name>
+                  <ses:value>4444444444444448</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.date}</ses:name>
+                  <ses:value>10-10-1973</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.email}</ses:name>
+                  <ses:value>null@void.com</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.mask}</ses:name>
+                  <ses:value>aaab</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.maxLength}</ses:name>
+                  <ses:value>aa</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.minLength}</ses:name>
+                  <ses:value>aa</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.range}</ses:name>
+                  <ses:value>9</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeByte}</ses:name>
+                  <ses:value>127</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeDouble}</ses:name>
+                  <ses:value>2.0</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeFloat}</ses:name>
+                  <ses:value>2.0</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeInt}</ses:name>
+                  <ses:value>10</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeLong}</ses:name>
+                  <ses:value>10</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.typeShort}</ses:name>
+                  <ses:value>32767</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>{actionForm.validWhenPageFlowProp}</ses:name>
+                  <ses:value>aaa</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>2FB79E4AD0F13D9C8B2A66C5A1D37235</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>---------------</ses:name>
+                  <ses:value>------------</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>454</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=2FB79E4AD0F13D9C8B2A66C5A1D37235; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>-1dd5eec:1020442d225:-7708</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <base href="http://localhost:8080/coreWeb/validation/declarativeValidation/success.jsp">
+    </head>
+    <body>
+        All validation passed.
+        <br/>
+        <a href="/coreWeb/validation/declarativeValidation/begin.do">start over</a>
+    </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>pass</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 07:14:52.188 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>5</ses:testCount>
+   <ses:passedCount>1</ses:passedCount>
+   <ses:failedCount>4</ses:failedCount>
+</ses:recorderSession>

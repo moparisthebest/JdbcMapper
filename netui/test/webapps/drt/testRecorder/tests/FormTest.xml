@@ -1,0 +1,1683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>FormTest</ses:sessionName>
+   <ses:tester>Daryl</ses:tester>
+   <ses:startDate>11 Feb 2005, 06:30:06.677 PM MST</ses:startDate>
+   <ses:description>Daryl</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/Controller.jpf</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}"><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}"></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}"></textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1">Choice 1</option>
+        <option value="2" selected>Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1"><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2" checked><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>2</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>132</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}" value="Test"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}"><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}"></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}"></textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1">Choice 1</option>
+        <option value="2" selected>Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1"><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2" checked><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>Change, old value &#39;&#39; new value &#39;Test&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>3</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>162</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}" value="Test"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}" checked><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}" checked></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}">Test</textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1" selected>Choice 1</option>
+        <option value="2">Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1" checked><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2"><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>Change, old value &#39;&#39; new value &#39;Test&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>Changed</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>Changed</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>Change, old value &#39;2&#39; new value &#39;1&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>Change, old value &#39;2&#39; new value &#39;1&#39;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>4</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>156</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}" value="Test"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}" checked><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}" checked></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}">Test</textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1" selected>Choice 1</option>
+        <option value="2">Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1" checked><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2"><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>5</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>143</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}" value="Test"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}"><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}" checked></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}">Test</textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1">Choice 1</option>
+        <option value="2" selected>Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1" checked><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2"><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>Changed</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>Change, old value &#39;1&#39; new value &#39;2&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>6</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value>Test</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>146</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}" value="Test"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}"><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}" checked></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}">Test</textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1">Choice 1</option>
+        <option value="2" selected>Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1"><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2" checked><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span>Test</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>Change, old value &#39;1&#39; new value &#39;2&#39;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>7</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>2</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value>x</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value>x</ses:value>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>140</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}" value="x"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}"><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}" checked></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}">x</textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1">Choice 1</option>
+        <option value="2" selected>Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1"><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2" checked><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span>x</span></td>
+          <td><span>Change, old value &#39;Test&#39; new value &#39;x&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span>x</span></td>
+          <td><span>Change, old value &#39;Test&#39; new value &#39;x&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>2</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>8</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>138</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}" checked><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}"></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}"></textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1" selected>Choice 1</option>
+        <option value="2">Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1" checked><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2"><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>Change, old value &#39;x&#39; new value &#39;&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>Change, old value &#39;x&#39; new value &#39;&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>Changed</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>Changed</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>Change, old value &#39;2&#39; new value &#39;1&#39;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>Change, old value &#39;2&#39; new value &#39;1&#39;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+      <ses:test>
+         <ses:testNumber>9</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/formTest/submit.do</ses:uri>
+            <ses:method>POST</ses:method>
+            <ses:parameters>
+               <ses:parameter>
+                  <ses:name>checkBox1</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox1OldValue</ses:name>
+                  <ses:value>on</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>checkBox2OldValue</ses:name>
+                  <ses:value>false</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>currentURI</ses:name>
+                  <ses:value>/coreWeb/formTest/formTest.jsp</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>radio</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>select</ses:name>
+                  <ses:value>1</ses:value>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>text</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+               <ses:parameter>
+                  <ses:name>textArea</ses:name>
+                  <ses:value/>
+               </ses:parameter>
+            </ses:parameters>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>D4E953FA0410A5376F1B9E5CC645441E</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-powerpoint, application/vnd.ms-excel, application/msword, */*</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip, deflate, x-gzip, compress, x-compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cache-control</ses:name>
+                  <ses:value>no-cache</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>Keep-Alive, TE</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-length</ses:name>
+                  <ses:value>138</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>content-type</ses:name>
+                  <ses:value>application/x-www-form-urlencoded</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>$Version=0; JSESSIONID=D4E953FA0410A5376F1B9E5CC645441E; $Path=/coreWeb</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie2</ses:name>
+                  <ses:value>$Version="1"</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>te</ses:name>
+                  <ses:value>trailers, deflate, gzip, compress</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>testrecorder.playback.testid</ses:name>
+                  <ses:value>f624cb5:102041cb937:-7716</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E RPT-HTTPClient/0.3-3E</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<html>
+<head>
+<title>Form Test</title>
+<base href="http://localhost:8080/coreWeb/formTest/formTest.jsp">
+</head>
+<body>
+  <h1>Form Test</h1>
+  <form action="/coreWeb/formTest/submit.do" method="post">
+  <table width="100%">
+  <tr><td>TextBox</td><td><input type="text" name="{actionForm.text}"></td>
+    <td>CheckboxGroup:</td>
+    <td>Checkbox1 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox1}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox1}" checked><br />
+        Checkbox2 <input type="hidden" name="wlw-checkbox_key:{actionForm.checkBox2}OldValue" value="false"><input type="checkbox" name="wlw-checkbox_key:{actionForm.checkBox2}"></td>
+  </tr>
+  <tr><td>TextArea</td><td><textarea name="{actionForm.textArea}"></textarea></td>
+    <td>Select:</td>
+    <td><input type="hidden" name="wlw-select_key:{actionForm.select}OldValue" value="true">
+<select name="wlw-select_key:{actionForm.select}" size="3"><option value="1" selected>Choice 1</option>
+        <option value="2">Choice 2</option>
+        <option value="3">Choice 3</option></select>
+    </td>
+  </tr>
+
+  <tr>
+  <td>A sample radiogroup:</td><td>
+    
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="1" checked><span>Choice 1</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="2"><span>Choice 2</span><br>
+        <input type="radio" name="wlw-radio_button_group_key:{actionForm.radio}" value="3"><span>Choice 3</span>
+    
+    </td>
+  </tr>
+  <tr><td colspan="4"><input type="submit" value="Change"></td></tr>
+  </table>
+  </form>
+  <hr />
+  <table width="100%" border="1" cellspacing="0">
+  <tr><th>Form Control</th><th>Value</th><th>Change</th></tr>
+  
+        <tr>
+          <td width="100px" ><span>TextBox</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>TextArea</span></td>
+          <td width="300px"><span></span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox1</span></td>
+          <td width="300px"><span>true</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Checkbox2</span></td>
+          <td width="300px"><span>false</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Select</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+        <tr>
+          <td width="100px" ><span>Radio</span></td>
+          <td width="300px"><span>1</span></td>
+          <td><span>&nbsp;</span></td>
+        </tr>
+        
+  </table>
+</body>
+</html>]]></ses:responseBody>
+         </ses:response>
+         <ses:testResults>
+            <ses:testStatus>fail</ses:testStatus>
+         </ses:testResults>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>11 Feb 2005, 06:30:08.539 PM MST</ses:endDate>
+   <ses:sessionStatus>fail</ses:sessionStatus>
+   <ses:testCount>9</ses:testCount>
+   <ses:passedCount>0</ses:passedCount>
+   <ses:failedCount>9</ses:failedCount>
+</ses:recorderSession>

@@ -1,0 +1,4 @@
+
+<%
+    response.sendRedirect( "testRecord.jsp" );
+%>

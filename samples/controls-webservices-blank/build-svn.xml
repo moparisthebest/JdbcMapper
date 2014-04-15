@@ -1,0 +1,237 @@
+<?xml version="1.0" ?>
+
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ 
+   $Header:$
+ -->
+<project name="controls-webservices-blank" basedir="." default="usage">
+
+    <property environment="os" />
+    <import file="../../beehive-imports.xml"/>
+    <import file="../../ant/beehive-tools.xml"/>
+    <import file="../../ant/axis-import.xml"/>
+
+    <property name="junit.source.dir" location="${basedir}/junit" />
+    <property name="build.dir" location="${basedir}/build" />
+    <property name="build.classes" location="${build.dir}/classes" />
+    <property name="build.beansrc" location="${build.dir}/beansrc" />
+
+    <!-- Service control specific properties -->
+    <property name="gen.source.dir" location="${build.dir}/jcxsrc" />
+    <property name="my.service.control.package" value="mypackage" />
+    <property name="schema.dir" location="${basedir}/schemas" />
+    <property name="xmlbean.type.gen.dir" location="${build.dir}/xmlbeantypes" />
+    <property name="build.jar" value="myservicecontrols.jar" />
+    <property name="test.logs" location="${basedir}/logs" />
+    <property name="junit.build.dir" location="${build.dir}/junitclasses" />
+    <property name="junit.build.beansrc" location="${build.dir}/junitbeansrc" />
+
+    <path id="webservices.dependency.path">
+        <fileset file="${beehive.home}/wsm/build/jars/beehive-wsm.jar"/>
+        <fileset file="${beehive.home}/wsm/build/jars/beehive-wsm-axis.jar"/>
+        <fileset file="${beehive.home}/wsm/build/jars/beehive-wsdltypes.jar"/>
+        <fileset file="${beehive.home}/wsm/build/jars/beehive-jsr181.jar"/>
+        <path refid="servlet.dependency.path"/>
+        <fileset file="${beehive.home}/wsm/external/axis-1.3/axis.jar"/>
+        <fileset file="${beehive.home}/wsm/external/axis-1.3/jaxrpc.jar"/>
+        <fileset file="${beehive.home}/wsm/external/axis-1.3/wsdl4j-1.5.1.jar"/>
+    </path>
+
+    <path id="beehive.classpath">
+        <path refid="webservices.dependency.path" />
+        <path refid="controls.dependency.path" />
+        <path refid="servlet.dependency.path" />
+        <path refid="junit.dependency.path" />
+    </path>
+    
+    <path id="service.control.dependencies">
+        <pathelement path="${beehive.home}/system-controls/build/jars/beehive-webservice-control.jar"/>
+        <path refid="beehive.classpath" />
+        <path refid="xbean.dependency.path" />
+        <path refid="log4j.dependency.path" />
+        <path refid="velocity.dependency.path" />
+        <path refid="commons-logging.dependency.path" />
+        <path refid="commons-discovery.dependency.path" />
+    </path>    
+
+    <path id="build.classpath">
+        <pathelement path="${build.classes}" />
+        <path refid="service.control.dependencies" />
+    </path>
+
+    <path id="run.classpath">
+        <path refid="service.control.dependencies" />
+        <pathelement path="${build.dir}/${build.jar}"  />
+         <path refid="junit.dependency.path" />
+        <pathelement path="${junit.build.dir}" />
+    </path>
+
+    <target name="clean" description="Delete all generated files">
+        <delete dir="${build.dir}" />
+        <delete file="velocity.log" />
+        <delete dir="${test.logs}" />
+    </target>
+
+    <target name="dirs">
+        <mkdir dir="${build.classes}" />
+        <mkdir dir="${build.beansrc}" />
+        <mkdir dir="${xmlbean.type.gen.dir}" />
+        <mkdir dir="${test.logs}" />
+        <mkdir dir="${junit.build.dir}" />
+        <mkdir dir="${junit.build.beansrc}" />
+        <mkdir dir="${gen.source.dir}"/>
+
+    </target>
+
+    <target name="build" depends="gen-svc-ctrl" description="Build control sources">
+        <build-controls srcdir="${gen.source.dir}" destdir="${build.classes}" tempdir="${build.beansrc}" classpathref="build.classpath" />
+        <!-- have the wsdls, in the same dir as the jcx files -->
+        <copy todir="${build.classes}">
+            <fileset dir="${gen.source.dir}/">
+                <include name="**/*.wsdl" />
+            </fileset>
+        </copy>
+        <control-jar destfile="${build.dir}/${build.jar}" basedir="${build.classes}" />
+    </target>
+
+    <!-- Generate the service control, should run after types have been generated. -->
+    <target name="gen-svc-ctrl" depends="gen-types">
+            <property name="cp" refid="build.classpath"/><echo>cp: ${cp}</echo>
+
+        <path id="wscgen.dependencies">
+            <path refid="build.classpath" />
+            <pathelement location="${build.classes}" />
+        </path>
+
+        <taskdef name="webservice-control-gen"
+                 classname="org.apache.beehive.controls.system.webservice.generator.WebServiceControlGeneratorTask"
+                 classpathref="wscgen.dependencies"/>
+
+        <webservice-control-gen wsdlsrc="${schema.dir}" destdir="${gen.source.dir}" destPackageName="${my.service.control.package}"/>
+
+          <!-- have the wsdls, in the same dir as the jcx files -->
+        <copy todir="${gen.source.dir}/${my.service.control.package}">
+            <fileset dir="${schema.dir}">
+                <include name="**/*.wsdl" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Generate types for the WSDL and Scheams  -->
+    <!-- 
+        ***********************************************************************************
+        NOTE: The type generation uses Apache XMLBeans compiler.  The Compiler doesn't support RPC/Encoded style.
+        To generate types for RPC/Encoded web service you need to use Axis's tools.
+
+        <property name="encoded.schema.dir" value="rpc-schemas" />
+        <property name="encoded.type.gen.dir" value="${build.dir}/encodedtypes" />
+
+        
+        <target name="gen-axis-types" depends="check-axis-types, dirs" unless="gen-axis-types-are-uptodate">
+            <taskdef name="encodedtypegen" classname="org.apache.beehive.wsm.axis.ant.AxisTypeGeneratorTask">
+                <classpath>
+                    <path refid="build.classpath" />
+                </classpath>
+            </taskdef>
+    
+            <encodedtypegen wsdldir="${encoded.schema.dir}" outputdir="${encoded.type.gen.dir}" />
+            <javac srcdir="${encoded.type.gen.dir}" destdir="${build.classes}" classpathref="build.classpath" debug="true" />
+        </target>
+    
+    
+    
+        <target name="check-axis-types">
+            <uptodate property="gen-axis-types-are-uptodate" targetfile="${encoded.type.gen.dir}">
+                <srcfiles dir="${encoded.schema.dir}" includes="*.wsdl" />
+            </uptodate>
+    
+        </target>
+        ***********************************************************************************
+    -->
+
+    <target name="gen-types" depends="checktypes, dirs" unless="gen-types-are-uptodate">
+        <!-- XMLBean build -->
+        <taskdef name="xmlbeanbuild" classname="org.apache.xmlbeans.impl.tool.XMLBean">
+            <classpath>
+                <path refid="xbean.dependency.path" />
+            </classpath>
+        </taskdef>
+
+        <xmlbeanbuild schema="${schema.dir}" srcgendir="${xmlbean.type.gen.dir}" classgendir="${build.classes}" failonerror="true">
+            <classpath>
+                <path refid="build.classpath" />
+            </classpath>
+        </xmlbeanbuild>
+    </target>
+
+    <target name="checktypes">
+        <uptodate property="gen-types-are-uptodate" targetfile="${xmlbean.type.gen.dir}">
+            <srcfiles dir="${schema.dir}" includes="*.wsdl,*.xsd" />
+        </uptodate>
+    </target>
+
+    <!-- Build the junit tests -->
+    <target name="build.junit" depends="build">
+        <build-controls srcdir="${junit.source.dir}" 
+            destdir="${junit.build.dir}" 
+            tempdir="${junit.build.beansrc}" 
+            classpathref="run.classpath" />
+        
+        <!-- have the wsdls, in the same dir as the jcx files -->
+        <copy todir="${junit.build.dir}">
+            <fileset dir="${junit.source.dir}">
+                <include name="**/*.properties" />
+                <include name="**/*.xml" />
+    <include name="**/*.properties" />
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="run.junit" depends="build.junit">
+        
+        <echo message="** junit logfiles written to ${test.logs} **" />
+        <junit failureproperty="testfailed" printsummary="on" tempdir="${junit.build.dir}" fork="yes" >
+            <classpath>
+                <path refid="run.classpath" />
+            </classpath>
+            <formatter type="plain" />
+            <batchtest filtertrace="off" todir="${test.logs}">
+                <fileset dir="${junit.source.dir}">
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+        <fail if="testfailed" message="One or more tests failed.  The unit test requires the wsm-addressbook-enhanced web serivce to be running.  Please verify that http://localhost:8080/EnhancedAddressBook/ is available before trying the unit testing."/>
+    </target>
+
+    <target name="usage" description="Print the usage for this build.xml">
+        <echo message="" />
+        <echo message="" />
+        <echo message="Service Controls Project Template Build file" />
+        <echo message="" />
+        <echo message="" />
+        <echo message="----------------------------------------------------------------" />
+        <echo message="|                      Standard Targets                        |" />
+        <echo message="----------------------------------------------------------------" />
+        <echo message="clean               - Delete all generated files" />
+        <echo message="build               - Build control sources" />
+        <echo message="gen-types           - Just generate the types from schemas" />
+        <echo message="run.junit           - Run Junit tests for the service control" />
+        <echo message="----------------------------------------------------------------" />
+    </target>
+
+</project>

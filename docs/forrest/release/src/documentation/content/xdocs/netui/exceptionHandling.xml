@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+	"http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Exception Handling in NetUI</title>
+	</header>
+	<body>
+		<section id="intro">
+			<title>Introduction</title>
+            <p>
+                Declarative exception handling is a powerful feature offered by NetUI. It allows you to define handling
+                for expected and unexpected exceptions <em>without</em> cluttering your controller logic. Consider the
+                following action method:
+            </p>
+            <source xml:space="preserve">
+@Jpf.Action(
+    forwards={
+        @Jpf.Forward(name="success", path="nextPage.jsp"),
+        @Jpf.Forward(name="errorPage1", path="error1.jsp"),
+        @Jpf.Forward(name="errorPage2", path="error2.jsp")
+    }
+)
+public Forward someAction()
+{
+    try
+    {
+        someBusinessControl.executeSomeBusinessLogic();
+        return new Forward("success");
+    }
+    catch (Exception1 e)
+    {
+        logger.error("Error 1 occurred while executing business logic.", e);
+        return new Forward("errorPage1");
+    }
+    catch (Exception2 e)
+    {
+        logger.error("Error 2 occurred while executing business logic.", e);
+        return new Forward("errorPage2");
+    }
+}           </source>
+            <p>
+                As you can see, the controller logic (executing the business logic and forwarding to "success") is
+                overwhelmed by exception-handling code. The method should really look like this:
+            </p>
+            <source>
+@Jpf.Action(
+    forwards={
+        @Jpf.Forward(name="success", path="nextPage.jsp")
+    }
+)
+public Forward someAction() throws Exception1, Exception2
+{
+    someBusinessControl.executeSomeBusinessLogic();
+    return new Forward("success");
+}           </source>
+            <p>
+                Here, exception handling is left to a mechanism outside of the action method. Read on to find out how
+                this works.
+            </p>
+        </section>
+        <section id="declaringExceptionsToHandle">
+            <title>Declaring Exceptions to Handle</title>
+            <p>
+                The way to declare that a particular exception type should be handled is the
+                <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html">
+                    <code>@Jpf.Catch</code>
+                </a>
+                annotation.  Using this annotation, you can specify one of two ways to handle the exception:
+            </p>
+            <ul>
+                <li>by forwarding to some path, or</li>
+                <li>by running an <em>exception-handler</em> method.</li>
+            </ul>
+            <p>
+                Here are two <code>@Jpf.Catch</code> annotations which deal with an exception type
+                <code>MyException</code>; the first one forwards to <code>error.jsp</code> and the second invokes an
+                exception-handler method <code>handleMyException</code>:
+            </p>
+            <source xml:space="preserve">
+@Jpf.Catch(type=MyException.class, path="error.jsp")
+@Jpf.Catch(type=MyException.class, method="handleMyException")</source>
+            <p>
+                You can put this annotation in a number of places (in order of precedence):
+            </p>
+            <ul>
+                <li>
+                    Inside a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Action.html">
+                        <code>@Jpf.Action</code>
+                    </a>
+                    annotation, which means that the exception is handled only for that action.
+                </li>
+                <li>
+                    Inside a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.SimpleAction.html">
+                        <code>@Jpf.SimpleAction</code>
+                    </a>
+                    annotation, which means that the exception is handled only for that action.
+                </li>
+                <li>
+                    Inside a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html">
+                        <code>@Jpf.Controller</code>
+                    </a>
+                    annotation, which means that the exception is handled for <em>any action</em> in the controller
+                    class, or, if this is a page flow controller, for <code>any page</code> in the page flow.
+                </li>
+                <li>
+                    Inside a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html">
+                        <code>@Jpf.Controller</code>
+                    </a>
+                    annotation in a <em>base class controller</em>, which means that the exception is handled for any
+                    action in <em>any derived</em> controller.  If this is a page flow controller, the exception is
+                    handled for any page in the page flow.
+                </li>
+                <li>
+                    Inside a
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Controller.html">
+                        <code>@Jpf.Controller</code>
+                    </a>
+                    annotation in a <a href="site:pageflow_sharedFlow">shared flow controller</a> that is referenced by
+                    the current page flow controller. This means the exception is handled for any action or any page in
+                    the current page flow.
+                </li>
+            </ul>
+            <p>
+                Here is an example of a page flow controller class that uses <code>@Jpf.Catch</code> at the class level
+                and at the action method level:
+            </p>
+            <source xml:space="preserve">
+@Jpf.Controller(
+    catches={
+        <strong>@Jpf.Catch(type=Exception1.class, path="error1.jsp")</strong>,
+        <strong>@Jpf.Catch(type=Exception2.class, path="error2.jsp")</strong>
+    }
+)
+public class MyPageFlow extends PageFlowController
+{
+    @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", path="success.jsp")
+        }
+    )
+    public Forward begin() throws Exception1, Exception2
+    {
+        return new Forward("success");
+    }
+
+   @Jpf.Action(
+        forwards={
+            @Jpf.Forward(name="success", path="success.jsp")
+        },
+        catches={
+            <strong>@Jpf.Catch(type=Exception1.class, path="specialErrorPage.jsp")</strong>
+        }
+    )
+    public Forward specialAction() throws Exception1, Exception2
+    {
+        return new Forward("success");
+    } 
+}           </source>
+            <p>
+                Throughout this page flow, <code>Exception1</code> and <code>Exception2</code> are handled by navigating
+                to <code>error1.jsp</code> and <code>error2.jsp</code>, respectively. When the action
+                <code>specialAction</code> runs, it will forward to <code>specialErrorPage.jsp</code> if
+                <code>Exception1</code> occurs.
+            </p>
+            <note>
+                If you have a set of
+                <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html">
+                    <code>@Jpf.Catch</code>
+                </a>
+                annotations, and more than one of them applies to a thrown
+                exception, then the <em>most specific one</em> in that set will win. Consider the following:
+                <br/>
+                <br/>
+                <code>&nbsp;&nbsp;&nbsp;&nbsp;catches={</code><br/>
+                <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Jpf.Catch(type=Exception.class, path="error1.jsp"),</code><br/>
+                <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Jpf.Catch(type=NullPointerException.class, path="error2.jsp"),</code><br/>
+                <code>&nbsp;&nbsp;&nbsp;&nbsp;}</code><br/>
+                <br/>
+                In this case, if <code>NullPointerException</code> is thrown, then <code>error2.jsp</code> will be
+                shown.
+            </note>
+            
+        </section>
+        <section id="handlingWithMethods">
+            <title>Handling Exceptions with Methods</title>
+            <p>
+                When you use the 
+                <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html#method()">
+                    <code>method</code>
+                </a>
+                attribute on <code>@Jpf.Catch</code>, you are signalling that you want an exception to be handled with
+                an <em>exception-handler</em> method. To make such a method, you use the
+                <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.ExceptionHandler.html">
+                    <code>@Jpf.ExceptionHandler</code>
+                </a>
+                annotation on a method with the following signature:
+            </p>
+            <source xml:space="preserve">
+public Forward <em>method-name</em>(<em>exception-type</em> ex, String actionName, String message, Object formBean)</source>
+            <p>
+                The <em>exception-type</em> is the specific type of the exception you want to handle (or any superclass
+                type).
+            </p>
+            <p>
+                In general, an exception-handler method is much like an action method: it has access to member data in
+                the controller class, can perform logic, and chooses a navigation destination. Here is an example of 
+                handling an exception through a method, which increments a count, logs the error, and navigates back to
+                the current page:
+            </p>
+            <source xml:space="preserve">
+@Jpf.Controller(
+    catches={
+        @Jpf.Catch(type=MyException.class, method="handleMyException")
+    }
+)
+public class MyPageFlow extends PageFlowController
+{
+    private int myExceptionsCount = 0;
+                
+    ...
+
+    @Jpf.ExceptionHandler(
+        forwards={
+            @Jpf.Forward(name="backToCurrent", navigateTo=Jpf.NavigateTo.currentPage)
+        }
+    )
+    public Forward handleMyException(MyException e, String actionName, String message, Object formBean)
+    {
+        ++myExceptionsCount;
+        logger.error("My exception occurred.", e);
+        return new Forward("backToCurrent");
+    }
+}           </source>
+        </section>
+        <section id="sharingExceptionHandling">
+            <title>Sharing Exception Handling</title>
+            <p>
+                Exception handling works well with the <a href="site:pageflow_inheritance">Page Flow inheritance</a>
+                and <a href="site:pageflow_sharedFlow">Shared Flow</a> features, both of which allow you to share
+                exception handling across multiple page flows. The documentation gives guidelines on when to use each
+                one.
+            </p>
+        </section>
+        <section id="displaying">
+            <title>Displaying Exception Information</title>
+            <p>
+                There are two main ways to display exceptions using the NetUI JSP tags:
+            </p>
+            <ul>
+                <li>
+                    the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Exceptions.html">
+                        <code>Exceptions</code>
+                    </a>
+                    tag
+                </li>
+                <li>
+                    the
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Error.html">
+                        <code>Error</code>
+                    </a>
+                    or
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Errors.html">
+                        <code>Errors</code>
+                    </a>
+                    tags
+                </li>
+            </ul>
+            <section id="exceptionsTag">
+                <title>The <code>Exceptions</code> tag</title>
+                <p>
+                    The 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Exceptions.html">
+                        <code>Exceptions</code>
+                    </a>
+                    tag is a simple way to display raw exception information. You can use it to show the exception
+                    message and/or the exception stack trace. For example, the following page displays just the
+                    exception message:
+                </p>
+                <source xml:space="preserve">
+An exception occurred:
+    &lt;netui:exceptions showMessage="true" showStackTrace="false"/></source>
+            </section>
+            <section id="errorTags">
+                <title>The <code>Error</code> and <code>Errors</code> tags</title>
+                <p>
+                    The 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Error.html">
+                        <code>Error</code>
+                    </a>
+                    or
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/tags/html/Errors.html">
+                        <code>Errors</code>
+                    </a>
+                    tags are used to display localizable messages for exceptions.  By default, you must have a
+                    message resource whose name is the <em>class name of the thrown exception</em> in order to display
+                    the message. Consider the following page flow controller:
+                </p>
+                <source xml:space="preserve">
+@Jpf.Controller(
+    catches={
+        @Jpf.Catch(type=IllegalStateException.class, path="error.jsp")
+    },
+    messageBundles={
+        @Jpf.MessageBundle(bundlePath="example.MyMessages")
+    }
+)
+public class Controller extends PageFlowController
+{
+    @Jpf.Action
+    public Forward begin()
+    {
+        throw new IllegalStateException("Throwing intentionally...");
+    }
+}               </source>
+                <p>
+                    Here, an <code>IllegalStateException</code> is thrown in the <code>begin</code> action, and
+                    caught/forwarded to <code>error.jsp</code>, which has the following markup:
+                </p>
+                <source xml:space="preserve">
+An error occurred: &lt;netui:errors/></source>
+                <p>
+                    This will display the message <em>named</em> <strong>java.lang.IllegalStateException</strong>
+                    in <code>/WEB-INF/classes/example/MyMessages.properties</code>. You could also use the
+                    <code>netui:error</code> tag to refer to the specific exception message:
+                </p>
+                <source xml:space="preserve">
+An error occurred: &lt;netui:error key="java.lang.IllegalStateException"/></source>
+                <p>
+                    If you want to use your own message key (instead of <code>java.lang.IllegalStateException</code>),
+                    you use the 
+                    <a href="apidocs/javadoc/org/apache/beehive/netui/pageflow/annotations/Jpf.Catch.html#messageKey()">
+                        <code>messageKey</code>
+                    </a>
+                    attribute on <code>@Jpf.Catch</code>:
+                </p>
+                <source xml:space="preserve">
+@Jpf.Catch(type=IllegalStateException.class, path="error.jsp", messageKey="myMessageKey")</source>
+                <p>
+                    Now, you would see the message under key <code>myMessageKey</code> in
+                    <code>MyMessages.properties</code>.
+                </p>
+                <p>
+                    Finally, you can also specify a hardcoded message, or a JSP 2.0-style expression, instead of a
+                    message key.
+                </p>
+                <source xml:space="preserve">
+@Jpf.Controller(
+    catches={
+        @Jpf.Catch(type=IllegalStateException.class, path="error.jsp", message="This is a hardcoded message."),
+        @Jpf.Catch(type=NullPointerException.class, path="error.jsp", message="${pageFlow.class.name}")
+    }
+)               </source>
+                <p>
+                    In the first case, the error tags would display the string "This is a hardcoded message".  In the 
+                    second case, they would display the class name of the current page flow controller.
+                </p>
+            </section>
+        </section>
+    </body>
+</document>

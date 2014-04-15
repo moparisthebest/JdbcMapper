@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+ <header>
+  <title>Controls Containment</title>
+ </header>
+ <body>
+
+  <section><title>Overview</title>
+
+    <p>This document describes the basic architecture for how Beehive Controls interact with the 
+		runtime container they are executing within.   Examples of runtime containers for Controls 
+		include:
+    </p>
+
+    <ul>
+     <li>Servlet Container</li>
+     <li>EJB Container</li>
+     <li>Web Services (WSM)</li>
+     <li>Client JVM</li>
+     <li>JUnit Test Container (standalone testing)</li>
+     <li>...</li>
+    </ul>
+
+    <p>The base runtime comes with a sample container integration for the servlet container, but the container integration model is flexible enough to support any and all of the above containers, as well as enabling the list above to be extended or customized in new and interesting ways.   The model makes it possible to author controls that run in a wide variety of containers, as well as ones that expect and leverage the capabilities of a specific container (where desirable).
+    </p>
+
+    <p>This is possible because there is a basic architecture for how Controls will interact with their container.   This includes the interfaces for how a new type of container can be constructed, or for how an existing runtime environment can be extended to act as a container of controls.
+    </p>
+
+    <p>There are two target audiences for this document:</p>
+
+    <ul>
+     <li>A Control author who wants a deeper understanding of how controls interact with their runtime environment for resource management, configuration, contextual services, etc.</li>
+     <li>A Control container developer who wants to define a new type of Control container to integrate support for Beehive Controls into an existing environment. 
+     </li>
+    </ul>
+
+  </section><!-- Overview -->
+
+  <section><title>Basic Architecture</title>
+
+   <p>This section outlines the basic implementation architecture for Control containment.  Containment is based upon an existing JavaBean standard for bean composition and services, and build atop this to provide additional features that are unique to Controls.
+   </p>
+
+   <section>
+    <title>The Foundation: JavaBeans Containment</title>
+
+     <p>The basic foundation of Control Containment is the <a href="http://java.sun.com/products/javabeans/glasgow/beancontext.pdf">Extensible Runtime Containment and Services Protocol For JavaBeans"</a>, a little known but useful containment model for JavaBeans that has been part of J2SE since 1.2.   The intent of the protocol (actually, a set of interfaces and supporting implementation classes) was to add a simple containment model for JavaBeans, as well as a mechanism for allowing beans to discover, request, and use services provided by their container.   All of the APIs defined by the protocol live in the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/beans/beancontext/package-summary.html">java.beans.beancontext</a> package.
+     </p>
+
+     <p>This diagram shows the basic architecture for this protocol: </p>
+
+     <p>
+      <img src="images/jbContain.gif" alt=""/> 
+     </p>
+
+     <p>The basic concepts shown in the diagram are:
+     </p>
+
+     <ul>
+      <li>A JavaBean can be nested within a BeanContext that acts as a container for one (or more) beans.</li>
+      <li>A BeanContext can itself be nested within another BeanContext, enabling hierarchical composition.</li>
+      <li>A BeanContext can provide the JavaBean with access to services.  These services may be directly implemented by the BeanContext, or the BeanContext may simply act as a discovery mechanism/bridge to services provided by the runtime environment of the BeanContext.</li>
+     </ul>
+
+     <p>Some of the key classes are described in the following sections:
+     </p>
+
+     <section><title>BeanContext</title>
+
+      <p>The <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/beans/beancontext/BeanContext.html">java.beans.beancontext.BeanContext</a> interface defines the basic interface for a container of JavaBeans.  It derives from the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/Collection.html">java.util.Collection</a> interface, so the standard Collection APIs can be used to add, remove, and iterate over the JavaBeans contained within the context.   It also extends the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/beans/beancontext/BeanContextChild.html">java.beans.beancontext.BeanContextChild</a> interface (see next section), meaning it is possible for one BeanContext to be nested within another BeanContext, forming a hierarchical structure.
+      </p>
+
+      <p> Whenever you see word "<em>BeanContext</em>" throughout this document or in API names, mentally replace it with "<em>JavaBeans Container</em>".
+      </p>
+
+     </section><!-- BeanContext -->
+
+     <section><title>BeanContextChild</title>
+
+      <p>The <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/beans/beancontext/BeanContextChild.html">java.beans.beancontext.BeanContextChild</a> interface defines the basic interface that will be implemented (directly or indirectly via <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/beans/beancontext/BeanContextProxy.html">java.beans.beancontext.BeanContextProxy</a>) by a JavaBean that wants to be contained within/access the services of a BeanContext.  It defines the basic mechanism for setting/retrieving the parent BeanContext for a JavaBean, as well as the APIs for listening to / vetoing property changes on the nested bean.
+      </p>
+
+     </section><!-- BeanContextChild -->
+
+     <section><title>BeanContextServices</title>
+
+      <p>The <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/beans/beancontext/BeanContextServices.html">java.beans.beancontext.BeanContextServices</a> interface derives from the BeanContext interface and defines a BeanContext that is capable of providing services to the JavaBeans contained within it.   It defines a model for how services can be discovered and used by the contained JavaBeans, as well as a model for how service providers can register themselves with the context so their services will be available.
+      </p>
+
+      <p>Service discovery is hierarchical; if a particular BeanContext does not implement a service requested by a contained JavaBean, but is itself contained within another BeanContext, it will delegate the request upwards to see if any parent context can provide the requested service.
+      </p>
+
+     </section><!-- BeanContextServices -->
+
+    </section><!-- Foundation: JavaBeans Containment -->
+
+    <section><title>Building Up: Controls Containment</title>
+
+     <p>The Beehive Controls runtime builds atop the base JavaBeans BeanContext model by adding a set of interfaces and support classes that provide containment and composition services that are unique to Controls.  This section provides an overview of this functionality, and a subsequent section on <em>Control Container Services</em> will describe them in more detail.
+     </p>
+
+     <section><title>ControlBeanContext</title>
+
+      <p>The <a href="apidocs/javadoc/org/apache/beehive/controls/api/context/ControlBeanContext.html">org.apache.beehive.controls.api.context.ControlBeanContext</a> interface extends the base java.bean.BeanContextServices interface to add the unique services available to JavaBeans that are Beehive Controls.  These include access to control property values bound by annotations, external configuration, or client invocation of property accessors, as well as a unique set of lifecycle events.
+      </p>
+
+      <p>Every Control is guaranteed to have an associated peer ControlBeanContext that can be used to query Control properties, nest other controls (either declaratively or programmatically), and to receive lifecycle events.  This is true even if the Control is not itself nested within a parent context.  
+      </p>
+      <p>This peer ControlBeanContext can be obtained by declaring:</p>
+
+      <source>
+
+      @Context ControlBeanContext myContext;
+      </source>
+
+      <p>within the Control Implementation class, or by calling the <a href="apidocs/javadoc/org/apache/beehive/controls/api/bean/ControlBean.html#getControlBeanContext()">org.apache.beehive.controls.api.bean.ControlBean.getControlBeanContext()</a> API on a Control bean instance.
+      </p>
+ 
+      <section><title>Control Identifiers</title>
+
+       <p>The ControlBeanContext interface goes beyond the simple java.util.Collection collection capabilities of the base BeanContext class to also manage a unique identifier associated with each contained Control.  This identifier can come from a number of different sources:
+       </p>
+
+       <ul>
+        <li>An argument to the bean constructor</li>
+        <li>The field name, for an instance field annotated with @Control.  In the example above, the Control ID would be "myContext"</li>
+        <li>The ControlBeanContext will autogenerate a unique one, if none is provided</li>
+       </ul>
+
+       <p>Because Controls can be hierarchically nested inside one another, a given Control instance actually has two IDs: the local (or BeanContext relative) ID that was provided by one of the mechanisms above and a full (or absolute) ID that is built by concatenating the IDs of all Controls from the root BeanContext down to the control, using a forward slash ('/') as a separator.
+       </p> 
+
+       <p>For example, the Control ID "foo/bar" refers to the Control with a local ID of "bar" that is nested inside the control with a local ID of "foo" in the root context.
+       </p>
+
+       <p>An absolute Control ID is effectively a unique address that allows a control within a BeanContext hierarchy to be located by traversing the ownership path of Controls defined by this composite identifier.   
+       </p>
+
+       <p>This is useful in a number of contexts:</p>
+
+       <ul>
+        <li>To enable external configuration based upon identifier (usage context) rather than just a type.</li>
+        <li>To locate a specific control instance within a hieararchy by navigating the BeanContext tree based upon the ID.  This can be useful in scenarios such as an external event dispatch.</li>
+       </ul>
+
+      </section><!-- Control Identity -->
+
+      <p>The <a href="apidocs/javadoc/org/apache/beehive/controls/runtime/bean/ControlBeanContext.html">org.apache.beehive.controls.runtime.bean.ControlBeanContext</a> class provides a concrete implementation of the ControlBeanContext interface for the Controls runtime.  
+      </p>
+      <p>This class is used:</p>
+      <ul>
+       <li>To provide the basic set of services for Controls.  Every instantiated Control will have an associated ControlBeanContext to provide access to properties, or to contain nested Controls.</li>
+       <li>As a base class for other types of Control containers.  These common services are also available for other types of containers that want to support controls.  A later section describes this in more detail.</li>
+      </ul>
+
+     </section><!-- ControlBeanContext -->
+
+     <section><title>ControlBean</title>
+
+      <p>The <a href="apidocs/javadoc/org/apache/beehive/controls/api/bean/ControlBean.html">org.apache.beehive.controls.api.bean.ControlBean</a> interface defines a base interface implemented by all Controls.  It provides accessors for:
+      </p>
+    
+      <ul>
+       <li>The parent BeanContext of the Control</li>
+       <li>The peer ControlBeanContext providing property access and containment for nested controls</li>
+       <li>The (absolute) Control ID of the Control</li>
+       <li>The public interface (@ControlInterface or @ControlExtension) implemented by the Control.</li>
+      </ul>
+
+      <p>The <a href="apidocs/javadoc/org/apache/beehive/controls/runtime/bean/ControlBean.html">org.apache.beehive.controls.runtime.bean.ControlBean</a> class provides a concrete implementation of the ControlBean interface, and is used as the base class for all code-generated Control JavaBeans.
+      </p>
+
+     </section><!-- ControlBean -->
+
+     <section><title>ControlContainerContext</title>
+
+      <p>The 
+		<a href="apidocs/javadoc/org/apache/beehive/controls/runtime/bean/ControlContainerContext.html">org.apache.beehive.controls.runtime.bean.ControlContainerContext</a> class extends the base ControlBeanContext class to define a base integration model (and default implementation, where appropriate) of containment and services to integrate an external container type with the Controls runtime.  Examples of existing external containers for controls are the Servlet container, 
+		the EJB container, the Spring bean container, ...
+      </p>
+
+      <p>An external container can provide additional services to Controls that are running within its scope, such as a definition of how long it is OK for Controls to acquire and hold resources, the integration of a native container configuration model, or contextual services that are unique and specific to the container.   
+      </p>
+    
+      <p>For any given container, a custom subclass of the ControlContainerContext class can be provided that defines the unique attributes and semantics of the container for controls executing within it.  For example, the <a href="apidocs/javadoc/org/apache/beehive/controls/runtime/servlet/ServletBeanContext.html">ServletBeanContext</a> class provided as part of the Controls runtime provides control containment for the web tier.  The ServletBeanContext defines the resource scope for Controls such that any control instance can hold a resource (connection, session, ...) for the lifetime of a single http request (but no longer).  Additionally, it exposes web-tier-specific contextual services, such as access to the current ServletContext or active HttpServletRequest instance.
+      </p>
+
+      <p>The following section on Control Container Services describes many of the services and behaviors that can be customized by a ControlContainerContext subclass.
+      </p>
+
+      <p>A ControlContainer context is intended to be the root context which will contain (either directly, or indirectly via nested BeanContexts) all Controls used within the scope of a container instance.   Generally speaking, the relationship between container instances and ControlContainerContext instances will be one-to-one.
+      </p>
+
+      <p><em>Impl Note: there really should be an org.apache.beehive.controls.spi.context.ControlContainerContext interface that defines the basic interface for Controls containment, with the above class acting as the concrete implementation thereof.  This follows the pattern used everywhere else, and decouples the declaration of control container requirements from its implementation.</em>
+      </p>
+
+     </section><!-- ControlContainerContext< -->
+
+    </section><!-- Building Up: Controls Containment -->
+
+   </section><!-- Basic Architecture -->
+
+   <section><title>Control Container Services</title>
+
+   <p>The interactions between a control and its container are best expressed in terms of the set of functional services that the container provides to the control.  This provides a basic framework for understanding what happens at runtime when a Control uses those services (for the Control author) as well as the effort required to integrate these services into a specific container (for the Control container developer).
+   </p>
+
+   <!--<section>
+    <title>Nesting/Composition</title>
+    <p>To be completed</p>
+   </section>
+
+   <section>
+    <title>Property Management/Access</title>
+    <p>To be completed</p>
+   </section>
+
+   <section><title>Contextual Services</title>
+    <p>To be completed</p>
+   </section>
+
+   <section><title>Resource Management</title>
+    <p>To be completed</p>
+   </section>
+
+   <section><title>State Management</title>
+    <p>To be completed</p>
+   </section>
+
+   <section><title>External Event Dispatch</title>
+    <p>To be completed</p>
+   </section>-->
+
+  </section>
+ </body>
+</document>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ses:recorderSession xmlns:ses="http://beehive.apache.org/netui/tools/testrecorder/2004/session">
+   <ses:sessionName>DataGridJ886</ses:sessionName>
+   <ses:tester>ekoneil</ses:tester>
+   <ses:startDate>16 Aug 2005, 09:16:25.404 AM MDT</ses:startDate>
+   <ses:description>Test of formatting an object and the use of the 'value' attribute of the headerCell tag.</ses:description>
+   <ses:tests>
+      <ses:test>
+         <ses:testNumber>1</ses:testNumber>
+         <ses:request>
+            <ses:protocol>HTTP</ses:protocol>
+            <ses:protocolVersion>1.1</ses:protocolVersion>
+            <ses:host>localhost</ses:host>
+            <ses:port>8080</ses:port>
+            <ses:uri>/coreWeb/databinding/datagrid/bugs/j886.jsp</ses:uri>
+            <ses:method>GET</ses:method>
+            <ses:parameters/>
+            <ses:cookies>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>7F770D4E3E5BB1302BB5CBDF125611BB</ses:value>
+               </ses:cookie>
+               <ses:cookie>
+                  <ses:name>JSESSIONID</ses:name>
+                  <ses:value>1t0r0ke8twn3k</ses:value>
+               </ses:cookie>
+            </ses:cookies>
+            <ses:headers>
+               <ses:header>
+                  <ses:name>accept</ses:name>
+                  <ses:value>text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-charset</ses:name>
+                  <ses:value>ISO-8859-1,utf-8;q=0.7,*;q=0.7</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-encoding</ses:name>
+                  <ses:value>gzip,deflate</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>accept-language</ses:name>
+                  <ses:value>en-us,en;q=0.5</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>connection</ses:name>
+                  <ses:value>keep-alive</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>cookie</ses:name>
+                  <ses:value>JSESSIONID=7F770D4E3E5BB1302BB5CBDF125611BB; JSESSIONID=1t0r0ke8twn3k</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>host</ses:name>
+                  <ses:value>localhost:8080</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>keep-alive</ses:name>
+                  <ses:value>300</ses:value>
+               </ses:header>
+               <ses:header>
+                  <ses:name>user-agent</ses:name>
+                  <ses:value>Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.10) Gecko/20050720 Fedora/1.0.6-1.1.fc3 Firefox/1.0.6</ses:value>
+               </ses:header>
+            </ses:headers>
+         </ses:request>
+         <ses:response>
+            <ses:statusCode>200</ses:statusCode>
+            <ses:reason/>
+            <ses:responseBody><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+    <head>
+        <title>JIRA 886 -- adding a 'value' attribute to the headerCell tag</title>
+    </head>
+    
+
+
+
+
+
+
+    <body>
+    Page 1 of 1&nbsp;&nbsp;&nbsp;
+<table class="datagrid">
+
+        
+        
+    
+        
+<tr class="datagrid-header">
+            <th class="datagrid">Symbol</th>
+
+
+            <th class="datagrid">Price</th>
+
+
+        
+</tr>
+        
+    
+        
+        
+<tr class="datagrid-even">
+            <td class="datagrid"><span>BEAS</span></td>
+
+            <td class="datagrid"><span>$14.35</span></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>CSCO</span></td>
+
+            <td class="datagrid"><span>$19.42</span></td>
+
+        
+</tr>
+<tr class="datagrid-even">
+            <td class="datagrid"><span>GE</span></td>
+
+            <td class="datagrid"><span>$59.42</span></td>
+
+        
+</tr>
+<tr class="datagrid-odd">
+            <td class="datagrid"><span>RHAT</span></td>
+
+            <td class="datagrid"><span>$18.20</span></td>
+
+        
+</tr>
+<tr class="datagrid-even">
+            <td class="datagrid"><span>YHOO</span></td>
+
+            <td class="datagrid"><span>$48.16</span></td>
+
+        
+</tr>
+    </table>
+
+
+  </body>
+
+</html>]]></ses:responseBody>
+         </ses:response>
+      </ses:test>
+   </ses:tests>
+   <ses:endDate>16 Aug 2005, 09:16:37.762 AM MDT</ses:endDate>
+   <ses:testCount>1</ses:testCount>
+</ses:recorderSession>
