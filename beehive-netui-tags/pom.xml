@@ -21,20 +21,20 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.apache.beehive</groupId>
+        <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>beehive-netui-tags</artifactId>
     <name>beehive-netui-tags</name>
     <dependencies>
         <dependency>
-            <groupId>org.apache.beehive</groupId>
+            <groupId>com.moparisthebest.beehive</groupId>
             <artifactId>beehive-netui-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.beehive</groupId>
+            <groupId>com.moparisthebest.beehive</groupId>
             <artifactId>beehive-netui-bootstrap</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
@@ -135,7 +135,7 @@
                                             filename="beehive-netui-tags-html.tld"
                                             destdir="${metainf.dir}"
                                             validateXml="true"
-                                            packageName="org.apache.beehive.netui.tags"
+                                            packageName="com.moparisthebest.beehive.netui.tags"
                                             />
                                 </webdoclet>
                                 <webdoclet
@@ -161,8 +161,8 @@
                                             filename="beehive-netui-tags-databinding.tld"
                                             destdir="${metainf.dir}"
                                             validateXml="true"
-                                            packageName="org.apache.beehive.netui.tags.databinding"
-                                            functionPackage="org.apache.beehive.netui.databinding"
+                                            packageName="com.moparisthebest.beehive.netui.tags.databinding"
+                                            functionPackage="com.moparisthebest.beehive.netui.databinding"
                                             />
                                 </webdoclet>
                                 <webdoclet
@@ -188,7 +188,7 @@
                                             filename="beehive-netui-tags-template.tld"
                                             destdir="${metainf.dir}"
                                             validateXml="true"
-                                            packageName="org.apache.beehive.netui.tags.template"
+                                            packageName="com.moparisthebest.beehive.netui.tags.template"
                                             />
                                 </webdoclet>
                             </target>
@@ -198,7 +198,7 @@
                 <dependencies>
                     <!--
                     <dependency>
-                        <groupId>org.apache.beehive</groupId>
+                        <groupId>com.moparisthebest.beehive</groupId>
                         <artifactId>beehive-netui-bootstrap</artifactId>
                         <version>${project.version}</version>
                     </dependency>

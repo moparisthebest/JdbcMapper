@@ -21,23 +21,21 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.apache.beehive</groupId>
+        <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>beehive-ejb-control</artifactId>
     <name>beehive-ejb-control</name>
     <dependencies>
         <dependency>
-            <groupId>org.apache.beehive</groupId>
+            <groupId>com.moparisthebest.beehive</groupId>
             <artifactId>beehive-controls</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.moparisthebest.aptIn16</groupId>
             <artifactId>netui-compiler</artifactId>
-            <scope>compile</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>

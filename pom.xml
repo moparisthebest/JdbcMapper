@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+   $Header:$
+-->
+
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.beehive</groupId>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+    <groupId>com.moparisthebest.beehive</groupId>
     <artifactId>beehive</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.2-SNAPSHOT</version>
+    <description>
+        Beehive's goal is to make J2EE programming easier by building a simple object model on J2EE and Struts. Using
+        the new JSR-175 annotations, Beehive reduces the coding necessary for J2EE. The initial Beehive project has
+        three pieces.
+
+        NetUI: An annotation-driven web application programming framework that is built atop Struts. NetUI centralizes
+        navigation logic, state, metadata, and exception handling in a single encapsulated and reusable Page Flow
+        Controller class. In addition, NetUI provides a set of JSP tags for rendering HTML / XHTML and higher-level UI
+        constructs such as data grids and trees and has first-class integration with JavaServer Faces and Struts.
+
+        Controls: A lightweight, metadata-driven component framework for building that reduces the complexity of being a
+        client of enterprise resources. Controls provide a unified client abstraction that can be implemented to access
+        a diverse set of enterprise resources using a single configuration model.
+
+        In addition, Beehive includes a set of system controls that are abstractions for low-level J2EE resource APIs
+        such as EJB, JMS, JDBC, and web services.
+    </description>
+    <url>https://github.com/moparisthebest/beehive</url>
+    <organization>
+        <name>moparisthebest.com</name>
+        <url>http://www.moparisthebest.com</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>moparisthebest</id>
+            <name>Travis Burtrum</name>
+            <email>admin@moparisthebest.com</email>
+            <url>http://www.moparisthebest.com/</url>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:https://github.com/moparisthebest/beehive.git</connection>
+        <developerConnection>scm:git:https://github.com/moparisthebest/beehive.git</developerConnection>
+        <url>https://github.com/moparisthebest/beehive</url>
+    </scm>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <properties>
+        <maven.test.skip>true</maven.test.skip>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <packaging>pom</packaging>
     <modules>
         <module>controls</module>
@@ -17,10 +88,6 @@
         <module>beehive-jdbc-control</module>
         <module>beehive-jms-control</module>
     </modules>
-    <properties>
-        <maven.test.skip>true</maven.test.skip>
-        <maven.test.failure.ignore>true</maven.test.failure.ignore>
-    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -120,15 +187,9 @@
             <dependency>
                 <groupId>com.moparisthebest.aptIn16</groupId>
                 <artifactId>netui-compiler</artifactId>
-                <version>0.1</version>
-                <scope>compile</scope>
+                <version>0.2</version>
+                <scope>provided</scope>
                 <optional>true</optional>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.moparisthebest.aptIn16</groupId>
-                        <artifactId>apt-mirror-api</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>xmlbeans</groupId>

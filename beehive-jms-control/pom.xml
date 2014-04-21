@@ -21,9 +21,9 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.apache.beehive</groupId>
+        <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>beehive-jms-control</artifactId>
     <name>beehive-jms-control</name>
@@ -32,15 +32,9 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.apache.beehive</groupId>
+            <groupId>com.moparisthebest.beehive</groupId>
             <artifactId>beehive-controls</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.moparisthebest.aptIn16</groupId>
-            <artifactId>netui-compiler</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>xmlbeans</groupId>
@@ -80,8 +74,6 @@
                                                description="The destination directory for compiled class files.  Required."/>
                                     <attribute name="tempdir"
                                                description="The temporary directory for generated files.  Required."/>
-                                    <attribute name="classpathref"
-                                               description="The classpath reference for building the controls.  Required."/>
                                     <sequential>
                                         <taskdef name="apt"
                                                  classname="org.apache.beehive.controls.runtime.generator.AptTask"
@@ -91,7 +83,7 @@
                                         <apt srcdir="@{srcdir}"
                                              destdir="@{destdir}"
                                              gendir="@{tempdir}"
-                                             classpathref="@{classpathref}"
+                                             classpathref="maven.compile.classpath"
                                              compileByExtension="true"
                                              srcExtensions="*.java,*.jcx,*.jcs,*.jws"
                                              debug="true"
@@ -102,8 +94,7 @@
                                 <mkdir dir="${gensrc.dir}"/>
                                 <build-controls srcdir="${project.build.sourceDirectory}"
                                                 destdir="${gensrc.dir}"
-                                                tempdir="${gensrc.dir}"
-                                                classpathref="maven.compile.classpath"/>
+                                                tempdir="${gensrc.dir}"/>
                             </target>
                         </configuration>
                     </execution>
