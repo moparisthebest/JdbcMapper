@@ -108,6 +108,11 @@
     <!-- Compiles the source code of the project. -->
     <!-- ==================================================================== -->
     <target name="classes" depends="dirs">
+
+        <echo-fileset filesetref="api.classpath"/>
+        <echo-fileset filesetref="runtime.classpath"/>
+        <echo-fileset filesetref="test-container.classpath"/>
+
         <!-- Build the API and SPI classes -->
         <!-- These are built together because there are some cross-depencies  -->
         <!-- where API classes reference SPI interfaces                       -->

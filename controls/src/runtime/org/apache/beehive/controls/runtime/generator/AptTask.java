@@ -48,269 +48,309 @@ import java.util.Vector;
  */
 public class AptTask extends Javac
 {
-    /**
-     * The srcExtensions attribute can be set to a comma-separated list of source filename
-     * extensions that are considered to be valid inputs to APT processing.  
-     * The default value is "*.java".
-     */
-    public void setSrcExtensions(String srcExts)
-    {
-        StringTokenizer tok = new StringTokenizer(srcExts, ",");
-        while (tok.hasMoreTokens())
-            _srcExts.add(tok.nextToken());
-    }
-    
-    /**
-     * The srcExtensions attribute can be set to a comma-separated list of processor options
-     * (of the form <i>option</i> or <i>option</i><code>=</code><i>value</i>) to be passed to
-     * APT.
-     */
-    public void setProcessorOptions(String processorOptions)
-    {
-        StringTokenizer tok = new StringTokenizer(processorOptions, ",");
-        while (tok.hasMoreTokens())
-            _processorOptions.add(tok.nextToken());
-    }
+	/**
+	 * The srcExtensions attribute can be set to a comma-separated list of source filename
+	 * extensions that are considered to be valid inputs to APT processing.
+	 * The default value is "*.java".
+	 */
+	public void setSrcExtensions(String srcExts)
+	{
+		StringTokenizer tok = new StringTokenizer(srcExts, ",");
+		while (tok.hasMoreTokens())
+			_srcExts.add(tok.nextToken());
+	}
 
-    /**
-     * The gendir attribute specifies the name of the output directory for any files generated
-     * as a result of calling APT.
-     */
-    public void setGendir(File genDir)
-    {
-        _genDir = genDir;
-    }
+	/**
+	 * The srcExtensions attribute can be set to a comma-separated list of processor options
+	 * (of the form <i>option</i> or <i>option</i><code>=</code><i>value</i>) to be passed to
+	 * APT.
+	 */
+	public void setProcessorOptions(String processorOptions)
+	{
+		StringTokenizer tok = new StringTokenizer(processorOptions, ",");
+		while (tok.hasMoreTokens())
+			_processorOptions.add(tok.nextToken());
+	}
 
-    /**
-     * The nocompile attribute disables compilation of the input source file list and any
-     * generated sources that are derived from them.  The default value is 'false'.
-     */
-    public void setNocompile(boolean nocompile)
-    {
-        _nocompile = nocompile;
-    }
+	/**
+	 * The gendir attribute specifies the name of the output directory for any files generated
+	 * as a result of calling APT.
+	 */
+	public void setGendir(File genDir)
+	{
+		_genDir = genDir;
+	}
 
-    /**
-     * The compileByExtension attribute causes each input source extension to be compiled
-     * independently (and sequentially).  This is useful when one type of extensio can
-     * possibly depend upon the generation output from another. The default value 'false'.
-     */
-    public void setCompileByExtension(boolean compileByExt)
-    {
-        _compileByExt = compileByExt;
-    }
+	/**
+	 * The nocompile attribute disables compilation of the input source file list and any
+	 * generated sources that are derived from them.  The default value is 'false'.
+	 */
+	public void setNocompile(boolean nocompile)
+	{
+		_nocompile = nocompile;
+	}
 
-    /**
-     * Override the implementation of scanDir, to look for additional files based upon any
-     * specified source extensions
-     */
-    protected void scanDir(File srcDir, File destDir, String[] files, String ext) 
-    {
-        // If no source path was specified, we effectively created one by adding the generation
-        // path.   Because of this, we need to be sure and add all source dirs to the path too.
-        if (!_hasSourcepath)
-        {
-            Path srcPath = new Path(getProject()); 
-            srcPath.setLocation(srcDir);
-            Path sp = getSourcepath();
-            sp.append(srcPath);
-            setSourcepath(sp);
-        }
+	/**
+	 * The compileByExtension attribute causes each input source extension to be compiled
+	 * independently (and sequentially).  This is useful when one type of extensio can
+	 * possibly depend upon the generation output from another. The default value 'false'.
+	 */
+	public void setCompileByExtension(boolean compileByExt)
+	{
+		_compileByExt = compileByExt;
+	}
 
-        GlobPatternMapper m = new GlobPatternMapper();
-        m.setFrom(ext);
-        m.setTo("*.class");
-        SourceFileScanner sfs = new SourceFileScanner(this);
-        if (ext.equals("*.java"))
-        {
-            File[] newFiles = sfs.restrictAsFiles(files, srcDir, destDir, m);
-            if (newFiles.length > 0) 
-            {
-                File[] newCompileList = new File[compileList.length + newFiles.length];
-                System.arraycopy(compileList, 0, newCompileList, 0, compileList.length);
-                System.arraycopy(newFiles, 0, newCompileList, compileList.length, 
-                                 newFiles.length);
-                compileList = newCompileList;
-            }
-        }
-        else
-        {
-            String [] newSources = sfs.restrict(files, srcDir, destDir, m);
-            int extLen = ext.length() - 1;  // strip wildcard
-            if (newSources.length > 0) 
-            {
-                File[] newCompileList = new File[compileList.length + newSources.length];
-                System.arraycopy(compileList, 0, newCompileList, 0, compileList.length);
-                try
-                {
-                    FileUtils fileUtils = FileUtils.newFileUtils();
-                    for (int j = 0; j < newSources.length; j++)
-                    {
-                        String toName = 
-                            newSources[j].substring(0, newSources[j].length() - extLen) + 
-                            ".java";
-                                                               
-                        File srcFile = new File(srcDir, newSources[j]);
-                        File dstFile = new File(_genDir, toName);
-                        fileUtils.copyFile(srcFile, dstFile, null, true, true);
-                        newCompileList[compileList.length + j] = dstFile;
-                    }
-                }
-                catch (IOException ioe)
-                {
-                    throw new BuildException("Unable to copy " + ext + " file", ioe, 
-                                             getLocation());
-                }
-                compileList = newCompileList;
-            }
-        }
-    }
+	public void setFactory(String factory) {
+		_factory = factory;
+	}
 
-    public void execute() throws BuildException
-    {
-        // Ensure that the gendir attribute was specified
-        if (_genDir == null)
-            throw new BuildException("Missing genDir attribute: must be set to codegen output directory", getLocation());
+	public void setFactorypath(String factorypath) {
+		_factorypath = factorypath;
+	}
+
+	/**
+	 * Override the implementation of scanDir, to look for additional files based upon any
+	 * specified source extensions
+	 */
+	protected void scanDir(File srcDir, File destDir, String[] files, String ext)
+	{
+		// If no source path was specified, we effectively created one by adding the generation
+		// path.   Because of this, we need to be sure and add all source dirs to the path too.
+		if (!_hasSourcepath)
+		{
+			Path srcPath = new Path(getProject());
+			srcPath.setLocation(srcDir);
+			setSourcepath(srcPath);
+		}
+
+		GlobPatternMapper m = new GlobPatternMapper();
+		m.setFrom(ext);
+		m.setTo("*.class");
+		SourceFileScanner sfs = new SourceFileScanner(this);
+		if (ext.equals("*.java"))
+		{
+			File[] newFiles = sfs.restrictAsFiles(files, srcDir, destDir, m);
+			if (newFiles.length > 0)
+			{
+				File[] newCompileList = new File[compileList.length + newFiles.length];
+				System.arraycopy(compileList, 0, newCompileList, 0, compileList.length);
+				System.arraycopy(newFiles, 0, newCompileList, compileList.length,
+						newFiles.length);
+				compileList = newCompileList;
+			}
+		}
+		else
+		{
+			String [] newSources = sfs.restrict(files, srcDir, destDir, m);
+			int extLen = ext.length() - 1;  // strip wildcard
+			if (newSources.length > 0)
+			{
+				File[] newCompileList = new File[compileList.length + newSources.length];
+				System.arraycopy(compileList, 0, newCompileList, 0, compileList.length);
+				try
+				{
+					FileUtils fileUtils = FileUtils.newFileUtils();
+					for (int j = 0; j < newSources.length; j++)
+					{
+						String toName =
+								newSources[j].substring(0, newSources[j].length() - extLen) +
+										".java";
+
+						File srcFile = new File(srcDir, newSources[j]);
+						File dstFile = new File(_genDir, toName);
+						fileUtils.copyFile(srcFile, dstFile, null, true, true);
+						newCompileList[compileList.length + j] = dstFile;
+					}
+				}
+				catch (IOException ioe)
+				{
+					throw new BuildException("Unable to copy " + ext + " file", ioe,
+							getLocation());
+				}
+				compileList = newCompileList;
+			}
+		}
+	}
+
+	public void execute() throws BuildException
+	{
+		// Ensure that the gendir attribute was specified
+		if (_genDir == null)
+			throw new BuildException("Missing genDir attribute: must be set to codegen output directory", getLocation());
 
 
-        // If no source extension specified, then just process .java files
-        if (_srcExts.size() == 0)
-            _srcExts.add("*.java");
+		// If no source extension specified, then just process .java files
+		if (_srcExts.size() == 0)
+			_srcExts.add("*.java");
 
-        // Save whether a user sourcepath was provided, and if so, the paths
-        String[] userSourcepaths = null;
-        _hasSourcepath = getSourcepath() != null;
-        if ( _hasSourcepath )
-            userSourcepaths = getSourcepath().list();
+		// Save whether a user sourcepath was provided, and if so, the paths
+		String[] userSourcepaths = null;
+		_hasSourcepath = getSourcepath() != null;
+		if ( _hasSourcepath )
+			userSourcepaths = getSourcepath().list();
 
-        // The generation dir is always added to the source path for compilation
-        Path genPath = new Path(getProject()); 
-        genPath.setLocation(_genDir);
-        setSourcepath(genPath);
-        
-        // If the user sourcepath specifies subdirs underneath the srcdir, then we need to add
-        // the corresponding subdirs under the gendir to the source path for compilation.
-        // For example, if the user sourcepath is "<webapp-root>;<webapp-root>\WEB-INF\src",
-        // then the sourcepath for compilation should include "<gen-dir>;<gen-dir>\WEB-INF\src".
-        if ( _hasSourcepath )
-        {
-            String srcDirPath = (getSrcdir().list())[0]; // TODO: handle multiple srcdirs
-            for ( String p: userSourcepaths )
-            {
-                if ( p.startsWith( srcDirPath ) && p.length() > srcDirPath.length() )
-                {
-                    File genDirElem = new File( _genDir, p.substring( srcDirPath.length()+1 ));
-                    Path gp = new Path(getProject());
-                    gp.setLocation( genDirElem );
-                    setSourcepath(gp);
-                }
-            }
-        }
+		// The generation dir is always added to the source path for compilation
+		Path genPath = new Path(getProject());
+		genPath.setLocation(_genDir);
+		setSourcepath(genPath);
 
-        //
-        // Select the executable (apt) and set fork = true
-        //
-        setExecutable("apt");
-        setFork(true);
+		// If the user sourcepath specifies subdirs underneath the srcdir, then we need to add
+		// the corresponding subdirs under the gendir to the source path for compilation.
+		// For example, if the user sourcepath is "<webapp-root>;<webapp-root>\WEB-INF\src",
+		// then the sourcepath for compilation should include "<gen-dir>;<gen-dir>\WEB-INF\src".
+		if ( _hasSourcepath )
+		{
+			String srcDirPath = (getSrcdir().list())[0]; // TODO: handle multiple srcdirs
+			for ( String p: userSourcepaths )
+			{
+				if ( p.startsWith( srcDirPath ) && p.length() > srcDirPath.length() )
+				{
+					File genDirElem = new File( _genDir, p.substring( srcDirPath.length()+1 ));
+					Path gp = new Path(getProject());
+					gp.setLocation( genDirElem );
+					setSourcepath(gp);
+				}
+			}
+		}
 
-        //
-        // Specify the code generation output directory to APT
-        // 
-        Commandline.Argument arg = createCompilerArg();
-        arg.setValue("-s");
-        arg = createCompilerArg();
-        arg.setFile(_genDir);
+		// Select the executable (apt) and set fork = true
+		setExecutable("apt");
+		setFork(true);
 
-        //add the -nocompile flag if set to true
-        if(_nocompile)
-        {
-            Commandline.Argument ncarg = createCompilerArg();
-            ncarg.setValue("-nocompile");
-        }
-        
-        //
-        // Add processor options.
-        //
-        for (Object i : _processorOptions)
-        {
-            Commandline.Argument optionArg = createCompilerArg();
-            optionArg.setValue("-A" + i);
-        }
+		// Specify the code generation output directory to APT
+		Commandline.Argument arg = createCompilerArg();
+		arg.setValue("-s");
+		arg = createCompilerArg();
+		arg.setFile(_genDir);
 
-        checkParameters();
-        resetFileLists();
+		// Add the -nocompile flag if set to true
+		if(_nocompile)
+		{
+			Commandline.Argument ncarg = createCompilerArg();
+			ncarg.setValue("-nocompile");
+		}
 
-        // Iterate through the list of input extensions, matching/dependency checking based
-        // upon the input list.
-        for (int j = 0; j < _srcExts.size(); j++)
-        {
-            String ext = (String)_srcExts.get(j);
-            Vector<File> inputFiles = new Vector<File>();
+		// Add processor options.
+		for (Object i : _processorOptions)
+		{
+			Commandline.Argument optionArg = createCompilerArg();
+			optionArg.setValue("-A" + i);
+		}
 
-            // scan source directories and dest directory to build up
-            // compile lists
-            String[] list = getSrcdir().list();
-            File destDir = getDestdir();
-            for (int i = 0; i < list.length; i++) 
-            {
-                File srcFile = getProject().resolveFile(list[i]);
-                if (!srcFile.exists()) {
-                    throw new BuildException("srcdir \""
-                                         + srcFile.getPath()
-                                         + "\" does not exist!", getLocation());
-                }
+		checkParameters();
+		resetFileLists();
 
-                //
-                // The base <javac> algorithm is tweaked here, to allow <src> elements
-                // to contain a list of files _or_ a list of directories to scan.
-                //
-                if (srcFile.isDirectory())
-                {
-                    DirectoryScanner ds = this.getDirectoryScanner(srcFile);
-                    String[] files = ds.getIncludedFiles();
-                    scanDir(srcFile, destDir != null ? destDir : srcFile, files, ext);
-                }
-                else
-                {
-                    //
-                    // BUGBUG: Because these bypass scanning, they also bypass dependency chks :(
-                    //
-                    if (srcFile.getPath().endsWith(ext.substring(1)))
-                        inputFiles.add(srcFile);
-                }
-            }
+		//
+		// Allow user to define apt specific options for the name of an
+		// annotation processor (AP) factory to use or the factory path
+		// for finding the AP factories. This allows apt to bypass the
+		// default discovery process or specify where to find AP factories.
+		//
+		// This can help resolve build issues users may experience when
+		// multiple annotation processors conflict. For example,...
+		// A project may contain JAX-RPC 1.1 Web Services annotations.
+		// Starting with JDK1.6, JDK bundles the JAX-WS 2.0 AP in its
+		// tool jar. JAX-RPC and JAX-WS use the same JSR 181 annotations
+		// but the JAX-WS 2.0 AP doesn't support the earlier JAX-RPC use
+		// of the RPC/ENCODED soapbinding annotation on an endpoint.
+		// A user running the build through the Beehive AptTask and using
+		// Java 6, would see APT fail on JAX-RPC services thinking they are
+		// invalid JAX-WS services.
+		//
+		// In this example, using the -factorypath option does not disable the
+		// built-in annotation processor because tools.jar is always in APT's
+		// class path. However, exposing the option to use a specific factory
+		// can solve this problem. There can only be one factory name when
+		// invoking APT, so a user of this task may want to pass a wrapper
+		// factory that is an aggregated annotation processor factory.
+		//
+		if (_factorypath != null && _factorypath.trim().length() > 0) {
+			Commandline.Argument factoryArg = createCompilerArg();
+			factoryArg.setValue("-factorypath");
+			factoryArg = createCompilerArg();
+			factoryArg.setValue(_factorypath);
+		}
 
-            if (inputFiles.size() != 0)
-            {
-                File[] newCompileList = new File[compileList.length + inputFiles.size()];
-                inputFiles.toArray(newCompileList);
-                System.arraycopy(compileList, 0, newCompileList, inputFiles.size(), 
-                             compileList.length);
-                compileList = newCompileList;
-            }
+		if (_factory != null && _factory.trim().length() > 0) {
+			Commandline.Argument factoryArg = createCompilerArg();
+			factoryArg.setValue("-factory");
+			factoryArg = createCompilerArg();
+			factoryArg.setValue(_factory);
+		}
 
-            //
-            // If processing/compiling on a per-extension basis, then handle the current list,
-            // then reset the list fo files to compile before moving to the next extension
-            //
-            if (_compileByExt)
-            {
-                compile();
-                resetFileLists();
-            }
-        }
+		// Iterate through the list of input extensions, matching/dependency
+		// checking based upon the input list.
+		for (int j = 0; j < _srcExts.size(); j++)
+		{
+			String ext = (String)_srcExts.get(j);
+			Vector<File> inputFiles = new Vector<File>();
 
-        //
-        // If not processing on a per-extension basis, then compile the entire aggregated list
-        //
-        if (!_compileByExt)
-            compile();
-    }
+			// scan source directories and dest directory to build up
+			// compile lists
+			String[] list = getSrcdir().list();
+			File destDir = getDestdir();
+			for (int i = 0; i < list.length; i++)
+			{
+				File srcFile = getProject().resolveFile(list[i]);
+				if (!srcFile.exists()) {
+					throw new BuildException("srcdir \""
+							+ srcFile.getPath()
+							+ "\" does not exist!", getLocation());
+				}
 
-    protected boolean _nocompile = false;
-    protected boolean _compileByExt = false;
-    protected boolean _hasSourcepath;
-    protected File _genDir;
-    protected Vector/*<String>*/ _srcExts = new Vector/*<String>*/();
-    protected Vector/*<String>*/ _processorOptions = new Vector/*<String>*/();
+				//
+				// The base <javac> algorithm is tweaked here, to allow <src> elements
+				// to contain a list of files _or_ a list of directories to scan.
+				//
+				if (srcFile.isDirectory())
+				{
+					DirectoryScanner ds = this.getDirectoryScanner(srcFile);
+					String[] files = ds.getIncludedFiles();
+					scanDir(srcFile, destDir != null ? destDir : srcFile, files, ext);
+				}
+				else
+				{
+					//
+					// BUGBUG: Because these bypass scanning, they also bypass dependency chks :(
+					//
+					if (srcFile.getPath().endsWith(ext.substring(1)))
+						inputFiles.add(srcFile);
+				}
+			}
+
+			if (inputFiles.size() != 0)
+			{
+				File[] newCompileList = new File[compileList.length + inputFiles.size()];
+				inputFiles.toArray(newCompileList);
+				System.arraycopy(compileList, 0, newCompileList, inputFiles.size(),
+						compileList.length);
+				compileList = newCompileList;
+			}
+
+			//
+			// If processing/compiling on a per-extension basis, then handle the current list,
+			// then reset the list fo files to compile before moving to the next extension
+			//
+			if (_compileByExt)
+			{
+				compile();
+				resetFileLists();
+			}
+		}
+
+		//
+		// If not processing on a per-extension basis, then compile the entire aggregated list
+		//
+		if (!_compileByExt)
+			compile();
+	}
+
+	protected boolean _nocompile = false;
+	protected boolean _compileByExt = false;
+	protected boolean _hasSourcepath;
+	protected File _genDir;
+	protected Vector/*<String>*/ _srcExts = new Vector/*<String>*/();
+	protected Vector/*<String>*/ _processorOptions = new Vector/*<String>*/();
+	protected String _factory = null;
+	protected String _factorypath = null;
 }

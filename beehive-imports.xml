@@ -162,6 +162,15 @@
     <!-- Common Beehive Ant macros                                                -->
     <!-- ======================================================================== -->
 
+    <macrodef name="echo-fileset">
+        <attribute name="filesetref" />
+        <sequential>
+            <pathconvert pathsep="${line.separator}" property="@{filesetref}.echopath" refid="@{filesetref}"/>
+            <echo>   ------- echoing fileset @{filesetref} -------</echo>
+            <echo>${@{filesetref}.echopath}</echo>
+        </sequential>
+    </macrodef>
+
     <macrodef name="copy-junit">
         <attribute name="todir"/>
         <sequential>
@@ -305,15 +314,19 @@
     <!-- ======================================================================== -->
     <!-- Verify JDK version                                                       -->
     <!-- ======================================================================== -->
-    <property name="required.jdk.version" value="1.5"/>
     <condition property="jdk.version.okay">
-        <contains string="${java.version}" substring="${required.jdk.version}"/>
+        <or>
+          <contains string="${java.version}" substring="1.5"/>
+          <contains string="${java.version}" substring="1.6"/>
+          <contains string="${java.version}" substring="1.7"/>
+          <contains string="${java.version}" substring="1.8"/>
+        </or>
     </condition>
 
     <fail unless="jdk.version.okay">
 Newer JDK required.
 
-Building the project requires JDK ${required.jdk.version}
+Building the project requires JDK 1.5 or newer.
 
 You are currently using the following JDK:
 
@@ -338,6 +351,7 @@ adjust your JAVA_HOME environment variable.
           <!-- allow ant 1.7 for gump runs -->
           <contains string="${ant.version}" substring="1.6"/>
           <contains string="${ant.version}" substring="1.7"/>
+          <contains string="${ant.version}" substring="1.8"/>
         </or>
     </condition>
 

@@ -60,6 +60,7 @@
         </copy>
 
         <echo>Generate TLD</echo>
+        <echo-fileset filesetref="webdoclet.dependency.path"/>
         <taskdef name="webdoclet" classname="xdoclet.modules.web.WebDocletTask" classpathref="webdoclet.dependency.path"/>
         <webdoclet
                 destdir="${jars.dir}"

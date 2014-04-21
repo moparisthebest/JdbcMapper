@@ -34,6 +34,10 @@
 
     <target name="build" description="Builds the JMS control.">
 
+        <echo>compile module: ${module.name}</echo>
+        <property name="classpath" refid="module.classpath"/>
+        <echo>module classpath: ${classpath}</echo>
+
         <mkdir dir="${classes.dir}/${module.name}"/>
         <mkdir dir="${gen.src.dir}/${module.name}"/>
 
