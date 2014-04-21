@@ -1,1 +1,0 @@
-Not supported for rpc encoded services.

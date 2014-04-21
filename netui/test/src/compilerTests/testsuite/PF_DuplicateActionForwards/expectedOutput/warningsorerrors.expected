@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_DuplicateActionForwards\Controller.java:38: Duplicate Forward tag with name="pg1".
-    protected Forward page1()
-                      ^
-1 error

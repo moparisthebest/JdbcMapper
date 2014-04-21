@@ -1,7 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_SameMethodNameSig\Controller.java:47: page2() is already defined in PF_SameMethodNameSig.Controller
-    protected Forward page2()
-                      ^
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_SameMethodNameSig\Controller.java:47: page2() is already defined in PF_SameMethodNameSig.Controller
-    protected Forward page2()
-                      ^
-1 error

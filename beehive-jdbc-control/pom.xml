@@ -36,6 +36,8 @@
         <dependency>
             <groupId>com.moparisthebest.aptIn16</groupId>
             <artifactId>netui-compiler</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>xmlbeans</groupId>

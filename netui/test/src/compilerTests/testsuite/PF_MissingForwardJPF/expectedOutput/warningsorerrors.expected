@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_MissingForwardJPF\Controller.java:21: warning: File "/DoesNotExist.jpf" could not be found in the web application.
-    protected Forward begin()
-                      ^
-1 warning

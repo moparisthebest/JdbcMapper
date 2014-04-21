@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardMissingNameAttr\Controller.java:34: Attribute "name" must be present.
-    protected Forward page1()
-                      ^
-1 error

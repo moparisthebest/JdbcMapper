@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\SF_InvalidRelativePath\SharedFlow.java:25: warning: File "invalid.jsp" could not be found in the web application.
-    protected Forward invalidAction() {
-                      ^
-1 warning

@@ -1,3 +1,0 @@
-Struts 1.2.9
-
-Downloaded: 2006-09-28

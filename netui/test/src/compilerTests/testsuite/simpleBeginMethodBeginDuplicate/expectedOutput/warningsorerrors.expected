@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\simpleBeginMethodBeginDuplicate\Controller.java:17: Duplicate action "begin".
-public class Controller 
-       ^
-1 error

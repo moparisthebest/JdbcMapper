@@ -46,7 +46,6 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>../system-controls/src/jms</sourceDirectory>
         <resources>
             <resource>
                 <directory>${gensrc.dir}</directory>

@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\sharedFlowReference1\Controller.java:22: There is no SharedFlowRef annotation that declares a shared flow with name "shared".
-    private sharedFlowReference1.SharedFlow sfRef;
-                                            ^
-1 error

@@ -38,6 +38,7 @@
             <artifactId>beehive-netui-bootstrap</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
@@ -45,43 +46,7 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>../netui/src/tags-html</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>../netui/src/tags-html</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.tld</include>
-                    <include>**/*.gif</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>../netui/src/tags-databinding</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>../netui/src/tags-databinding</source>
-                                <source>../netui/src/tags-template</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -94,24 +59,6 @@
                         <configuration>
                             <target>
                                 <property name="metainf.dir" value="${project.build.outputDirectory}/META-INF/"/>
-                                <property name="src.dir" value="../netui/src"/>
-
-                                <!--
-                                <macrodef name="echo-fileset">
-                                    <attribute name="filesetref" />
-                                    <sequential>
-                                        <pathconvert pathsep="${line.separator}" property="@{filesetref}.echopath" refid="@{filesetref}"/>
-                                        <echo>   ++++++++ echoing fileset @{filesetref} ++++++++</echo>
-                                        <echo>${@{filesetref}.echopath}</echo>
-                                    </sequential>
-                                </macrodef>
-
-                                <echo-fileset filesetref="maven.compile.classpath"/>
-                                <echo-fileset filesetref="maven.runtime.classpath"/>
-                                <echo-fileset filesetref="maven.test.classpath"/>
-                                <echo-fileset filesetref="maven.plugin.classpath"/>
-                                <echo-fileset filesetref="webdoclet.dependency.path"/>
-                                -->
 
                                 <taskdef name="webdoclet" classname="xdoclet.modules.web.WebDocletTask"
                                          classpathref="maven.compile.classpath"/>
@@ -121,8 +68,10 @@
                                         force="true"
                                         verbose="true">
 
-                                    <fileset dir="${src.dir}/tags-html">
-                                        <include name="**/*.java"/>
+                                    <fileset dir="${project.build.sourceDirectory}">
+                                        <exclude name="org/apache/beehive/netui/tags/databinding/**"/>
+                                        <exclude name="org/apache/beehive/netui/tags/template/**"/>
+                                        <include name="org/apache/beehive/netui/tags/**/*.java"/>
                                     </fileset>
 
                                     <netuitldgen
@@ -135,7 +84,7 @@
                                             filename="beehive-netui-tags-html.tld"
                                             destdir="${metainf.dir}"
                                             validateXml="true"
-                                            packageName="com.moparisthebest.beehive.netui.tags"
+                                            packageName="org.apache.beehive.netui.tags"
                                             />
                                 </webdoclet>
                                 <webdoclet
@@ -144,11 +93,10 @@
                                         force="true"
                                         verbose="true">
 
-                                    <fileset dir="${src.dir}/tags-databinding">
-                                        <include name="**/*.java"/>
-                                    </fileset>
-                                    <fileset dir="${src.dir}/tags-html">
-                                        <include name="**/*.java"/>
+                                    <fileset dir="${project.build.sourceDirectory}">
+                                        <exclude name="org/apache/beehive/netui/tags/template/**"/>
+                                        <include name="org/apache/beehive/netui/databinding/**/*.java"/>
+                                        <include name="org/apache/beehive/netui/tags/**/*.java"/>
                                     </fileset>
 
                                     <netuitldgen
@@ -161,8 +109,8 @@
                                             filename="beehive-netui-tags-databinding.tld"
                                             destdir="${metainf.dir}"
                                             validateXml="true"
-                                            packageName="com.moparisthebest.beehive.netui.tags.databinding"
-                                            functionPackage="com.moparisthebest.beehive.netui.databinding"
+                                            packageName="org.apache.beehive.netui.tags.databinding"
+                                            functionPackage="org.apache.beehive.netui.databinding"
                                             />
                                 </webdoclet>
                                 <webdoclet
@@ -171,11 +119,9 @@
                                         force="true"
                                         verbose="true">
 
-                                    <fileset dir="${src.dir}/tags-template">
-                                        <include name="**/*.java"/>
-                                    </fileset>
-                                    <fileset dir="${src.dir}/tags-html">
-                                        <include name="**/*.java"/>
+                                    <fileset dir="${project.build.sourceDirectory}">
+                                        <exclude name="org/apache/beehive/netui/tags/databinding/**"/>
+                                        <include name="org/apache/beehive/netui/tags/**/*.java"/>
                                     </fileset>
 
                                     <netuitldgen
@@ -188,7 +134,7 @@
                                             filename="beehive-netui-tags-template.tld"
                                             destdir="${metainf.dir}"
                                             validateXml="true"
-                                            packageName="com.moparisthebest.beehive.netui.tags.template"
+                                            packageName="org.apache.beehive.netui.tags.template"
                                             />
                                 </webdoclet>
                             </target>

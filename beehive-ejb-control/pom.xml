@@ -42,7 +42,4 @@
             <artifactId>geronimo-j2ee_1.4_spec</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <sourceDirectory>../system-controls/src/ejb</sourceDirectory>
-    </build>
 </project>

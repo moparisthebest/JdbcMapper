@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ActionWith2Args\Controller.java:53: Expected a single argument.
-    protected Forward page1(TempForm inForm, String inString)
-                      ^
-1 error

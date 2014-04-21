@@ -68,19 +68,6 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>../netui/src/bootstrap</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>${project.build.sourceDirectory}</directory>
-                <includes>
-                    <include>**/*.xdt</include>
-                    <include>**/*.xml</include>
-                </includes>
-                <excludes>
-                    <exclude>build.xml</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -101,7 +88,7 @@
                                         <include name="org/apache/beehive/netui/tools/**/*TagsHandler.java"/>
                                         <include name="org/apache/beehive/netui/tools/**/*SubTask.java"/>
                                     </fileset>
-                                    <template templateFile="${project.build.sourceDirectory}/xdoclet-xml.xdt"
+                                    <template templateFile="${project.build.outputDirectory}/xdoclet-xml.xdt"
                                               destinationFile="xdoclet.xml"/>
                                 </xdoclet>
                             </target>

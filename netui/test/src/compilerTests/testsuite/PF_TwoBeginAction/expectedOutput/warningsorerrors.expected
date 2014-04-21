@@ -1,7 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_TwoBeginAction\Controller.java:35: begin() is already defined in PF_TwoBeginAction.Controller
-    protected Forward begin()
-                      ^
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_TwoBeginAction\Controller.java:35: begin() is already defined in PF_TwoBeginAction.Controller
-    protected Forward begin()
-                      ^
-1 error

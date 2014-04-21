@@ -1,7 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardSyntax\Controller.java:38: ')' expected
-                myattribute = "testing")
-                ^
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_ForwardSyntax\Controller.java:38: ')' expected
-                myattribute = "testing")
-                ^
-1 error

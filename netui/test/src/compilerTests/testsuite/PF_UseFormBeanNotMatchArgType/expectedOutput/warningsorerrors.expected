@@ -1,7 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_UseFormBeanNotMatchArgType\Controller.java:44: The useFormBean attribute points to a member of type PF_UseFormBeanNotMatchArgType.Controller.FormTwo, which requires that this action method accept an argument of type PF_UseFormBeanNotMatchArgType.Controller.FormTwo.
-   public Forward action1(FormOne inForm)
-                  ^
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_UseFormBeanNotMatchArgType\Controller.java:57: The useFormBean attribute points to a member of type PF_UseFormBeanNotMatchArgType.Controller.FormOne, which requires that this action method accept an argument of type PF_UseFormBeanNotMatchArgType.Controller.FormOne.
-   public Forward action2(FormTwo inForm)
-                  ^
-2 errors

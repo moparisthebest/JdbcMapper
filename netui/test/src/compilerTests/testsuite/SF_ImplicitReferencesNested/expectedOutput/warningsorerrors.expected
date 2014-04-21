@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\SF_ImplicitReferencesNested\Controller.java:23: warning: Field sfRef is of a type that extends org.apache.beehive.netui.pageflow.SharedFlowController, but it has no @Jpf.SharedFlowField annotation.  It will not be initialized automatically.
-    private SF_ImplicitReferencesNested.SharedFlow sfRef;
-                                                   ^
-1 warning

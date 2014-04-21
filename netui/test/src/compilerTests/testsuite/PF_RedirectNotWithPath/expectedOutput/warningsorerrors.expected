@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_RedirectNotWithPath\Controller.java:39: Attribute "redirect" may only be present when one of attributes "path", "navigateTo", or "action" is present.
-    protected Forward page1()
-                      ^
-1 error

@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\PF_NonNestedWithReturnAction\Controller.java:38: Attribute "returnAction" is only valid in a nested PageFlowController.
-    protected Forward page1()
-                      ^
-1 error

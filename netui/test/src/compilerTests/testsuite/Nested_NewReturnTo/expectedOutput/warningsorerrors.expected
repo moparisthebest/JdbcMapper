@@ -1,8 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\Nested_NewReturnTo\Controller.java:121: warning: The "page" value is deprecated.
-    protected Forward action5()
-                      ^
-Note: [LOCAL_PATH]\WEB-INF\.tmpbeansrc\Nested_NewReturnTo\Controller.java uses or overrides a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-1 warning
-Note: [LOCAL_PATH]\WEB-INF\.tmpbeansrc\Nested_NewReturnTo\Controller.java uses or overrides a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.

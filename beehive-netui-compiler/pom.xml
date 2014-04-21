@@ -35,42 +35,4 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <build>
-        <sourceDirectory>../netui/src/compiler-core</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>../netui/src/compiler-core</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.dtd</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>../netui/src/compiler-apt</directory>
-                <includes>
-                    <include>META-INF/**</include>
-                </includes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>../netui/src/compiler-apt</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

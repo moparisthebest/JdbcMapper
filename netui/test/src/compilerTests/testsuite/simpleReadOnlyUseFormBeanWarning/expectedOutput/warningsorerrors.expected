@@ -1,4 +1,0 @@
-[LOCAL_PATH]\WEB-INF\.tmpbeansrc\simpleReadOnlyUseFormBeanWarning\readOnlyController.java:18: warning: This action has the readOnly attribute set to true, but the useFormBean attribute may cause the value of member field scopedBean to be modified.
-public class readOnlyController extends PageFlowController
-       ^
-1 warning
