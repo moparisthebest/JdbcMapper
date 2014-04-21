@@ -44,7 +44,4 @@
             <artifactId>xbean</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <sourceDirectory>../system-controls/src/jdbc</sourceDirectory>
-    </build>
 </project>
