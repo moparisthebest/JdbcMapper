@@ -28,7 +28,7 @@
     <artifactId>beehive-jms-control</artifactId>
     <name>beehive-jms-control</name>
     <properties>
-        <gensrc.dir>${project.build.directory}/generated-sources</gensrc.dir>
+        <gensrc.dir>${project.build.outputDirectory}</gensrc.dir>
     </properties>
     <dependencies>
         <dependency>
@@ -46,14 +46,6 @@
         </dependency>
     </dependencies>
     <build>
-        <resources>
-            <resource>
-                <directory>${gensrc.dir}</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>

@@ -206,6 +206,10 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
+                <!-- For generated sources, ugly hack, but maven-source-plugin can't do it any other way right now? -->
+                <directory>${project.build.outputDirectory}</directory>
+            </resource>
+            <resource>
                 <directory>../</directory>
                 <includes>
                     <include>LICENSE.txt</include>
@@ -231,6 +235,25 @@
                 <configuration>
                     <excludes>
                         <exclude>**/*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+                </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>
