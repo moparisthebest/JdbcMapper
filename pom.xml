@@ -27,7 +27,7 @@
     </parent>
     <groupId>com.moparisthebest.beehive</groupId>
     <artifactId>beehive</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <description>
         Beehive's goal is to make J2EE programming easier by building a simple object model on J2EE and Struts. Using
         the new JSR-175 annotations, Beehive reduces the coding necessary for J2EE. The initial Beehive project has

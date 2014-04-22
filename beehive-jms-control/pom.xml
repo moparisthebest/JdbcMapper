@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
     <artifactId>beehive-jms-control</artifactId>
     <name>beehive-jms-control</name>
@@ -59,9 +59,9 @@
                         <configuration>
                             <target>
                                 <macrodef name="build-controls">
-                                    <attribute name="srcdir" description="The directory containing controls to build.  Required." />
-                                    <attribute name="destdir" description="The destination directory for compiled class files.  Required." />
-                                    <attribute name="tempdir" description="The temporary directory for generated files.  Required." />
+                                    <attribute name="srcdir" description="The directory containing controls to build. Required." />
+                                    <attribute name="destdir" description="The destination directory for compiled class files. Required." />
+                                    <attribute name="tempdir" description="The temporary directory for generated files. Required." />
                                     <sequential>
                                         <taskdef name="apt" classname="org.apache.beehive.controls.runtime.generator.AptTask" classpathref="maven.compile.classpath" onerror="fail" />
 
