@@ -29,7 +29,7 @@ import java.util.Iterator;
 /**
  * Default ResultSetMapper implementation for Iterators.
  */
-public class DefaultIteratorResultSetMapper extends ResultSetMapper {
+public class DefaultIteratorResultSetMapper extends AbstractResultSetMapper {
 
     /**
      * Map a ResultSet to an object type

@@ -33,7 +33,7 @@ import java.util.Calendar;
 /**
  * Default ResultSetMapper implementation for RowSets.
  */
-public class DefaultRowSetResultSetMapper extends ResultSetMapper {
+public class DefaultRowSetResultSetMapper extends AbstractResultSetMapper {
 
     /**
      * Map a ResultSet to a RowSet.  Type of RowSet is defined by the SQL annotation for the method.

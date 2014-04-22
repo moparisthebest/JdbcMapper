@@ -28,7 +28,7 @@ import java.util.Calendar;
 /**
  * Default ResultSetMapper implementation for ResultSets.
  */
-public class DefaultResultSetMapper extends ResultSetMapper {
+public class DefaultResultSetMapper extends AbstractResultSetMapper {
 
     /**
      * Maps a ResultSet to a ResultSet.  The default implementation is a NOOP.

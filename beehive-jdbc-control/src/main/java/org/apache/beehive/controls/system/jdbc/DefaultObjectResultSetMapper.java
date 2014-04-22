@@ -34,7 +34,7 @@ import java.util.Calendar;
 /**
  * Default ResultSetMapper implementation for Objects.
  */
-public class DefaultObjectResultSetMapper extends ResultSetMapper {
+public class DefaultObjectResultSetMapper extends AbstractResultSetMapper {
 
     /**
      * static reference to the TypeMappingsFactory for this class
