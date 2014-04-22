@@ -18,12 +18,12 @@
    $Header:$
 -->
 
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <artifactId>beehive-netui-tags</artifactId>
     <name>beehive-netui-tags</name>
@@ -58,84 +58,37 @@
                         </goals>
                         <configuration>
                             <target>
-                                <property name="metainf.dir" value="${project.build.outputDirectory}/META-INF/"/>
+                                <property name="metainf.dir" value="${project.build.outputDirectory}/META-INF/" />
 
-                                <taskdef name="webdoclet" classname="xdoclet.modules.web.WebDocletTask"
-                                         classpathref="maven.compile.classpath"/>
-                                <webdoclet
-                                        destdir="${metainf.dir}"
-                                        excludedtags="@version,@author,@todo"
-                                        force="true"
-                                        verbose="true">
+                                <taskdef name="webdoclet" classname="xdoclet.modules.web.WebDocletTask" classpathref="maven.compile.classpath" />
+                                <webdoclet destdir="${metainf.dir}" excludedtags="@version,@author,@todo" force="true" verbose="true">
 
                                     <fileset dir="${project.build.sourceDirectory}">
-                                        <exclude name="org/apache/beehive/netui/tags/databinding/**"/>
-                                        <exclude name="org/apache/beehive/netui/tags/template/**"/>
-                                        <include name="org/apache/beehive/netui/tags/**/*.java"/>
+                                        <exclude name="org/apache/beehive/netui/tags/databinding/**" />
+                                        <exclude name="org/apache/beehive/netui/tags/template/**" />
+                                        <include name="org/apache/beehive/netui/tags/**/*.java" />
                                     </fileset>
 
-                                    <netuitldgen
-                                            xmlencoding="UTF-8"
-                                            taglibversion="1.0"
-                                            jspversion="1.2"
-                                            shortname="netui"
-                                            uri="http://beehive.apache.org/netui/tags-html-1.0"
-                                            description="NetUI HTML controls taglibrary."
-                                            filename="beehive-netui-tags-html.tld"
-                                            destdir="${metainf.dir}"
-                                            validateXml="true"
-                                            packageName="org.apache.beehive.netui.tags"
-                                            />
+                                    <netuitldgen xmlencoding="UTF-8" taglibversion="1.0" jspversion="1.2" shortname="netui" uri="http://beehive.apache.org/netui/tags-html-1.0" description="NetUI HTML controls taglibrary." filename="beehive-netui-tags-html.tld" destdir="${metainf.dir}" validateXml="true" packageName="org.apache.beehive.netui.tags" />
                                 </webdoclet>
-                                <webdoclet
-                                        destdir="${metainf.dir}"
-                                        excludedtags="@version,@author,@todo"
-                                        force="true"
-                                        verbose="true">
+                                <webdoclet destdir="${metainf.dir}" excludedtags="@version,@author,@todo" force="true" verbose="true">
 
                                     <fileset dir="${project.build.sourceDirectory}">
-                                        <exclude name="org/apache/beehive/netui/tags/template/**"/>
-                                        <include name="org/apache/beehive/netui/databinding/**/*.java"/>
-                                        <include name="org/apache/beehive/netui/tags/**/*.java"/>
+                                        <exclude name="org/apache/beehive/netui/tags/template/**" />
+                                        <include name="org/apache/beehive/netui/databinding/**/*.java" />
+                                        <include name="org/apache/beehive/netui/tags/**/*.java" />
                                     </fileset>
 
-                                    <netuitldgen
-                                            xmlencoding="UTF-8"
-                                            taglibversion="1.0"
-                                            jspversion="1.2"
-                                            shortname="netui-data"
-                                            uri="http://beehive.apache.org/netui/tags-databinding-1.0"
-                                            description="NetUI Databinding Tag Library."
-                                            filename="beehive-netui-tags-databinding.tld"
-                                            destdir="${metainf.dir}"
-                                            validateXml="true"
-                                            packageName="org.apache.beehive.netui.tags.databinding"
-                                            functionPackage="org.apache.beehive.netui.databinding"
-                                            />
+                                    <netuitldgen xmlencoding="UTF-8" taglibversion="1.0" jspversion="1.2" shortname="netui-data" uri="http://beehive.apache.org/netui/tags-databinding-1.0" description="NetUI Databinding Tag Library." filename="beehive-netui-tags-databinding.tld" destdir="${metainf.dir}" validateXml="true" packageName="org.apache.beehive.netui.tags.databinding" functionPackage="org.apache.beehive.netui.databinding" />
                                 </webdoclet>
-                                <webdoclet
-                                        destdir="${metainf.dir}"
-                                        excludedtags="@version,@author,@todo"
-                                        force="true"
-                                        verbose="true">
+                                <webdoclet destdir="${metainf.dir}" excludedtags="@version,@author,@todo" force="true" verbose="true">
 
                                     <fileset dir="${project.build.sourceDirectory}">
-                                        <exclude name="org/apache/beehive/netui/tags/databinding/**"/>
-                                        <include name="org/apache/beehive/netui/tags/**/*.java"/>
+                                        <exclude name="org/apache/beehive/netui/tags/databinding/**" />
+                                        <include name="org/apache/beehive/netui/tags/**/*.java" />
                                     </fileset>
 
-                                    <netuitldgen
-                                            xmlencoding="UTF-8"
-                                            taglibversion="1.0"
-                                            jspversion="1.2"
-                                            shortname="netui-template"
-                                            uri="http://beehive.apache.org/netui/tags-template-1.0"
-                                            description="NetUI Template controls taglibrary."
-                                            filename="beehive-netui-tags-template.tld"
-                                            destdir="${metainf.dir}"
-                                            validateXml="true"
-                                            packageName="org.apache.beehive.netui.tags.template"
-                                            />
+                                    <netuitldgen xmlencoding="UTF-8" taglibversion="1.0" jspversion="1.2" shortname="netui-template" uri="http://beehive.apache.org/netui/tags-template-1.0" description="NetUI Template controls taglibrary." filename="beehive-netui-tags-template.tld" destdir="${metainf.dir}" validateXml="true" packageName="org.apache.beehive.netui.tags.template" />
                                 </webdoclet>
                             </target>
                         </configuration>

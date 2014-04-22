@@ -18,12 +18,12 @@
    $Header:$
 -->
 
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <artifactId>beehive-jms-control</artifactId>
     <name>beehive-jms-control</name>
@@ -59,33 +59,18 @@
                         <configuration>
                             <target>
                                 <macrodef name="build-controls">
-                                    <attribute name="srcdir"
-                                               description="The directory containing controls to build.  Required."/>
-                                    <attribute name="destdir"
-                                               description="The destination directory for compiled class files.  Required."/>
-                                    <attribute name="tempdir"
-                                               description="The temporary directory for generated files.  Required."/>
+                                    <attribute name="srcdir" description="The directory containing controls to build.  Required." />
+                                    <attribute name="destdir" description="The destination directory for compiled class files.  Required." />
+                                    <attribute name="tempdir" description="The temporary directory for generated files.  Required." />
                                     <sequential>
-                                        <taskdef name="apt"
-                                                 classname="org.apache.beehive.controls.runtime.generator.AptTask"
-                                                 classpathref="maven.compile.classpath"
-                                                 onerror="fail"/>
+                                        <taskdef name="apt" classname="org.apache.beehive.controls.runtime.generator.AptTask" classpathref="maven.compile.classpath" onerror="fail" />
 
-                                        <apt srcdir="@{srcdir}"
-                                             destdir="@{destdir}"
-                                             gendir="@{tempdir}"
-                                             classpathref="maven.compile.classpath"
-                                             compileByExtension="true"
-                                             srcExtensions="*.java,*.jcx,*.jcs,*.jws"
-                                             debug="true"
-                                             nocompile="true"/>
+                                        <apt srcdir="@{srcdir}" destdir="@{destdir}" gendir="@{tempdir}" classpathref="maven.compile.classpath" compileByExtension="true" srcExtensions="*.java,*.jcx,*.jcs,*.jws" debug="true" nocompile="true" />
                                     </sequential>
                                 </macrodef>
 
-                                <mkdir dir="${gensrc.dir}"/>
-                                <build-controls srcdir="${project.build.sourceDirectory}"
-                                                destdir="${gensrc.dir}"
-                                                tempdir="${gensrc.dir}"/>
+                                <mkdir dir="${gensrc.dir}" />
+                                <build-controls srcdir="${project.build.sourceDirectory}" destdir="${gensrc.dir}" tempdir="${gensrc.dir}" />
                             </target>
                         </configuration>
                     </execution>
