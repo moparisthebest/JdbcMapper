@@ -16,8 +16,8 @@ public abstract class UpdateableDTO implements Finishable {
 	private String tableName;
 	private String whereClause;
 
-	public static final String YES = "Y";
-	public static final String NO = "N";
+	public static final String YES = System.getProperty("UpdateableDTO.YES", "Y");
+	public static final String NO = System.getProperty("UpdateableDTO.NO", "N");
 
 	/**
 	 * Will always return YES or NO from this class, so they CAN be compared with object equality '==' instead of '.equals()'
