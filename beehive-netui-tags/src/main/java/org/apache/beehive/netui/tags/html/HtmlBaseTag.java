@@ -86,6 +86,72 @@ abstract public class HtmlBaseTag extends AbstractClassicTag
         tsh.styleClass = styleClass;
     }
 
+	/**
+	 * Set the ID of the tag.
+	 * @param id the tagId. A value is required.
+	 * @jsptagref.attributedescription <p>String value. Sets the <code>id</code> (or <code>name</code>) attribute of the rendered HTML tag.
+	 * Note that the real id attribute rendered in the browser may be
+	 * changed by the application container (for example, Portal containers may change
+	 * the rendered id value to ensure the uniqueness of
+	 * id's on the page). In this case, the real id rendered
+	 * in the browser may be looked up
+	 * through the JavaScript function <code>lookupIdByTagId( tagId, tag )</code>.
+	 *
+	 * <p>For example, assume that some tag's <code>tagId</code> attribute is set to <code>foo</code>.
+	 *
+	 * <pre>    &lt;netui:textBox <b>tagId="foo"</b> /></pre>
+	 *
+	 * <p>Then the following JavaScript function will return the real id attribute rendered in the browser:
+	 *
+	 * <pre>    lookupIdByTagId( "foo", this )</pre>
+	 *
+	 * <p>To get a &lt;netui:form> element and all of its children elements in JavaScript, use
+	 * the same JavaScript function <code>lookupIdByTagId( tagId, tag )</code>.  For example,
+	 * assume that there is a &lt;netui:form> whose
+	 * tagId attribute is set to <code>bar</code>.
+	 *
+	 * <pre>    &lt;netui:form <b>tagId="bar"</b> ></pre>
+	 *
+	 * <p>Then the following JavaScript function will return the &lt;netui:form> element
+	 * and its children (packaged as an array).
+	 *
+	 * <pre>    document[lookupIdByTagId( "bar", this )]</pre>
+	 *
+	 * <p>To retreive the value entered into a &lt;netui:textBox> within the &lt;netui:form> tag, use the following
+	 * JavaScript expression.
+	 *
+	 * <pre>    document[lookupIdByTagId("bar", this)][lookupIdByTagId("foo", this)].value</pre>
+	 *
+	 * <p>The second parameter ensures that the JavaScript function
+	 * begins its search within the correct Portlet scope.  Pass the
+	 * JavaScript keyword <code>this</code> as the second parameter.
+	 * @jsptagref.databindable false
+	 * @jsptagref.attributesyntaxvalue <i>string_tagId</i>
+	 * @netui:attribute required="false" rtexprvalue="true"
+	 * description="String value. Sets the id (or name) attribute of the rendered HTML tag. "
+	 */
+	public void setId(String id)
+	{
+		super.setId(id);
+		try {
+			setTagId(id);
+		} catch (JspException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Return the ID of the tag.  The id may be rewritten by the container (such
+	 * as a portal) to make sure it is unique.  JavaScript may lookup the actual id
+	 * of the element by looking it up in the <code>netui_names</code> table written
+	 * into the HTML.
+	 * @return the tagId.
+	 */
+	public String getId()
+	{
+		return getTagId();
+	}
+
     /**
      * Set the ID of the tag.
      * @param tagId the tagId. A value is required.
