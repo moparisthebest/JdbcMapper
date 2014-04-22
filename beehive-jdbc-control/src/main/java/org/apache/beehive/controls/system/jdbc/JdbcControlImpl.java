@@ -72,7 +72,7 @@ public class JdbcControlImpl implements JdbcControl, Extensible, java.io.Seriali
 
     private static final String EMPTY_STRING = "";
     private static final Log LOGGER = LogFactory.getLog(JdbcControlImpl.class);
-    private static final ResultSetMapper DEFAULT_MAPPER = new DefaultObjectResultSetMapper();
+    private static final ResultSetMapper DEFAULT_MAPPER = new NewDefaultObjectResultSetMapper();
     private static final SqlParser _sqlParser = new SqlParser();
 
     protected static final HashMap<Class, ResultSetMapper> _resultMappers = new HashMap<Class, ResultSetMapper>();
@@ -83,7 +83,6 @@ public class JdbcControlImpl implements JdbcControl, Extensible, java.io.Seriali
     //
     static {
         _resultMappers.put(ResultSet.class, new DefaultResultSetMapper());
-        _resultMappers.put(Iterator.class, new DefaultIteratorResultSetMapper());
 
         try {
             _xmlObjectClass = Class.forName("org.apache.xmlbeans.XmlObject");
