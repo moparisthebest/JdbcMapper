@@ -4,12 +4,24 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.io.*;
+import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.*;
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
 public class QueryMapper implements Closeable {
+
+	static {
+		try{
+			final Class<?> ensureContext = Class.forName(System.getProperty("QueryMapper.ensureContext.class", "com.gcl.containerless.EnsureContext"));
+			final Method method = ensureContext.getMethod(System.getProperty("QueryMapper.ensureContext.method", "setup"));
+			method.invoke(null);
+		}catch(Throwable e){
+			// ignore
+			e.printStackTrace();
+		}
+	}
 
 	protected final ResultSetMapper cm;
 	protected final Connection conn;
@@ -20,7 +32,6 @@ public class QueryMapper implements Closeable {
 		Context context = null;
 		if (conn == null && jndiName != null)
                     try {
-                        //todo: EnsureContext.setup();
                         context = new InitialContext();
                         DataSource ds = (DataSource) context.lookup(jndiName);
                         conn = ds.getConnection();
