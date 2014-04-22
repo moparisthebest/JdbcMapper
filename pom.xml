@@ -85,6 +85,7 @@
         <module>beehive-jdbc-control</module>
         <module>beehive-ejb-control</module>
         <module>beehive-jms-control</module>
+        <module>beehive-jdbc-mapper</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -227,6 +228,7 @@
                     <source>1.5</source>
                     <target>1.5</target>
                     <debug>true</debug>
+                    <!--compilerArgument>-Xlint:unchecked</compilerArgument-->
                 </configuration>
             </plugin>
             <plugin>
