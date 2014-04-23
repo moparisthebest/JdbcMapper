@@ -589,7 +589,8 @@ public abstract class FlowController extends PageFlowManagedObject
         }
         finally
         {
-            setPerRequestState( prevState );
+            if(prevState != null)
+                setPerRequestState( prevState );
 
             PageFlowControlContainer pfcc = PageFlowControlContainerFactory.getControlContainer(request,getServletContext());
             pfcc.endContextOnPageFlow(this);
