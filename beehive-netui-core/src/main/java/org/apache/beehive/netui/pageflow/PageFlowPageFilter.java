@@ -67,6 +67,7 @@ public abstract class PageFlowPageFilter
     private ServletContainerAdapter _servletContainerAdapter;
     private FlowControllerFactory _flowControllerFactory;
     private Map _knownModulePaths = new InternalConcurrentHashMap();
+    private String whitelistPrefix = null;
 
     protected PageFlowPageFilter()
     {
@@ -92,6 +93,8 @@ public abstract class PageFlowPageFilter
 
         _servletContainerAdapter = AdapterManager.getServletContainerAdapter( _servletContext );
         _flowControllerFactory = FlowControllerFactory.get( _servletContext );
+
+        whitelistPrefix = filterConfig.getInitParameter("whitelist-prefix");
     }
 
     public void doFilter( ServletRequest request, ServletResponse response, FilterChain chain )
@@ -116,6 +119,16 @@ public abstract class PageFlowPageFilter
             }
 
             String servletPath = InternalUtils.getDecodedServletPath( httpRequest );
+
+            if (whitelistPrefix != null && !servletPath.startsWith(whitelistPrefix)) {
+                if (LOG.isDebugEnabled())
+                    LOG.debug("Path " + servletPath +
+                            " does not start with specified whitelist-prefix " + whitelistPrefix + ".  Skipping filter.");
+
+                continueChainNoWrapper(request, response, chain);
+                return;
+            }
+
             String extension = FileUtils.getFileExtension( servletPath );
             Set validFileExtensions = getValidFileExtensions();
 
