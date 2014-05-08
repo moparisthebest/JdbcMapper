@@ -71,7 +71,7 @@ abstract public class HtmlDataSourceTag
      * <p>&nbsp;&nbsp;&nbsp;&nbsp;<code>&lt;netui-data:repeater dataSource="pageFlow.myIterativeData"></code>
      * @jsptagref.databindable true
      * @jsptagref.attributesyntaxvalue <i>expression_datasource</i>
-     * @netui:attribute required="true"
+     * @netui:attribute required="true" rtexprvalue="true"
      * description="The <code>dataSource</code> attribute determines both
      * the source of populating data for the tag and
      * the object to which the tag submits data."
