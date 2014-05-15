@@ -117,11 +117,20 @@ public class RowToObjectMapper<T> extends RowMapper {
 	}
 
 	/**
+	 * This returns a new instance of the Map class required by Map<String, Object>[]
+	 * It lives in it's own method to minimize suppressed warnings and allow subclasses to override methods,
+	 * like perhaps to implement the original beehive behavior of case-insensitive strings
+	 */
+	@SuppressWarnings({"unchecked"})
+	protected Map<String, Object> getMapImplementation() throws IllegalAccessException, InstantiationException {
+		return (Map<String, Object>)_returnTypeClass.newInstance();
+	}
+
+	/**
 	 * Do the mapping.
 	 *
 	 * @return An object instance.
 	 */
-	@SuppressWarnings({"unchecked"})
 	public T mapRowToReturnType() {
 
 		if (resultSetConstructor != null)
@@ -134,7 +143,7 @@ public class RowToObjectMapper<T> extends RowMapper {
 		
 		if(returnMap) // we want a map
 			try {
-				final Map<String, Object> ret = (Map<String, Object>)_returnTypeClass.newInstance();
+				final Map<String, Object> ret = getMapImplementation();
 				final ResultSetMetaData md = _resultSet.getMetaData();
 				final int columnLength = _columnCount+1;
 				if(componentType != null && componentType != Object.class){ // we want a specific value type
