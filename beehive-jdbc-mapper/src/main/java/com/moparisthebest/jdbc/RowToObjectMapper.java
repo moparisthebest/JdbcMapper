@@ -331,18 +331,19 @@ public class RowToObjectMapper<T> extends RowMapper {
 			if (isSetterMethod(m)) {
 				String fieldName = m.getName().substring(3).toUpperCase();
 				//System.out.println("METHOD-fieldName: "+fieldName);
-				if (!mapFields.containsKey(fieldName)) {
+				AccessibleObject field = mapFields.get(fieldName);
+				if (field == null) {
 					fieldName = strippedKeys.get(fieldName);
 					if (fieldName == null)
 						continue;
+					field = mapFields.get(fieldName);
 				}
 				// check for overloads
-				Object field = mapFields.get(fieldName);
 				if (field == null) {
 					mapFields.put(fieldName, m);
 				} else {
-					throw new MapperException("Unable to choose between overloaded methods " + m.getName()
-							+ " on the " + _returnTypeClass.getName() + " class. Mapping is done using "
+					throw new MapperException("Unable to choose between overloaded methods '" + m.getName()
+							+ "' and '"+((Method)field).getName()+"' for field '"+fieldName+"' on the " + _returnTypeClass.getName() + " class. Mapping is done using "
 							+ "a case insensitive comparison of SQL ResultSet columns to field "
 							+ "names and public setter methods on the return class. Columns are also "
 							+ "stripped of '_' and compared if no match is found with them.");
@@ -379,9 +380,9 @@ public class RowToObjectMapper<T> extends RowMapper {
 		for (int i = 1; i < _fields.length; i++) {
 			AccessibleObject f = mapFields.get(keys[i]);
 			if (f == null) {
-				throw new MapperException("Unable to map the SQL column " + keys[i]
-						+ " to a field on the " + _returnTypeClass.getName() +
-						" class. Mapping is done using a case insensitive comparision of SQL ResultSet "
+				throw new MapperException("Unable to map the SQL column '" + keys[i]
+						+ "' to a field on the '" + _returnTypeClass.getName() +
+						"' class. Mapping is done using a case insensitive comparison of SQL ResultSet "
 						+ "columns to field "
 						+ "names and public setter methods on the return class. Columns are also "
 						+ "stripped of '_' and compared if no match is found with them.");
