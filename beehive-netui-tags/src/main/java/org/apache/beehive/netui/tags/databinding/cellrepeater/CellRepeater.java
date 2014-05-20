@@ -399,7 +399,7 @@ public class CellRepeater
      *
      * <p>&nbsp;&nbsp;&nbsp;&nbsp;<code>&lt;netui-data:cellRepeater dataSource="pageFlow.myIterativeData"></code>
      * @jsptagref.attributesyntaxvalue <i>expression_datasource</i>
-     * @netui:attribute required="true"
+     * @netui:attribute required="true" rtexprvalue="true"
      */
     public void setDataSource(String dataSource) {
         _dataSource = dataSource;

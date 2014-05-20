@@ -326,7 +326,7 @@ abstract public class HtmlGroupBaseTag
      * the source of populating data for the tag
      * @jsptagref.databindable false
      * @jsptagref.attributesyntaxvalue <i>string_dataSource</i>
-     * @netui:attribute required="true"
+     * @netui:attribute required="true" rtexprvalue="true"
      * description="Sets the tag's data source."
      */
     public void setDataSource(String dataSource)

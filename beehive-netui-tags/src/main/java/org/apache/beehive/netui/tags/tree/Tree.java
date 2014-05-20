@@ -671,7 +671,7 @@ public class Tree extends AbstractSimpleTag implements HtmlConstants,
      * that represents the root of the tree.
      * @jsptagref.databindable true
      * @jsptagref.attributesyntaxvalue <i>string_dataSource</i>
-     * @netui:attribute required="true"
+     * @netui:attribute required="true" rtexprvalue="true"
      * description="Sets an expression which indentifies the TreeElement that represents the root of
      * the tree."
      */

@@ -327,7 +327,7 @@ public class DataGrid
      * This expression will be evaluated the data grid in order to obtain a reference to the data set.
      * </p>
      * @jsptagref.attributesyntaxvalue <i>string_dataSource</i>
-     * @netui:attribute required="true"
+     * @netui:attribute required="true" rtexprvalue="true"
      *                  description="The <code>dataSource</code> attribute determines both
      *                               the source of populating data for the tag and the object to which the tag submits data."
      */

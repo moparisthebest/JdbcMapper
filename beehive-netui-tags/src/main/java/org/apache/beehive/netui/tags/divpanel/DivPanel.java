@@ -82,7 +82,7 @@ public class DivPanel extends AbstractClassicTag
      * @jsptagref.attributedescription An expression which identifies which DivPanelState object will store state between posts to the server.
      * @jsptagref.databindable true
      * @jsptagref.attributesyntaxvalue <i>expression</i>
-     * @netui:attribute description="Sets an expression which indentifies the DivPanelState storing the state of the
+     * @netui:attribute rtexprvalue="true" description="Sets an expression which indentifies the DivPanelState storing the state of the
      * DivPanel between posts."
      */
     public void setDataSource(String dataSource)
