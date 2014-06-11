@@ -3,3 +3,4 @@
 **/build
 **/target
 **~
+**derby.log

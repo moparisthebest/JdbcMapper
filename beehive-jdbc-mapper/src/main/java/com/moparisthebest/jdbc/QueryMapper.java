@@ -19,7 +19,7 @@ public class QueryMapper implements Closeable {
 			method.invoke(null);
 		}catch(Throwable e){
 			// ignore
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 

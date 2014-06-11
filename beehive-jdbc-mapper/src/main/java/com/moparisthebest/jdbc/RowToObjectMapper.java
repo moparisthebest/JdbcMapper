@@ -341,23 +341,32 @@ public class RowToObjectMapper<T> extends RowMapper {
 			//System.out.printf("method: '%s', isSetterMethod: '%s'\n", m, isSetterMethod(m));
 			if (isSetterMethod(m)) {
 				String fieldName = m.getName().substring(3).toUpperCase();
-				//System.out.println("METHOD-fieldName: "+fieldName);
-				AccessibleObject field = mapFields.get(fieldName);
-				if (field == null) {
+				//System.out.println("METHOD-fieldName1: "+fieldName);
+				if (!mapFields.containsKey(fieldName)) {
 					fieldName = strippedKeys.get(fieldName);
 					if (fieldName == null)
 						continue;
-					field = mapFields.get(fieldName);
+					//System.out.println("METHOD-fieldName2: "+fieldName);
 				}
+				final AccessibleObject field = mapFields.get(fieldName);
 				// check for overloads
 				if (field == null) {
 					mapFields.put(fieldName, m);
 				} else {
-					throw new MapperException("Unable to choose between overloaded methods '" + m.getName()
-							+ "' and '"+((Method)field).getName()+"' for field '"+fieldName+"' on the " + _returnTypeClass.getName() + " class. Mapping is done using "
-							+ "a case insensitive comparison of SQL ResultSet columns to field "
-							+ "names and public setter methods on the return class. Columns are also "
-							+ "stripped of '_' and compared if no match is found with them.");
+					// fix for 'overloaded' methods when it comes to stripped keys, we want the exact match
+					final String thisName = m.getName().substring(3).toUpperCase();
+					final String previousName = ((Method) field).getName().substring(3).toUpperCase();
+					//System.out.printf("thisName: '%s', previousName: '%s', mapFields.containsKey(thisName): %b, strippedKeys.containsKey(previousName): %b\n", thisName, previousName, mapFields.containsKey(thisName), strippedKeys.containsKey(previousName));
+					if(mapFields.containsKey(thisName) && strippedKeys.containsKey(previousName)) {
+						mapFields.put(fieldName, m);
+					} else if (!mapFields.containsKey(previousName) || !strippedKeys.containsKey(thisName)) {
+						throw new MapperException("Unable to choose between overloaded methods '" + m.getName()
+								+ "' and '" + ((Method) field).getName() + "' for field '" + fieldName + "' on the '" + _returnTypeClass.getName() + "' class. Mapping is done using "
+								+ "a case insensitive comparison of SQL ResultSet columns to field "
+								+ "names and public setter methods on the return class. Columns are also "
+								+ "stripped of '_' and compared if no match is found with them.");
+					}
+					// then the 'overloaded' method is already correct
 				}
 			}
 		}
@@ -377,9 +386,24 @@ public class RowToObjectMapper<T> extends RowMapper {
 					if (fieldName == null)
 						continue;
 				}
-				Object field = mapFields.get(fieldName);
+				final AccessibleObject field = mapFields.get(fieldName);
 				if (field == null) {
 					mapFields.put(fieldName, f);
+				} else if(field instanceof Field) {
+					// fix for 'overloaded' fields when it comes to stripped keys, we want the exact match
+					final String thisName = f.getName().toUpperCase();
+					final String previousName = ((Field) field).getName().toUpperCase();
+					//System.out.printf("thisName: '%s', previousName: '%s', mapFields.containsKey(thisName): %b, strippedKeys.containsKey(previousName): %b\n", thisName, previousName, mapFields.containsKey(thisName), strippedKeys.containsKey(previousName));
+					if(mapFields.containsKey(thisName) && strippedKeys.containsKey(previousName)) {
+						mapFields.put(fieldName, f);
+					} else if (!mapFields.containsKey(previousName) || !strippedKeys.containsKey(thisName)) {
+						throw new MapperException("Unable to choose between overloaded fields '" + f.getName()
+								+ "' and '" + ((Field) field).getName() + "' for field '" + fieldName + "' on the '" + _returnTypeClass.getName() + "' class. Mapping is done using "
+								+ "a case insensitive comparison of SQL ResultSet columns to field "
+								+ "names and public setter methods on the return class. Columns are also "
+								+ "stripped of '_' and compared if no match is found with them.");
+					}
+					// then the 'overloaded' field is already correct
 				}
 			}
 		}
