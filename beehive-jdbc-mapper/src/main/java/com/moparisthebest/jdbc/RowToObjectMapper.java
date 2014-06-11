@@ -53,12 +53,13 @@ public class RowToObjectMapper<T> extends RowMapper {
 	public static final int TYPE_BOOLEAN_OBJ = _tmf.getTypeId(Boolean.class);//TypeMappingsFactory.TYPE_BOOLEAN_OBJ; // not public?
 
 	protected final int _columnCount;
-	protected final Constructor<T> resultSetConstructor;
+	protected final boolean resultSetConstructor;
+	protected final Constructor<T> constructor;
 	protected final Class<? extends T> _returnTypeClass; // over-ride non-generic version of this in super class
 	
 	// only non-null when _returnTypeClass is an array, or a map
 	protected final Class<?> componentType;
-	protected final boolean returnMap;     	
+	protected final boolean returnMap;
 
 	protected AccessibleObject[] _fields;
 	protected int[] _fieldTypes;
@@ -99,15 +100,25 @@ public class RowToObjectMapper<T> extends RowMapper {
 		_fields = null;
 
 		// detect if returnTypeClass has a constructor that takes a ResultSet, if so, our job couldn't be easier...
-		Constructor<T> resultSetConstructor = null;
+		boolean resultSetConstructor = false;
+		Constructor<T> constructor = null;
 		try {
-			resultSetConstructor = returnTypeClass.getConstructor(ResultSet.class);
-			if (!resultSetConstructor.isAccessible())
-				resultSetConstructor.setAccessible(true);
+			constructor = returnTypeClass.getConstructor(ResultSet.class);
+			if (!constructor.isAccessible())
+				constructor.setAccessible(true);
+			resultSetConstructor = true;
 		} catch (Throwable e) {
-			// do nothing, no such constructor
+			// if no resultSetConstructor find the constructor
+			try {
+				constructor = returnTypeClass.getDeclaredConstructor();
+				if (!constructor.isAccessible())
+					constructor.setAccessible(true);
+			} catch (Throwable e1) {
+				throw new MapperException("Exception when trying to get constructor for : "+returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+			}
 		}
 		this.resultSetConstructor = resultSetConstructor;
+		this.constructor = constructor;
 
 		try {
 			_columnCount = resultSet.getMetaData().getColumnCount();
@@ -133,9 +144,9 @@ public class RowToObjectMapper<T> extends RowMapper {
 	 */
 	public T mapRowToReturnType() {
 
-		if (resultSetConstructor != null)
+		if (resultSetConstructor)
 			try {
-				return resultSetConstructor.newInstance(_resultSet);
+				return constructor.newInstance(_resultSet);
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
 						+ _returnTypeClass.getName() + " sending in a ResultSet object as a parameter", e);
@@ -205,7 +216,7 @@ public class RowToObjectMapper<T> extends RowMapper {
 		}
 
 		try {
-			resultObject = _returnTypeClass.newInstance();
+			resultObject = constructor.newInstance();
 		} catch (Throwable e) {
 			throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
 					+ _returnTypeClass.getName(), e);
