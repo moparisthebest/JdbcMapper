@@ -67,7 +67,7 @@ public class RowToObjectMapper<T> extends RowMapper {
 	protected final Object[] _args = new Object[1];
 
 	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass) {
-		this(resultSet, returnTypeClass, null, null);	
+		this(resultSet, returnTypeClass, null, null);
 	}
 
 	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Class<?> mapValType) {
@@ -99,6 +99,12 @@ public class RowToObjectMapper<T> extends RowMapper {
 
 		_fields = null;
 
+		try {
+			_columnCount = resultSet.getMetaData().getColumnCount();
+		} catch (SQLException e) {
+			throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
+		}
+
 		// detect if returnTypeClass has a constructor that takes a ResultSet, if so, our job couldn't be easier...
 		boolean resultSetConstructor = false;
 		Constructor<T> constructor = null;
@@ -114,17 +120,12 @@ public class RowToObjectMapper<T> extends RowMapper {
 				if (!constructor.isAccessible())
 					constructor.setAccessible(true);
 			} catch (Throwable e1) {
-				throw new MapperException("Exception when trying to get constructor for : "+returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+				if(_columnCount != 1) // if column count is only 1, it might map directly to a type like a Long or something
+					throw new MapperException("Exception when trying to get constructor for : "+returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
 			}
 		}
 		this.resultSetConstructor = resultSetConstructor;
 		this.constructor = constructor;
-
-		try {
-			_columnCount = resultSet.getMetaData().getColumnCount();
-		} catch (SQLException e) {
-			throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
-		}
 	}
 
 	/**
@@ -218,6 +219,8 @@ public class RowToObjectMapper<T> extends RowMapper {
 		try {
 			resultObject = constructor.newInstance();
 		} catch (Throwable e) {
+			if(constructor == null) // then this is a different error
+				throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e);
 			throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
 					+ _returnTypeClass.getName(), e);
 		}

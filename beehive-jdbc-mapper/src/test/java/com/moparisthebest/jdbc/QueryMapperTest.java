@@ -6,9 +6,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Date;
+import java.util.*;
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
@@ -185,6 +186,34 @@ public class QueryMapperTest {
 	@Test
 	public void testReverseSetUnderscore() throws Throwable {
 		testPerson(reverseSetBoss2, bossUnderscore);
+	}
+
+	@Test
+	public void testSelectLong() throws Throwable {
+		Assert.assertEquals(new Long(1L), qm.toObject("SELECT person_no FROM person WHERE person_no = ?", Long.class, 1L));
+	}
+
+	@Test
+	public void testSelectListMap() throws Throwable {
+		final List<Map<String, String>> arrayMap = getListMap();
+		Assert.assertEquals(arrayMap, qm.toListMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
+	}
+
+	@Test
+	public void testSelectArrayMap() throws Throwable {
+		final List<Map<String, String>> arrayMap = getListMap();
+		Assert.assertEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.toArrayMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
+	}
+
+	private List<Map<String, String>> getListMap() {
+		final List<Map<String, String>> arrayMap = new ArrayList<Map<String, String>>();
+		for (final Person person : new Person[]{fieldPerson1, fieldBoss1, fieldBoss2}) {
+			final Map<String, String> map = new HashMap<String, String>();
+			map.put("last_name", person.getLastName());
+			map.put("first_name", person.getFirstName());
+			arrayMap.add(map);
+		}
+		return arrayMap;
 	}
 
 	private static void testPerson(final Person expected, final String query) throws Throwable {
