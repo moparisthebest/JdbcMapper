@@ -205,6 +205,23 @@ public class QueryMapperTest {
 		Assert.assertEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.toArrayMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
 	}
 
+	@Test
+	public void testSelectMapString() throws Throwable {
+		final Map<String, String> map = new HashMap<String, String>();
+		for (final Person person : new Person[]{fieldPerson1, fieldBoss1, fieldBoss2})
+			map.put(person.getFirstName(), person.getLastName());
+		Assert.assertEquals(map, qm.toMap("SELECT first_name, last_name FROM person WHERE person_no < 4", String.class, String.class));
+	}
+
+	@Test
+	public void testSelectMapLong() throws Throwable {
+		final Map<Long, Long> map = new HashMap<Long, Long>();
+		for (final Person person : new Person[]{fieldPerson1, fieldBoss1, fieldBoss2})
+			map.put(person.getPersonNo(), person.getPersonNo());
+		Assert.assertEquals(map, qm.toMap("SELECT person_no AS first_no, person_no AS last_no FROM person WHERE person_no < 4", Long.class, Long.class));
+	}
+
+
 	private List<Map<String, String>> getListMap() {
 		final List<Map<String, String>> arrayMap = new ArrayList<Map<String, String>>();
 		for (final Person person : new Person[]{fieldPerson1, fieldBoss1, fieldBoss2}) {

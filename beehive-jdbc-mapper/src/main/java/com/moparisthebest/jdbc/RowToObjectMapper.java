@@ -120,7 +120,7 @@ public class RowToObjectMapper<T> extends RowMapper {
 				if (!constructor.isAccessible())
 					constructor.setAccessible(true);
 			} catch (Throwable e1) {
-				if(_columnCount != 1) // if column count is only 1, it might map directly to a type like a Long or something
+				if(_columnCount > 2) // if column count is 2 or less, it might map directly to a type like a Long or something, or be a map which does
 					throw new MapperException("Exception when trying to get constructor for : "+returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
 			}
 		}
