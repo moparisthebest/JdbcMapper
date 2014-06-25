@@ -25,6 +25,7 @@ import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.util.FileUtils;
 import org.apache.tools.ant.util.GlobPatternMapper;
+import org.apache.tools.ant.util.JavaEnvUtils;
 import org.apache.tools.ant.util.SourceFileScanner;
 
 import java.io.File;
@@ -214,7 +215,8 @@ public class AptTask extends Javac
 		}
 
 		// Select the executable (apt) and set fork = true
-		setExecutable("apt");
+		if(getExecutable() == null)
+			setExecutable(JavaEnvUtils.getJdkExecutable("apt"));
 		setFork(true);
 
 		// Specify the code generation output directory to APT
