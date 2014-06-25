@@ -143,6 +143,7 @@ public class RowToObjectMapper<T> extends RowMapper {
 	 *
 	 * @return An object instance.
 	 */
+	@SuppressWarnings({"unchecked"})
 	public T mapRowToReturnType() {
 
 		if (resultSetConstructor)
@@ -195,7 +196,7 @@ public class RowToObjectMapper<T> extends RowMapper {
 
 			try {
 				if (typeId != TypeMappingsFactory.TYPE_UNKNOWN) {
-					return _returnTypeClass.cast(extractColumnValue(1, typeId));
+					return (T)extractColumnValue(1, typeId);
 				} else {
 					// we still might want a single value (i.e. java.util.Date)
 					Object val = extractColumnValue(1, typeId);

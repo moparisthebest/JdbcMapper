@@ -221,6 +221,18 @@ public class QueryMapperTest {
 		Assert.assertEquals(map, qm.toMap("SELECT person_no AS first_no, person_no AS last_no FROM person WHERE person_no < 4", Long.class, Long.class));
 	}
 
+	@Test
+	public void testSelectLongObject() throws Throwable {
+		final Long expected = fieldPerson1.getPersonNo();
+		Assert.assertEquals(expected, qm.toObject("SELECT person_no FROM person WHERE person_no = ?", Long.class, expected));
+	}
+
+	@Test
+	public void testSelectLongPrimitive() throws Throwable {
+		final Long expected = fieldPerson1.getPersonNo();
+		Assert.assertEquals(expected, qm.toObject("SELECT person_no FROM person WHERE person_no = ?", long.class, expected));
+	}
+
 
 	private List<Map<String, String>> getListMap() {
 		final List<Map<String, String>> arrayMap = new ArrayList<Map<String, String>>();
