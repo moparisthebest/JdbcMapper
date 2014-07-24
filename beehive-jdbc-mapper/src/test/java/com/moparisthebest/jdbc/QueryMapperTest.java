@@ -229,10 +229,15 @@ public class QueryMapperTest {
 
 	@Test
 	public void testSelectLongPrimitive() throws Throwable {
-		final Long expected = fieldPerson1.getPersonNo();
-		Assert.assertEquals(expected, qm.toObject("SELECT person_no FROM person WHERE person_no = ?", long.class, expected));
+		final long expected = fieldPerson1.getPersonNo();
+		Assert.assertEquals((Object)expected, qm.toObject("SELECT person_no FROM person WHERE person_no = ?", long.class, expected));
 	}
 
+	@Test
+	public void testSelectLongObjectArray() throws Throwable {
+		final Long[] expected = {fieldPerson1.getPersonNo()};
+		Assert.assertArrayEquals(expected, qm.toArray("SELECT person_no FROM person WHERE person_no = ?", Long.class, expected[0]));
+	}
 
 	private List<Map<String, String>> getListMap() {
 		final List<Map<String, String>> arrayMap = new ArrayList<Map<String, String>>();
