@@ -109,7 +109,7 @@ public class ResultSetMapper {
 	}
 
 	public ResultSetMapper() {
-		this(1024);
+		this(-1);
 	}
 
 	public ResultSetMapper(int arrayMaxLength) {

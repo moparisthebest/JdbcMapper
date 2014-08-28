@@ -12,6 +12,10 @@ import java.util.*;
  * Refer to org.apache.beehive.controls.system.jdbc.ResultSetMapper for how this class operates
  */
 public class NewDefaultObjectResultSetMapper extends com.moparisthebest.jdbc.CaseInsensitiveMapResultSetMapper implements org.apache.beehive.controls.system.jdbc.ResultSetMapper {
+	public NewDefaultObjectResultSetMapper() {
+		super(1024);
+	}
+
 	/**
 	 * Map the ResultSet to the method's return type. The object type returned is defined by the return type of the method.
 	 *
