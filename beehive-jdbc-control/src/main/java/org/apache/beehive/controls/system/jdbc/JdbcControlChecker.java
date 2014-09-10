@@ -114,16 +114,6 @@ public class JdbcControlChecker implements ControlChecker {
         }
 
         //
-        // Make sure maxArrayLength is not set to some negative number
-        //
-        int arrayMax = methodSQL.arrayMaxLength();
-        if (arrayMax < 0) {
-            env.getMessager().printError(method.getPosition(), getResourceString("jdbccontrol.bad.arraymaxlength",
-                                                                                 method.getSimpleName(), arrayMax));
-            return;
-        }
-
-        //
         //
         // parse the SQL
         //
