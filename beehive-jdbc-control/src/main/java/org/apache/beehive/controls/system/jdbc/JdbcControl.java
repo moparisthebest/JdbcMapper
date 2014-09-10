@@ -386,7 +386,7 @@ public interface JdbcControl {
          * with very large ResultSets when the value of this element is set to zero.
          */
         @AnnotationMemberTypes.Optional
-        int arrayMaxLength()                            default 1024;
+        int arrayMaxLength()                            default -1;
 
 
         /**

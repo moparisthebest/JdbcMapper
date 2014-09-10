@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class NewDefaultObjectResultSetMapper extends com.moparisthebest.jdbc.CaseInsensitiveMapResultSetMapper implements org.apache.beehive.controls.system.jdbc.ResultSetMapper {
 	public NewDefaultObjectResultSetMapper() {
-		super(1024);
+		super(-1);
 	}
 
 	/**
