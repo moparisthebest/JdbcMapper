@@ -325,6 +325,8 @@ public class Anchor extends AnchorBase
             bodyContent.clearBody();
             if (value.length() > 0)
                 _text = value;
+            else
+                _text = null;
         }
         return SKIP_BODY;
     }
