@@ -36,8 +36,6 @@ public class TreeLabel extends AbstractSimpleTag
 {
     private static final Logger logger = Logger.getInstance(TreeLabel.class);
 
-    private String _text;
-
     /**
      * Return the name of the Tag.
      */
@@ -54,8 +52,9 @@ public class TreeLabel extends AbstractSimpleTag
             throws JspException, IOException
     {
         String value = getBufferBody(true);
+        String text = "";
         if (value.length() > 0)
-            _text = value;
+            text = value;
 
         Object o = getParent();
         assert (o != null);
@@ -66,6 +65,6 @@ public class TreeLabel extends AbstractSimpleTag
 
         // assign the value to the parent's label value
         TreeItem ti = (TreeItem) o;
-        ti.setItemLabel(_text);
+        ti.setItemLabel(text);
     }
 }

@@ -325,8 +325,6 @@ public class Anchor extends AnchorBase
             bodyContent.clearBody();
             if (value.length() > 0)
                 _text = value;
-            else
-                _text = null;
         }
         return SKIP_BODY;
     }
@@ -372,4 +370,10 @@ public class Anchor extends AnchorBase
         return EVAL_PAGE;
     }
 
+    @Override
+    protected void localRelease() {
+        super.localRelease();
+        _text = null;
+        _value = null;
+    }
 }
