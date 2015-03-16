@@ -239,6 +239,12 @@ public class QueryMapperTest {
 		Assert.assertArrayEquals(expected, qm.toArray("SELECT person_no FROM person WHERE person_no = ?", Long.class, expected[0]));
 	}
 
+	@Test
+	public void testSelectPrimitiveArray() throws Throwable {
+		final Long[] arr = {1L, 2L, 3L};
+		Assert.assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", Long[].class, fieldPerson1.getPersonNo()));
+	}
+
 	private List<Map<String, String>> getListMap() {
 		final List<Map<String, String>> arrayMap = new ArrayList<Map<String, String>>();
 		for (final Person person : new Person[]{fieldPerson1, fieldBoss1, fieldBoss2}) {

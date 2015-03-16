@@ -3,7 +3,6 @@ package com.moparisthebest.jdbc.dto;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
-import java.util.Objects;
 
 /**
  * This class is meant to test the java compiler's in-lining behavior for final variables
@@ -102,7 +101,7 @@ public class FinalDTO {
 	}
 
 	private boolean directEqualsReflection(final Object object, final String fieldName) {
-		return Objects.equals(object, getField(fieldName));
+		return equals(object, getField(fieldName));
 	}
 
 	public Object getField(final String fieldName) {
@@ -112,6 +111,10 @@ public class FinalDTO {
 	public boolean setField(final String fieldName, final Object fieldValue) {
 		setField(this, fieldName, fieldValue);
 		return directEqualsReflection();
+	}
+
+	public static boolean equals(Object a, Object b) {
+		return (a == b) || (a != null && a.equals(b));
 	}
 
 	private static Object getField(final Object object, final String fieldName) {
