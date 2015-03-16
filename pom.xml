@@ -71,9 +71,11 @@
         </license>
     </licenses>
     <properties>
-        <maven.test.skip>true</maven.test.skip>
-        <maven.test.failure.ignore>true</maven.test.failure.ignore>
+        <maven.test.skip>false</maven.test.skip>
+        <maven.test.failure.ignore>false</maven.test.failure.ignore>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <pushChanges>false</pushChanges>
+        <localCheckout>true</localCheckout>
     </properties>
     <packaging>pom</packaging>
     <modules>
@@ -265,6 +267,17 @@
                     <excludes>
                         <exclude>**/*.class</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.5</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
