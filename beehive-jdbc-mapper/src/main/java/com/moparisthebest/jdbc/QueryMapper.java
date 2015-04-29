@@ -155,6 +155,8 @@ public class QueryMapper implements Closeable {
 			}
 		else if (o instanceof Blob)
 			ps.setBlob(index, (Blob) o);
+		else if (o instanceof ArrayInList.ArrayListObject)
+			ps.setArray(index, ((ArrayInList.ArrayListObject) o).getArray());
 		else
 			ps.setObject(index, o); // probably won't get here ever, but just in case...
 		/*
@@ -201,7 +203,13 @@ public class QueryMapper implements Closeable {
 		if (bindObjects != null && bindObjects.length > 0) {
 			for (Object o : bindObjects) {
 				if (o != null) {
-					if (o instanceof Object[]) {
+					if (o == InList.InListObject.empty) {
+						continue; // ignore
+					} else if (o instanceof BindInList.BindInListObject) {
+						if (((BindInList.BindInListObject) o).getBindObjects() != null)
+							index = recursiveBind(ps, index, ((BindInList.BindInListObject) o).getBindObjects());
+						continue;
+					} else if (o instanceof Object[]) {
 						index = recursiveBind(ps, index, (Object[]) o);
 						continue;
 					} else if (o instanceof Collection) {

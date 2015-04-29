@@ -56,6 +56,10 @@ public class NullQueryMapper extends QueryMapper {
 		this(jndiName, cm, true);
 	}
 
+	public static NullQueryMapper wrap(final QueryMapper qm){
+		return qm instanceof NullQueryMapper ? (NullQueryMapper)qm : new NullQueryMapper(qm);
+	}
+
 	// these update the database
 
 	@Override
@@ -199,16 +203,6 @@ public class NullQueryMapper extends QueryMapper {
 	@Override
 	public void close() {
 		delegate.close();
-	}
-
-	@Override
-	protected PreparedStatement bind(PreparedStatement ps, Object... bindObjects) throws SQLException {
-		return delegate.bind(ps, bindObjects);
-	}
-
-	@Override
-	protected ResultSet bindExecute(PreparedStatement ps, Object... bindObjects) throws SQLException {
-		return delegate.bindExecute(ps, bindObjects);
 	}
 
 	// and these are standard

@@ -59,6 +59,7 @@ finishFile "src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java"
 query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java")"
 caching_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/CachingQueryMapper.java")"
 null_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/NullQueryMapper.java")"
+list_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/ListQueryMapper.java")"
 
 cat src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java | grep public | grep '(ResultSet rs' | egrep -v '(int arrayMaxLength|Calendar cal)' | while read method
 do
@@ -110,8 +111,23 @@ EOF
 
 EOF
     done >> "$null_query"
+
+    # ListQueryMapper.java
+    cat >> "$list_query" <<EOF
+	@Override
+	$(echo $method | sed -e 's/ResultSet rs/PreparedStatement ps/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
+		return delegate.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/ps/' -e 's/) {/, bindObjects);/')
+	}
+
+	@Override
+	$(echo $method | sed -e 's/ResultSet rs/String sql/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
+		return delegate.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/prepareSql(sql, bindObjects)/' -e 's/) {/, bindObjects);/')
+	}
+
+EOF
 done
 
 finishFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/CachingQueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/NullQueryMapper.java"
+finishFile "src/main/java/com/moparisthebest/jdbc/ListQueryMapper.java"
