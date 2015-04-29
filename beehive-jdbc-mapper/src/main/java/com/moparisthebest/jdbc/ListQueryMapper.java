@@ -27,7 +27,7 @@ public class ListQueryMapper extends QueryMapper {
 	protected final QueryMapper delegate;
 	protected final InList inList;
 
-	private static final String inListReplace = "{inList}";
+	public static final String inListReplace = "{inList}";
 
 	private ListQueryMapper(Connection conn, String jndiName, QueryMapper delegate, ResultSetMapper cm, InList inList) {
 		this.inList = inList;
