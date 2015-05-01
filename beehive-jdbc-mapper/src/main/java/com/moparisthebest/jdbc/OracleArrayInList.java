@@ -37,8 +37,8 @@ public class OracleArrayInList extends ArrayInList {
 	protected OracleArrayInList() {
 	}
 
-	protected String columnAppend() {
-		return " IN(select column_value from table(?))";
+	protected String columnAppend(final String columnName) {
+		return "(" + columnName + " IN(select column_value from table(?)))";
 	}
 
 	protected <T> Array toArray(final Connection conn, final Collection<T> values) throws SQLException {

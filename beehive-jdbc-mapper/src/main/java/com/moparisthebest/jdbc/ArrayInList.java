@@ -19,8 +19,8 @@ public class ArrayInList implements InList {
 	protected ArrayInList() {
 	}
 
-	protected String columnAppend() {
-		return " = ANY(?)";
+	protected String columnAppend(final String columnName) {
+		return "(" + columnName + " = ANY(?))";
 	}
 
 	protected <T> Array toArray(final Connection conn, final Collection<T> values) throws SQLException {
@@ -32,7 +32,7 @@ public class ArrayInList implements InList {
 
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException {
 		return values == null || values.isEmpty() ? InListObject.empty : new ArrayListObject(
-				columnName + columnAppend(),
+				columnAppend(columnName),
 				toArray(conn, values)
 		);
 	}
