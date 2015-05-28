@@ -98,6 +98,7 @@
     /**
      * Implements ${intf.className}.${operation.name}
      */
+    @SuppressWarnings({"unchecked"}) // for __bc_retval cast
     public $operation.formalTypes $returnType ${operation.name}($operation.argDecl) $operation.throwsClause
     {
         Object [] __bc_argArray = new Object[] { $operation.argList };
