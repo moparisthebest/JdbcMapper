@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.moparisthebest.beehive</groupId>
         <artifactId>beehive</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>beehive-netui-tags</artifactId>
     <name>beehive-netui-tags</name>
