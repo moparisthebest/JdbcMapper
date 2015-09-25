@@ -192,7 +192,7 @@ public class ListQueryMapper extends QueryMapper {
 	private static StringBuilder recursiveReplace(final StringBuilder sb, final Object... bindObjects) {
 		if (bindObjects != null && bindObjects.length > 0) {
 			for (Object o : bindObjects) {
-				if (o != null) {
+				if (o != null && o != QueryMapper.noBind) {
 					if (o instanceof InList.InListObject) {
 						final int startIndex = sb.indexOf(inListReplace);
 						if (startIndex < -1)

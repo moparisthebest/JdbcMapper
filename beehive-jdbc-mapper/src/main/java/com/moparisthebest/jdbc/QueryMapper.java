@@ -12,6 +12,8 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
 
 public class QueryMapper implements Closeable {
 
+	public static final Object noBind = new Object();
+
 	static {
 		try{
 			final Class<?> ensureContext = Class.forName(System.getProperty("QueryMapper.ensureContext.class", "com.gcl.containerless.EnsureContext"));
@@ -203,7 +205,7 @@ public class QueryMapper implements Closeable {
 		if (bindObjects != null && bindObjects.length > 0) {
 			for (Object o : bindObjects) {
 				if (o != null) {
-					if (o == InList.InListObject.empty) {
+					if (o == InList.InListObject.empty || o == noBind) {
 						continue; // ignore
 					} else if (o instanceof BindInList.BindInListObject) {
 						if (((BindInList.BindInListObject) o).getBindObjects() != null)
