@@ -33,15 +33,16 @@ public class QueryMapper implements Closeable {
 		this.cm = cm == null ? new ResultSetMapper() : cm;
 		Context context = null;
 		if (conn == null && jndiName != null)
-                    try {
-                        context = new InitialContext();
-                        DataSource ds = (DataSource) context.lookup(jndiName);
-                        conn = ds.getConnection();
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                        tryClose(conn);
-                        tryClose(context);
-                    }
+			try {
+				context = new InitialContext();
+				DataSource ds = (DataSource) context.lookup(jndiName);
+				conn = ds.getConnection();
+			} catch (Throwable e) {
+				e.printStackTrace();
+				tryClose(conn);
+			} finally {
+				tryClose(context);
+			}
 		this.conn = conn;
 		this.context = context;
 		if (this.conn == null)
