@@ -34,5 +34,10 @@
             <artifactId>beehive-controls</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.moparisthebest.aptIn16</groupId>
+            <artifactId>apt-mirror-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

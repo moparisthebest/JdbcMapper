@@ -190,6 +190,13 @@
             </dependency>
 
             <dependency>
+                <groupId>com.moparisthebest.aptIn16</groupId>
+                <artifactId>apt-mirror-api</artifactId>
+                <version>0.2</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.geronimo.specs</groupId>
                 <artifactId>geronimo-j2ee_1.4_spec</artifactId>
                 <version>1.0</version>
