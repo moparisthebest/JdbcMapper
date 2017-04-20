@@ -281,16 +281,6 @@ public class ListQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<K, E>, K, E> T toMap(PreparedStatement ps, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
-		return delegate.toMap(ps, returnType, mapKeyType, componentType, bindObjects);
-	}
-
-	@Override
-	public <T extends Map<K, E>, K, E> T toMap(String sql, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
-		return delegate.toMap(prepareSql(sql, bindObjects), returnType, mapKeyType, componentType, bindObjects);
-	}
-
-	@Override
 	public <T extends Map<K, E>, K, E> T toMap(PreparedStatement ps, T map, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		return delegate.toMap(ps, map, mapKeyType, componentType, bindObjects);
 	}

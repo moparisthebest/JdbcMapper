@@ -338,26 +338,6 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<K, E>, K, E> T toMap(PreparedStatement query, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) {
-		try {
-			return delegate.toMap(query, returnType, mapKeyType, componentType, bindObjects);
-		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public <T extends Map<K, E>, K, E> T toMap(String query, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) {
-		try {
-			return delegate.toMap(query, returnType, mapKeyType, componentType, bindObjects);
-		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
 	public <T extends Map<K, E>, K, E> T toMap(PreparedStatement query, T map, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) {
 		try {
 			return delegate.toMap(query, map, mapKeyType, componentType, bindObjects);

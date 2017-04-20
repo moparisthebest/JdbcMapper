@@ -447,10 +447,6 @@ public class ResultSetMapper {
 		return privToCollection(rs, list, componentType, arrayMaxLength, cal, null);
 	}
 
-	public <T extends Map<K, E>, K, E> T toMap(ResultSet rs, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, int arrayMaxLength, Calendar cal) {
-		return privToMap(rs, returnType, mapKeyType, componentType, arrayMaxLength, cal, null);
-	}
-
 	public <T extends Map<K, E>, K, E> T toMap(ResultSet rs, T map, Class<K> mapKeyType, Class<E> componentType, int arrayMaxLength, Calendar cal) {
 		return privToMap(rs, map, mapKeyType, componentType, arrayMaxLength, cal, null);
 	}
@@ -643,18 +639,6 @@ public class ResultSetMapper {
 
 	public <T extends Collection<E>, E> T toCollection(ResultSet rs, T list, Class<E> componentType, Calendar cal) {
 		return this.toCollection(rs, list, componentType, arrayMaxLength, cal);
-	}
-
-	public <T extends Map<K, E>, K, E> T toMap(ResultSet rs, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType) {
-		return this.toMap(rs, returnType, mapKeyType, componentType, arrayMaxLength, cal);
-	}
-
-	public <T extends Map<K, E>, K, E> T toMap(ResultSet rs, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, int arrayMaxLength) {
-		return this.toMap(rs, returnType, mapKeyType, componentType, arrayMaxLength, cal);
-	}
-
-	public <T extends Map<K, E>, K, E> T toMap(ResultSet rs, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, Calendar cal) {
-		return this.toMap(rs, returnType, mapKeyType, componentType, arrayMaxLength, cal);
 	}
 
 	public <T extends Map<K, E>, K, E> T toMap(ResultSet rs, T map, Class<K> mapKeyType, Class<E> componentType) {

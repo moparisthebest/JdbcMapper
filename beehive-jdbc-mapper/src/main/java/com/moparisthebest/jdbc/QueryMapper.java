@@ -420,20 +420,6 @@ public class QueryMapper implements Closeable {
 		}
 	}
 
-	public <T extends Map<K, E>, K, E> T toMap(PreparedStatement ps, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
-		return cm.toMap(bindExecute(ps, bindObjects), returnType, mapKeyType, componentType);
-	}
-
-	public <T extends Map<K, E>, K, E> T toMap(String sql, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
-		PreparedStatement ps = null;
-		try {
-			ps = conn.prepareStatement(sql);
-			return this.toMap(ps, returnType, mapKeyType, componentType, bindObjects);
-		} finally {
-			tryClose(ps);
-		}
-	}
-
 	public <T extends Map<K, E>, K, E> T toMap(PreparedStatement ps, T map, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		return cm.toMap(bindExecute(ps, bindObjects), map, mapKeyType, componentType);
 	}

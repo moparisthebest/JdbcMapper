@@ -158,11 +158,6 @@ public class CachingQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<K, E>, K, E> T toMap(String sql, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
-		return super.toMap(getPreparedStatement(sql), returnType, mapKeyType, componentType, bindObjects);
-	}
-
-	@Override
 	public <T extends Map<K, E>, K, E> T toMap(String sql, T map, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		return super.toMap(getPreparedStatement(sql), map, mapKeyType, componentType, bindObjects);
 	}
