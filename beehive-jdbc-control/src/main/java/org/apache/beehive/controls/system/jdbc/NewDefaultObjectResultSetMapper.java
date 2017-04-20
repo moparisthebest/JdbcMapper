@@ -40,7 +40,7 @@ public class NewDefaultObjectResultSetMapper extends com.moparisthebest.jdbc.Cas
 				if (Collection.class.isAssignableFrom(collectionType))
 					return toMapCollection(rs, returnType, (Class) types[0], collectionType, (Class) pt.getActualTypeArguments()[0], context.getMethodPropertySet(m, JdbcControl.SQL.class).arrayMaxLength(), cal);
 			}
-			return toMap(rs, returnType, (Class) types[0], (Class) types[1], context.getMethodPropertySet(m, JdbcControl.SQL.class).arrayMaxLength(), cal);
+			return toMap(rs, com.moparisthebest.jdbc.ResultSetMapper.instantiateClass((Class<Map>)returnType, HashMap.class), (Class) types[0], (Class) types[1], context.getMethodPropertySet(m, JdbcControl.SQL.class).arrayMaxLength(), cal);
 		} else if (Iterator.class.isAssignableFrom(returnType)) {
 			return ListIterator.class.isAssignableFrom(returnType) ?
 					toListIterator(rs, (Class) getActualTypeArguments(m)[0], context.getMethodPropertySet(m, JdbcControl.SQL.class).arrayMaxLength(), cal) :
