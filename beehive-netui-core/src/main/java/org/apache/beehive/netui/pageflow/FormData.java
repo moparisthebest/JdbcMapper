@@ -24,9 +24,11 @@ import org.apache.beehive.netui.pageflow.internal.BaseActionForm;
  * Base class for form beans associated with action methods in {@link PageFlowController}s.  Note that Page Flow actions
  * may take form beans of any type.
  * 
- * @deprecated Page Flow actions can accept form beans of any type; it is not necessary to extend this class.  This
+ * Previously deprecated: Page Flow actions can accept form beans of any type; it is not necessary to extend this class.  This
  *     will be removed in the next major version.  In general, it's possible to remove <code>extends FormData</code>
  *     and replace it with <code>implements {@link java.io.Serializable}</code>.
+ *
+ * There will never be another major version though, so undeprecate here, beehive as a whole is deprecated. :)
  */
 public class FormData extends BaseActionForm
 {
