@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class StaticCompilingResultSetMapper extends CompilingResultSetMapper {
 
-	private static final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?>> cache = new ConcurrentHashMap<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?>>();
+	private static final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache = new ConcurrentHashMap<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>();
 
 	public static final StaticCompilingResultSetMapper instance = new StaticCompilingResultSetMapper();
 

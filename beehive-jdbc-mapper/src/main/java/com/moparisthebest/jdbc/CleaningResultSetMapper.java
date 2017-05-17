@@ -19,7 +19,7 @@ public class CleaningResultSetMapper<E> extends ResultSetMapper {
 
 	@Override
 	@SuppressWarnings({"unchecked"})
-	protected <T> RowToObjectMapper<T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
-		return new CleaningRowToObjectMapper<T>((Cleaner<T>)cleaner, resultSet, returnTypeClass, cal, mapValType);
+	protected <K, T> RowToObjectMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		return new CleaningRowToObjectMapper<K, T>((Cleaner<T>)cleaner, resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 }

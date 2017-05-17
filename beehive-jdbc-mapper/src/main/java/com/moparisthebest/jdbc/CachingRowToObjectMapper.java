@@ -11,18 +11,18 @@ import java.util.Map;
 /**
  * Maps same as RowToObjectMapper except caches constructor and field mappings
  */
-public class CachingRowToObjectMapper<T> extends RowToObjectMapper<T> {
+public class CachingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
 	protected final Map<ResultSetKey, FieldMapping<T>> cache;
 	protected final ResultSetKey keys;
 
-	public CachingRowToObjectMapper(final Map<ResultSetKey, FieldMapping<?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
-		super(resultSet, returnTypeClass, cal, mapValType);
+	public CachingRowToObjectMapper(final Map<ResultSetKey, FieldMapping<?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 		@SuppressWarnings("unchecked")
 		final Map<ResultSetKey, FieldMapping<T>> genericCache = (Map<ResultSetKey, FieldMapping<T>>) (Object) cache; // ridiculous ain't it?
 		this.cache = genericCache;
 		try {
-			keys = new ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass);
+			keys = new ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass, _mapKeyType);
 			//System.out.printf("keys: %s\n", keys);
 		} catch (SQLException e) {
 			throw new MapperException("CachingRowToObjectMapper: SQLException: " + e.getMessage(), e);
@@ -55,11 +55,12 @@ public class CachingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 
 	public static class ResultSetKey {
 		protected final String[] keys;
-		protected final Class<?> returnTypeClass;
+		protected final Class<?> returnTypeClass, mapKeyType;
 
-		public ResultSetKey(final String[] keys, final Class<?> returnTypeClass) {
+		public ResultSetKey(final String[] keys, final Class<?> returnTypeClass, final Class<?> mapKeyType) {
 			this.keys = keys;
 			this.returnTypeClass = returnTypeClass;
+			this.mapKeyType = mapKeyType;
 		}
 
 		@Override
@@ -69,13 +70,18 @@ public class CachingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 
 			final ResultSetKey that = (ResultSetKey) o;
 
-			return Arrays.equals(keys, that.keys) && (returnTypeClass != null ? returnTypeClass.equals(that.returnTypeClass) : that.returnTypeClass == null);
+			// Probably incorrect - comparing Object[] arrays with Arrays.equals
+			if (!Arrays.equals(keys, that.keys)) return false;
+			if (returnTypeClass != null ? !returnTypeClass.equals(that.returnTypeClass) : that.returnTypeClass != null)
+				return false;
+			return mapKeyType != null ? mapKeyType.equals(that.mapKeyType) : that.mapKeyType == null;
 		}
 
 		@Override
 		public int hashCode() {
 			int result = Arrays.hashCode(keys);
 			result = 31 * result + (returnTypeClass != null ? returnTypeClass.hashCode() : 0);
+			result = 31 * result + (mapKeyType != null ? mapKeyType.hashCode() : 0);
 			return result;
 		}
 
@@ -84,6 +90,7 @@ public class CachingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 			return "ResultSetKey{" +
 					"keys=" + Arrays.toString(keys) +
 					", returnTypeClass=" + returnTypeClass +
+					", mapKeyType=" + mapKeyType +
 					'}';
 		}
 	}

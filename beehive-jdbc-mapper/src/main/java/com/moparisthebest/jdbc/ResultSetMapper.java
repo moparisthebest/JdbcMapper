@@ -120,7 +120,7 @@ public class ResultSetMapper {
 		T ret = null;
 		try {
 			if (rs.next())
-				ret = getRowMapper(rs, componentType, cal, mapValType).mapRowToReturnType();
+				ret = getRowMapper(rs, componentType, cal, mapValType, null).mapRowToReturnType();
 		} catch (SQLException e) {
 			// ignore
 		}
@@ -151,7 +151,7 @@ public class ResultSetMapper {
 			// a value of less than 1 indicates that all rows from the ResultSet should be included.
 			final boolean unlimitedRows = arrayMaxLength < 1;
 
-			final RowToObjectMapper<E> rowMapper = getRowMapper(rs, componentType, cal, mapValType);
+			final RowToObjectMapper<?, E> rowMapper = getRowMapper(rs, componentType, cal, mapValType, null);
 
 			for (; (unlimitedRows || numRows != arrayMaxLength) && rs.next(); ++numRows) {
 				E object = rowMapper.mapRowToReturnType();
@@ -230,12 +230,11 @@ public class ResultSetMapper {
 			// a value of less than 1 indicates that all rows from the ResultSet should be included.
 			final boolean unlimitedRows = arrayMaxLength < 1;
 
-			final RowToObjectMapper<E> rowMapper = getRowMapper(rs, componentType, cal, mapValType);
+			final RowToObjectMapper<K, E> rowMapper = getRowMapper(rs, componentType, cal, mapValType, mapKeyType);
 
-			boolean onlyTwoColumns = rowMapper.getColumnCount() == 2;
 			for (; (unlimitedRows || numRows != arrayMaxLength) && rs.next(); ++numRows) {
-				K key = rowMapper.extractColumnValue(1, mapKeyType);
-				E value = onlyTwoColumns ? rowMapper.extractColumnValue(2, componentType) : rowMapper.mapRowToReturnType();
+				K key = rowMapper.getMapKey();
+				E value = rowMapper.mapRowToReturnType();
 
 				map = softMap.get();
 				if (map == null)
@@ -312,12 +311,11 @@ public class ResultSetMapper {
 			// a value of less than 1 indicates that all rows from the ResultSet should be included.
 			final boolean unlimitedRows = arrayMaxLength < 1;
 
-			final RowToObjectMapper<C> rowMapper = getRowMapper(rs, componentType, cal, mapValType);
+			final RowToObjectMapper<K, C> rowMapper = getRowMapper(rs, componentType, cal, mapValType, mapKeyType);
 
-			boolean onlyTwoColumns = rowMapper.getColumnCount() == 2;
 			for (; (unlimitedRows || numRows != arrayMaxLength) && rs.next(); ++numRows) {
-				K key = rowMapper.extractColumnValue(1, mapKeyType);
-				C value = onlyTwoColumns ? rowMapper.extractColumnValue(2, componentType) : rowMapper.mapRowToReturnType();
+				K key = rowMapper.getMapKey();
+				C value = rowMapper.mapRowToReturnType();
 
 				map = softMap.get();
 				if (map == null)
@@ -406,8 +404,8 @@ public class ResultSetMapper {
 	}
 
 	// fairly un-interesting methods below here
-	protected <T> RowToObjectMapper<T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
-		return new RowToObjectMapper<T>(resultSet, returnTypeClass, cal, mapValType);
+	protected <K, T> RowToObjectMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		return new RowToObjectMapper<K, T>(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 
 	protected void warnOnMaxLength(final int numRows, final int arrayMaxLength, final ResultSet rs) {

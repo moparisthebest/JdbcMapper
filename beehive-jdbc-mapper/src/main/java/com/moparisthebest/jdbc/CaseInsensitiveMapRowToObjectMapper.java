@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by mopar on 5/15/14.
  */
-public class CaseInsensitiveMapRowToObjectMapper<T> extends RowToObjectMapper<T> {
+public class CaseInsensitiveMapRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	public CaseInsensitiveMapRowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass) {
 		super(resultSet, returnTypeClass);
 	}
@@ -23,6 +23,10 @@ public class CaseInsensitiveMapRowToObjectMapper<T> extends RowToObjectMapper<T>
 
 	public CaseInsensitiveMapRowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
 		super(resultSet, returnTypeClass, cal, mapValType);
+	}
+
+	public CaseInsensitiveMapRowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 
 	@Override

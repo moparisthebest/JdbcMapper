@@ -26,20 +26,23 @@ import java.util.Map;
  * 1. Normally a subclass of RowToObjectMapper can overload the getMapImplementation() method to change some behavior,
  * @see CaseInsensitiveMapRowToObjectMapper , but that method is never called with this implementation.
  */
-public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
+public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
+
+	public static final String firstColumnError = "Cannot call getFirstColumn when mapKeyType is null!";
+
 	protected final Compiler compiler;
-	protected final ResultSetToObject<T> resultSetToObject;
+	protected final ResultSetToObject<K, T> resultSetToObject;
 
 	protected String[] keys = null; // for caching if we must generate class
 
-	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
-		super(resultSet, returnTypeClass, cal, mapValType);
+	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 		this.compiler = compiler;
 		try {
-			final CachingRowToObjectMapper.ResultSetKey keys = new CachingRowToObjectMapper.ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass);
+			final CachingRowToObjectMapper.ResultSetKey keys = new CachingRowToObjectMapper.ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass, _mapKeyType);
 			//System.out.printf("keys: %s\n", keys);
 			@SuppressWarnings("unchecked")
-			final ResultSetToObject<T> resultSetToObject = (ResultSetToObject<T>) cache.get(keys);
+			final ResultSetToObject<K,T> resultSetToObject = (ResultSetToObject<K,T>) cache.get(keys);
 			if (resultSetToObject == null) {
 				//System.out.printf("cache miss, keys: %s\n", keys);
 				// generate and put into cache
@@ -60,15 +63,15 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	}
 
 	@Override
-	public T mapRowToReturnType() {
-		try {
-			return resultSetToObject.toObject(_resultSet, _cal);
-		} catch (SQLException e) {
-			throw new MapperException(e.getMessage(), e);
-		}
+	public T mapRowToReturnType() throws SQLException {
+		return resultSetToObject.toObject(_resultSet, _cal);
 	}
 
-	// todo: generate/cache these to make it faster for Map and MapCollection? maybe just getKey and getVal methods instead
+	@Override
+	public K getMapKey() throws SQLException {
+		return resultSetToObject.getFirstColumn(_resultSet, _cal);
+	}
+// todo: generate/cache these to make it faster for Map and MapCollection? maybe just getKey and getVal methods instead
 	/*
 	@Override
 	public <E> E extractColumnValue(final int index, final Class<E> classType) throws SQLException {
@@ -88,11 +91,14 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 		throw new MapperException("not supported here");
 	}
 
-	public interface ResultSetToObject<T> {
+	public interface ResultSetToObject<K, T> {
+		K getFirstColumn(final ResultSet rs, final Calendar cal) throws SQLException;
 		T toObject(final ResultSet rs, final Calendar cal) throws SQLException;
 	}
 
 	protected String typeFromName(final Class<?> type) {
+		if(type == null)
+			return "Object";
 		if(_columnCount == 1 && type.isPrimitive()) {
 			// need the object equivalent here, what is the best way? this works, isn't pretty...
 			if(type.equals(Character.TYPE))
@@ -141,26 +147,43 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	}
 
 	// code generation down here
-	protected ResultSetToObject<T> genClass() {
+	protected ResultSetToObject<K, T> genClass() {
 		final String className = "CompilingMapper";
 		final String tType = typeFromName(_returnTypeClass);
+		final String kType = typeFromName(_mapKeyType);
 		final String header =
 				"import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n\n" +
 						"public final class " + className +
-						" implements com.moparisthebest.jdbc.CompilingRowToObjectMapper.ResultSetToObject<" + tType + "> {\n" +
+						" implements com.moparisthebest.jdbc.CompilingRowToObjectMapper.ResultSetToObject<"+ kType +"," + tType + "> {\n" +
 						"  public " + tType + " toObject(final java.sql.ResultSet rs, final java.util.Calendar cal) throws java.sql.SQLException {\n";
-		final String footer = "  }\n" +
+		final String footer = ";\n  }\n" +
 				"}\n";
 
 		final StringBuilder java = new StringBuilder(header);
 		//java.append("return null;\n");
 		gen(java, tType);
+
+		java.append("  }\n\n  public ").append(kType).append(" getFirstColumn(final java.sql.ResultSet rs, final java.util.Calendar cal) throws java.sql.SQLException {\n    ");
+		if(_mapKeyType != null){
+			java.append("return ");
+			extractColumnValueString(java, 1, _tmf.getTypeId(_mapKeyType));
+		} else {
+			java.append("throw new com.moparisthebest.jdbc.MapperException(com.moparisthebest.jdbc.CompilingRowToObjectMapper.firstColumnError)");
+		}
+
 		java.append(footer);
-		//System.out.println(java);
+		System.out.println(java);
 		return compiler.compile(className, java);
 	}
 
 	protected void gen(final StringBuilder java, final String tType) {
+
+		if(mapOnlySecondColumn){
+			java.append("return ");
+			extractColumnValueString(java, 2, _tmf.getTypeId(_returnTypeClass));
+			java.append(";\n");
+			return;
+		}
 
 		lazyLoadConstructor();
 

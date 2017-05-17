@@ -15,7 +15,7 @@ public class CaseInsensitiveMapResultSetMapper extends ResultSetMapper {
 	}
 
 	@Override
-	protected <T> RowToObjectMapper<T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
-		return new CaseInsensitiveMapRowToObjectMapper<T>(resultSet, returnTypeClass, cal, mapValType);
+	protected <K, T> RowToObjectMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		return new CaseInsensitiveMapRowToObjectMapper<K, T>(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 }

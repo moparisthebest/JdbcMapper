@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  * RowMapperFactory.
  *
  */
-public abstract class RowMapper {
+public abstract class RowMapper<K, T> {
 
     private static final String SETTER_NAME_REGEX = "^(set)([A-Z_]\\w*+)";
     protected static final TypeMappingsFactory _tmf = TypeMappingsFactory.getInstance();
@@ -50,9 +50,13 @@ public abstract class RowMapper {
     protected final Calendar _cal;
 
     /** Class to map ResultSet Rows to. */
-    protected final Class<?> _returnTypeClass;
+    protected final Class<T> _returnTypeClass;
+
+    protected final Class<K> _mapKeyType;
 
     protected final int _columnCount;
+
+    protected final boolean mapOnlySecondColumn;
 
     /**
      * Create a new RowMapper for the specified ResultSet and return type Class.
@@ -60,24 +64,37 @@ public abstract class RowMapper {
      * @param returnTypeClass Class to map ResultSet rows to.
      * @param cal Calendar instance for date/time values.
      */
-    protected RowMapper(ResultSet resultSet, Class<?> returnTypeClass, Calendar cal) {
+    protected RowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<K> mapKeyType) {
         _resultSet = resultSet;
         _returnTypeClass = returnTypeClass;
         _cal = cal;
+        _mapKeyType = mapKeyType;
 
         try {
             _columnCount = resultSet.getMetaData().getColumnCount();
         } catch (SQLException e) {
             throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
         }
+
+        mapOnlySecondColumn = _mapKeyType != null && _columnCount == 2;
+    }
+
+    protected RowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal) {
+        this(resultSet, returnTypeClass, cal, null);
     }
 
     /**
      * Map a ResultSet row to the return type class
-     * @return An instance of class.
+     * @return An instance of class, if _mapKeyType is not null and _columnCount is 2, return only index 2
      */
-    public abstract Object mapRowToReturnType();
+    public abstract T mapRowToReturnType() throws SQLException;
 
+    /**
+     * key for map
+     * @return index number 1, with type of _mapKeyType
+     * @throws MapperException if _mapKeyType is null
+     */
+    public abstract K getMapKey() throws SQLException;
 
     /**
      * Build a String array of column names from the ResultSet.

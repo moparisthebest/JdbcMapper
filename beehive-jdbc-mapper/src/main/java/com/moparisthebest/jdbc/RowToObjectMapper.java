@@ -47,7 +47,7 @@ import static com.moparisthebest.jdbc.UpdateableDTO.NO;
  *
  * @author Travis Burtrum (modifications from beehive)
  */
-public class RowToObjectMapper<T> extends RowMapper {
+public class RowToObjectMapper<K, T> extends RowMapper<K, T> {
 
 	public static final int TYPE_BOOLEAN = _tmf.getTypeId(Boolean.TYPE);//TypeMappingsFactory.TYPE_BOOLEAN; // not public? 
 	public static final int TYPE_BOOLEAN_OBJ = _tmf.getTypeId(Boolean.class);//TypeMappingsFactory.TYPE_BOOLEAN_OBJ; // not public?
@@ -77,6 +77,11 @@ public class RowToObjectMapper<T> extends RowMapper {
 		this(resultSet, returnTypeClass, cal, null);
 	}
 
+
+	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
+		this(resultSet, returnTypeClass, cal, mapValType, null);
+	}
+
 	/**
 	 * Create a new RowToObjectMapper.
 	 *
@@ -84,8 +89,8 @@ public class RowToObjectMapper<T> extends RowMapper {
 	 * @param returnTypeClass Class to map to.
 	 * @param cal             Calendar instance for date/time mappings.
 	 */
-	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType) {
-		super(resultSet, returnTypeClass, cal);
+	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		super(resultSet, returnTypeClass, cal, mapKeyType);
 		returnMap = Map.class.isAssignableFrom(returnTypeClass);
 		if(returnMap){
 			_returnTypeClass = ResultSetMapper.getConcreteClass(returnTypeClass, HashMap.class);
@@ -136,13 +141,21 @@ public class RowToObjectMapper<T> extends RowMapper {
 		return (Map<String, Object>)_returnTypeClass.newInstance();
 	}
 
+	@Override
+	public K getMapKey() throws SQLException {
+		return this.extractColumnValue(1, _mapKeyType);
+	}
+
 	/**
 	 * Do the mapping.
 	 *
 	 * @return An object instance.
 	 */
 	@SuppressWarnings({"unchecked"})
-	public T mapRowToReturnType() {
+	public T mapRowToReturnType() throws SQLException {
+
+		if(mapOnlySecondColumn)
+			return this.extractColumnValue(2, _returnTypeClass);
 
 		lazyLoadConstructor();
 
@@ -298,15 +311,6 @@ public class RowToObjectMapper<T> extends RowMapper {
 	@SuppressWarnings({"unchecked"})
 	public <E> E extractColumnValue(int index, Class<E> classType) throws SQLException {
 			return classType.cast(extractColumnValue(index, _tmf.getTypeId(classType)));
-	}
-
-	/**
-	 * Provided so we know whether to map all values to a type, or just the second one
-	 *
-	 * @return
-	 */
-	public int getColumnCount() {
-		return this._columnCount;
 	}
 
 	/**
