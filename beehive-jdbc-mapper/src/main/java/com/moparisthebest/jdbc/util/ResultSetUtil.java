@@ -1,10 +1,15 @@
 package com.moparisthebest.jdbc.util;
 
+import com.moparisthebest.jdbc.MapperException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
+
+import static com.moparisthebest.jdbc.UpdateableDTO.NO;
+import static com.moparisthebest.jdbc.UpdateableDTO.YES;
 
 /**
  * Created by mopar on 5/16/17.
@@ -44,6 +49,26 @@ public class ResultSetUtil {
 	public static Boolean getObjectBoolean(final ResultSet rs, final int index) throws SQLException {
 		final boolean ret = rs.getBoolean(index);
 		return rs.wasNull() ? null : (ret ? Boolean.TRUE : Boolean.FALSE);
+	}
+
+	public static Boolean getObjectBooleanYN(final ResultSet rs, final int index) throws SQLException {
+		try {
+			return getObjectBoolean(rs, index);
+		} catch (SQLException e) {
+			// if we are here, it wasn't a boolean or null, so try to grab a string instead
+			final String bool = rs.getString(index);//.toUpperCase(); // do we want it case-insensitive?
+			final boolean ret = YES.equals(bool);
+			if (!ret && !NO.equals(bool))
+				throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead '%s'.", index, bool));
+			return ret;
+		}
+	}
+
+	public static boolean getBooleanYN(final ResultSet rs, final int index) throws SQLException {
+		final Boolean ret = getObjectBooleanYN(rs, index);
+		if(ret == null)
+			throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead 'null'. If you want to accept null values, make it an object Boolean instead of primitive boolean.", index));
+		return ret;
 	}
 
 	public static Timestamp getTimestamp(final ResultSet _resultSet, final Calendar _cal, final int index) throws SQLException {

@@ -257,7 +257,7 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 				java.append("rs.getInt(").append(index).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BOOLEAN:
-				java.append("rs.getInt(").append(index).append(") ? Boolean.TRUE : Boolean.FALSE");
+				java.append("getBooleanYN(rs, ").append(index).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_INT_OBJ:
 				java.append("getObjectInt(rs, ").append(index).append(")");
@@ -278,7 +278,7 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 				java.append("getObjectShort(rs, ").append(index).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BOOLEAN_OBJ:
-				java.append("getObjectBoolean(rs, ").append(index).append(")");
+				java.append("getObjectBooleanYN(rs, ").append(index).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_STRING:
 			case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
