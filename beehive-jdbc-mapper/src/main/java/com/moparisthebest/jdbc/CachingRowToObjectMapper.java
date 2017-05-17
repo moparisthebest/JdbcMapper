@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
 
+/**
+ * Maps same as RowToObjectMapper except caches constructor and field mappings
+ */
 public class CachingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 
 	protected final Map<ResultSetKey, FieldMapping<T>> cache;
