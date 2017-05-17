@@ -9,7 +9,7 @@ public class SetBoss extends SetPerson implements Boss {
 	protected String department;
 	protected String first_name;
 
-	protected SetBoss() {
+	public SetBoss() {
 		super();
 	}
 

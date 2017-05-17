@@ -174,10 +174,11 @@ public class RowToObjectMapper<T> extends RowMapper {
 			}
 		else if(componentType != null) // we want an array
 			try {
-				final Object[] ret = (Object[])Array.newInstance(componentType, _columnCount);
+				final Object ret = Array.newInstance(componentType, _columnCount);
 				final int typeId = _tmf.getTypeId(componentType);
 				for(int x = 0; x < _columnCount;)
-					ret[x] = extractColumnValue(++x, typeId);
+					Array.set(ret, x, extractColumnValue(++x, typeId));
+					//ret[x] = extractColumnValue(++x, typeId);
 				return _returnTypeClass.cast(ret);
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create a "

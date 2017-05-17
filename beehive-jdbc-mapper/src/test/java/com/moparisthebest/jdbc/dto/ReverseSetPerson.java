@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by mopar on 6/10/14.
  */
 public class ReverseSetPerson extends ReverseFieldPerson {
-	protected ReverseSetPerson() {
+	public ReverseSetPerson() {
 	}
 
 	public ReverseSetPerson(long personNo, Date birthDate, String firstName, String lastName) {

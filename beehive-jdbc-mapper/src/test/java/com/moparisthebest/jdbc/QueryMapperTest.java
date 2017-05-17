@@ -1,10 +1,9 @@
 package com.moparisthebest.jdbc;
 
 import com.moparisthebest.jdbc.dto.*;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,10 +14,10 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
 /**
  * Created by mopar on 6/10/14.
  */
+@RunWith(Parameterized.class)
 public class QueryMapperTest {
 
 	private static Connection conn;
-	protected static QueryMapper qm;
 
 	protected static final Person fieldPerson1 = new FieldPerson(1, new Date(0), "First", "Person");
 	protected static final Boss fieldBoss1 = new FieldBoss(2, new Date(0), "Second", "Person", "Finance", "Second");
@@ -62,21 +61,52 @@ public class QueryMapperTest {
 	public static void setUp() throws Throwable {
 		Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 		conn = DriverManager.getConnection("jdbc:derby:memory:derbyDB;create=true");
-		qm = new QueryMapper(conn);
-		qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
-		qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
-		for (final Person person : new Person[]{fieldPerson1})
-			qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
-		for (final Boss boss : new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3}) {
-			qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
-			qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
+		QueryMapper qm = null;
+		try {
+			qm = new QueryMapper(conn);
+			qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
+			qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
+			for (final Person person : new Person[]{fieldPerson1})
+				qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
+			for (final Boss boss : new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3}) {
+				qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
+				qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
+			}
+		} finally {
+			tryClose(qm);
 		}
 	}
 
 	@AfterClass
 	public static void tearDown() throws Throwable {
-		tryClose(qm);
 		tryClose(conn);
+	}
+
+	protected QueryMapper qm;
+	protected final ResultSetMapper rsm;
+
+	public QueryMapperTest(final ResultSetMapper rsm) {
+		this.rsm = rsm;
+	}
+
+	@Before
+	public void open() {
+		this.qm = new QueryMapper(conn, rsm);
+	}
+
+	@After
+	public void close() {
+		tryClose(qm);
+	}
+
+	@Parameterized.Parameters(name="{0}")
+	public static Collection<Object[]> getParameters()
+	{
+		return Arrays.asList(new Object[][] {
+				{ new ResultSetMapper() },
+				{ new CachingResultSetMapper() },
+				{ new CompilingResultSetMapper() },
+		});
 	}
 
 	// fields
@@ -213,6 +243,21 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testSelectMapLongPerson() throws Throwable {
+		final Map<Long, Person> map = new HashMap<Long, Person>();
+		for (final Person person : new Person[]{
+				qm.toObject(bossRegular, FieldBoss.class, 2),
+				qm.toObject(bossRegular, FieldBoss.class, 3),
+				qm.toObject(bossRegular, FieldBoss.class, 4),
+				})
+			map.put(person.getPersonNo(), person);
+		Assert.assertEquals(map, qm.toMap("SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department " +
+				"FROM person p " +
+				"JOIN boss b ON p.person_no = b.person_no " +
+				"WHERE p.person_no in (2,3,4)", Long.class, FieldBoss.class));
+	}
+
+	@Test
 	public void testSelectMapLong() throws Throwable {
 		final Map<Long, Long> map = new HashMap<Long, Long>();
 		for (final Person person : new Person[]{fieldPerson1, fieldBoss1, fieldBoss2})
@@ -233,15 +278,27 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testSelectIntPrimitive() throws Throwable {
+		final int expected = (int)fieldPerson1.getPersonNo();
+		Assert.assertEquals((Object)expected, qm.toObject("SELECT person_no FROM person WHERE person_no = ?", int.class, expected));
+	}
+
+	@Test
 	public void testSelectLongObjectArray() throws Throwable {
 		final Long[] expected = {fieldPerson1.getPersonNo()};
 		Assert.assertArrayEquals(expected, qm.toArray("SELECT person_no FROM person WHERE person_no = ?", Long.class, expected[0]));
 	}
 
 	@Test
-	public void testSelectPrimitiveArray() throws Throwable {
+	public void testSelectObjectArray() throws Throwable {
 		final Long[] arr = {1L, 2L, 3L};
 		Assert.assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", Long[].class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testSelectPrimitiveArray() throws Throwable {
+		final long[] arr = {1L, 2L, 3L};
+		Assert.assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", long[].class, fieldPerson1.getPersonNo()));
 	}
 
 	@Test(expected = com.moparisthebest.jdbc.MapperException.class)
@@ -260,10 +317,12 @@ public class QueryMapperTest {
 		return arrayMap;
 	}
 
-	private static void testPerson(final Person expected, final String query) throws Throwable {
+	private void testPerson(final Person expected, final String query) throws Throwable {
 		final Person actual = qm.toObject(query, expected.getClass(), expected.getPersonNo());
-		//System.out.println("expected: " + expected);
-		//System.out.println("actual:   " + actual);
+		/*
+		System.out.println("expected: " + expected);
+		System.out.println("actual:   " + actual);
+		*/
 		Assert.assertEquals(expected, actual);
 	}
 }

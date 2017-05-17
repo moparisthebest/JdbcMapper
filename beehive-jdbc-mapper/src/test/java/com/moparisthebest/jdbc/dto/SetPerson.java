@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by mopar on 6/10/14.
  */
 public class SetPerson extends FieldPerson {
-	protected SetPerson() {
+	public SetPerson() {
 	}
 
 	public SetPerson(long personNo, Date birthDate, String firstName, String lastName) {

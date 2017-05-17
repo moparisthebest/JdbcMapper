@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class FieldPerson implements Person {
 
-	protected long personNo;
-	protected Date birthDate;
-	protected String firstName;
-	protected String lastName;
+	public long personNo;
+	public Date birthDate;
+	public String firstName;
+	public String lastName;
 
-	protected FieldPerson(){
+	public FieldPerson(){
 	}
 
 	public FieldPerson(long personNo, Date birthDate, String firstName, String lastName) {

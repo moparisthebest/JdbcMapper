@@ -6,10 +6,10 @@ import java.util.Date;
  * Created by mopar on 6/10/14.
  */
 public class ReverseSetBoss extends ReverseSetPerson implements Boss {
-	protected String department;
-	protected String firstName;
+	public String department;
+	public String firstName;
 
-	protected ReverseSetBoss() {
+	public ReverseSetBoss() {
 		super();
 	}
 

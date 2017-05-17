@@ -6,10 +6,10 @@ import java.util.Date;
  * Created by mopar on 6/10/14.
  */
 public class ReverseFieldBoss extends ReverseFieldPerson implements Boss {
-	protected String department;
-	protected String firstName;
+	public String department;
+	public String firstName;
 
-	protected ReverseFieldBoss() {
+	public ReverseFieldBoss() {
 		super();
 	}
 

@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class ReverseFieldPerson implements Person {
 
-	protected long personNo;
-	protected Date birthDate;
-	protected String first_name;
-	protected String lastName;
+	public long personNo;
+	public Date birthDate;
+	public String first_name;
+	public String lastName;
 
-	protected ReverseFieldPerson(){
+	public ReverseFieldPerson(){
 	}
 
 	public ReverseFieldPerson(long personNo, Date birthDate, String firstName, String lastName) {

@@ -93,9 +93,18 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	}
 
 	protected String typeFromName(final Class<?> type) {
-		if (returnMap || componentType == null)
+		if(_columnCount == 1 && type.isPrimitive()) {
+			// need the object equivalent here, what is the best way? this works, isn't pretty...
+			if(type.equals(Character.TYPE))
+				return "Character";
+			if(type.equals(Integer.TYPE))
+				return "Integer";
+			final char[] name = type.getName().toCharArray();
+			name[0] = Character.toUpperCase(name[0]);
+			return new String(name);
+		} else if (returnMap || componentType == null) {
 			return type.getName();
-		else {
+		} else {
 			// an array, annoying syntax
 			final String name = type.getName();
 			final char charType = name.charAt(1);
