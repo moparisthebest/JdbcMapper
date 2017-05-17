@@ -52,6 +52,8 @@ public abstract class RowMapper {
     /** Class to map ResultSet Rows to. */
     protected final Class<?> _returnTypeClass;
 
+    protected final int _columnCount;
+
     /**
      * Create a new RowMapper for the specified ResultSet and return type Class.
      * @param resultSet ResultSet to map
@@ -62,6 +64,12 @@ public abstract class RowMapper {
         _resultSet = resultSet;
         _returnTypeClass = returnTypeClass;
         _cal = cal;
+
+        try {
+            _columnCount = resultSet.getMetaData().getColumnCount();
+        } catch (SQLException e) {
+            throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -80,10 +88,9 @@ public abstract class RowMapper {
 
         String[] keys;
         final ResultSetMetaData md = _resultSet.getMetaData();
-        final int columnCount = md.getColumnCount();
 
-        keys = new String[columnCount + 1];
-        for (int i = 1; i <= columnCount; i++) {
+        keys = new String[_columnCount + 1];
+        for (int i = 1; i <= _columnCount; i++) {
             keys[i] = md.getColumnName(i).toUpperCase();
         }
         return keys;

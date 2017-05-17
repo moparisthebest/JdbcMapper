@@ -48,6 +48,7 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 				this.keys = null;
 				this._fields = null;
 				this._fieldTypes = null;
+				this.constructor = null;
 			} else {
 				//System.out.printf("cache hit, keys: %s\n", keys);
 				// load from cache
@@ -143,6 +144,8 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	}
 
 	protected void gen(final StringBuilder java, final String tType) {
+
+		lazyLoadConstructor();
 
 		if (resultSetConstructor) {
 			java.append("return new ").append(tType).append("(rs);\n");

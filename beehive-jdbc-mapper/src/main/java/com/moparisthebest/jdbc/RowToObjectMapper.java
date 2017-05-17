@@ -52,16 +52,15 @@ public class RowToObjectMapper<T> extends RowMapper {
 	public static final int TYPE_BOOLEAN = _tmf.getTypeId(Boolean.TYPE);//TypeMappingsFactory.TYPE_BOOLEAN; // not public? 
 	public static final int TYPE_BOOLEAN_OBJ = _tmf.getTypeId(Boolean.class);//TypeMappingsFactory.TYPE_BOOLEAN_OBJ; // not public?
 
-	protected final int _columnCount;
-	protected final boolean resultSetConstructor;
-	protected final Constructor<T> constructor;
+	protected boolean resultSetConstructor, constructorLoaded = false;
+	protected Constructor<? extends T> constructor;
 	protected final Class<? extends T> _returnTypeClass; // over-ride non-generic version of this in super class
 	
 	// only non-null when _returnTypeClass is an array, or a map
 	protected final Class<?> componentType;
 	protected final boolean returnMap;
 
-	protected AccessibleObject[] _fields;
+	protected AccessibleObject[] _fields = null;
 	protected int[] _fieldTypes;
 
 	protected final Object[] _args = new Object[1];
@@ -96,38 +95,35 @@ public class RowToObjectMapper<T> extends RowMapper {
 			// detect if we want an array back
 			componentType = returnTypeClass.getComponentType();
 		}
+	}
 
-		_fields = null;
-
-		try {
-			_columnCount = resultSet.getMetaData().getColumnCount();
-		} catch (SQLException e) {
-			throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
-		}
-
+	protected void lazyLoadConstructor() {
+		if(constructorLoaded)
+			return;
 		// detect if returnTypeClass has a constructor that takes a ResultSet, if so, our job couldn't be easier...
 		boolean resultSetConstructor = false;
-		Constructor<T> constructor = null;
+		Constructor<? extends T> constructor = null;
 		try {
-			constructor = returnTypeClass.getConstructor(ResultSet.class);
+			constructor = _returnTypeClass.getConstructor(ResultSet.class);
 			if (!constructor.isAccessible())
 				constructor.setAccessible(true);
 			resultSetConstructor = true;
 		} catch (Throwable e) {
 			// if no resultSetConstructor find the constructor
 			try {
-				constructor = returnTypeClass.getDeclaredConstructor();
+				constructor = _returnTypeClass.getDeclaredConstructor();
 				if (!constructor.isAccessible())
 					constructor.setAccessible(true);
 			} catch (Throwable e1) {
 				// if column count is 2 or less, it might map directly to a type like a Long or something, or be a map which does
 				// or if componentType is non-null, then we want an array like Long[] or String[]
 				if(_columnCount > 2 && componentType == null)
-					throw new MapperException("Exception when trying to get constructor for : "+returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+					throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
 			}
 		}
 		this.resultSetConstructor = resultSetConstructor;
 		this.constructor = constructor;
+		this.constructorLoaded = true;
 	}
 
 	/**
@@ -147,6 +143,8 @@ public class RowToObjectMapper<T> extends RowMapper {
 	 */
 	@SuppressWarnings({"unchecked"})
 	public T mapRowToReturnType() {
+
+		lazyLoadConstructor();
 
 		if (resultSetConstructor)
 			try {
