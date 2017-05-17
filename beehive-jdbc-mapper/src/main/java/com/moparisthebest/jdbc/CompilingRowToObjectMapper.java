@@ -68,6 +68,14 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 		}
 	}
 
+	// todo: generate/cache these to make it faster for Map and MapCollection? maybe just getKey and getVal methods instead
+	/*
+	@Override
+	public <E> E extractColumnValue(final int index, final Class<E> classType) throws SQLException {
+		return super.extractColumnValue(index, classType);
+	}
+	*/
+
 	@Override
 	protected String[] getKeysFromResultSet() throws SQLException {
 		if (keys == null)

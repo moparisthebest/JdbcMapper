@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class CachingResultSetMapper extends ResultSetMapper {
 
-	protected final Map<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping> cache = new HashMap<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping>();
+	protected final Map<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>> cache = new HashMap<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>>();
 
 	public CachingResultSetMapper(Calendar cal, int arrayMaxLength) {
 		super(cal, arrayMaxLength);
