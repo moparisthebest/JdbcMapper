@@ -12,7 +12,19 @@ import java.util.Calendar;
 import java.util.Map;
 
 /**
- * Created by mopar on 5/16/17.
+ * Map a ResultSet row to an Object. This mapper generates/compiles/executes java code to perform the mapping.
+ *
+ * @author Travis Burtrum (modifications from beehive)
+ * @author Travis Burtrum
+ * @see RowToObjectMapper for most details, will document here where this differs
+ * <p>
+ * Usage differences:
+ * 1. Reflection can set non-public or final fields directly, direct java code cannot, so DTOs like that will result in
+ * a compilation and therefore mapping error.
+ * <p>
+ * Subclass differences:
+ * 1. Normally a subclass of RowToObjectMapper can overload the getMapImplementation() method to change some behavior,
+ * @see CaseInsensitiveMapRowToObjectMapper , but that method is never called with this implementation.
  */
 public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	protected final Compiler compiler;
@@ -72,12 +84,42 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	}
 
 	protected String typeFromName(final Class<?> type) {
-		return type.getName(); // todo: naive for now
+		if (returnMap || componentType == null)
+			return type.getName();
+		else {
+			// an array, annoying syntax
+			final String name = type.getName();
+			final char charType = name.charAt(1);
+			switch (charType) {
+				case 'L':
+					return name.substring(2, name.length() - 1) + "[]";
+				case 'Z':
+					return "boolean[]";
+				case 'B':
+					return "byte[]";
+				case 'C':
+					return "char[]";
+				case 'D':
+					return "double[]";
+				case 'F':
+					return "float[]";
+				case 'I':
+					return "int[]";
+				case 'J':
+					return "long[]";
+				case 'S':
+					return "short[]";
+				case '[':
+				default:
+					throw new MapperException("only supports single dimensional array");
+			}
+		}
 	}
 
-	protected String escapeJavaString(final String s) {
+	protected String escapeMapKeyString(final String s) {
 		// todo: escape key string, newlines, double quotes, backslashes...
-		return s;
+		// actually it seems like those wouldn't be valid SQL column names, so we won't bother until we hear different...
+		return '"' + s + '"';
 	}
 
 	// code generation down here
@@ -110,19 +152,19 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 		if (returnMap) // we want a map
 			try {
 				// todo: does not call getMapImplementation, I think that's fine
-				java.append("final Map<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
+				java.append("final ").append(tType).append("<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
 				final ResultSetMetaData md = _resultSet.getMetaData();
 				final int columnLength = _columnCount + 1;
 				if (componentType != null && componentType != Object.class) { // we want a specific value type
 					int typeId = _tmf.getTypeId(componentType);
 					for (int x = 1; x < columnLength; ++x) {
-						java.append("ret.put(").append(escapeJavaString(md.getColumnName(x).toLowerCase())).append(", ");
+						java.append("ret.put(").append(escapeMapKeyString(md.getColumnName(x).toLowerCase())).append(", ");
 						extractColumnValueString(java, x, typeId);
 						java.append(");\n");
 					}
 				} else // we want a generic object type
 					for (int x = 1; x < columnLength; ++x)
-						java.append("ret.put(").append(escapeJavaString(md.getColumnName(x).toLowerCase())).append(", rs.getObject(").append(x).append("));\n");
+						java.append("ret.put(").append(escapeMapKeyString(md.getColumnName(x).toLowerCase())).append(", rs.getObject(").append(x).append("));\n");
 				java.append("return ret;\n");
 				return;
 			} catch (Throwable e) {
@@ -132,8 +174,7 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 			}
 		else if (componentType != null) // we want an array
 			try {
-				// todo: array initialization syntax?
-				java.append("final ").append(tType).append("[] ret = new ").append(tType).append("[").append(_columnCount).append("];\n");
+				java.append("final ").append(tType).append(" ret = new ").append(tType.substring(0, tType.length() - 1)).append(_columnCount).append("];\n");
 				final int typeId = _tmf.getTypeId(componentType);
 				for (int x = 0; x < _columnCount; ) {
 					java.append("ret[").append(x).append("] = ");
@@ -141,6 +182,7 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 					java.append(";\n");
 				}
 				java.append("return ret;\n");
+				return;
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create a "
 						+ componentType.getName() + "[] from a ResultSet row, all columns must be of that type", e);
@@ -236,7 +278,6 @@ public class CompilingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 	 * @throws java.sql.SQLException on error.
 	 */
 	protected void extractColumnValueString(final StringBuilder java, final int index, final int resultType) {
-		// todo: custom boolean
 		switch (resultType) {
 			case TypeMappingsFactory.TYPE_INT:
 				java.append("rs.getInt(").append(index).append(")");
