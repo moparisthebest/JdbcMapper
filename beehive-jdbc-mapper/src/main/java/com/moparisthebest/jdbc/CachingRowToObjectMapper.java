@@ -44,7 +44,7 @@ public class CachingRowToObjectMapper<T> extends RowToObjectMapper<T> {
 		}
 	}
 
-	static class ResultSetKey {
+	public static class ResultSetKey {
 		protected final String[] keys;
 		protected final Class<?> returnTypeClass;
 
