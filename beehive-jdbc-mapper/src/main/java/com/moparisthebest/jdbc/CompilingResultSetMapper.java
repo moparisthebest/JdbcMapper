@@ -144,7 +144,7 @@ public class CompilingResultSetMapper extends ResultSetMapper {
 	}
 
 	@Override
-	protected <K, T> RowToObjectMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+	public <K, T> RowMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
 		return new CompilingRowToObjectMapper<K, T>(compiler, cache, resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 }

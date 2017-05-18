@@ -21,13 +21,10 @@ import java.util.Map;
  * Usage differences:
  * 1. Reflection can set non-public or final fields directly, direct java code cannot, so DTOs like that will result in
  * a compilation and therefore mapping error.
- * <p>
- * Subclass differences:
- * 1. Normally a subclass of RowToObjectMapper can overload the getMapImplementation() method to change some behavior,
- * @see CaseInsensitiveMapRowToObjectMapper , but that method is never called with this implementation.
- */
+*/
 public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
+	// do not remove, used from generated classes
 	public static final String firstColumnError = "Cannot call getFirstColumn when mapKeyType is null!";
 
 	protected final Compiler compiler;
@@ -36,7 +33,11 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	protected String[] keys = null; // for caching if we must generate class
 
 	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
-		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
+		this(compiler, cache, resultSet, returnTypeClass, cal, mapValType, mapKeyType, false);
+	}
+
+	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, final boolean caseInsensitiveMap) {
+		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType, caseInsensitiveMap);
 		this.compiler = compiler;
 		try {
 			final CachingRowToObjectMapper.ResultSetKey keys = new CachingRowToObjectMapper.ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass, _mapKeyType);
@@ -172,7 +173,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		}
 
 		java.append(footer);
-		System.out.println(java);
+		//System.out.println(java);
 		return compiler.compile(className, java);
 	}
 

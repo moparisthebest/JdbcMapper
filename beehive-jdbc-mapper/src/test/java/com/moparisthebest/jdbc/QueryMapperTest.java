@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.util.*;
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by mopar on 6/10/14.
@@ -19,48 +21,47 @@ public class QueryMapperTest {
 
 	private static Connection conn;
 
-	protected static final Person fieldPerson1 = new FieldPerson(1, new Date(0), "First", "Person");
-	protected static final Boss fieldBoss1 = new FieldBoss(2, new Date(0), "Second", "Person", "Finance", "Second");
-	protected static final Boss fieldBoss2 = new FieldBoss(3, new Date(0), "Third", "Person", "Finance", null);
-	protected static final Boss fieldBoss3 = new FieldBoss(4, new Date(0), null, "Person", "Finance", "Fourth");
+	public static final Person fieldPerson1 = new FieldPerson(1, new Date(0), "First", "Person");
+	public static final Boss fieldBoss1 = new FieldBoss(2, new Date(0), "Second", "Person", "Finance", "Second");
+	public static final Boss fieldBoss2 = new FieldBoss(3, new Date(0), "Third", "Person", "Finance", null);
+	public static final Boss fieldBoss3 = new FieldBoss(4, new Date(0), null, "Person", "Finance", "Fourth");
 
-	protected static final Person setPerson1 = new SetPerson(fieldPerson1);
-	protected static final Boss setBoss1 = new SetBoss(fieldBoss1);
-	protected static final Boss setBoss2 = new SetBoss(fieldBoss2);
-	protected static final Boss setBoss3 = new SetBoss(fieldBoss3);
+	public static final Person setPerson1 = new SetPerson(fieldPerson1);
+	public static final Boss setBoss1 = new SetBoss(fieldBoss1);
+	public static final Boss setBoss2 = new SetBoss(fieldBoss2);
+	public static final Boss setBoss3 = new SetBoss(fieldBoss3);
 
-	protected static final Person reverseFieldPerson1 = new ReverseFieldPerson(fieldPerson1);
-	protected static final Boss reverseFieldBoss1 = new ReverseFieldBoss(fieldBoss1);
-	protected static final Boss reverseFieldBoss2 = new ReverseFieldBoss(fieldBoss2);
-	protected static final Boss reverseFieldBoss3 = new ReverseFieldBoss(fieldBoss3);
+	public static final Person reverseFieldPerson1 = new ReverseFieldPerson(fieldPerson1);
+	public static final Boss reverseFieldBoss1 = new ReverseFieldBoss(fieldBoss1);
+	public static final Boss reverseFieldBoss2 = new ReverseFieldBoss(fieldBoss2);
+	public static final Boss reverseFieldBoss3 = new ReverseFieldBoss(fieldBoss3);
 
-	protected static final Person reverseSetPerson1 = new ReverseSetPerson(fieldPerson1);
-	protected static final Boss reverseSetBoss1 = new ReverseSetBoss(fieldBoss1);
-	protected static final Boss reverseSetBoss2 = new ReverseSetBoss(fieldBoss2);
-	protected static final Boss reverseSetBoss3 = new ReverseSetBoss(fieldBoss3);
+	public static final Person reverseSetPerson1 = new ReverseSetPerson(fieldPerson1);
+	public static final Boss reverseSetBoss1 = new ReverseSetBoss(fieldBoss1);
+	public static final Boss reverseSetBoss2 = new ReverseSetBoss(fieldBoss2);
+	public static final Boss reverseSetBoss3 = new ReverseSetBoss(fieldBoss3);
 
-	protected static final String personRegular = "SELECT * FROM person WHERE person_no = ?";
-	protected static final String bossRegularAndUnderscore = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department, p.first_name " +
+	public static final String personRegular = "SELECT * FROM person WHERE person_no = ?";
+	public static final String bossRegularAndUnderscore = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department, p.first_name " +
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = ?";
-	protected static final String bossRegularAndUnderscoreReverse = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department, p.first_name AS firstName " +
+	public static final String bossRegularAndUnderscoreReverse = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department, p.first_name AS firstName " +
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = ?";
-	protected static final String bossRegular = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department " +
+	public static final String bossRegular = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department " +
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = ?";
-	protected static final String bossUnderscore = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department " +
+	public static final String bossUnderscore = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department " +
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = ?";
 
-	@BeforeClass
-	public static void setUp() throws Throwable {
+	public static Connection getConnection() throws Throwable {
 		Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-		conn = DriverManager.getConnection("jdbc:derby:memory:derbyDB;create=true");
+		final Connection conn = DriverManager.getConnection("jdbc:derby:memory:derbyDB;create=true");
 		QueryMapper qm = null;
 		try {
 			qm = new QueryMapper(conn);
@@ -75,6 +76,12 @@ public class QueryMapperTest {
 		} finally {
 			tryClose(qm);
 		}
+		return conn;
+	}
+
+	@BeforeClass
+	public static void setUp() throws Throwable {
+		conn = getConnection();
 	}
 
 	@AfterClass
@@ -105,6 +112,7 @@ public class QueryMapperTest {
 		return Arrays.asList(new Object[][] {
 				{ new ResultSetMapper() },
 				{ new CachingResultSetMapper() },
+				{ new CaseInsensitiveMapResultSetMapper() },
 				{ new CompilingResultSetMapper() },
 		});
 	}
@@ -231,7 +239,7 @@ public class QueryMapperTest {
 	@Test
 	public void testSelectArrayMap() throws Throwable {
 		final List<Map<String, String>> arrayMap = getListMap();
-		Assert.assertEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.toArrayMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
+		Assert.assertArrayEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.toArrayMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
 	}
 
 	@Test
@@ -324,5 +332,33 @@ public class QueryMapperTest {
 		System.out.println("actual:   " + actual);
 		*/
 		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testCaseInsensitiveMap() throws Throwable {
+		final Map<String, String> map = qm.toListMap("SELECT 'bob' as bob, 'tom' as tom FROM person WHERE person_no = ?", String.class, 1).get(0);
+		if (rsm instanceof CaseInsensitiveMapResultSetMapper) {
+			assertEquals("bob", map.get("bob"));
+			assertEquals("bob", map.get("Bob"));
+			assertEquals("bob", map.get("BoB"));
+			assertEquals("bob", map.get("BOb"));
+			assertEquals("bob", map.get("BOB"));
+			assertEquals("tom", map.get("tom"));
+			assertEquals("tom", map.get("Tom"));
+			assertEquals("tom", map.get("ToM"));
+			assertEquals("tom", map.get("TOm"));
+			assertEquals("tom", map.get("TOM"));
+		} else {
+			assertEquals("bob", map.get("bob"));
+			assertNull(map.get("Bob"));
+			assertNull(map.get("BoB"));
+			assertNull(map.get("BOb"));
+			assertNull(map.get("BOB"));
+			assertEquals("tom", map.get("tom"));
+			assertNull(map.get("Tom"));
+			assertNull(map.get("ToM"));
+			assertNull(map.get("TOm"));
+			assertNull(map.get("TOM"));
+		}
 	}
 }

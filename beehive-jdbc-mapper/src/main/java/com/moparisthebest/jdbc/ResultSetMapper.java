@@ -53,7 +53,7 @@ import java.util.concurrent.*;
  *
  * @author Travis Burtrum (modifications from beehive)
  */
-public class ResultSetMapper {
+public class ResultSetMapper implements RowMapperProvider {
 
 	public static final Map<Class, Class> interfaceToConcrete = Collections.unmodifiableMap(new HashMap<Class, Class>() {{
 		// Collection's
@@ -151,7 +151,7 @@ public class ResultSetMapper {
 			// a value of less than 1 indicates that all rows from the ResultSet should be included.
 			final boolean unlimitedRows = arrayMaxLength < 1;
 
-			final RowToObjectMapper<?, E> rowMapper = getRowMapper(rs, componentType, cal, mapValType, null);
+			final RowMapper<?, E> rowMapper = getRowMapper(rs, componentType, cal, mapValType, null);
 
 			for (; (unlimitedRows || numRows != arrayMaxLength) && rs.next(); ++numRows) {
 				E object = rowMapper.mapRowToReturnType();
@@ -230,7 +230,7 @@ public class ResultSetMapper {
 			// a value of less than 1 indicates that all rows from the ResultSet should be included.
 			final boolean unlimitedRows = arrayMaxLength < 1;
 
-			final RowToObjectMapper<K, E> rowMapper = getRowMapper(rs, componentType, cal, mapValType, mapKeyType);
+			final RowMapper<K, E> rowMapper = getRowMapper(rs, componentType, cal, mapValType, mapKeyType);
 
 			for (; (unlimitedRows || numRows != arrayMaxLength) && rs.next(); ++numRows) {
 				K key = rowMapper.getMapKey();
@@ -311,7 +311,7 @@ public class ResultSetMapper {
 			// a value of less than 1 indicates that all rows from the ResultSet should be included.
 			final boolean unlimitedRows = arrayMaxLength < 1;
 
-			final RowToObjectMapper<K, C> rowMapper = getRowMapper(rs, componentType, cal, mapValType, mapKeyType);
+			final RowMapper<K, C> rowMapper = getRowMapper(rs, componentType, cal, mapValType, mapKeyType);
 
 			for (; (unlimitedRows || numRows != arrayMaxLength) && rs.next(); ++numRows) {
 				K key = rowMapper.getMapKey();
@@ -404,7 +404,7 @@ public class ResultSetMapper {
 	}
 
 	// fairly un-interesting methods below here
-	protected <K, T> RowToObjectMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+	public <K, T> RowMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
 		return new RowToObjectMapper<K, T>(resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 

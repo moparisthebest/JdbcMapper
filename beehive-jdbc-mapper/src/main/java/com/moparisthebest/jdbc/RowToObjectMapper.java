@@ -19,6 +19,8 @@ package com.moparisthebest.jdbc;
  * $Header:$
  */
 
+import com.moparisthebest.jdbc.util.CaseInsensitiveHashMap;
+
 import java.lang.reflect.*;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -26,6 +28,8 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.moparisthebest.jdbc.UpdateableDTO.YES;
 import static com.moparisthebest.jdbc.UpdateableDTO.NO;
@@ -47,7 +51,11 @@ import static com.moparisthebest.jdbc.UpdateableDTO.NO;
  *
  * @author Travis Burtrum (modifications from beehive)
  */
-public class RowToObjectMapper<K, T> extends RowMapper<K, T> {
+public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
+
+	private static final String SETTER_NAME_REGEX = "^(set)([A-Z_]\\w*+)";
+	protected static final TypeMappingsFactory _tmf = TypeMappingsFactory.getInstance();
+	protected static final Pattern _setterRegex = Pattern.compile(SETTER_NAME_REGEX);
 
 	public static final int TYPE_BOOLEAN = _tmf.getTypeId(Boolean.TYPE);//TypeMappingsFactory.TYPE_BOOLEAN; // not public? 
 	public static final int TYPE_BOOLEAN_OBJ = _tmf.getTypeId(Boolean.class);//TypeMappingsFactory.TYPE_BOOLEAN_OBJ; // not public?
@@ -82,6 +90,11 @@ public class RowToObjectMapper<K, T> extends RowMapper<K, T> {
 		this(resultSet, returnTypeClass, cal, mapValType, null);
 	}
 
+
+	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		this(resultSet, returnTypeClass, cal, mapValType, mapKeyType, false);
+	}
+
 	/**
 	 * Create a new RowToObjectMapper.
 	 *
@@ -89,11 +102,17 @@ public class RowToObjectMapper<K, T> extends RowMapper<K, T> {
 	 * @param returnTypeClass Class to map to.
 	 * @param cal             Calendar instance for date/time mappings.
 	 */
-	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, boolean caseInsensitiveMap) {
 		super(resultSet, returnTypeClass, cal, mapKeyType);
 		returnMap = Map.class.isAssignableFrom(returnTypeClass);
 		if(returnMap){
-			_returnTypeClass = ResultSetMapper.getConcreteClass(returnTypeClass, HashMap.class);
+			Class<? extends T> rtc = ResultSetMapper.getConcreteClass(returnTypeClass, HashMap.class);
+			if(caseInsensitiveMap && HashMap.class.equals(rtc)) {
+				@SuppressWarnings("unchecked")
+				final Class<? extends T> rtct = (Class<? extends T>) CaseInsensitiveHashMap.class;
+				rtc = rtct;
+			}
+			_returnTypeClass = rtc;
 			componentType = mapValType;
 		}else{
 			_returnTypeClass = returnTypeClass;
@@ -137,7 +156,7 @@ public class RowToObjectMapper<K, T> extends RowMapper<K, T> {
 	 * like perhaps to implement the original beehive behavior of case-insensitive strings
 	 */
 	@SuppressWarnings({"unchecked"})
-	protected Map<String, Object> getMapImplementation() throws IllegalAccessException, InstantiationException {
+	private Map<String, Object> getMapImplementation() throws IllegalAccessException, InstantiationException {
 		return (Map<String, Object>)_returnTypeClass.newInstance();
 	}
 
@@ -441,40 +460,178 @@ public class RowToObjectMapper<K, T> extends RowMapper<K, T> {
 		}
 	}
 
-	@Override
+	public static <T> T fixNull(Class<T> returnType) {
+		return returnType.cast(_tmf.fixNull(returnType));
+	}
+
+	/**
+	 * Determine if the given method is a java bean setter method.
+	 * @param method Method to check
+	 * @return True if the method is a setter method.
+	 */
+	protected boolean isSetterMethod(Method method) {
+		Matcher matcher = _setterRegex.matcher(method.getName());
+		if (matcher.matches()) {
+
+			if (Modifier.isStatic(method.getModifiers())) return false;
+			if (!Modifier.isPublic(method.getModifiers())) return false;
+			if (!Void.TYPE.equals(method.getReturnType())) return false;
+
+			// method parameter checks
+			Class[] params = method.getParameterTypes();
+			if (params.length != 1) return false;
+			if (TypeMappingsFactory.TYPE_UNKNOWN == _tmf.getTypeId(params[0])) return false;
+
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Extract a column value from the ResultSet and return it as resultType.
+	 *
+	 * @param index The column index of the value to extract from the ResultSet.
+	 * @param resultType The return type. Defined in TypeMappingsFactory.
+	 * @return The extracted value
+	 * @throws java.sql.SQLException on error.
+	 */
 	protected Object extractColumnValue(int index, int resultType) throws SQLException {
 		try{
-			if (resultType != TYPE_BOOLEAN && resultType != TYPE_BOOLEAN_OBJ)
-				return super.extractColumnValue(index, resultType);
-			else {
-				// do some special handling to convert a database string to a boolean
-				boolean ret;
-				try {
-					// try to get an actual boolean from the database
-					ret = _resultSet.getBoolean(index);
-					// null seems to get returned as false above, so String code won't run if its null
-					if (_resultSet.wasNull())
-						if (resultType == TYPE_BOOLEAN_OBJ)
-							return null; // only return null for Boolean object
-						else
-							throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead 'null'. If you want to accept null values, make it an object Boolean instead of primitive boolean.", index));
-				} catch (SQLException e) {
-					// if we are here, it wasn't a boolean or null, so try to grab a string instead
-					String bool = _resultSet.getString(index);//.toUpperCase(); // do we want it case-insensitive?
-					ret = YES.equals(bool);
-					if (!ret && !NO.equals(bool))
-						throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead '%s'.", index, bool));
-					//throw e;
+			switch (resultType) {
+				case TypeMappingsFactory.TYPE_INT:
+					return new Integer(_resultSet.getInt(index));
+				case TypeMappingsFactory.TYPE_LONG:
+					return new Long(_resultSet.getLong(index));
+				case TypeMappingsFactory.TYPE_FLOAT:
+					return new Float(_resultSet.getFloat(index));
+				case TypeMappingsFactory.TYPE_DOUBLE:
+					return new Double(_resultSet.getDouble(index));
+				case TypeMappingsFactory.TYPE_BYTE:
+					return new Byte(_resultSet.getByte(index));
+				case TypeMappingsFactory.TYPE_SHORT:
+					return new Short(_resultSet.getShort(index));
+				case TypeMappingsFactory.TYPE_INT_OBJ:
+				{
+					int i = _resultSet.getInt(index);
+					return _resultSet.wasNull() ? null : new Integer(i);
 				}
-				return ret ? Boolean.TRUE : Boolean.FALSE;
+				case TypeMappingsFactory.TYPE_LONG_OBJ:
+				{
+					long i = _resultSet.getLong(index);
+					return _resultSet.wasNull() ? null : new Long(i);
+				}
+				case TypeMappingsFactory.TYPE_FLOAT_OBJ:
+				{
+					float i = _resultSet.getFloat(index);
+					return _resultSet.wasNull() ? null : new Float(i);
+				}
+				case TypeMappingsFactory.TYPE_DOUBLE_OBJ:
+				{
+					double i = _resultSet.getDouble(index);
+					return _resultSet.wasNull() ? null : new Double(i);
+				}
+				case TypeMappingsFactory.TYPE_BYTE_OBJ:
+				{
+					byte i = _resultSet.getByte(index);
+					return _resultSet.wasNull() ? null : new Byte(i);
+				}
+				case TypeMappingsFactory.TYPE_SHORT_OBJ:
+				{
+					short i = _resultSet.getShort(index);
+					return _resultSet.wasNull() ? null : new Short(i);
+				}
+
+				case TypeMappingsFactory.TYPE_BOOLEAN:
+				case TypeMappingsFactory.TYPE_BOOLEAN_OBJ:
+				{
+					// do some special handling to convert a database string to a boolean
+					boolean ret;
+					try {
+						// try to get an actual boolean from the database
+						ret = _resultSet.getBoolean(index);
+						// null seems to get returned as false above, so String code won't run if its null
+						if (_resultSet.wasNull())
+							if (resultType == TYPE_BOOLEAN_OBJ)
+								return null; // only return null for Boolean object
+							else
+								throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead 'null'. If you want to accept null values, make it an object Boolean instead of primitive boolean.", index));
+					} catch (SQLException e) {
+						// if we are here, it wasn't a boolean or null, so try to grab a string instead
+						String bool = _resultSet.getString(index);//.toUpperCase(); // do we want it case-insensitive?
+						ret = YES.equals(bool);
+						if (!ret && !NO.equals(bool))
+							throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead '%s'.", index, bool));
+						//throw e;
+					}
+					return ret ? Boolean.TRUE : Boolean.FALSE;
+				}
+				case TypeMappingsFactory.TYPE_STRING:
+				case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
+					return _resultSet.getString(index);
+				case TypeMappingsFactory.TYPE_BIG_DECIMAL:
+					return _resultSet.getBigDecimal(index);
+				case TypeMappingsFactory.TYPE_BYTES:
+					return _resultSet.getBytes(index);
+				case TypeMappingsFactory.TYPE_TIMESTAMP:
+				{
+					if (null == _cal)
+						return _resultSet.getTimestamp(index);
+					else
+						return _resultSet.getTimestamp(index, _cal);
+				}
+				case TypeMappingsFactory.TYPE_TIME:
+				{
+					if (null == _cal)
+						return _resultSet.getTime(index);
+					else
+						return _resultSet.getTime(index, _cal);
+				}
+				case TypeMappingsFactory.TYPE_SQLDATE:
+				{
+					if (null == _cal)
+						return _resultSet.getDate(index);
+					else
+						return _resultSet.getDate(index, _cal);
+				}
+				case TypeMappingsFactory.TYPE_DATE:
+				{
+					// convert explicity to java.util.Date
+					// 12918 |  knex does not return java.sql.Date properly from web service
+					java.sql.Timestamp ts = (null == _cal) ? _resultSet.getTimestamp(index) : _resultSet.getTimestamp(index, _cal);
+					if (null == ts)
+						return null;
+					return new java.util.Date(ts.getTime());
+				}
+				case TypeMappingsFactory.TYPE_CALENDAR:
+				{
+					java.sql.Timestamp ts = (null == _cal) ? _resultSet.getTimestamp(index) : _resultSet.getTimestamp(index, _cal);
+					if (null == ts)
+						return null;
+					Calendar c = (null == _cal) ? Calendar.getInstance() : (Calendar) _cal.clone();
+					c.setTimeInMillis(ts.getTime());
+					return c;
+				}
+				case TypeMappingsFactory.TYPE_REF:
+					return _resultSet.getRef(index);
+				case TypeMappingsFactory.TYPE_BLOB:
+					return _resultSet.getBlob(index);
+				case TypeMappingsFactory.TYPE_CLOB:
+					return _resultSet.getClob(index);
+				case TypeMappingsFactory.TYPE_ARRAY:
+					return _resultSet.getArray(index);
+				case TypeMappingsFactory.TYPE_READER:
+				case TypeMappingsFactory.TYPE_STREAM:
+					throw new MapperException("streaming return types are not supported by the JdbcControl; use ResultSet instead");
+				case TypeMappingsFactory.TYPE_STRUCT:
+				case TypeMappingsFactory.TYPE_UNKNOWN:
+					// JAVA_TYPE (could be any), or REF
+					return _resultSet.getObject(index);
+				default:
+					throw new MapperException("internal error: unknown type ID: " + Integer.toString(resultType));
 			}
 		}catch(SQLException e){
 			throw new SQLExceptionColumnNum(e, index);
 		}
-	}
-
-	public static <T> T fixNull(Class<T> returnType) {
-		return returnType.cast(_tmf.fixNull(returnType));
 	}
 }
 

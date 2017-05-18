@@ -132,7 +132,7 @@ public class CachingResultSetMapper extends ResultSetMapper {
 	}
 
 	@Override
-	protected <K, T> RowToObjectMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+	public <K, T> RowMapper<K, T> getRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
 		return new CachingRowToObjectMapper<K, T>(cache, resultSet, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 }
