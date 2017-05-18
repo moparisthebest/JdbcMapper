@@ -59,24 +59,34 @@ public class QueryMapperTest {
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = ?";
 
-	public static Connection getConnection() throws Throwable {
-		Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-		final Connection conn = DriverManager.getConnection("jdbc:derby:memory:derbyDB;create=true");
-		QueryMapper qm = null;
+	static {
+		// load db once
 		try {
-			qm = new QueryMapper(conn);
-			qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
-			qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
-			for (final Person person : new Person[]{fieldPerson1})
-				qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
-			for (final Boss boss : new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3}) {
-				qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
-				qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+			Connection conn = null;
+			QueryMapper qm = null;
+			try {
+				conn = getConnection();
+				qm = new QueryMapper(conn);
+				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
+				qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
+				for (final Person person : new Person[]{fieldPerson1})
+					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
+				for (final Boss boss : new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3}) {
+					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
+					qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
+				}
+			} finally {
+				tryClose(qm);
+				tryClose(conn);
 			}
-		} finally {
-			tryClose(qm);
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
 		}
-		return conn;
+	}
+
+	public static Connection getConnection() throws Throwable {
+		return DriverManager.getConnection("jdbc:derby:memory:derbyDB;create=true");
 	}
 
 	@BeforeClass
