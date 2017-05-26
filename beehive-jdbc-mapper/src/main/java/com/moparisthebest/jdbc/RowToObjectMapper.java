@@ -189,15 +189,15 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 		if(returnMap) // we want a map
 			try {
 				final Map<String, Object> ret = getMapImplementation();
-				final ResultSetMetaData md = _resultSet.getMetaData();
+				final String[] keys = getKeysFromResultSet();
 				final int columnLength = _columnCount+1;
 				if(componentType != null && componentType != Object.class){ // we want a specific value type
 					int typeId = _tmf.getTypeId(componentType);
 					for(int x = 1; x < columnLength; ++x)
-						ret.put(md.getColumnName(x).toLowerCase(), extractColumnValue(x, typeId));
+						ret.put(keys[x].toLowerCase(), extractColumnValue(x, typeId));
 				} else // we want a generic object type
 					for(int x = 1; x < columnLength; ++x)
-						ret.put(md.getColumnName(x).toLowerCase(), _resultSet.getObject(x));
+						ret.put(keys[x].toLowerCase(), _resultSet.getObject(x));
 				return _returnTypeClass.cast(ret);
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create a Map<String, "
@@ -285,13 +285,13 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 					if (f instanceof Field) {
 						throw new MapperException("The declared Java type for field " + ((Field) f).getName()
 								+ ((Field) f).getType().toString()
-								+ " is incompatible with the SQL format of column " + i + " '" + md.getColumnName(i)
+								+ " is incompatible with the SQL format of column " + i + " '" + md.getColumnLabel(i)
 								+ "' (" + md.getColumnTypeName(i)
 								+ ") which returns objects of type " + _args[0].getClass().getName());
 					} else {
 						throw new MapperException("The declared Java type for method " + ((Method) f).getName()
 								+ ((Method) f).getParameterTypes()[0].toString()
-								+ " is incompatible with the SQL format of column " + i + " '" + md.getColumnName(i)
+								+ " is incompatible with the SQL format of column " + i + " '" + md.getColumnLabel(i)
 								+ "' (" + md.getColumnTypeName(i)
 								+ ") which returns objects of type " + _args[0].getClass().getName());
 					}

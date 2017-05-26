@@ -189,7 +189,7 @@ public class ResultSetMapper implements RowMapperProvider {
 			try {
 				ResultSetMetaData md = rs.getMetaData();
 				badColumn = e.getCause() instanceof SQLExceptionColumnNum ? ((SQLExceptionColumnNum)e.getCause()).getColumnNum() : 1;
-				columnName = md.getColumnName(badColumn);
+				columnName = md.getColumnLabel(badColumn);
 				columnType = md.getColumnTypeName(badColumn);
 				returnedType = ((list != null && !list.isEmpty()) ? list.iterator().next() : rs.getObject(badColumn)).getClass().getName();
 			} catch (Throwable t) {
@@ -269,7 +269,7 @@ public class ResultSetMapper implements RowMapperProvider {
 			try {
 				ResultSetMetaData md = rs.getMetaData();
 				badColumn = e.getCause() instanceof SQLExceptionColumnNum ? ((SQLExceptionColumnNum)e.getCause()).getColumnNum() : 1;
-				columnName = md.getColumnName(badColumn);
+				columnName = md.getColumnLabel(badColumn);
 				columnType = md.getColumnTypeName(badColumn);
 				returnedType = ((map != null && !map.isEmpty()) ? map.values().iterator().next() : rs.getObject(badColumn)).getClass().getName();
 			} catch (Throwable t) {
@@ -355,7 +355,7 @@ public class ResultSetMapper implements RowMapperProvider {
 			try {
 				ResultSetMetaData md = rs.getMetaData();
 				badColumn = e.getCause() instanceof SQLExceptionColumnNum ? ((SQLExceptionColumnNum)e.getCause()).getColumnNum() : 1;
-				columnName = md.getColumnName(badColumn);
+				columnName = md.getColumnLabel(badColumn);
 				columnType = md.getColumnTypeName(badColumn);
 				returnedType = ((map != null && !map.isEmpty()) ? map.values().iterator().next() : rs.getObject(badColumn)).getClass().getName();
 			} catch (Throwable t) {

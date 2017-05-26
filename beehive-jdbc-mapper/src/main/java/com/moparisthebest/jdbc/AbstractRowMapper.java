@@ -50,6 +50,8 @@ public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
 
     protected final boolean mapOnlySecondColumn;
 
+    protected String[] keys = null; // for caching if we must generate class
+
     /**
      * Create a new RowMapper for the specified ResultSet and return type Class.
      * @param resultSet ResultSet to map
@@ -75,6 +77,17 @@ public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
         this(resultSet, returnTypeClass, cal, null);
     }
 
+    protected AbstractRowMapper(String[] keys, Class<T> returnTypeClass, Calendar cal, Class<K> mapKeyType) {
+        _resultSet = null;
+        _returnTypeClass = returnTypeClass;
+        _cal = cal;
+        _mapKeyType = mapKeyType;
+        this.keys = keys;
+        _columnCount = keys.length - 1;
+
+        mapOnlySecondColumn = _mapKeyType != null && _columnCount == 2;
+    }
+
     /**
      * Build a String array of column names from the ResultSet.
      * @return A String array containing the column names contained within the ResultSet.
@@ -82,13 +95,17 @@ public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
      */
     protected String[] getKeysFromResultSet() throws SQLException {
 
+        if(this.keys != null)
+            return this.keys;
+
         String[] keys;
         final ResultSetMetaData md = _resultSet.getMetaData();
 
         keys = new String[_columnCount + 1];
         for (int i = 1; i <= _columnCount; i++) {
-            keys[i] = md.getColumnName(i).toUpperCase();
+            //keys[i] = md.getColumnName(i).toUpperCase();
+            keys[i] = md.getColumnLabel(i).toUpperCase();
         }
-        return keys;
+        return this.keys = keys;
     }
 }

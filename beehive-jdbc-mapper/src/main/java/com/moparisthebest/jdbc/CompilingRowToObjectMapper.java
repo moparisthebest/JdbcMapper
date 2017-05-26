@@ -30,8 +30,6 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	protected final Compiler compiler;
 	protected final ResultSetToObject<K, T> resultSetToObject;
 
-	protected String[] keys = null; // for caching if we must generate class
-
 	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
 		this(compiler, cache, resultSet, returnTypeClass, cal, mapValType, mapKeyType, false);
 	}
@@ -47,7 +45,6 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			if (resultSetToObject == null) {
 				//System.out.printf("cache miss, keys: %s\n", keys);
 				// generate and put into cache
-				this.keys = keys.keys;
 				cache.put(keys, this.resultSetToObject = genClass());
 				this.keys = null;
 				this._fields = null;
@@ -72,13 +69,6 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	public K getMapKey() throws SQLException {
 		return resultSetToObject.getFirstColumn(_resultSet, _cal);
 	}
-// todo: generate/cache these to make it faster for Map and MapCollection? maybe just getKey and getVal methods instead
-	/*
-	@Override
-	public <E> E extractColumnValue(final int index, final Class<E> classType) throws SQLException {
-		return super.extractColumnValue(index, classType);
-	}
-	*/
 
 	@Override
 	protected String[] getKeysFromResultSet() throws SQLException {
@@ -197,18 +187,17 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			try {
 				// todo: does not call getMapImplementation, I think that's fine
 				java.append("final ").append(tType).append("<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
-				final ResultSetMetaData md = _resultSet.getMetaData();
 				final int columnLength = _columnCount + 1;
 				if (componentType != null && componentType != Object.class) { // we want a specific value type
 					int typeId = _tmf.getTypeId(componentType);
 					for (int x = 1; x < columnLength; ++x) {
-						java.append("ret.put(").append(escapeMapKeyString(md.getColumnName(x).toLowerCase())).append(", ");
+						java.append("ret.put(").append(escapeMapKeyString(keys[x]).toLowerCase()).append(", ");
 						extractColumnValueString(java, x, typeId);
 						java.append(");\n");
 					}
 				} else // we want a generic object type
 					for (int x = 1; x < columnLength; ++x)
-						java.append("ret.put(").append(escapeMapKeyString(md.getColumnName(x).toLowerCase())).append(", rs.getObject(").append(x).append("));\n");
+						java.append("ret.put(").append(escapeMapKeyString(keys[x].toLowerCase())).append(", rs.getObject(").append(x).append("));\n");
 				java.append("return ret;\n");
 				return;
 			} catch (Throwable e) {
