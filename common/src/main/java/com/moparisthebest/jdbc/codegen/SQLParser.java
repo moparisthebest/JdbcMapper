@@ -1,4 +1,4 @@
-package com.moparisthebest.classgen;
+package com.moparisthebest.jdbc.codegen;
 
 /**
  * Created by mopar on 5/25/17.

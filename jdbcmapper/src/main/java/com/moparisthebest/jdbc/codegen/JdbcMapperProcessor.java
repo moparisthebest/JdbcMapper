@@ -1,8 +1,5 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.classgen.SQLParser;
-import com.moparisthebest.classgen.SimpleSQLParser;
-
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;

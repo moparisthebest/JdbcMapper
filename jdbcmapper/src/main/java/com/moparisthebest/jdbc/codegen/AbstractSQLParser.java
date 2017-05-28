@@ -1,4 +1,6 @@
-package com.moparisthebest.classgen;
+package com.moparisthebest.jdbc.codegen;
+
+import com.moparisthebest.jdbc.codegen.SQLParser;
 
 /**
  * Created by mopar on 5/25/17.

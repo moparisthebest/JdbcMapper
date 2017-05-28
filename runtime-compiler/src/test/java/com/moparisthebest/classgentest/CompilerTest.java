@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author moparisthebest
  */
-public class CalculatorCompiler {
+public class CompilerTest {
 
 	@Test
 	public void testSingle() throws InterruptedException {

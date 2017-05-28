@@ -1,7 +1,5 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.classgen.SQLParser;
-import com.moparisthebest.classgen.SimpleSQLParser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

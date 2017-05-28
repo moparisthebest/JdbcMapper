@@ -65,7 +65,10 @@
     </properties>
     <packaging>pom</packaging>
     <modules>
+        <module>common</module>
+        <module>runtime-compiler</module>
         <module>querymapper</module>
+        <module>jdbcmapper</module>
     </modules>
     <dependencyManagement>
         <dependencies>

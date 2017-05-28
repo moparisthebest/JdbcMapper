@@ -1,4 +1,4 @@
-package com.moparisthebest.classgen;
+package com.moparisthebest.jdbc.codegen;
 
 import java.util.regex.Pattern;
 

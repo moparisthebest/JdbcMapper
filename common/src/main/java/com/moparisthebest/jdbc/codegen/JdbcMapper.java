@@ -1,8 +1,5 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.classgen.AbstractSQLParser;
-import com.moparisthebest.classgen.SQLParser;
-
 import java.io.Closeable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -30,7 +27,7 @@ public interface JdbcMapper extends Closeable {
 
 		boolean cachePreparedStatements() default true;
 
-		Class<? extends SQLParser> sqlParser() default AbstractSQLParser.class;
+		Class<? extends SQLParser> sqlParser() default SQLParser.class;
 	}
 
 	@Retention(RetentionPolicy.SOURCE)
