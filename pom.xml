@@ -25,27 +25,13 @@
         <artifactId>oss-parent</artifactId>
         <version>9</version>
     </parent>
-    <groupId>com.moparisthebest.beehive</groupId>
-    <artifactId>beehive</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <groupId>com.moparisthebest.jdbcmapper</groupId>
+    <artifactId>jdbcmapper-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <description>
-        Beehive's goal is to make J2EE programming easier by building a simple object model on J2EE and Struts. Using
-        the new JSR-175 annotations, Beehive reduces the coding necessary for J2EE. The initial Beehive project has
-        three pieces.
-
-        NetUI: An annotation-driven web application programming framework that is built atop Struts. NetUI centralizes
-        navigation logic, state, metadata, and exception handling in a single encapsulated and reusable Page Flow
-        Controller class. In addition, NetUI provides a set of JSP tags for rendering HTML / XHTML and higher-level UI
-        constructs such as data grids and trees and has first-class integration with JavaServer Faces and Struts.
-
-        Controls: A lightweight, metadata-driven component framework for building that reduces the complexity of being a
-        client of enterprise resources. Controls provide a unified client abstraction that can be implemented to access
-        a diverse set of enterprise resources using a single configuration model.
-
-        In addition, Beehive includes a set of system controls that are abstractions for low-level J2EE resource APIs
-        such as EJB, JMS, JDBC, and web services.
+        JdbcMapper takes the pain out of mapping SQL to POJOs
     </description>
-    <url>https://github.com/moparisthebest/beehive</url>
+    <url>https://code.moparisthebest.com/moparisthebest/JdbcMapper</url>
     <organization>
         <name>moparisthebest.com</name>
         <url>http://www.moparisthebest.com</url>
@@ -59,9 +45,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/moparisthebest/beehive.git</connection>
-        <developerConnection>scm:git:https://github.com/moparisthebest/beehive.git</developerConnection>
-        <url>https://github.com/moparisthebest/beehive</url>
+        <connection>scm:git:https://code.moparisthebest.com/moparisthebest/JdbcMapper.git</connection>
+        <developerConnection>scm:git:https://code.moparisthebest.com/moparisthebest/JdbcMapper.git</developerConnection>
+        <url>https://code.moparisthebest.com/moparisthebest/JdbcMapper</url>
     </scm>
     <licenses>
         <license>
@@ -79,33 +65,10 @@
     </properties>
     <packaging>pom</packaging>
     <modules>
-        <module>beehive-controls</module>
-        <module>beehive-netui-core</module>
-        <module>beehive-netui-compiler</module>
-        <module>beehive-netui-bootstrap</module>
-        <module>beehive-netui-tags</module>
-        <module>beehive-jdbc-control</module>
-        <module>beehive-ejb-control</module>
-        <module>beehive-jms-control</module>
-        <module>beehive-jdbc-mapper</module>
+        <module>querymapper</module>
     </modules>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>velocity</groupId>
-                <artifactId>velocity-dep</artifactId>
-                <version>1.4</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-discovery</groupId>
-                <artifactId>commons-discovery</artifactId>
-                <version>0.2</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>1.0.4</version>
-            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -117,102 +80,6 @@
                 <artifactId>derby</artifactId>
                 <version>10.10.2.0</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.ant</groupId>
-                <artifactId>ant</artifactId>
-                <version>1.9.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.ant</groupId>
-                <artifactId>ant-launcher</artifactId>
-                <version>1.9.4</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>2.4</version>
-                <scope>provided</scope>
-            </dependency>
-
-
-            <dependency>
-                <groupId>commons-el</groupId>
-                <artifactId>commons-el</artifactId>
-                <version>1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>struts</groupId>
-                <artifactId>struts</artifactId>
-                <version>1.2.9</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.8</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.3</version>
-            </dependency>
-            <dependency>
-                <groupId>myfaces</groupId>
-                <artifactId>myfaces-jsf-api</artifactId>
-                <version>1.0.9</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>2.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>xdoclet</groupId>
-                <artifactId>xdoclet</artifactId>
-                <version>1.2b4</version>
-            </dependency>
-            <dependency>
-                <groupId>xdoclet</groupId>
-                <artifactId>xdoclet-web-module</artifactId>
-                <version>1.2b4</version>
-            </dependency>
-            <dependency>
-                <groupId>xdoclet</groupId>
-                <artifactId>xjavadoc</artifactId>
-                <version>1.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.moparisthebest.aptIn16</groupId>
-                <artifactId>apt-mirror-api</artifactId>
-                <version>0.2</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.geronimo.specs</groupId>
-                <artifactId>geronimo-j2ee_1.4_spec</artifactId>
-                <version>1.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.moparisthebest.aptIn16</groupId>
-                <artifactId>netui-compiler</artifactId>
-                <version>0.2</version>
-                <scope>provided</scope>
-                <optional>true</optional>
-            </dependency>
-            <dependency>
-                <groupId>xmlbeans</groupId>
-                <artifactId>xbean</artifactId>
-                <version>2.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
