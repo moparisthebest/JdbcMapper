@@ -95,6 +95,10 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 		this(resultSet, returnTypeClass, cal, mapValType, mapKeyType, false);
 	}
 
+	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, boolean caseInsensitiveMap) {
+		this(null, resultSet, returnTypeClass, cal, mapValType, mapKeyType, caseInsensitiveMap);
+	}
+
 	/**
 	 * Create a new RowToObjectMapper.
 	 *
@@ -102,8 +106,8 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	 * @param returnTypeClass Class to map to.
 	 * @param cal             Calendar instance for date/time mappings.
 	 */
-	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, boolean caseInsensitiveMap) {
-		super(resultSet, returnTypeClass, cal, mapKeyType);
+	public RowToObjectMapper(String[] keys, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, boolean caseInsensitiveMap) {
+		super(keys, resultSet, returnTypeClass, cal, mapKeyType);
 		returnMap = Map.class.isAssignableFrom(returnTypeClass);
 		if(returnMap){
 			Class<? extends T> rtc = ResultSetMapper.getConcreteClass(returnTypeClass, HashMap.class);

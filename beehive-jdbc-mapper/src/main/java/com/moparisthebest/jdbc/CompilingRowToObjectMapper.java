@@ -2,11 +2,11 @@ package com.moparisthebest.jdbc;
 
 import com.moparisthebest.classgen.Compiler;
 
+import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Map;
@@ -57,7 +57,15 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			}
 		} catch (SQLException e) {
 			throw new MapperException("CachingRowToObjectMapper: SQLException: " + e.getMessage(), e);
+		} catch (IOException e) {
+			throw new MapperException("CachingRowToObjectMapper: IOException (should never happen?): " + e.getMessage(), e);
 		}
+	}
+
+	public CompilingRowToObjectMapper(final String[] keys, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+		super(keys,null, returnTypeClass, cal, mapValType, mapKeyType, false);
+		this.compiler = null;
+		this.resultSetToObject = null;
 	}
 
 	@Override
@@ -138,7 +146,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	}
 
 	// code generation down here
-	protected ResultSetToObject<K, T> genClass() {
+	protected ResultSetToObject<K, T> genClass() throws IOException {
 		final String className = "CompilingMapper";
 		final String tType = typeFromName(_returnTypeClass);
 		final String kType = typeFromName(_mapKeyType);
@@ -153,11 +161,12 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		final StringBuilder java = new StringBuilder(header);
 		//java.append("return null;\n");
 		gen(java, tType);
+		java.append("return ret;\n");
 
 		java.append("  }\n\n  public ").append(kType).append(" getFirstColumn(final java.sql.ResultSet rs, final java.util.Calendar cal) throws java.sql.SQLException {\n    ");
 		if(_mapKeyType != null){
 			java.append("return ");
-			extractColumnValueString(java, 1, _tmf.getTypeId(_mapKeyType));
+			extractColumnValueString(java, 1, _mapKeyType);
 		} else {
 			java.append("throw new com.moparisthebest.jdbc.MapperException(com.moparisthebest.jdbc.CompilingRowToObjectMapper.firstColumnError)");
 		}
@@ -167,10 +176,10 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		return compiler.compile(className, java);
 	}
 
-	protected void gen(final StringBuilder java, final String tType) {
+	public void gen(final Appendable java, final String tType) throws IOException {
 
 		if(mapOnlySecondColumn){
-			java.append("return ");
+			java.append("final ").append(tType).append(" ret = ");
 			extractColumnValueString(java, 2, _tmf.getTypeId(_returnTypeClass));
 			java.append(";\n");
 			return;
@@ -179,7 +188,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		lazyLoadConstructor();
 
 		if (resultSetConstructor) {
-			java.append("return new ").append(tType).append("(rs);\n");
+			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(rs);\n");
 			return;
 		}
 
@@ -197,8 +206,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 					}
 				} else // we want a generic object type
 					for (int x = 1; x < columnLength; ++x)
-						java.append("ret.put(").append(escapeMapKeyString(keys[x].toLowerCase())).append(", rs.getObject(").append(x).append("));\n");
-				java.append("return ret;\n");
+						java.append("ret.put(").append(escapeMapKeyString(keys[x].toLowerCase())).append(", rs.getObject(").append(String.valueOf(x)).append("));\n");
 				return;
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create a Map<String, "
@@ -207,14 +215,13 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			}
 		else if (componentType != null) // we want an array
 			try {
-				java.append("final ").append(tType).append(" ret = new ").append(tType.substring(0, tType.length() - 1)).append(_columnCount).append("];\n");
+				java.append("final ").append(tType).append(" ret = new ").append(tType.substring(0, tType.length() - 1)).append(String.valueOf(_columnCount)).append("];\n");
 				final int typeId = _tmf.getTypeId(componentType);
 				for (int x = 0; x < _columnCount; ) {
-					java.append("ret[").append(x).append("] = ");
+					java.append("ret[").append(String.valueOf(x)).append("] = ");
 					extractColumnValueString(java, ++x, typeId);
 					java.append(";\n");
 				}
-				java.append("return ret;\n");
 				return;
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create a "
@@ -230,7 +237,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
 			try {
 				if (typeId != TypeMappingsFactory.TYPE_UNKNOWN) {
-					java.append("return ");
+					java.append("final ").append(tType).append(" ret = ");
 					extractColumnValueString(java, 1, typeId);
 					java.append(";\n");
 					return;
@@ -243,7 +250,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 					}
 					*/
 					// we could actually pull from first row like above and test it first and fail now, but maybe just failing during compilation is enough?
-					java.append("return (").append(tType).append(") ");
+					java.append("final ").append(tType).append(" ret = (").append(tType).append(") ");
 					extractColumnValueString(java, 1, typeId);
 					java.append(";\n");
 					return;
@@ -299,7 +306,11 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		// if this resultObject is Finishable, call finish()
 		if (Finishable.class.isAssignableFrom(_returnTypeClass))
 			java.append("ret.finish(rs);\n");
-		java.append("return ret;\n");
+	}
+
+
+	public void extractColumnValueString(final Appendable java, final int index, final Class resultType) throws IOException {
+		extractColumnValueString(java, index, _tmf.getTypeId(resultType));
 	}
 
 	/**
@@ -310,86 +321,86 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	 * @return The extracted value
 	 * @throws java.sql.SQLException on error.
 	 */
-	protected void extractColumnValueString(final StringBuilder java, final int index, final int resultType) {
+	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException {
 		switch (resultType) {
 			case TypeMappingsFactory.TYPE_INT:
-				java.append("rs.getInt(").append(index).append(")");
+				java.append("rs.getInt(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_LONG:
-				java.append("rs.getLong(").append(index).append(")");
+				java.append("rs.getLong(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_FLOAT:
-				java.append("rs.getFloat(").append(index).append(")");
+				java.append("rs.getFloat(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_DOUBLE:
-				java.append("rs.getDouble(").append(index).append(")");
+				java.append("rs.getDouble(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BYTE:
-				java.append("rs.getByte(").append(index).append(")");
+				java.append("rs.getByte(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_SHORT:
-				java.append("rs.getInt(").append(index).append(")");
+				java.append("rs.getInt(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BOOLEAN:
-				java.append("getBooleanYN(rs, ").append(index).append(")");
+				java.append("getBooleanYN(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_INT_OBJ:
-				java.append("getObjectInt(rs, ").append(index).append(")");
+				java.append("getObjectInt(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_LONG_OBJ:
-				java.append("getObjectLong(rs, ").append(index).append(")");
+				java.append("getObjectLong(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_FLOAT_OBJ:
-				java.append("getObjectFloat(rs, ").append(index).append(")");
+				java.append("getObjectFloat(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_DOUBLE_OBJ:
-				java.append("getObjectDouble(rs, ").append(index).append(")");
+				java.append("getObjectDouble(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BYTE_OBJ:
-				java.append("getObjectByte(rs, ").append(index).append(")");
+				java.append("getObjectByte(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_SHORT_OBJ:
-				java.append("getObjectShort(rs, ").append(index).append(")");
+				java.append("getObjectShort(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BOOLEAN_OBJ:
-				java.append("getObjectBooleanYN(rs, ").append(index).append(")");
+				java.append("getObjectBooleanYN(rs, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_STRING:
 			case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
-				java.append("rs.getString(").append(index).append(")");
+				java.append("rs.getString(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BIG_DECIMAL:
-				java.append("rs.getBigDecimal(").append(index).append(")");
+				java.append("rs.getBigDecimal(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BYTES:
-				java.append("rs.getBytes(").append(index).append(")");
+				java.append("rs.getBytes(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_TIMESTAMP:
-				java.append("getTimestamp(rs, cal, ").append(index).append(")");
+				java.append("getTimestamp(rs, cal, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_TIME:
-				java.append("getTime(rs, cal, ").append(index).append(")");
+				java.append("getTime(rs, cal, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_SQLDATE:
-				java.append("getSqlDate(rs, cal, ").append(index).append(")");
+				java.append("getSqlDate(rs, cal, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_DATE:
-				java.append("getUtilDate(rs, cal, ").append(index).append(")");
+				java.append("getUtilDate(rs, cal, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_CALENDAR:
-				java.append("getCalendar(rs, cal, ").append(index).append(")");
+				java.append("getCalendar(rs, cal, ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_REF:
-				java.append("rs.getRef(").append(index).append(")");
+				java.append("rs.getRef(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BLOB:
-				java.append("rs.getBlob(").append(index).append(")");
+				java.append("rs.getBlob(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_CLOB:
-				java.append("rs.getClob(").append(index).append(")");
+				java.append("rs.getClob(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_ARRAY:
-				java.append("rs.getArray(").append(index).append(")");
+				java.append("rs.getArray(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_READER:
 			case TypeMappingsFactory.TYPE_STREAM:
@@ -397,7 +408,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			case TypeMappingsFactory.TYPE_STRUCT:
 			case TypeMappingsFactory.TYPE_UNKNOWN:
 				// JAVA_TYPE (could be any), or REF
-				java.append("rs.getObject(").append(index).append(")");
+				java.append("rs.getObject(").append(String.valueOf(index)).append(")");
 				return;
 			default:
 				throw new MapperException("internal error: unknown type ID: " + Integer.toString(resultType));

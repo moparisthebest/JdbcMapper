@@ -58,19 +58,28 @@ public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
      * @param returnTypeClass Class to map ResultSet rows to.
      * @param cal Calendar instance for date/time values.
      */
-    protected AbstractRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<K> mapKeyType) {
+    protected AbstractRowMapper(String[] keys, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<K> mapKeyType) {
         _resultSet = resultSet;
         _returnTypeClass = returnTypeClass;
         _cal = cal;
         _mapKeyType = mapKeyType;
 
-        try {
-            _columnCount = resultSet.getMetaData().getColumnCount();
-        } catch (SQLException e) {
-            throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
+        if(keys == null) {
+            try {
+                _columnCount = resultSet.getMetaData().getColumnCount();
+            } catch (SQLException e) {
+                throw new MapperException("RowToObjectMapper: SQLException: " + e.getMessage(), e);
+            }
+        } else {
+            this.keys = keys;
+            _columnCount = keys.length - 1;
         }
 
         mapOnlySecondColumn = _mapKeyType != null && _columnCount == 2;
+    }
+
+    protected AbstractRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<K> mapKeyType) {
+        this(null, resultSet, returnTypeClass, cal, mapKeyType);
     }
 
     protected AbstractRowMapper(ResultSet resultSet, Class<T> returnTypeClass, Calendar cal) {
@@ -78,14 +87,7 @@ public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
     }
 
     protected AbstractRowMapper(String[] keys, Class<T> returnTypeClass, Calendar cal, Class<K> mapKeyType) {
-        _resultSet = null;
-        _returnTypeClass = returnTypeClass;
-        _cal = cal;
-        _mapKeyType = mapKeyType;
-        this.keys = keys;
-        _columnCount = keys.length - 1;
-
-        mapOnlySecondColumn = _mapKeyType != null && _columnCount == 2;
+        this(keys, null, returnTypeClass, cal, mapKeyType);
     }
 
     /**

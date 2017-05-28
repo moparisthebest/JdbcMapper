@@ -22,9 +22,37 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <scope>test</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <debug>true</debug>
+                    <!--compilerArgument>-Xlint:unchecked</compilerArgument-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>my-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessors>
+                                <annotationProcessor>com.moparisthebest.jdbc.codegen.JdbcMapperProcessor</annotationProcessor>
+                            </annotationProcessors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
