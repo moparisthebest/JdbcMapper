@@ -31,8 +31,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
-			byteArrayType, inputStreamType, fileType, blobType
-			//, clobStringType, blobStringType,  arrayListObjectType
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType
 			;
 
 	public JdbcMapperProcessor() {
@@ -58,11 +57,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		//byteArrayType = this.types.getArrayType(elements.getTypeElement(byte.class.getCanonicalName()).asType());
 		//byteArrayType = elements.getTypeElement(byte.class.getCanonicalName()).asType();
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
-		/*
-        clobStringType = elements.getTypeElement(ClobString.class.getCanonicalName()).asType();
-		blobStringType = elements.getTypeElement(BlobString.class.getCanonicalName()).asType();
-		arrayListObjectType = elements.getTypeElement(ArrayInList.ArrayListObject.class.getCanonicalName()).asType();
-		*/
+		sqlArrayType = elements.getTypeElement(java.sql.Array.class.getCanonicalName()).asType();
 	}
 
 	@Override
@@ -263,7 +258,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// now bind parameters
 							int count = 0;
 							for (final VariableElement param : bindParams)
-								setObject(w, ++count, param.getSimpleName().toString(), param.asType());
+								setObject(w, ++count, param);
 
 							if (!parsedSQl.isSelect()) {
 								if (returnType.equals("void")) {
@@ -352,54 +347,79 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return true;
 	}
 
-	private void setObject(final Writer w, final int index, String variableName, final TypeMirror o) throws SQLException, IOException {
+	private void setObject(final Writer w, final int index, final VariableElement param) throws SQLException, IOException {
+		String variableName = param.getSimpleName().toString();
+		final TypeMirror o = param.asType();
 		w.write("\t\t\t");
-		// we are going to put most common ones up top so it should execute faster normally
 		String method = null;
-		// todo: avoid string concat here
-		if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType)) {
-			method = "Object";
-			// java.util.Date support, put it in a Timestamp
-		} else if (types.isAssignable(o, utilDateType)) {
-			method = "Object";
-			// might need to wrap with Timestamp
-			if (types.isSameType(o, utilDateType))
-				variableName = "new java.sql.Timestamp(" + variableName + ".getTime())";
-			// CLOB support
-		} else if (types.isAssignable(o, readerType) || types.isAssignable(o, clobType)) {
-			method = "Clob";
-		/*
-		} else if (o instanceof ClobString) {
-			ps.setObject(index, ((ClobString) o).s == null ? null : ((ClobString) o).s);
-		*/
-			// BLOB support
-		} else if (types.isAssignable(o, byteArrayType)) {
-			method = "Blob";
-			variableName = "new java.io.ByteArrayInputStream(" + variableName + ")";
-		} else if (types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType)) {
-			method = "Blob";
-		} else if (types.isAssignable(o, fileType)) {
-			// todo: does this close the InputStream properly????
-			w.write("\t\t\ttry {\n" +
-					"\t\t\t\tps.setBlob(" + index + ", new java.io.FileInputStream(" + variableName + "));\n" +
-					"\t\t\t} catch (java.io.FileNotFoundException e) {\n" +
-					"\t\t\t\tthrow new SQLException(\"File to Blob FileNotFoundException\", e);\n" +
-					"\t\t\t}");
-			return;
-			/*
-		} else if (o instanceof BlobString) {
-			try {
-				ps.setBlob(index, ((BlobString) o).s == null ? null : new ByteArrayInputStream(((BlobString) o).s.getBytes("UTF-8")));
-			} catch (UnsupportedEncodingException e) {
-				throw new SQLException("String to Blob UnsupportedEncodingException", e);
+
+		// special behavior
+		final JdbcMapper.Blob blob = param.getAnnotation(JdbcMapper.Blob.class);
+		if(blob != null) {
+			if (types.isAssignable(o, stringType)) {
+				w.write("try {\n\t\t\t\tps.setBlob(");
+				w.write(Integer.toString(index));
+				w.write(", ");
+				w.write(variableName);
+				w.write(" == null ? null : new java.io.ByteArrayInputStream(");
+				w.write(variableName);
+				w.write(".getBytes(\"");
+				w.write(blob.charsetName());
+				w.write("\")));\n\t\t\t} catch (java.io.UnsupportedEncodingException e) {\n" +
+						"\t\t\t\tthrow new SQLException(\"String to Blob UnsupportedEncodingException\", e);\n" +
+						"\t\t\t}\n");
+				return;
+			} else if (!(types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType) || types.isAssignable(o, fileType) || types.isAssignable(o, byteArrayType))) {
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Blob only valid for String, byte[], Blob, InputStream, and File", param);
+				return;
 			}
-		} else if (o instanceof ArrayInList.ArrayListObject) {
-			ps.setArray(index, ((ArrayInList.ArrayListObject) o).getArray());
-			*/
 		} else {
-			// probably won't get here ever, but just in case...
-			method = "Object";
+			final JdbcMapper.Clob clob = param.getAnnotation(JdbcMapper.Clob.class);
+			if(clob != null) {
+				if (types.isAssignable(o, stringType)) {
+					method = "Clob";
+					variableName = variableName + " == null ? null : new StringReader("+variableName+")";
+				} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Clob only valid for String, Clob, Reader", param);
+					return;
+				}
+			}
 		}
+		// end special behavior
+
+		// we are going to put most common ones up top so it should execute faster normally
+		// todo: avoid string concat here
+		if(method == null)
+			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType)) {
+				method = "Object";
+				// java.util.Date support, put it in a Timestamp
+			} else if (types.isAssignable(o, utilDateType)) {
+				method = "Object";
+				// might need to wrap with Timestamp
+				if (types.isSameType(o, utilDateType))
+					variableName = "new java.sql.Timestamp(" + variableName + ".getTime())";
+				// CLOB support
+			} else if (types.isAssignable(o, readerType) || types.isAssignable(o, clobType)) {
+				method = "Clob";
+			} else if (types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType)) {
+				method = "Blob";
+			} else if (types.isAssignable(o, fileType)) {
+				// todo: does this close the InputStream properly????
+				w.write("\t\t\ttry {\n" +
+						"\t\t\t\tps.setBlob(" + index + ", new java.io.FileInputStream(" + variableName + "));\n" +
+						"\t\t\t} catch (java.io.FileNotFoundException e) {\n" +
+						"\t\t\t\tthrow new SQLException(\"File to Blob FileNotFoundException\", e);\n" +
+						"\t\t\t}");
+				return;
+			} else if (types.isAssignable(o, byteArrayType)) {
+				method = "Blob";
+				variableName = "new java.io.ByteArrayInputStream(" + variableName + ")";
+			} else if (types.isAssignable(o, sqlArrayType)) {
+				method = "Array";
+			} else {
+				// probably won't get here ever, but just in case...
+				method = "Object";
+			}
 		w.write("ps.set");
 		w.write(method);
 		w.write('(');

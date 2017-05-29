@@ -28,6 +28,9 @@ public interface PersonDAO {
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE person_no = {personNo}")
 	void setFirstNameBlob(byte[] firstName, long personNo) throws SQLException;
 
+	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE person_no = {personNo}")
+	void setFirstNameBlob(@JdbcMapper.Blob String firstName, long personNo) throws SQLException;
+
 	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
 	String getFirstName(long personNo) throws SQLException;
 
