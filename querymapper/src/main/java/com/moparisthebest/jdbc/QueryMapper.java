@@ -136,7 +136,7 @@ public class QueryMapper implements Closeable {
 		else if (o instanceof Reader)
 			ps.setClob(index, (Reader) o);
 		else if (o instanceof ClobString)
-			ps.setObject(index, ((ClobString) o).s == null ? null : ((ClobString) o).s);
+			ps.setClob(index, ((ClobString) o).s == null ? null : new StringReader(((ClobString) o).s));
 		else if (o instanceof Clob)
 			ps.setClob(index, (Clob) o);
 			// BLOB support
