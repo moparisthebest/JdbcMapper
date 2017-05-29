@@ -4,14 +4,11 @@ import com.moparisthebest.jdbc.CompilingRowToObjectMapper;
 import com.moparisthebest.jdbc.ResultSetMapper;
 
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.io.Writer;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -24,36 +21,44 @@ public class CompileTimeResultSetMapper {
 
 	@SuppressWarnings({"unchecked"})
 	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final Calendar cal) throws IOException, NoSuchMethodException, ClassNotFoundException {
-		final Method m = fromExecutableElement(eeMethod);
-		final Class returnType = m.getReturnType();
+		//final Method m = fromExecutableElement(eeMethod);
+		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
+		final Class returnType = typeMirrorToClass(returnTypeMirror);
 		if (returnType.isArray()) {
 			toArray(w, keys, ((ArrayType) returnTypeMirror).getComponentType(), returnType.getComponentType(), arrayMaxLength, cal);
 		} else if (Collection.class.isAssignableFrom(returnType)) {
-			toCollection(w, keys, returnTypeMirror, returnType, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), (Class) getActualTypeArguments(m)[0], arrayMaxLength, cal);
+			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
+			toCollection(w, keys, returnTypeMirror, returnType, typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
 		} else if (Map.class.isAssignableFrom(returnType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			final Type[] types = getActualTypeArguments(m);
-			if (types[1] instanceof ParameterizedType) { // for collectionMaps
-				final ParameterizedType pt = (ParameterizedType) types[1];
-				final Class collectionType = (Class) pt.getRawType();
+			final Type[] types = getActualTypeArguments(typeArguments);
+			final TypeMirror collectionTypeMirror = typeArguments.get(1);
+			//if (types[1] instanceof ParameterizedType) { // for collectionMaps
+			if (!((DeclaredType) collectionTypeMirror).getTypeArguments().isEmpty()) { // for collectionMaps
+				//final ParameterizedType pt = (ParameterizedType) types[1];
+				//final Class collectionType = (Class) pt.getRawType();
+				final Class collectionType = typeMirrorToClass(collectionTypeMirror);
 				if (Collection.class.isAssignableFrom(collectionType)) {
-					final TypeMirror collectionTypeMirror = typeArguments.get(1);
+					final TypeMirror componentTypeMirror = ((DeclaredType) collectionTypeMirror).getTypeArguments().get(0);
+					//final Class componentType = (Class) pt.getActualTypeArguments()[0];
+					final Class componentType = typeMirrorToClass(componentTypeMirror);
 					toMapCollection(w, keys,
 							returnTypeMirror, returnType,
 							typeArguments.get(0), (Class) types[0],
 							collectionTypeMirror, collectionType,
-							((DeclaredType) collectionTypeMirror).getTypeArguments().get(0), (Class) pt.getActualTypeArguments()[0],
+							componentTypeMirror, componentType,
 							arrayMaxLength, cal);
 					return;
 				}
 			}
 			toMap(w, keys, returnTypeMirror, returnType, typeArguments.get(0), (Class) types[0], typeArguments.get(1), (Class) types[1], arrayMaxLength, cal);
 		} else if (Iterator.class.isAssignableFrom(returnType)) {
+			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			if (ListIterator.class.isAssignableFrom(returnType))
-				toListIterator(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), (Class) getActualTypeArguments(m)[0], arrayMaxLength, cal);
+				toListIterator(w, keys, typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
 			else
-				toIterator(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), (Class) getActualTypeArguments(m)[0], arrayMaxLength, cal);
+				toIterator(w, keys, typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
 		} else {
 			toObject(w, keys, returnTypeMirror, returnType, cal);
 		}
@@ -166,6 +171,16 @@ public class CompileTimeResultSetMapper {
 		w.write("();\n\t\t\t\t\t_colret.put(_colkey, _collist);\n\t\t\t\t}\n\t\t\t\t_collist.add(ret);\n\t\t\t}\n\t\t\treturn _colret;\n");
 	}
 
+	private static Type[] getActualTypeArguments(final List<? extends TypeMirror> typeArguments) throws ClassNotFoundException {
+		final Type[] ret = new Type[typeArguments.size()];
+		int x = -1;
+		for(final TypeMirror tm : typeArguments)
+			ret[++x] = typeMirrorToClass(tm);
+		return ret;
+	}
+
+	/*
+
 	private static Type[] getActualTypeArguments(Method m) {
 		return ((ParameterizedType) m.getGenericReturnType()).getActualTypeArguments();
 	}
@@ -181,4 +196,6 @@ public class CompileTimeResultSetMapper {
 		}
 		return c.getDeclaredMethod(eeMethod.getSimpleName().toString(), parameterTypes);
 	}
+
+	*/
 }
