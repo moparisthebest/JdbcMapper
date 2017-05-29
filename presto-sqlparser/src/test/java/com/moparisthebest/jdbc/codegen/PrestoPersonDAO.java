@@ -13,8 +13,8 @@ import java.util.Map;
  */
 @JdbcMapper.Mapper(
 //		jndiName = "bob",
-        cachePreparedStatements = false
-		, sqlParser = PrestoSQLParser.class
+//        cachePreparedStatements = false,
+		sqlParser = PrestoSQLParser.class
 )
 public interface PrestoPersonDAO extends PersonDAO {
 

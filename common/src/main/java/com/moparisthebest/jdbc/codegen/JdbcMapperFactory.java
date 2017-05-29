@@ -10,7 +10,7 @@ public abstract class JdbcMapperFactory {
 	static final String SUFFIX = "Bean";
 
 	@SuppressWarnings("unchecked")
-	public static <T extends JdbcMapper> T create(final Class<T> jdbcMapper, final Connection connection) {
+	public static <T> T create(final Class<T> jdbcMapper, final Connection connection) {
 		try {
 			return (T) Class.forName(jdbcMapper.getName() + SUFFIX).getConstructor(Connection.class).newInstance(connection);
 		} catch (Throwable e) {
@@ -18,7 +18,7 @@ public abstract class JdbcMapperFactory {
 		}
 	}
 
-	public static <T extends JdbcMapper> T create(final Class<T> jdbcMapper) {
+	public static <T> T create(final Class<T> jdbcMapper) {
 		return create(jdbcMapper, null);
 	}
 }

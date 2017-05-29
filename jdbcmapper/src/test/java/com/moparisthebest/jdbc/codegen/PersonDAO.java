@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.dto.FieldPerson;
 
+import java.io.Closeable;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
@@ -13,10 +14,10 @@ import java.util.Map;
  */
 @JdbcMapper.Mapper(
 //		jndiName = "bob",
-		cachePreparedStatements = false
+//		cachePreparedStatements = false
 //		, sqlParser = SimpleSQLParser.class
 )
-public interface PersonDAO extends JdbcMapper {
+public interface PersonDAO {
 
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE last_name = {lastName}")
 	int setFirstName(String firstName, String lastName);

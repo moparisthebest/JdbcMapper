@@ -25,8 +25,15 @@ public interface JdbcMapper extends Closeable {
 		 */
 		String jndiName() default "";
 
-		boolean cachePreparedStatements() default true;
+		/**
+		 * This defaults to true if a close() method exists to override/implement, false otherwise
+		 */
+		OptionalBool cachePreparedStatements() default OptionalBool.DEFAULT;
 
+		/**
+		 * This defaults to SimpleSQLParser, PrestoSQLParser is another option for Java 8, or implement your own
+		 * @return
+		 */
 		Class<? extends SQLParser> sqlParser() default SQLParser.class;
 	}
 
@@ -38,7 +45,10 @@ public interface JdbcMapper extends Closeable {
 		 */
 		String value();
 
-		OptionalBool cachePreparedStatement() default OptionalBool.INHERIT;
+		/**
+		 * This defaults to the value of the class-level @JdbcMapper.Mapper.cachePreparedStatements annotation, but can be configured on a per-method level here
+		 */
+		OptionalBool cachePreparedStatement() default OptionalBool.DEFAULT;
 
 		/**
 		 * Maximum array length.
@@ -56,18 +66,18 @@ public interface JdbcMapper extends Closeable {
 	}
 
 	public enum OptionalBool {
-		INHERIT,
+		DEFAULT,
 		TRUE,
 		FALSE;
 
-		public boolean combine(final boolean inherited) {
+		public boolean combine(final boolean def) {
 			switch (this) {
 				case TRUE:
 					return true;
 				case FALSE:
 					return false;
 			}
-			return inherited;
+			return def;
 		}
 	}
 }

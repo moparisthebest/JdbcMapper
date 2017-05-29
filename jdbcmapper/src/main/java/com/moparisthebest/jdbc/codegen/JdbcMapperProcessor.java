@@ -146,17 +146,36 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						}
 						w.write("\n\t\tif (this.conn == null)\n" +
 								"\t\t\tthrow new NullPointerException(\"Connection needs to be non-null for JdbcMapper...\");\n\t}\n" +
-								"\n\t@Override\n\tpublic Connection getConnection() {\n\t\treturn this.conn;\n\t}\n"
+								"\n\tpublic Connection getConnection() {\n\t\treturn this.conn;\n\t}\n"
 						);
 
 						// loop through methods
-						final Types typeUtils = processingEnv.getTypeUtils();
 						int cachedPreparedStatements = 0;
+						ExecutableElement closeMethod = null;
+						boolean lookupCloseMethod = true;
+						final boolean defaultCachePreparedStatements;
+						switch (mapper.cachePreparedStatements()) {
+							case TRUE:
+								defaultCachePreparedStatements = true;
+								break;
+							case FALSE:
+								defaultCachePreparedStatements = false;
+								break;
+							default:
+								defaultCachePreparedStatements = (closeMethod = getCloseMethod(genClass)) != null;
+								lookupCloseMethod = false;
+						}
+
 						for (final Element methodElement : genClass.getEnclosedElements()) {
 							// can only implement abstract methods
 							if (methodElement.getKind() != ElementKind.METHOD || !methodElement.getModifiers().contains(Modifier.ABSTRACT))
 								continue;
 							final ExecutableElement eeMethod = (ExecutableElement) methodElement;
+							if(lookupCloseMethod)
+								if((closeMethod = getCloseMethod(eeMethod)) != null) {
+									lookupCloseMethod = false;
+									continue; // skip close method
+								}
 							final JdbcMapper.SQL sql = eeMethod.getAnnotation(JdbcMapper.SQL.class);
 							if (sql == null || sql.value().isEmpty()) {
 								processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL with non-empty query is required on abstract or interface methods", methodElement);
@@ -199,7 +218,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									w.write(" throws ");
 								}
 								for (final TypeMirror thrownType : thrownTypes) {
-									sqlExceptionThrown |= typeUtils.isSameType(thrownType, sqlExceptionType);
+									sqlExceptionThrown |= types.isSameType(thrownType, sqlExceptionType);
 									w.write(thrownType.toString());
 									if (++count != numThrownTypes)
 										w.write(", ");
@@ -228,7 +247,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							if (parsedSQl.isSelect())
 								w.write("\t\tResultSet rs = null;\n");
 							w.write("\t\ttry {\n\t\t\tps = ");
-							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(mapper.cachePreparedStatements());
+							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements);
 							if (cachePreparedStatements) {
 								w.write("this.prepareStatement(");
 								w.write(Integer.toString(cachedPreparedStatements));
@@ -286,6 +305,15 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write("\t}\n");
 						}
 
+						// look on super classes and interfaces recursively
+						if(lookupCloseMethod)
+							closeMethod = getCloseMethod(genClass);
+
+						if(closeMethod == null && (cachedPreparedStatements > 0 || doJndi)) {
+							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Jdbc.Mapper extended classes with cachedPreparedStatements or jndiNames must have a public void close() method to override or implement, because they must be closed", genClass);
+							continue;
+						}
+
 						if (cachedPreparedStatements > 0) {
 							w.write("\n\tprivate final PreparedStatement[] psCache = new PreparedStatement[");
 							w.write(Integer.toString(cachedPreparedStatements));
@@ -296,13 +324,18 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						}
 
 						// close method
-						w.write("\n\t@Override\n\tpublic void close() {\n\t\t");
-						if (cachedPreparedStatements > 0)
-							w.write("for(final PreparedStatement ps : psCache)\n\t\t\ttryClose(ps);\n\t\t");
-						w.write("tryClose(conn);\n");
-						if (doJndi)
-							w.write("\t\ttryClose(ctx);\n");
-						w.write("\t}\n");
+						if(closeMethod != null) {
+							// if cachedPreparedStatements > 0 or doJndi are true, class MUST have a close() method to override as it
+							// MUST be called to clean up
+							w.write("\n\t@Override\n\tpublic void close() {\n");
+							if (cachedPreparedStatements > 0)
+								w.write("\t\tfor(final PreparedStatement ps : psCache)\n\t\t\ttryClose(ps);\n");
+							if (doJndi)
+								w.write("\t\ttryClose(ctx);\n\t\tif(ctx != null)\n\t\t\ttryClose(conn);\n");
+							if(closeMethod.getEnclosingElement().getKind() != ElementKind.INTERFACE && !closeMethod.getEnclosingElement().equals(genClass))
+								w.write("\t\tsuper.close();\n");
+							w.write("\t}\n");
+						}
 						// end close method
 
 						w.write("}\n");
@@ -407,5 +440,33 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			default:
 				return Class.forName(tm.toString());
 		}
+	}
+
+	public ExecutableElement getCloseMethod(final TypeElement genClass) {
+		ExecutableElement ret = null;
+		for (final Element methodElement : genClass.getEnclosedElements()) {
+			if((ret = getCloseMethod(methodElement)) != null)
+				return ret;
+		}
+		// superclasses
+		final TypeMirror superclass = genClass.getSuperclass();
+		if(superclass.getKind() == TypeKind.DECLARED && (ret = getCloseMethod((TypeElement)types.asElement(superclass))) != null)
+			return ret;
+		// interfaces
+		for(final TypeMirror iface : genClass.getInterfaces()) {
+			if(iface.getKind() == TypeKind.DECLARED && (ret = getCloseMethod((TypeElement)types.asElement(iface))) != null)
+				return ret;
+		}
+		return ret;
+	}
+
+	public static ExecutableElement getCloseMethod(final Element element) {
+		return element.getKind() != ElementKind.METHOD ? null : getCloseMethod((ExecutableElement) element);
+	}
+
+	public static ExecutableElement getCloseMethod(final ExecutableElement methodElement) {
+		return methodElement.getReturnType().getKind() == TypeKind.VOID &&
+				methodElement.getSimpleName().toString().equals("close") &&
+				methodElement.getParameters().isEmpty() ? methodElement : null;
 	}
 }
