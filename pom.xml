@@ -69,6 +69,7 @@
         <module>runtime-compiler</module>
         <module>querymapper</module>
         <module>jdbcmapper</module>
+        <module>presto-sqlparser</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -161,13 +162,12 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.8</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.7</version>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>

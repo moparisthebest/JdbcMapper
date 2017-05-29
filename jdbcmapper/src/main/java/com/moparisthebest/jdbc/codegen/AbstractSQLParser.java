@@ -1,6 +1,6 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.jdbc.codegen.SQLParser;
+import java.util.Arrays;
 
 /**
  * Created by mopar on 5/25/17.
@@ -25,4 +25,11 @@ public abstract class AbstractSQLParser implements SQLParser {
 		return isSelect;
 	}
 
+	@Override
+	public String toString() {
+		return this.getClass().getCanonicalName()+"{" +
+				"columnNames=" + Arrays.toString(columnNames) +
+				", isSelect=" + isSelect +
+				'}';
+	}
 }

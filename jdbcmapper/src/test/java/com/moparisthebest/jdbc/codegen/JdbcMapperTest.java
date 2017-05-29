@@ -27,8 +27,12 @@ public class JdbcMapperTest {
 		tryClose(dao);
 	}
 
+	public PersonDAO getDao() {
+		return dao;
+	}
+
 	@Test
 	public void testName() throws Throwable {
-		assertEquals(fieldPerson1.getFirstName(), dao.getFirstName(fieldPerson1.getPersonNo()));
+		assertEquals(fieldPerson1.getFirstName(), getDao().getFirstName(fieldPerson1.getPersonNo()));
 	}
 }

@@ -3,6 +3,7 @@ package com.moparisthebest.jdbc.codegen;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
@@ -58,7 +59,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		//byteArrayType = elements.getTypeElement(byte.class.getCanonicalName()).asType();
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
 		/*
-		clobStringType = elements.getTypeElement(ClobString.class.getCanonicalName()).asType();
+        clobStringType = elements.getTypeElement(ClobString.class.getCanonicalName()).asType();
 		blobStringType = elements.getTypeElement(BlobString.class.getCanonicalName()).asType();
 		arrayListObjectType = elements.getTypeElement(ArrayInList.ArrayListObject.class.getCanonicalName()).asType();
 		*/
@@ -82,7 +83,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					}
 					final TypeElement genClass = (TypeElement) element;
 					final JdbcMapper.Mapper mapper = genClass.getAnnotation(JdbcMapper.Mapper.class);
-					final SQLParser parser = new SimpleSQLParser();//(SQLParser)Class.forName(mapper.sqlParser().getCanonicalName()).newInstance();
+					final String sqlParserMirror = getSqlParser(mapper).toString();
+					//final SQLParser parser = new SimpleSQLParser();//(SQLParser)Class.forName(mapper.sqlParser().getCanonicalName()).newInstance();
+					//final SQLParser parser = mapper.sqlParser().equals(SQLParser.class) ? new SimpleSQLParser() : mapper.sqlParser().newInstance();
+					final SQLParser parser = sqlParserMirror.equals("com.moparisthebest.jdbc.codegen.SQLParser") ?
+							new SimpleSQLParser() : (SQLParser) Class.forName(sqlParserMirror).newInstance();
 					final String qualifiedName = genClass.getQualifiedName().toString();
 					final boolean isInterface = genClass.getKind().isInterface();
 					final boolean doJndi = !mapper.jndiName().isEmpty();
@@ -305,7 +310,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						tryClose(w);
 					}
 				} catch (Exception e) {
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage(), element);
+					final StringWriter sw = new StringWriter();
+					sw.write('\n');
+					e.printStackTrace(new PrintWriter(sw));
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage() + sw.toString(), element);
 					return false;
 				}
 		return true;
@@ -366,6 +374,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		w.write(", ");
 		w.write(variableName);
 		w.write(");\n");
+	}
+
+	private static TypeMirror getSqlParser(final JdbcMapper.Mapper mapper) {
+		// ridiculous isn't it?
+		try {
+			mapper.sqlParser();
+		} catch (MirroredTypeException mte) {
+			return mte.getTypeMirror();
+		}
+		return null;
 	}
 
 	public static Class<?> typeMirrorToClass(final TypeMirror tm) throws ClassNotFoundException {

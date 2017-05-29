@@ -7,13 +7,17 @@ import static org.junit.Assert.*;
 /**
  * Created by mopar on 5/30/17.
  */
-public class SqlParserTest {
+public class SimpleSQLParserTest {
 
 	private final SQLParser factory = new SimpleSQLParser();
 
+	public SQLParser getFactory() {
+		return factory;
+	}
+
 	@Test
 	public void testSingleSelect() {
-		final SQLParser ret = factory.parse("select bob from tom");
+		final SQLParser ret = getFactory().parse("select bob from tom");
 		assertTrue(ret.isSelect());
 		assertArrayEquals(new String[]{null, "BOB"}, ret.columnNames());
 	}
@@ -26,7 +30,7 @@ public class SqlParserTest {
 				, "select some_bob bob, some_tom as tom from tom"
 				, "select tom.bob, some_tom as tom from tom"
 		}) {
-			final SQLParser ret = factory.parse(sql);
+			final SQLParser ret = getFactory().parse(sql);
 			assertTrue(ret.isSelect());
 			assertArrayEquals(expected, ret.columnNames());
 		}
@@ -39,7 +43,7 @@ public class SqlParserTest {
 				, "INSERT INTO bob (bob_no, bob) VALUES (1, 'bob')"
 				, "MERGE INTO bob bla bla bla"
 		}) {
-			final SQLParser ret = factory.parse(sql);
+			final SQLParser ret = getFactory().parse(sql);
 			assertFalse(ret.isSelect());
 		}
 	}

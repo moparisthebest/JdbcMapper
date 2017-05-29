@@ -14,6 +14,7 @@ import java.util.Map;
 @JdbcMapper.Mapper(
 //		jndiName = "bob",
 		cachePreparedStatements = false
+//		, sqlParser = SimpleSQLParser.class
 )
 public interface PersonDAO extends JdbcMapper {
 
