@@ -35,6 +35,14 @@ public interface JdbcMapper extends Closeable {
 		 * @return
 		 */
 		Class<? extends SQLParser> sqlParser() default SQLParser.class;
+
+		/**
+		 * This defaults to SimpleSQLParser, PrestoSQLParser is another option for Java 8, or implement your own
+		 * @return
+		 */
+		DatabaseType databaseType() default DatabaseType.DEFAULT;
+		String arrayNumberTypeName() default "";
+		String arrayStringTypeName() default "";
 	}
 
 	@Retention(RetentionPolicy.SOURCE)
@@ -107,6 +115,26 @@ public interface JdbcMapper extends Closeable {
 					return false;
 			}
 			return def;
+		}
+	}
+
+	public enum DatabaseType {
+		DEFAULT(null, null),
+		STANDARD("number", "text"),
+		ORACLE("ARRAY_NUM_TYPE", "ARRAY_STR_TYPE");
+
+		public final String arrayNumberTypeName, arrayStringTypeName;
+
+		private DatabaseType(final String arrayNumberTypeName, final String arrayStringTypeName) {
+			this.arrayNumberTypeName = arrayNumberTypeName;
+			this.arrayStringTypeName = arrayStringTypeName;
+		}
+
+		public DatabaseType nonDefault(final DatabaseType def) {
+			if(this != DEFAULT)
+				return this;
+			//return def == DEFAULT ? STANDARD : def;
+			return def; // we guarantee this to be not DEFAULT in JdbcMapperProcessor
 		}
 	}
 }

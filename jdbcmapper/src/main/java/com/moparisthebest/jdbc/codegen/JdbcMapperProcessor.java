@@ -3,9 +3,7 @@ package com.moparisthebest.jdbc.codegen;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
-import javax.lang.model.type.MirroredTypeException;
-import javax.lang.model.type.TypeKind;
-import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.*;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -23,16 +21,19 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
  * Created by mopar on 5/24/17.
  */
 @SupportedAnnotationTypes("com.moparisthebest.jdbc.codegen.JdbcMapper.Mapper")
+@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName"})
 @SupportedSourceVersion(SourceVersion.RELEASE_5)
 public class JdbcMapperProcessor extends AbstractProcessor {
 
-	private static final Pattern paramPattern = Pattern.compile("\\{([^}]+)\\}");
+	private static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([^}]+)\\}");
 	private static final CompileTimeResultSetMapper rsm = new CompileTimeResultSetMapper();
 
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType
 			;
+	private JdbcMapper.DatabaseType defaultDatabaseType;
+	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
 
 	public JdbcMapperProcessor() {
 		//out.println("JdbcMapperProcessor running!");
@@ -58,6 +59,15 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		//byteArrayType = elements.getTypeElement(byte.class.getCanonicalName()).asType();
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
 		sqlArrayType = elements.getTypeElement(java.sql.Array.class.getCanonicalName()).asType();
+		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
+		final String databaseType = processingEnv.getOptions().get("JdbcMapper.databaseType");
+		defaultDatabaseType = databaseType == null ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
+		defaultArrayNumberTypeName = processingEnv.getOptions().get("JdbcMapper.arrayNumberTypeName");
+		if(defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
+			defaultArrayNumberTypeName = defaultDatabaseType.arrayNumberTypeName;
+		defaultArrayStringTypeName = processingEnv.getOptions().get("JdbcMapper.arrayStringTypeName");
+		if(defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
+			defaultArrayStringTypeName = defaultDatabaseType.arrayStringTypeName;
 	}
 
 	@Override
@@ -78,6 +88,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					}
 					final TypeElement genClass = (TypeElement) element;
 					final JdbcMapper.Mapper mapper = genClass.getAnnotation(JdbcMapper.Mapper.class);
+					final JdbcMapper.DatabaseType databaseType = mapper.databaseType().nonDefault(defaultDatabaseType);
+					final String arrayNumberTypeName = !mapper.arrayNumberTypeName().isEmpty() ? mapper.arrayNumberTypeName() : defaultArrayNumberTypeName;
+					final String arrayStringTypeName = !mapper.arrayStringTypeName().isEmpty() ? mapper.arrayStringTypeName() : defaultArrayStringTypeName;
 					final String sqlParserMirror = getSqlParser(mapper).toString();
 					//final SQLParser parser = new SimpleSQLParser();//(SQLParser)Class.forName(mapper.sqlParser().getCanonicalName()).newInstance();
 					//final SQLParser parser = mapper.sqlParser().equals(SQLParser.class) ? new SimpleSQLParser() : mapper.sqlParser().newInstance();
@@ -223,14 +236,37 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								final Matcher bindParamMatcher = paramPattern.matcher(sql.value());
 								final StringBuffer sb = new StringBuffer();
 								while (bindParamMatcher.find()) {
-									final String paramName = bindParamMatcher.group(1);
+									final String paramName = bindParamMatcher.group(5);
 									final VariableElement bindParam = paramMap.get(paramName);
 									if (bindParam == null) {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL sql has bind param '%s' not in method parameter list", paramName), methodElement);
 										continue;
 									}
-									bindParams.add(bindParam);
-									bindParamMatcher.appendReplacement(sb, "?");
+									final String inColumnName = bindParamMatcher.group(2);
+									if(inColumnName == null) {
+										bindParams.add(bindParam);
+										bindParamMatcher.appendReplacement(sb, "?");
+									} else {
+										bindParams.add(new InListVariableElement(bindParam));
+										final boolean not = bindParamMatcher.group(4) != null;
+										final String replacement;
+										switch (databaseType) {
+											case ORACLE:
+												replacement = not ?
+														"(" + inColumnName + " NOT IN(select column_value from table(?)))" :
+														"(" + inColumnName + " IN(select column_value from table(?)))";
+												break;
+											case STANDARD:
+												replacement = not ?
+														"(" + inColumnName + " != ANY(?))" :
+														"(" + inColumnName + " = ANY(?))";
+												break;
+											default:
+												processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", bindParam);
+												return false;
+										}
+										bindParamMatcher.appendReplacement(sb, replacement);
+									}
 								}
 								bindParamMatcher.appendTail(sb);
 								sqlStatement = sb.toString();
@@ -258,7 +294,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// now bind parameters
 							int count = 0;
 							for (final VariableElement param : bindParams)
-								setObject(w, ++count, param);
+								setObject(w, ++count, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
 
 							if (!parsedSQl.isSelect()) {
 								if (returnType.equals("void")) {
@@ -347,13 +383,74 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return true;
 	}
 
-	private void setObject(final Writer w, final int index, final VariableElement param) throws SQLException, IOException {
+	private void setObject(final Writer w, final int index, final JdbcMapper.DatabaseType databaseType, final String arrayNumberTypeName, final String arrayStringTypeName, final VariableElement param) throws SQLException, IOException {
 		String variableName = param.getSimpleName().toString();
 		final TypeMirror o = param.asType();
 		w.write("\t\t\t");
 		String method = null;
 
 		// special behavior
+		if(param instanceof InListVariableElement) {
+			final boolean collection;
+			final TypeMirror componentType;
+			if(o.getKind() == TypeKind.ARRAY) {
+				collection = false;
+				componentType = ((ArrayType)o).getComponentType();
+			} else if(o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
+				collection = true;
+				final DeclaredType dt = (DeclaredType)o;
+				if(dt.getTypeArguments().isEmpty()) {
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" +o.toString(), ((InListVariableElement)param).delegate);
+					return;
+				}
+				componentType = dt.getTypeArguments().get(0);
+			} else {
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" +o.toString(), ((InListVariableElement)param).delegate);
+				return;
+			}
+			w.write("ps.setArray(");
+			w.write(Integer.toString(index));
+			w.write(", ");
+			final String type = types.isAssignable(componentType, numberType) ? arrayNumberTypeName : arrayStringTypeName;
+			switch (databaseType) {
+				case ORACLE:
+					w.write("conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(\"");
+
+					// todo: if oracle driver is not on compile-time classpath, would need to do:
+					// we could also create a fake-oracle module that just had a oracle.jdbc.OracleConnection class implementing createOracleArray()...
+					/*
+					private static final Class<?> oracleConnection;
+					private static final Method createArray;
+
+					static {
+						Class<?> oc;
+						Method ca;
+						try {
+							oc = Class.forName("oracle.jdbc.OracleConnection");
+							ca = oc.getDeclaredMethod("createOracleArray", String.class, Object.class);
+						} catch (Exception e) {
+							throw new RuntimeException(e);
+						}
+						oracleConnection = oc;
+						createArray = ca;
+					}
+					 */
+					//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
+					break;
+				case STANDARD:
+					w.write("conn.createArrayOf(\"");
+					break;
+				default:
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", ((InListVariableElement)param).delegate);
+			}
+			w.write(type);
+			w.write("\", ");
+			w.write(variableName);
+			if(collection)
+				w.write(".toArray()");
+			w.write("));\n");
+			return;
+		}
 		final JdbcMapper.Blob blob = param.getAnnotation(JdbcMapper.Blob.class);
 		if(blob != null) {
 			if (types.isAssignable(o, stringType)) {
@@ -457,6 +554,37 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				return float.class;
 			case DOUBLE:
 				return double.class;
+			case ARRAY:
+				// yuck
+				final TypeMirror arrayComponentType = ((ArrayType)tm).getComponentType();
+				switch (arrayComponentType.getKind()) {
+					case BOOLEAN:
+						return boolean[].class;
+					case BYTE:
+						return byte[].class;
+					case SHORT:
+						return short[].class;
+					case INT:
+						return int[].class;
+					case LONG:
+						return long[].class;
+					case CHAR:
+						return char[].class;
+					case FLOAT:
+						return float[].class;
+					case DOUBLE:
+						return double[].class;
+					case ARRAY:
+						throw new RuntimeException("multi-dimensional arrays are not supported");
+					default:
+						return Class.forName("[L" + arrayComponentType.toString() + ";");
+				}
+			case DECLARED:
+				if(!((DeclaredType)tm).getTypeArguments().isEmpty()) {
+					final String classWithGenerics = tm.toString();
+					return Class.forName(classWithGenerics.substring(0, classWithGenerics.indexOf('<')));
+				}
+				// fallthrough otherwise...
 			default:
 				return Class.forName(tm.toString());
 		}

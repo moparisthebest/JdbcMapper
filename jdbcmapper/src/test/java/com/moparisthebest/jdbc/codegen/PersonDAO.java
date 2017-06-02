@@ -2,7 +2,6 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.dto.FieldPerson;
 
-import java.io.Closeable;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.Map;
  */
 @JdbcMapper.Mapper(
 //		jndiName = "bob",
+//		databaseType = JdbcMapper.DatabaseType.ORACLE
 //		cachePreparedStatements = false
 //		, sqlParser = SimpleSQLParser.class
 )
@@ -39,6 +39,12 @@ public interface PersonDAO {
 
 	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")
 	List<FieldPerson> getPeople(String lastName) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE {last_name not in lastName}")
+	List<FieldPerson> getPeople(String[] lastName) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE {last_name in lastName}")
+	List<FieldPerson> getPeople(List<String> lastName) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")
 	FieldPerson[] getPeopleArray(String lastName) throws SQLException;
