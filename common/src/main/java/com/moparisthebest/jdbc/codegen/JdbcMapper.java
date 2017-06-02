@@ -129,12 +129,5 @@ public interface JdbcMapper extends Closeable {
 			this.arrayNumberTypeName = arrayNumberTypeName;
 			this.arrayStringTypeName = arrayStringTypeName;
 		}
-
-		public DatabaseType nonDefault(final DatabaseType def) {
-			if(this != DEFAULT)
-				return this;
-			//return def == DEFAULT ? STANDARD : def;
-			return def; // we guarantee this to be not DEFAULT in JdbcMapperProcessor
-		}
 	}
 }

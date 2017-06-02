@@ -30,8 +30,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType
-			;
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
 
@@ -63,10 +62,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		final String databaseType = processingEnv.getOptions().get("JdbcMapper.databaseType");
 		defaultDatabaseType = databaseType == null ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
 		defaultArrayNumberTypeName = processingEnv.getOptions().get("JdbcMapper.arrayNumberTypeName");
-		if(defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
+		if (defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
 			defaultArrayNumberTypeName = defaultDatabaseType.arrayNumberTypeName;
 		defaultArrayStringTypeName = processingEnv.getOptions().get("JdbcMapper.arrayStringTypeName");
-		if(defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
+		if (defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
 			defaultArrayStringTypeName = defaultDatabaseType.arrayStringTypeName;
 	}
 
@@ -88,9 +87,19 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					}
 					final TypeElement genClass = (TypeElement) element;
 					final JdbcMapper.Mapper mapper = genClass.getAnnotation(JdbcMapper.Mapper.class);
-					final JdbcMapper.DatabaseType databaseType = mapper.databaseType().nonDefault(defaultDatabaseType);
-					final String arrayNumberTypeName = !mapper.arrayNumberTypeName().isEmpty() ? mapper.arrayNumberTypeName() : defaultArrayNumberTypeName;
-					final String arrayStringTypeName = !mapper.arrayStringTypeName().isEmpty() ? mapper.arrayStringTypeName() : defaultArrayStringTypeName;
+					final JdbcMapper.DatabaseType databaseType;
+					final String arrayNumberTypeName, arrayStringTypeName;
+					if (mapper.databaseType() == JdbcMapper.DatabaseType.DEFAULT) {
+						databaseType = defaultDatabaseType;
+						arrayNumberTypeName = !mapper.arrayNumberTypeName().isEmpty() ? mapper.arrayNumberTypeName() : defaultArrayNumberTypeName;
+						arrayStringTypeName = !mapper.arrayStringTypeName().isEmpty() ? mapper.arrayStringTypeName() : defaultArrayStringTypeName;
+					} else {
+						databaseType = mapper.databaseType();
+						arrayNumberTypeName = !mapper.arrayNumberTypeName().isEmpty() ? mapper.arrayNumberTypeName() :
+								(mapper.databaseType() == defaultDatabaseType ? defaultArrayNumberTypeName : mapper.databaseType().arrayNumberTypeName);
+						arrayStringTypeName = !mapper.arrayStringTypeName().isEmpty() ? mapper.arrayStringTypeName() :
+								(mapper.databaseType() == defaultDatabaseType ? defaultArrayStringTypeName : mapper.databaseType().arrayStringTypeName);
+					}
 					final String sqlParserMirror = getSqlParser(mapper).toString();
 					//final SQLParser parser = new SimpleSQLParser();//(SQLParser)Class.forName(mapper.sqlParser().getCanonicalName()).newInstance();
 					//final SQLParser parser = mapper.sqlParser().equals(SQLParser.class) ? new SimpleSQLParser() : mapper.sqlParser().newInstance();
@@ -179,8 +188,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							if (methodElement.getKind() != ElementKind.METHOD || !methodElement.getModifiers().contains(Modifier.ABSTRACT))
 								continue;
 							final ExecutableElement eeMethod = (ExecutableElement) methodElement;
-							if(lookupCloseMethod)
-								if((closeMethod = getCloseMethod(eeMethod)) != null) {
+							if (lookupCloseMethod)
+								if ((closeMethod = getCloseMethod(eeMethod)) != null) {
 									lookupCloseMethod = false;
 									continue; // skip close method
 								}
@@ -245,7 +254,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									}
 									unusedParams.remove(paramName);
 									final String inColumnName = bindParamMatcher.group(2);
-									if(inColumnName == null) {
+									if (inColumnName == null) {
 										bindParams.add(bindParam);
 										bindParamMatcher.appendReplacement(sb, "?");
 									} else {
@@ -273,7 +282,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								bindParamMatcher.appendTail(sb);
 								sqlStatement = sb.toString();
 
-								for(final Map.Entry<String, VariableElement> unusedParam : unusedParams.entrySet()) {
+								for (final Map.Entry<String, VariableElement> unusedParam : unusedParams.entrySet()) {
 									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
 							}
@@ -343,10 +352,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						}
 
 						// look on super classes and interfaces recursively
-						if(lookupCloseMethod)
+						if (lookupCloseMethod)
 							closeMethod = getCloseMethod(genClass);
 
-						if(closeMethod == null && (cachedPreparedStatements > 0 || doJndi)) {
+						if (closeMethod == null && (cachedPreparedStatements > 0 || doJndi)) {
 							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Jdbc.Mapper extended classes with cachedPreparedStatements or jndiNames must have a public void close() method to override or implement, because they must be closed", genClass);
 							continue;
 						}
@@ -361,7 +370,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						}
 
 						// close method
-						if(closeMethod != null) {
+						if (closeMethod != null) {
 							// if cachedPreparedStatements > 0 or doJndi are true, class MUST have a close() method to override as it
 							// MUST be called to clean up
 							w.write("\n\t@Override\n\tpublic void close() {\n");
@@ -369,7 +378,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								w.write("\t\tfor(final PreparedStatement ps : psCache)\n\t\t\ttryClose(ps);\n");
 							if (doJndi)
 								w.write("\t\ttryClose(ctx);\n\t\tif(ctx != null)\n\t\t\ttryClose(conn);\n");
-							if(closeMethod.getEnclosingElement().getKind() != ElementKind.INTERFACE && !closeMethod.getEnclosingElement().equals(genClass))
+							if (closeMethod.getEnclosingElement().getKind() != ElementKind.INTERFACE && !closeMethod.getEnclosingElement().equals(genClass))
 								w.write("\t\tsuper.close();\n");
 							w.write("\t}\n");
 						}
@@ -396,22 +405,22 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		String method = null;
 
 		// special behavior
-		if(param instanceof InListVariableElement) {
+		if (param instanceof InListVariableElement) {
 			final boolean collection;
 			final TypeMirror componentType;
-			if(o.getKind() == TypeKind.ARRAY) {
+			if (o.getKind() == TypeKind.ARRAY) {
 				collection = false;
-				componentType = ((ArrayType)o).getComponentType();
-			} else if(o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
+				componentType = ((ArrayType) o).getComponentType();
+			} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
 				collection = true;
-				final DeclaredType dt = (DeclaredType)o;
-				if(dt.getTypeArguments().isEmpty()) {
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" +o.toString(), ((InListVariableElement)param).delegate);
+				final DeclaredType dt = (DeclaredType) o;
+				if (dt.getTypeArguments().isEmpty()) {
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" + o.toString(), ((InListVariableElement) param).delegate);
 					return;
 				}
 				componentType = dt.getTypeArguments().get(0);
 			} else {
-				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" +o.toString(), ((InListVariableElement)param).delegate);
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" + o.toString(), ((InListVariableElement) param).delegate);
 				return;
 			}
 			w.write("ps.setArray(");
@@ -447,18 +456,18 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					w.write("conn.createArrayOf(\"");
 					break;
 				default:
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", ((InListVariableElement)param).delegate);
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", ((InListVariableElement) param).delegate);
 			}
 			w.write(type);
 			w.write("\", ");
 			w.write(variableName);
-			if(collection)
+			if (collection)
 				w.write(".toArray()");
 			w.write("));\n");
 			return;
 		}
 		final JdbcMapper.Blob blob = param.getAnnotation(JdbcMapper.Blob.class);
-		if(blob != null) {
+		if (blob != null) {
 			if (types.isAssignable(o, stringType)) {
 				w.write("try {\n\t\t\t\tps.setBlob(");
 				w.write(Integer.toString(index));
@@ -478,10 +487,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			}
 		} else {
 			final JdbcMapper.Clob clob = param.getAnnotation(JdbcMapper.Clob.class);
-			if(clob != null) {
+			if (clob != null) {
 				if (types.isAssignable(o, stringType)) {
 					method = "Clob";
-					variableName = variableName + " == null ? null : new StringReader("+variableName+")";
+					variableName = variableName + " == null ? null : new StringReader(" + variableName + ")";
 				} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
 					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Clob only valid for String, Clob, Reader", param);
 					return;
@@ -492,7 +501,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 		// we are going to put most common ones up top so it should execute faster normally
 		// todo: avoid string concat here
-		if(method == null)
+		if (method == null)
 			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType)) {
 				method = "Object";
 				// java.util.Date support, put it in a Timestamp
@@ -563,7 +572,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				return double.class;
 			case ARRAY:
 				// yuck
-				final TypeMirror arrayComponentType = ((ArrayType)tm).getComponentType();
+				final TypeMirror arrayComponentType = ((ArrayType) tm).getComponentType();
 				switch (arrayComponentType.getKind()) {
 					case BOOLEAN:
 						return boolean[].class;
@@ -587,7 +596,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						return Class.forName("[L" + arrayComponentType.toString() + ";");
 				}
 			case DECLARED:
-				if(!((DeclaredType)tm).getTypeArguments().isEmpty()) {
+				if (!((DeclaredType) tm).getTypeArguments().isEmpty()) {
 					final String classWithGenerics = tm.toString();
 					return Class.forName(classWithGenerics.substring(0, classWithGenerics.indexOf('<')));
 				}
@@ -600,16 +609,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	public ExecutableElement getCloseMethod(final TypeElement genClass) {
 		ExecutableElement ret = null;
 		for (final Element methodElement : genClass.getEnclosedElements()) {
-			if((ret = getCloseMethod(methodElement)) != null)
+			if ((ret = getCloseMethod(methodElement)) != null)
 				return ret;
 		}
 		// superclasses
 		final TypeMirror superclass = genClass.getSuperclass();
-		if(superclass.getKind() == TypeKind.DECLARED && (ret = getCloseMethod((TypeElement)types.asElement(superclass))) != null)
+		if (superclass.getKind() == TypeKind.DECLARED && (ret = getCloseMethod((TypeElement) types.asElement(superclass))) != null)
 			return ret;
 		// interfaces
-		for(final TypeMirror iface : genClass.getInterfaces()) {
-			if(iface.getKind() == TypeKind.DECLARED && (ret = getCloseMethod((TypeElement)types.asElement(iface))) != null)
+		for (final TypeMirror iface : genClass.getInterfaces()) {
+			if (iface.getKind() == TypeKind.DECLARED && (ret = getCloseMethod((TypeElement) types.asElement(iface))) != null)
 				return ret;
 		}
 		return ret;
