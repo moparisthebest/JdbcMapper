@@ -216,6 +216,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									if (++count != numParams)
 										w.write(", ");
 								}
+								final Map<String, VariableElement> unusedParams = new HashMap<String, VariableElement>(paramMap);
 
 								// throws?
 								w.write(")");
@@ -242,6 +243,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL sql has bind param '%s' not in method parameter list", paramName), methodElement);
 										continue;
 									}
+									unusedParams.remove(paramName);
 									final String inColumnName = bindParamMatcher.group(2);
 									if(inColumnName == null) {
 										bindParams.add(bindParam);
@@ -270,6 +272,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								}
 								bindParamMatcher.appendTail(sb);
 								sqlStatement = sb.toString();
+
+								for(final Map.Entry<String, VariableElement> unusedParam : unusedParams.entrySet()) {
+									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
+								}
 							}
 
 							final SQLParser parsedSQl = parser.parse(sqlStatement);
