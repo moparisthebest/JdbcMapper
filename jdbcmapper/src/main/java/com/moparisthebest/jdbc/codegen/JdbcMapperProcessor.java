@@ -514,8 +514,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			} else if (types.isAssignable(o, sqlArrayType)) {
 				method = "Array";
 			} else {
-				// probably won't get here ever, but just in case...
-				method = "Object";
+				// shouldn't get here ever, if we do the types should be more specific
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param", param);
+				return;
 			}
 		w.write("ps.set");
 		w.write(method);
