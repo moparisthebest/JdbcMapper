@@ -3,10 +3,14 @@ package com.moparisthebest.jdbc.codegen;
 import com.moparisthebest.jdbc.CompilingRowToObjectMapper;
 import com.moparisthebest.jdbc.ResultSetMapper;
 
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
@@ -19,48 +23,64 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToCl
  */
 public class CompileTimeResultSetMapper {
 
+	private final Types types;
+	private final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType;
+
+	public CompileTimeResultSetMapper(final ProcessingEnvironment processingEnv) {
+		types = processingEnv.getTypeUtils();
+		final Elements elements = processingEnv.getElementUtils();
+
+		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
+		mapType = types.getDeclaredType(elements.getTypeElement(Map.class.getCanonicalName()), types.getWildcardType(null, null), types.getWildcardType(null, null));
+		mapCollectionType = types.getDeclaredType(elements.getTypeElement(Map.class.getCanonicalName()), types.getWildcardType(null, null), types.getWildcardType(collectionType, null));
+
+		iteratorType = types.getDeclaredType(elements.getTypeElement(Iterator.class.getCanonicalName()), types.getWildcardType(null, null));
+		listIteratorType = types.getDeclaredType(elements.getTypeElement(ListIterator.class.getCanonicalName()), types.getWildcardType(null, null));
+	}
+
 	@SuppressWarnings({"unchecked"})
 	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final Calendar cal) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
-		final Class returnType = typeMirrorToClass(returnTypeMirror);
-		if (returnType.isArray()) {
-			toArray(w, keys, ((ArrayType) returnTypeMirror).getComponentType(), returnType.getComponentType(), arrayMaxLength, cal);
-		} else if (Collection.class.isAssignableFrom(returnType)) {
+		//final Class returnType = typeMirrorToClass(returnTypeMirror);
+		if (returnTypeMirror.getKind() == TypeKind.ARRAY) {
+			final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
+			toArray(w, keys, componentType, typeMirrorToClass(componentType), arrayMaxLength, cal);
+		} else if (types.isAssignable(returnTypeMirror, collectionType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			toCollection(w, keys, returnTypeMirror, returnType, typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
-		} else if (Map.class.isAssignableFrom(returnType)) {
+			toCollection(w, keys, returnTypeMirror, (Class<? extends Collection>)typeMirrorToClass(returnTypeMirror), typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
+		} else if (types.isAssignable(returnTypeMirror, mapType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			final Type[] types = getActualTypeArguments(typeArguments);
-			final TypeMirror collectionTypeMirror = typeArguments.get(1);
+			final Type[] typeArgs = getActualTypeArguments(typeArguments);
 			//if (types[1] instanceof ParameterizedType) { // for collectionMaps
-			if (!((DeclaredType) collectionTypeMirror).getTypeArguments().isEmpty()) { // for collectionMaps
+			if (types.isAssignable(returnTypeMirror, mapCollectionType)) { // for collectionMaps
 				//final ParameterizedType pt = (ParameterizedType) types[1];
 				//final Class collectionType = (Class) pt.getRawType();
+				final TypeMirror collectionTypeMirror = typeArguments.get(1);
 				final Class collectionType = typeMirrorToClass(collectionTypeMirror);
 				if (Collection.class.isAssignableFrom(collectionType)) {
 					final TypeMirror componentTypeMirror = ((DeclaredType) collectionTypeMirror).getTypeArguments().get(0);
 					//final Class componentType = (Class) pt.getActualTypeArguments()[0];
 					final Class componentType = typeMirrorToClass(componentTypeMirror);
 					toMapCollection(w, keys,
-							returnTypeMirror, returnType,
-							typeArguments.get(0), (Class) types[0],
+							returnTypeMirror, (Class<? extends Map>)typeMirrorToClass(returnTypeMirror),
+							typeArguments.get(0), (Class) typeArgs[0],
 							collectionTypeMirror, collectionType,
 							componentTypeMirror, componentType,
 							arrayMaxLength, cal);
 					return;
 				}
 			}
-			toMap(w, keys, returnTypeMirror, returnType, typeArguments.get(0), (Class) types[0], typeArguments.get(1), (Class) types[1], arrayMaxLength, cal);
-		} else if (Iterator.class.isAssignableFrom(returnType)) {
+			toMap(w, keys, returnTypeMirror, (Class<? extends Map>)typeMirrorToClass(returnTypeMirror), typeArguments.get(0), (Class) typeArgs[0], typeArguments.get(1), (Class) typeArgs[1], arrayMaxLength, cal);
+		} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			if (ListIterator.class.isAssignableFrom(returnType))
+			if (types.isAssignable(returnTypeMirror, listIteratorType))
 				toListIterator(w, keys, typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
 			else
 				toIterator(w, keys, typeArguments.get(0), (Class) getActualTypeArguments(typeArguments)[0], arrayMaxLength, cal);
 		} else {
-			toObject(w, keys, returnTypeMirror, returnType, cal);
+			toObject(w, keys, returnTypeMirror, typeMirrorToClass(returnTypeMirror), cal);
 		}
 	}
 

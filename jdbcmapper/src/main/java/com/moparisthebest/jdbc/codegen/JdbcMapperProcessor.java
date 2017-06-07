@@ -26,13 +26,13 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
 public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([^}]+)\\}");
-	private static final CompileTimeResultSetMapper rsm = new CompileTimeResultSetMapper();
 
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
+	private CompileTimeResultSetMapper rsm;
 
 	public JdbcMapperProcessor() {
 		//out.println("JdbcMapperProcessor running!");
@@ -67,6 +67,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		defaultArrayStringTypeName = processingEnv.getOptions().get("JdbcMapper.arrayStringTypeName");
 		if (defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
 			defaultArrayStringTypeName = defaultDatabaseType.arrayStringTypeName;
+
+		rsm = new CompileTimeResultSetMapper(processingEnv);
 	}
 
 	@Override
