@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc;
 
 import com.moparisthebest.classgen.Compiler;
 
+import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
@@ -139,7 +140,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		}
 	}
 
-	protected String escapeMapKeyString(final String s) {
+	public static String escapeMapKeyString(final String s) {
 		// todo: escape key string, newlines, double quotes, backslashes...
 		// actually it seems like those wouldn't be valid SQL column names, so we won't bother until we hear different...
 		return '"' + s + '"';
@@ -309,7 +310,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	}
 
 
-	public void extractColumnValueString(final Appendable java, final int index, final Class resultType) throws IOException {
+	public static void extractColumnValueString(final Appendable java, final int index, final Class resultType) throws IOException {
 		extractColumnValueString(java, index, _tmf.getTypeId(resultType));
 	}
 
@@ -321,7 +322,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	 * @return The extracted value
 	 * @throws java.sql.SQLException on error.
 	 */
-	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException {
+	public static void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException {
 		switch (resultType) {
 			case TypeMappingsFactory.TYPE_INT:
 				java.append("rs.getInt(").append(String.valueOf(index)).append(")");

@@ -555,6 +555,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	}
 
 	public static Class<?> typeMirrorToClass(final TypeMirror tm) throws ClassNotFoundException {
+		if(tm == null)
+			return null;
 		switch (tm.getKind()) {
 			case BOOLEAN:
 				return boolean.class;
@@ -599,13 +601,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				}
 			case DECLARED:
 				if (!((DeclaredType) tm).getTypeArguments().isEmpty()) {
-					final String classWithGenerics = tm.toString();
-					return Class.forName(classWithGenerics.substring(0, classWithGenerics.indexOf('<')));
+					return Class.forName(typeMirrorStringNoGenerics(tm));
 				}
 				// fallthrough otherwise...
 			default:
 				return Class.forName(tm.toString());
 		}
+	}
+
+	public static String typeMirrorStringNoGenerics(final TypeMirror tm) {
+		final String classWithGenerics = tm.toString();
+		return classWithGenerics.substring(0, classWithGenerics.indexOf('<'));
 	}
 
 	public ExecutableElement getCloseMethod(final TypeElement genClass) {

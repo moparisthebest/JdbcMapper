@@ -311,6 +311,9 @@ public final class TypeMappingsFactory {
      */
     public int getTypeId(Class classType) {
 
+        if(classType == null)
+            return TYPE_UNKNOWN;
+
         final Class origType = classType;
         while (null != classType) {
             Integer typeObj = (Integer) _typeMap.get(classType);

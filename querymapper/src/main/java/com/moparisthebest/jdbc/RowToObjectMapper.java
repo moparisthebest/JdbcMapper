@@ -55,7 +55,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 
 	private static final String SETTER_NAME_REGEX = "^(set)([A-Z_]\\w*+)";
 	protected static final TypeMappingsFactory _tmf = TypeMappingsFactory.getInstance();
-	protected static final Pattern _setterRegex = Pattern.compile(SETTER_NAME_REGEX);
+	public static final Pattern _setterRegex = Pattern.compile(SETTER_NAME_REGEX);
 
 	public static final int TYPE_BOOLEAN = _tmf.getTypeId(Boolean.TYPE);//TypeMappingsFactory.TYPE_BOOLEAN; // not public? 
 	public static final int TYPE_BOOLEAN_OBJ = _tmf.getTypeId(Boolean.class);//TypeMappingsFactory.TYPE_BOOLEAN_OBJ; // not public?
