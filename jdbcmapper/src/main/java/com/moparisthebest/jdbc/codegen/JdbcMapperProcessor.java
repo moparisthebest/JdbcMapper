@@ -125,6 +125,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write("import javax.sql.DataSource;\n");
 						}
 						w.write("import java.sql.*;\n\n");
+						w.write("import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n");
 						w.write("import static com.moparisthebest.jdbc.TryClose.tryClose;\n\n");
 						w.write("public class ");
 						w.write(className);
