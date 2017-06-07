@@ -28,7 +28,8 @@ public class CompileTimeRowToObjectMapper {
 
 	protected static final TypeMappingsFactory _tmf = TypeMappingsFactory.getInstance();
 
-	final String[] keys;
+	protected final CompileTimeResultSetMapper rsm;
+	protected final String[] keys;
 
 	/**
 	 * Calendar instance for date/time mappings.
@@ -53,7 +54,8 @@ public class CompileTimeRowToObjectMapper {
 	protected Element[] _fields = null;
 	protected int[] _fieldTypes;
 
-	public CompileTimeRowToObjectMapper(final String[] keys, final TypeMirror returnTypeClass, final Calendar cal, final TypeMirror mapValType, final TypeMirror mapKeyType) {
+	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final Calendar cal, final TypeMirror mapValType, final TypeMirror mapKeyType) {
+		this.rsm = rsm;
 		this.keys = keys;
 
 		_cal = cal;
@@ -63,7 +65,7 @@ public class CompileTimeRowToObjectMapper {
 
 		mapOnlySecondColumn = _mapKeyType != null && _columnCount == 2;
 
-		returnMap = false;//todo: Map.class.isAssignableFrom(returnTypeClass);
+		returnMap = rsm.types.isAssignable(returnTypeClass, rsm.mapType);
 		if (returnMap) {
 			// todo: need this? _returnTypeClass = ResultSetMapper.getConcreteClass(returnTypeClass, HashMap.class);
 			_returnTypeClass = null;
@@ -83,7 +85,7 @@ public class CompileTimeRowToObjectMapper {
 						final List<? extends VariableElement> params = ((ExecutableElement)e).getParameters();
 						if(params.isEmpty())
 							defaultConstructor = true;
-						else if(params.size() == 1 && params.get(0).asType().toString().equals("java.sql.ResultSet")) // todo: this better
+						else if(params.size() == 1 && rsm.types.isSameType(params.get(0).asType(), rsm.resultSetType))
 							resultSetConstructor = true;
 					}
 				}
@@ -269,7 +271,6 @@ public class CompileTimeRowToObjectMapper {
 
 		if (returnMap) // we want a map
 			try {
-				// todo: does not call getMapImplementation, I think that's fine
 				java.append("final ").append(tType).append("<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
 				final int columnLength = _columnCount + 1;
 				int typeId = getTypeId(componentType);
@@ -378,8 +379,8 @@ public class CompileTimeRowToObjectMapper {
 			}
 		}
 		// if this resultObject is Finishable, call finish()
-		//if (Finishable.class.isAssignableFrom(_returnTypeClass))
-		//todo:	java.append("ret.finish(rs);\n");
+		if (rsm.types.isAssignable(_returnTypeClass, rsm.finishableType))
+			java.append("ret.finish(rs);\n");
 	}
 
 	public static int getTypeId(TypeMirror classType) {

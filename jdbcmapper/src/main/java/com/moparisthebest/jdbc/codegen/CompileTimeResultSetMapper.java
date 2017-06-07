@@ -1,5 +1,6 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.Finishable;
 import com.moparisthebest.jdbc.ResultSetMapper;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -13,6 +14,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.ResultSet;
 import java.util.*;
 
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorStringNoGenerics;
@@ -23,8 +25,8 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToCl
  */
 public class CompileTimeResultSetMapper {
 
-	private final Types types;
-	private final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType;
+	public final Types types;
+	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType;
 
 	public CompileTimeResultSetMapper(final ProcessingEnvironment processingEnv) {
 		types = processingEnv.getTypeUtils();
@@ -36,6 +38,9 @@ public class CompileTimeResultSetMapper {
 
 		iteratorType = types.getDeclaredType(elements.getTypeElement(Iterator.class.getCanonicalName()), types.getWildcardType(null, null));
 		listIteratorType = types.getDeclaredType(elements.getTypeElement(ListIterator.class.getCanonicalName()), types.getWildcardType(null, null));
+
+		finishableType = elements.getTypeElement(Finishable.class.getCanonicalName()).asType();
+		resultSetType = elements.getTypeElement(ResultSet.class.getCanonicalName()).asType();
 	}
 
 	public static String getConcreteClassCanonicalName(final TypeMirror returnType, final Class defaultConcreteClass) {
@@ -89,7 +94,7 @@ public class CompileTimeResultSetMapper {
 	}
 
 	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, Calendar cal, TypeMirror mapValType, TypeMirror mapKeyType) {
-		return new CompileTimeRowToObjectMapper(keys, returnTypeClass, cal, mapValType, mapKeyType);
+		return new CompileTimeRowToObjectMapper(this, keys, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 
 	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final Calendar cal) throws IOException, ClassNotFoundException {

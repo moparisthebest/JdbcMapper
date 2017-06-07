@@ -122,7 +122,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						}
 						if (doJndi) {
 							w.write("import javax.naming.InitialContext;\n");
-							w.write("import javax.sql.DataSource;\n");
+							// * imported below w.write("import javax.sql.DataSource;\n");
 						}
 						w.write("import java.sql.*;\n\n");
 						w.write("import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n");

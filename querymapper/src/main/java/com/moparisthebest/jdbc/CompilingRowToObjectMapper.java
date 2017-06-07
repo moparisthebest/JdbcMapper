@@ -195,7 +195,6 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
 		if (returnMap) // we want a map
 			try {
-				// todo: does not call getMapImplementation, I think that's fine
 				java.append("final ").append(tType).append("<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
 				final int columnLength = _columnCount + 1;
 				if (componentType != null && componentType != Object.class) { // we want a specific value type
