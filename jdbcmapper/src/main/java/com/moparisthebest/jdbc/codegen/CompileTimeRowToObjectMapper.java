@@ -390,11 +390,11 @@ public class CompileTimeRowToObjectMapper {
 		}
 	}
 
-	public static void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException, ClassNotFoundException {
+	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException, ClassNotFoundException {
 		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType);
 	}
 
-	public static void extractColumnValueString(final Appendable java, final int index, final TypeMirror resultType) throws IOException, ClassNotFoundException {
+	public void extractColumnValueString(final Appendable java, final int index, final TypeMirror resultType) throws IOException, ClassNotFoundException {
 		CompilingRowToObjectMapper.extractColumnValueString(java, index, typeMirrorToClass(resultType));
 	}
 }
