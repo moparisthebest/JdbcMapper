@@ -225,7 +225,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// build query and bind param order
 							final List<VariableElement> bindParams = new ArrayList<VariableElement>();
 							final String sqlStatement;
-							String calendarName = null, cleanerName = null, maxRowsName = sql.maxRows() < 1 ? null : Long.toString(sql.maxRows());
+							String calendarName = null, cleanerName = null;
+							CompileTimeResultSetMapper.MaxRows maxRows = CompileTimeResultSetMapper.MaxRows.getMaxRows(sql.maxRows());
 							boolean sqlExceptionThrown = false;
 							{
 								// now parameters
@@ -317,8 +318,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 													String.format("@JdbcMapper.SQL method has unused parameter '%s' of cleaner type '%s' when cleaner type required is '%s'", unusedParam.getKey(), unusedType, requiredType),
 													unusedParam.getValue());
 										*/
-									} else if(isPrimitiveInteger(unusedType.getKind()) && maxRowsName == null && this.allowedMaxRowParamNames.contains(unusedParam.getKey())) {
-										maxRowsName = unusedParam.getKey();
+									} else if(isPrimitiveInteger(unusedType.getKind()) && maxRows == null && this.allowedMaxRowParamNames.contains(unusedParam.getKey())) {
+										maxRows = CompileTimeResultSetMapper.MaxRows.getMaxRows(unusedParam.getKey(), unusedType.toString());
 									} else
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
@@ -369,7 +370,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
 										return false;
 									}
-								rsm.mapToResultType(w, keys, eeMethod, maxRowsName, calendarName, cleanerName);
+								rsm.mapToResultType(w, keys, eeMethod, maxRows, calendarName, cleanerName);
 							}
 
 							// if no SQLException is thrown, we have to catch it here and wrap it with RuntimeException...

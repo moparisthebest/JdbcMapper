@@ -56,7 +56,7 @@ public class CompileTimeResultSetMapper {
 		return typeMirrorStringNoGenerics(returnType);
 	}
 
-	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final String maxRows, final String cal, final String cleaner) throws IOException, NoSuchMethodException, ClassNotFoundException {
+	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final MaxRows maxRows, final String cal, final String cleaner) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
@@ -109,7 +109,7 @@ public class CompileTimeResultSetMapper {
 		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
 	}
 
-	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		maxRowInit(w, maxRows).write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
@@ -122,13 +122,13 @@ public class CompileTimeResultSetMapper {
 		maxRowBreak(w, maxRows).write("\t\t\t}\n");
 	}
 
-	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret;\n");
 	}
 
-	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret.toArray(new ");
@@ -136,19 +136,19 @@ public class CompileTimeResultSetMapper {
 		w.write("[_colret.size()]);\n");
 	}
 
-	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret.listIterator();\n");
 	}
 
-	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret.iterator();\n");
 	}
 
-	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String returnTypeString = mapTypeMirror.toString();
 		maxRowInit(w, maxRows).write("\t\t\tfinal ");
@@ -174,7 +174,7 @@ public class CompileTimeResultSetMapper {
 								final TypeMirror mapKeyTypeMirror,
 								final TypeMirror collectionTypeMirror,
 								final TypeMirror componentTypeMirror,
-								String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+								MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		final String returnTypeString = mapTypeMirror.toString();
@@ -206,24 +206,18 @@ public class CompileTimeResultSetMapper {
 		maxRowBreak(w, maxRows).write("\t\t\t}\n\t\t\treturn _colret;\n");
 	}
 
-	private Writer maxRowInit(final Writer w, final String maxRows) throws IOException {
+	private Writer maxRowInit(final Writer w, final MaxRows maxRows) throws IOException {
 		if(maxRows != null)
-			w.write("\t\t\tlong _rowCount = 1;\n"); // todo: use type of dynamic param, or minimum the hard coded number will fit in?
+			w.append("\t\t\t").append(maxRows.type).append(" _rowCount = 0;\n");
 		return w;
 	}
 
-	private Writer maxRowBreak(final Writer w, final String maxRows) throws IOException {
+	private Writer maxRowBreak(final Writer w, final MaxRows maxRows) throws IOException {
 		if(maxRows != null) {
 			w.append("\t\t\t\tif(");
-			// annoying and hacky, but if this is a dynamic param name we want to only check rowCount if it's < 1
-			// if it's a hard coded number, it'll be null so we won't even be here
-			try {
-				Long.parseLong(maxRows);
-			} catch (NumberFormatException e) {
-				// dynamic
-				w.append(maxRows).append(" > 0 && ");
-			}
-			w.append("++_rowCount > ").append(maxRows).append(")\n\t\t\t\t\tbreak;\n");
+			if(maxRows.dynamic)
+				w.append(maxRows.value).append(" > 0 && ");
+			w.append("++_rowCount == ").append(maxRows.value).append(")\n\t\t\t\t\tbreak;\n");
 		}
 		return w;
 	}
@@ -235,5 +229,40 @@ public class CompileTimeResultSetMapper {
 			w.append(cleaner).append(".clean(ret)");
 		}
 		return w;
+	}
+	
+	static class MaxRows {
+		final String value, type;
+		final boolean dynamic;
+		
+		static MaxRows getMaxRows(final long value) {
+			return value < 1 ? null : new MaxRows(value);
+		}
+
+		static MaxRows getMaxRows(final String value, final String type) {
+			return new MaxRows(value, type);
+		}
+
+		private MaxRows(final long value) {
+			String valueString = Long.toString(value);
+			this.dynamic = false;
+			if(value <= Byte.MAX_VALUE)
+				this.type = "byte";
+			else if(value <= Short.MAX_VALUE)
+				this.type = "short";
+			else if(value <= Integer.MAX_VALUE)
+				this.type = "int";
+			else {
+				this.type = "long";
+				valueString += "L"; // fun!
+			}
+			this.value = valueString;
+		}
+
+		private MaxRows(final String value, final String type) {
+			this.value = value;
+			this.type = type;
+			this.dynamic = true;
+		}
 	}
 }

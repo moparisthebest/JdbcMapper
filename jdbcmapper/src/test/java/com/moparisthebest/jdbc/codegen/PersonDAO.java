@@ -115,17 +115,21 @@ public interface PersonDAO {
 
 	// max row checks
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
-	List<FieldPerson> getPersonDynamicLimit(long personNo, int maxRows) throws SQLException;
+	Map<String, FieldPerson> getPersonDynamicLimit(long personNo, byte maxRows) throws SQLException;
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	Map<String, FieldPerson> getPersonDynamicLimit(long personNo, short arrayMaxLength) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	List<FieldPerson> getPersonDynamicLimit(long personNo, int maxRows) throws SQLException;
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	Map<String, List<FieldPerson>> getPersonDynamicLimit(long personNo, long rowLimit) throws SQLException;
 
 
-	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = 1)
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = Byte.MAX_VALUE)
+	List<FieldPerson> getPersonStaticLimitListByte(long personNo) throws SQLException;
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = Short.MAX_VALUE)
 	List<FieldPerson> getPersonStaticLimitList(long personNo) throws SQLException;
-	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = 1)
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = Integer.MAX_VALUE)
 	Map<String, FieldPerson> getPersonStaticLimitMap(long personNo) throws SQLException;
-	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = 1)
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = Long.MAX_VALUE)
 	Map<String, List<FieldPerson>> getPersonStaticLimitMapList(long personNo) throws SQLException;
 }
