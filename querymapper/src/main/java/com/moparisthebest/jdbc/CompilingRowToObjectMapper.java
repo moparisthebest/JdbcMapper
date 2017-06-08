@@ -31,21 +31,25 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	protected final Compiler compiler;
 	protected final ResultSetToObject<K, T> resultSetToObject;
 
-	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+	protected String _calendarName = null;
+
+	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
 		this(compiler, cache, resultSet, returnTypeClass, cal, mapValType, mapKeyType, false);
 	}
 
-	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CachingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, final boolean caseInsensitiveMap) {
+	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, final boolean caseInsensitiveMap) {
 		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType, caseInsensitiveMap);
 		this.compiler = compiler;
 		try {
-			final CachingRowToObjectMapper.ResultSetKey keys = new CachingRowToObjectMapper.ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass, _mapKeyType);
+			final CompilingRowToObjectMapper.ResultSetKey keys = new CompilingRowToObjectMapper.ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass, _mapKeyType, cal != null);
 			//System.out.printf("keys: %s\n", keys);
 			@SuppressWarnings("unchecked")
 			final ResultSetToObject<K,T> resultSetToObject = (ResultSetToObject<K,T>) cache.get(keys);
 			if (resultSetToObject == null) {
 				//System.out.printf("cache miss, keys: %s\n", keys);
 				// generate and put into cache
+				if(keys.hasCalendar)
+					_calendarName = "cal";
 				cache.put(keys, this.resultSetToObject = genClass());
 				this.keys = null;
 				this._fields = null;
@@ -308,9 +312,40 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			java.append("ret.finish(rs);\n");
 	}
 
+	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException {
+		extractColumnValueString(java, index, resultType, _calendarName);
+	}
 
-	public static void extractColumnValueString(final Appendable java, final int index, final Class resultType) throws IOException {
-		extractColumnValueString(java, index, _tmf.getTypeId(resultType));
+	public void extractColumnValueString(final Appendable java, final int index, final Class resultType) throws IOException {
+		extractColumnValueString(java, index, resultType, _calendarName);
+	}
+
+	public static class ResultSetKey extends CachingRowToObjectMapper.ResultSetKey {
+		protected final boolean hasCalendar;
+
+		public ResultSetKey(final String[] keys, final Class<?> returnTypeClass, final Class<?> mapKeyType, final boolean hasCalendar) {
+			super(keys, returnTypeClass, mapKeyType);
+			this.hasCalendar = hasCalendar;
+		}
+
+		@Override
+		public boolean equals(final Object o) {
+			if (this == o) return true;
+			if (!(o instanceof ResultSetKey)) return false;
+			final ResultSetKey that = (ResultSetKey) o;
+			return hasCalendar == that.hasCalendar && super.equals(o);
+		}
+
+		@Override
+		public int hashCode() {
+			int result = super.hashCode();
+			result = 31 * result + (hasCalendar ? 1 : 0);
+			return result;
+		}
+	}
+
+	public static void extractColumnValueString(final Appendable java, final int index, final Class resultType, final String calendarName) throws IOException {
+		extractColumnValueString(java, index, _tmf.getTypeId(resultType), calendarName);
 	}
 
 	/**
@@ -321,7 +356,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	 * @return The extracted value
 	 * @throws java.sql.SQLException on error.
 	 */
-	public static void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException {
+	public static void extractColumnValueString(final Appendable java, final int index, final int resultType, final String calendarName) throws IOException {
 		switch (resultType) {
 			case TypeMappingsFactory.TYPE_INT:
 				java.append("rs.getInt(").append(String.valueOf(index)).append(")");
@@ -376,19 +411,34 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 				java.append("rs.getBytes(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_TIMESTAMP:
-				java.append("getTimestamp(rs, cal, ").append(String.valueOf(index)).append(")");
+				java.append("rs.getTimestamp(").append(String.valueOf(index));
+				if(calendarName != null)
+					java.append(", ").append(calendarName);
+				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_TIME:
-				java.append("getTime(rs, cal, ").append(String.valueOf(index)).append(")");
+				java.append("rs.getTime(").append(String.valueOf(index));
+				if(calendarName != null)
+					java.append(", ").append(calendarName);
+				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_SQLDATE:
-				java.append("getSqlDate(rs, cal, ").append(String.valueOf(index)).append(")");
+				java.append("rs.getDate(").append(String.valueOf(index));
+				if(calendarName != null)
+					java.append(", ").append(calendarName);
+				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_DATE:
-				java.append("getUtilDate(rs, cal, ").append(String.valueOf(index)).append(")");
+				java.append("getUtilDate(rs, ").append(String.valueOf(index));
+				if(calendarName != null)
+					java.append(", ").append(calendarName);
+				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_CALENDAR:
-				java.append("getCalendar(rs, cal, ").append(String.valueOf(index)).append(")");
+				java.append("getCalendar(rs, ").append(String.valueOf(index));
+				if(calendarName != null)
+					java.append(", ").append(calendarName);
+				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_REF:
 				java.append("rs.getRef(").append(String.valueOf(index)).append(")");

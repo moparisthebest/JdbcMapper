@@ -30,17 +30,17 @@ public class CleaningCompilingResultSetMapper<E> extends CompilingResultSetMappe
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength, final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
 		super(cal, arrayMaxLength, cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final int arrayMaxLength, final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final int arrayMaxLength, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
 		super(arrayMaxLength, cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
 		super(cache);
 		this.cleaner = cleaner;
 	}

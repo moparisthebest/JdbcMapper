@@ -29,7 +29,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType;
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
 	private CompileTimeResultSetMapper rsm;
@@ -52,6 +52,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		inputStreamType = elements.getTypeElement(InputStream.class.getCanonicalName()).asType();
 		fileType = elements.getTypeElement(File.class.getCanonicalName()).asType();
 		blobType = elements.getTypeElement(Blob.class.getCanonicalName()).asType();
+		calendarType = elements.getTypeElement(Calendar.class.getCanonicalName()).asType();
 		// throws NPE:
 		//byteArrayType = elements.getTypeElement(byte[].class.getCanonicalName()).asType();
 		//byteArrayType = this.types.getArrayType(elements.getTypeElement(byte.class.getCanonicalName()).asType());
@@ -211,6 +212,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// build query and bind param order
 							final List<VariableElement> bindParams = new ArrayList<VariableElement>();
 							final String sqlStatement;
+							String calendarName = null;
 							boolean sqlExceptionThrown = false;
 							{
 								// now parameters
@@ -286,7 +288,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								sqlStatement = sb.toString();
 
 								for (final Map.Entry<String, VariableElement> unusedParam : unusedParams.entrySet()) {
-									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
+									// look for lone calendar object
+									if(types.isAssignable(unusedParam.getValue().asType(), calendarType) && calendarName == null)
+										calendarName = unusedParam.getKey();
+									else
+										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
 							}
 
@@ -335,7 +341,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
 										return false;
 									}
-								rsm.mapToResultType(w, keys, eeMethod, sql.arrayMaxLength(), null);
+								rsm.mapToResultType(w, keys, eeMethod, sql.arrayMaxLength(), calendarName);
 							}
 
 							// if no SQLException is thrown, we have to catch it here and wrap it with RuntimeException...

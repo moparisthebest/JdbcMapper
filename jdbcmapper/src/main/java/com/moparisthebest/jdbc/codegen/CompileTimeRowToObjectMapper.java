@@ -1,7 +1,6 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.CompilingRowToObjectMapper;
-import com.moparisthebest.jdbc.Finishable;
 import com.moparisthebest.jdbc.MapperException;
 import com.moparisthebest.jdbc.TypeMappingsFactory;
 
@@ -11,8 +10,6 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
-import java.io.Writer;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -34,7 +31,7 @@ public class CompileTimeRowToObjectMapper {
 	/**
 	 * Calendar instance for date/time mappings.
 	 */
-	protected final Calendar _cal;
+	protected final String _calendarName;
 
 	/**
 	 * Class to map ResultSet Rows to.
@@ -54,11 +51,11 @@ public class CompileTimeRowToObjectMapper {
 	protected Element[] _fields = null;
 	protected int[] _fieldTypes;
 
-	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final Calendar cal, final TypeMirror mapValType, final TypeMirror mapKeyType) {
+	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final String calendarName, final TypeMirror mapValType, final TypeMirror mapKeyType) {
 		this.rsm = rsm;
 		this.keys = keys;
 
-		_cal = cal;
+		_calendarName = calendarName;
 		_mapKeyType = mapKeyType;
 
 		_columnCount = keys.length - 1;
@@ -392,10 +389,10 @@ public class CompileTimeRowToObjectMapper {
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException, ClassNotFoundException {
-		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType);
+		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType, _calendarName);
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final TypeMirror resultType) throws IOException, ClassNotFoundException {
-		CompilingRowToObjectMapper.extractColumnValueString(java, index, typeMirrorToClass(resultType));
+		CompilingRowToObjectMapper.extractColumnValueString(java, index, typeMirrorToClass(resultType), _calendarName);
 	}
 }

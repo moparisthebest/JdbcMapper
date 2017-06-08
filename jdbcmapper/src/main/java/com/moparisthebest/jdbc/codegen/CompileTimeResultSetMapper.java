@@ -56,7 +56,7 @@ public class CompileTimeResultSetMapper {
 		return typeMirrorStringNoGenerics(returnType);
 	}
 
-	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final Calendar cal) throws IOException, NoSuchMethodException, ClassNotFoundException {
+	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final String cal) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
@@ -93,21 +93,21 @@ public class CompileTimeResultSetMapper {
 		}
 	}
 
-	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, Calendar cal, TypeMirror mapValType, TypeMirror mapKeyType) {
+	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, String cal, TypeMirror mapValType, TypeMirror mapKeyType) {
 		return new CompileTimeRowToObjectMapper(this, keys, returnTypeClass, cal, mapValType, mapKeyType);
 	}
 
-	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final Calendar cal) throws IOException, ClassNotFoundException {
+	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal) throws IOException, ClassNotFoundException {
 		getRowMapper(keys, returnTypeMirror, cal, null, null).gen(w, returnTypeMirror.toString());
 	}
 
-	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final Calendar cal) throws IOException, ClassNotFoundException {
+	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal) throws IOException, ClassNotFoundException {
 		w.write("\t\t\tif(rs.next()) {\n");
 		writeObject(w, keys, returnTypeMirror, cal);
 		w.write("\t\t\t\treturn ret;\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
 	}
 
-	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		w.write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
@@ -118,13 +118,13 @@ public class CompileTimeResultSetMapper {
 		w.write("\t\t\t\t_colret.add(ret);\n\t\t\t}\n");
 	}
 
-	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, arrayMaxLength, cal);
 		w.write("\t\t\treturn _colret;\n");
 	}
 
-	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal);
 		w.write("\t\t\treturn _colret.toArray(new ");
@@ -132,19 +132,19 @@ public class CompileTimeResultSetMapper {
 		w.write("[_colret.size()]);\n");
 	}
 
-	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal);
 		w.write("\t\t\treturn _colret.listIterator();\n");
 	}
 
-	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal);
 		w.write("\t\t\treturn _colret.iterator();\n");
 	}
 
-	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String returnTypeString = mapTypeMirror.toString();
 		w.write("\t\t\tfinal ");
@@ -168,7 +168,7 @@ public class CompileTimeResultSetMapper {
 																					 final TypeMirror mapKeyTypeMirror,
 																					 final TypeMirror collectionTypeMirror,
 																					 final TypeMirror componentTypeMirror,
-																					 int arrayMaxLength, Calendar cal) throws IOException, ClassNotFoundException {
+																					 int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		final String returnTypeString = mapTypeMirror.toString();

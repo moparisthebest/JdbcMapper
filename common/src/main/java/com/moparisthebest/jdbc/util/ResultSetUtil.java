@@ -69,41 +69,38 @@ public class ResultSetUtil {
 		return ret;
 	}
 
-	public static Timestamp getTimestamp(final ResultSet _resultSet, final Calendar _cal, final int index) throws SQLException {
-		if (null == _cal)
-			return _resultSet.getTimestamp(index);
-		else
-			return _resultSet.getTimestamp(index, _cal);
-	}
-
-	public static Time getTime(final ResultSet _resultSet, final Calendar _cal, final int index) throws SQLException {
-		if (null == _cal)
-			return _resultSet.getTime(index);
-		else
-			return _resultSet.getTime(index, _cal);
-	}
-
-	public static java.sql.Date getSqlDate(final ResultSet _resultSet, final Calendar _cal, final int index) throws SQLException {
-		if (null == _cal)
-			return _resultSet.getDate(index);
-		else
-			return _resultSet.getDate(index, _cal);
-	}
-
-	public static java.util.Date getUtilDate(final ResultSet _resultSet, final Calendar _cal, final int index) throws SQLException {
+	public static java.util.Date getUtilDate(final ResultSet _resultSet, final int index) throws SQLException {
 		// convert explicity to java.util.Date
 		// 12918 |  knex does not return java.sql.Date properly from web service
-		java.sql.Timestamp ts = (null == _cal) ? _resultSet.getTimestamp(index) : _resultSet.getTimestamp(index, _cal);
+		java.sql.Timestamp ts = _resultSet.getTimestamp(index);
 		if (null == ts)
 			return null;
 		return new java.util.Date(ts.getTime());
 	}
 
-	public static Calendar getCalendar(final ResultSet _resultSet, final Calendar _cal, final int index) throws SQLException {
-		java.sql.Timestamp ts = (null == _cal) ? _resultSet.getTimestamp(index) : _resultSet.getTimestamp(index, _cal);
+	public static java.util.Date getUtilDate(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		// convert explicity to java.util.Date
+		// 12918 |  knex does not return java.sql.Date properly from web service
+		java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
 		if (null == ts)
 			return null;
-		Calendar c = (null == _cal) ? Calendar.getInstance() : (Calendar) _cal.clone();
+		return new java.util.Date(ts.getTime());
+	}
+
+	public static Calendar getCalendar(final ResultSet _resultSet, final int index) throws SQLException {
+		java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		if (null == ts)
+			return null;
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(ts.getTime());
+		return c;
+	}
+
+	public static Calendar getCalendar(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		if (null == ts)
+			return null;
+		Calendar c = (Calendar) _cal.clone();
 		c.setTimeInMillis(ts.getTime());
 		return c;
 	}

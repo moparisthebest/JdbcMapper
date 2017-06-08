@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CompilingResultSetMapper extends ResultSetMapper {
 
 	protected final Compiler compiler = new Compiler();
-	protected final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache;
+	protected final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache;
 
 	/**
 	 * CompilingResultSetMapper with optional maxEntries, expiring old ones in LRU fashion
@@ -40,14 +40,14 @@ public class CompilingResultSetMapper extends ResultSetMapper {
 			final float loadFactor = 0.75f; // default for HashMaps
 			// if we set the initialCapacity this way, nothing should ever need re-sized
 			final int initialCapacity = ((int) Math.ceil(maxEntries / loadFactor)) + 1;
-			cache = new LinkedHashMap<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>(initialCapacity, loadFactor, true) {
+			cache = new LinkedHashMap<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>(initialCapacity, loadFactor, true) {
 				@Override
-				protected boolean removeEldestEntry(final Map.Entry<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> eldest) {
+				protected boolean removeEldestEntry(final Map.Entry<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> eldest) {
 					return size() > maxEntries;
 				}
 			};
 		} else
-			cache = new HashMap<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>();
+			cache = new HashMap<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>();
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class CompilingResultSetMapper extends ResultSetMapper {
 	 * @param arrayMaxLength max array/list/map length, a value of less than 1 indicates that all rows from the ResultSet should be included
 	 * @param cache          any Map implementation for cache you wish, does not need to handle null keys or values
 	 */
-	public CompilingResultSetMapper(final Calendar cal, final int arrayMaxLength, final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache) {
+	public CompilingResultSetMapper(final Calendar cal, final int arrayMaxLength, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache) {
 		super(cal, arrayMaxLength);
 		if (cache == null)
 			throw new IllegalArgumentException("cache cannot be null");
@@ -96,7 +96,7 @@ public class CompilingResultSetMapper extends ResultSetMapper {
 	 * @param arrayMaxLength max array/list/map length, a value of less than 1 indicates that all rows from the ResultSet should be included
 	 * @param cache          any Map implementation for cache you wish, does not need to handle null keys or values
 	 */
-	public CompilingResultSetMapper(final int arrayMaxLength, final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache) {
+	public CompilingResultSetMapper(final int arrayMaxLength, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache) {
 		this(null, arrayMaxLength, cache);
 	}
 
@@ -105,7 +105,7 @@ public class CompilingResultSetMapper extends ResultSetMapper {
 	 *
 	 * @param cache any Map implementation for cache you wish, does not need to handle null keys or values
 	 */
-	public CompilingResultSetMapper(final Map<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache) {
+	public CompilingResultSetMapper(final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache) {
 		this(-1, cache);
 	}
 
@@ -118,9 +118,9 @@ public class CompilingResultSetMapper extends ResultSetMapper {
 	 */
 	public CompilingResultSetMapper(final Calendar cal, final int arrayMaxLength, final boolean threadSafe) {
 		this(cal, arrayMaxLength, threadSafe ?
-				new ConcurrentHashMap<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>()
+				new ConcurrentHashMap<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>()
 				:
-				new HashMap<CachingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>()
+				new HashMap<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>()
 		);
 	}
 
