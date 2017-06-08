@@ -56,17 +56,17 @@ public class CompileTimeResultSetMapper {
 		return typeMirrorStringNoGenerics(returnType);
 	}
 
-	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final String cal) throws IOException, NoSuchMethodException, ClassNotFoundException {
+	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final String cal, final String cleaner) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
 		//final Class returnType = typeMirrorToClass(returnTypeMirror);
 		if (returnTypeMirror.getKind() == TypeKind.ARRAY) {
 			final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
-			toArray(w, keys, componentType, arrayMaxLength, cal);
+			toArray(w, keys, componentType, arrayMaxLength, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, collectionType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), arrayMaxLength, cal);
+			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), arrayMaxLength, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, mapType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			//if (types[1] instanceof ParameterizedType) { // for collectionMaps
@@ -78,18 +78,18 @@ public class CompileTimeResultSetMapper {
 						typeArguments.get(0),
 						collectionTypeMirror,
 						componentTypeMirror,
-						arrayMaxLength, cal);
+						arrayMaxLength, cal, cleaner);
 				return;
 			}
-			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), arrayMaxLength, cal);
+			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), arrayMaxLength, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			if (types.isAssignable(returnTypeMirror, listIteratorType))
-				toListIterator(w, keys, typeArguments.get(0), arrayMaxLength, cal);
+				toListIterator(w, keys, typeArguments.get(0), arrayMaxLength, cal, cleaner);
 			else
-				toIterator(w, keys, typeArguments.get(0), arrayMaxLength, cal);
+				toIterator(w, keys, typeArguments.get(0), arrayMaxLength, cal, cleaner);
 		} else {
-			toObject(w, keys, returnTypeMirror, cal);
+			toObject(w, keys, returnTypeMirror, cal, cleaner);
 		}
 	}
 
@@ -101,13 +101,15 @@ public class CompileTimeResultSetMapper {
 		getRowMapper(keys, returnTypeMirror, cal, null, null).gen(w, returnTypeMirror.toString());
 	}
 
-	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal) throws IOException, ClassNotFoundException {
+	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		w.write("\t\t\tif(rs.next()) {\n");
 		writeObject(w, keys, returnTypeMirror, cal);
-		w.write("\t\t\t\treturn ret;\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
+		w.write("\t\t\t\treturn ");
+		// this does not clean null on purpose, neither does CleaningResultSetMapper
+		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
 	}
 
-	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		w.write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
@@ -115,36 +117,37 @@ public class CompileTimeResultSetMapper {
 		w.write(returnTypeString.substring(returnTypeString.indexOf('<')));
 		w.write("();\n\t\t\twhile(rs.next()) {\n");
 		writeObject(w, keys, componentTypeMirror, cal);
-		w.write("\t\t\t\t_colret.add(ret);\n\t\t\t}\n");
+		w.write("\t\t\t\t_colret.add(");
+		clean(w, cleaner).write(");\n\t\t\t}\n");
 	}
 
-	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
-		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, arrayMaxLength, cal);
+		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, arrayMaxLength, cal, cleaner);
 		w.write("\t\t\treturn _colret;\n");
 	}
 
-	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal, cleaner);
 		w.write("\t\t\treturn _colret.toArray(new ");
 		w.write(returnTypeString);
 		w.write("[_colret.size()]);\n");
 	}
 
-	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal, cleaner);
 		w.write("\t\t\treturn _colret.listIterator();\n");
 	}
 
-	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal, cleaner);
 		w.write("\t\t\treturn _colret.iterator();\n");
 	}
 
-	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String returnTypeString = mapTypeMirror.toString();
 		w.write("\t\t\tfinal ");
@@ -159,16 +162,17 @@ public class CompileTimeResultSetMapper {
 		rm.gen(w, componentTypeMirror.toString());
 		w.write("\t\t\t\t_colret.put(");
 		rm.extractColumnValueString(w, 1, mapKeyTypeMirror);
-		w.write(", ret);\n\t\t\t}\n");
+		w.write(", ");
+		clean(w, cleaner).write(");\n\t\t\t}\n");
 		w.write("\t\t\treturn _colret;\n");
 	}
 
 	public void toMapCollection(final Writer w, final String[] keys,
-																					 final TypeMirror mapTypeMirror,
-																					 final TypeMirror mapKeyTypeMirror,
-																					 final TypeMirror collectionTypeMirror,
-																					 final TypeMirror componentTypeMirror,
-																					 int arrayMaxLength, String cal) throws IOException, ClassNotFoundException {
+								final TypeMirror mapTypeMirror,
+								final TypeMirror mapKeyTypeMirror,
+								final TypeMirror collectionTypeMirror,
+								final TypeMirror componentTypeMirror,
+								int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		final String returnTypeString = mapTypeMirror.toString();
@@ -194,6 +198,16 @@ public class CompileTimeResultSetMapper {
 		w.write(" _collist = _colret.get(_colkey);\n\t\t\t\tif(_collist == null) {\n\t\t\t\t\t_collist = new ");
 		w.write(collectionType);
 		w.write(collectionTypeString.substring(collectionTypeString.indexOf('<')));
-		w.write("();\n\t\t\t\t\t_colret.put(_colkey, _collist);\n\t\t\t\t}\n\t\t\t\t_collist.add(ret);\n\t\t\t}\n\t\t\treturn _colret;\n");
+		w.write("();\n\t\t\t\t\t_colret.put(_colkey, _collist);\n\t\t\t\t}\n\t\t\t\t_collist.add(");
+		clean(w, cleaner).write(");\n\t\t\t}\n\t\t\treturn _colret;\n");
+	}
+
+	private Writer clean(final Writer w, final String cleaner) throws IOException {
+		if(cleaner == null)
+			w.write("ret");
+		else {
+			w.append(cleaner).append(".clean(ret)");
+		}
+		return w;
 	}
 }

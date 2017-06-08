@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.Cleaner;
+
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
@@ -29,7 +31,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType;
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType;
+	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
 	private CompileTimeResultSetMapper rsm;
@@ -60,6 +63,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
 		sqlArrayType = elements.getTypeElement(java.sql.Array.class.getCanonicalName()).asType();
 		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
+
+		cleanerElement = elements.getTypeElement(Cleaner.class.getCanonicalName());
+		cleanerType = types.getDeclaredType(cleanerElement, types.getWildcardType(null, null));
+
 		final String databaseType = processingEnv.getOptions().get("JdbcMapper.databaseType");
 		defaultDatabaseType = databaseType == null ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
 		defaultArrayNumberTypeName = processingEnv.getOptions().get("JdbcMapper.arrayNumberTypeName");
@@ -212,7 +219,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// build query and bind param order
 							final List<VariableElement> bindParams = new ArrayList<VariableElement>();
 							final String sqlStatement;
-							String calendarName = null;
+							String calendarName = null, cleanerName = null;
 							boolean sqlExceptionThrown = false;
 							{
 								// now parameters
@@ -289,9 +296,22 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 								for (final Map.Entry<String, VariableElement> unusedParam : unusedParams.entrySet()) {
 									// look for lone calendar object
-									if(types.isAssignable(unusedParam.getValue().asType(), calendarType) && calendarName == null)
+									final TypeMirror unusedType = unusedParam.getValue().asType();
+									if(types.isAssignable(unusedType, calendarType) && calendarName == null)
 										calendarName = unusedParam.getKey();
-									else
+									else if(types.isAssignable(unusedType, cleanerType) && cleanerName == null) {
+										cleanerName = unusedParam.getKey();
+										/*
+										// yuck this falls apart for anything other than plain objects, might as well just let it be a compile time error?
+										final TypeMirror requiredType = types.getDeclaredType(cleanerElement, types.getWildcardType(null, eeMethod.getReturnType()));
+										if(types.isAssignable(unusedType, requiredType))
+											cleanerName = unusedParam.getKey();
+										else
+											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
+													String.format("@JdbcMapper.SQL method has unused parameter '%s' of cleaner type '%s' when cleaner type required is '%s'", unusedParam.getKey(), unusedType, requiredType),
+													unusedParam.getValue());
+										*/
+									} else
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
 							}
@@ -341,7 +361,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
 										return false;
 									}
-								rsm.mapToResultType(w, keys, eeMethod, sql.arrayMaxLength(), calendarName);
+								rsm.mapToResultType(w, keys, eeMethod, sql.arrayMaxLength(), calendarName, cleanerName);
 							}
 
 							// if no SQLException is thrown, we have to catch it here and wrap it with RuntimeException...

@@ -1,6 +1,8 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.Cleaner;
 import com.moparisthebest.jdbc.dto.FieldPerson;
+import com.moparisthebest.jdbc.dto.Person;
 
 import java.sql.SQLException;
 import java.sql.Time;
@@ -91,4 +93,23 @@ public interface PersonDAO {
 	java.util.Date getBirthDateUtilDate(long personNo) throws SQLException;
 	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
 	java.util.Date getBirthDateUtilDate(long personNo, Calendar mycal) throws SQLException;
+
+	// cleaner checks
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	FieldPerson getPersonCleanFieldPerson(long personNo, Cleaner<FieldPerson> clean) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	FieldPerson getPersonCleanPerson(long personNo, Cleaner<Person> clean) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	FieldPerson getPersonCleanObject(long personNo, Cleaner<Object> clean) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	List<FieldPerson> getPersonCleanPersonList(long personNo, Cleaner<Person> clean) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	Map<String, FieldPerson> getPersonCleanPersonMap(long personNo, Cleaner<Person> clean) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	Map<String, List<FieldPerson>> getPersonCleanPersonMapList(long personNo, Cleaner<Person> clean) throws SQLException;
+	/*
+	// this should NOT compile:
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	FieldPerson getPersonCleanNumber(long personNo, Cleaner<Number> clean) throws SQLException;
+	*/
 }

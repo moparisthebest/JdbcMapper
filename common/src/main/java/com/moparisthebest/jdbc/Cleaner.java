@@ -2,5 +2,5 @@ package com.moparisthebest.jdbc;
 
 public interface Cleaner<T> {
 
-	public T clean(T dto);
+	public <E extends T> E clean(E dto);
 }
