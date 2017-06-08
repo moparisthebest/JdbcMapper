@@ -56,17 +56,17 @@ public class CompileTimeResultSetMapper {
 		return typeMirrorStringNoGenerics(returnType);
 	}
 
-	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final int arrayMaxLength, final String cal, final String cleaner) throws IOException, NoSuchMethodException, ClassNotFoundException {
+	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final String maxRows, final String cal, final String cleaner) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
 		//final Class returnType = typeMirrorToClass(returnTypeMirror);
 		if (returnTypeMirror.getKind() == TypeKind.ARRAY) {
 			final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
-			toArray(w, keys, componentType, arrayMaxLength, cal, cleaner);
+			toArray(w, keys, componentType, maxRows, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, collectionType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), arrayMaxLength, cal, cleaner);
+			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), maxRows, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, mapType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			//if (types[1] instanceof ParameterizedType) { // for collectionMaps
@@ -78,16 +78,16 @@ public class CompileTimeResultSetMapper {
 						typeArguments.get(0),
 						collectionTypeMirror,
 						componentTypeMirror,
-						arrayMaxLength, cal, cleaner);
+						maxRows, cal, cleaner);
 				return;
 			}
-			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), arrayMaxLength, cal, cleaner);
+			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), maxRows, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			if (types.isAssignable(returnTypeMirror, listIteratorType))
-				toListIterator(w, keys, typeArguments.get(0), arrayMaxLength, cal, cleaner);
+				toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
 			else
-				toIterator(w, keys, typeArguments.get(0), arrayMaxLength, cal, cleaner);
+				toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
 		} else {
 			toObject(w, keys, returnTypeMirror, cal, cleaner);
 		}
@@ -109,8 +109,8 @@ public class CompileTimeResultSetMapper {
 		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
 	}
 
-	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
-		w.write("\t\t\tfinal ");
+	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+		maxRowInit(w, maxRows).write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
 		w.write(concreteTypeString);
@@ -118,39 +118,40 @@ public class CompileTimeResultSetMapper {
 		w.write("();\n\t\t\twhile(rs.next()) {\n");
 		writeObject(w, keys, componentTypeMirror, cal);
 		w.write("\t\t\t\t_colret.add(");
-		clean(w, cleaner).write(");\n\t\t\t}\n");
+		clean(w, cleaner).write(");\n");
+		maxRowBreak(w, maxRows).write("\t\t\t}\n");
 	}
 
-	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
-		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, arrayMaxLength, cal, cleaner);
+		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret;\n");
 	}
 
-	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal, cleaner);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret.toArray(new ");
 		w.write(returnTypeString);
 		w.write("[_colret.size()]);\n");
 	}
 
-	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal, cleaner);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret.listIterator();\n");
 	}
 
-	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, arrayMaxLength, cal, cleaner);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
 		w.write("\t\t\treturn _colret.iterator();\n");
 	}
 
-	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String returnTypeString = mapTypeMirror.toString();
-		w.write("\t\t\tfinal ");
+		maxRowInit(w, maxRows).write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
 		w.write(mapType);
@@ -163,7 +164,8 @@ public class CompileTimeResultSetMapper {
 		w.write("\t\t\t\t_colret.put(");
 		rm.extractColumnValueString(w, 1, mapKeyTypeMirror);
 		w.write(", ");
-		clean(w, cleaner).write(");\n\t\t\t}\n");
+		clean(w, cleaner).write(");\n");
+		maxRowBreak(w, maxRows).write("\t\t\t}\n");
 		w.write("\t\t\treturn _colret;\n");
 	}
 
@@ -172,12 +174,13 @@ public class CompileTimeResultSetMapper {
 								final TypeMirror mapKeyTypeMirror,
 								final TypeMirror collectionTypeMirror,
 								final TypeMirror componentTypeMirror,
-								int arrayMaxLength, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+								String maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		final String returnTypeString = mapTypeMirror.toString();
 		final String collectionTypeString = collectionTypeMirror.toString();
-		w.write("\t\t\tfinal ");
+
+		maxRowInit(w, maxRows).write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
 		w.write(mapType);
@@ -199,7 +202,30 @@ public class CompileTimeResultSetMapper {
 		w.write(collectionType);
 		w.write(collectionTypeString.substring(collectionTypeString.indexOf('<')));
 		w.write("();\n\t\t\t\t\t_colret.put(_colkey, _collist);\n\t\t\t\t}\n\t\t\t\t_collist.add(");
-		clean(w, cleaner).write(");\n\t\t\t}\n\t\t\treturn _colret;\n");
+		clean(w, cleaner).write(");\n");
+		maxRowBreak(w, maxRows).write("\t\t\t}\n\t\t\treturn _colret;\n");
+	}
+
+	private Writer maxRowInit(final Writer w, final String maxRows) throws IOException {
+		if(maxRows != null)
+			w.write("\t\t\tlong _rowCount = 1;\n"); // todo: use type of dynamic param, or minimum the hard coded number will fit in?
+		return w;
+	}
+
+	private Writer maxRowBreak(final Writer w, final String maxRows) throws IOException {
+		if(maxRows != null) {
+			w.append("\t\t\t\tif(");
+			// annoying and hacky, but if this is a dynamic param name we want to only check rowCount if it's < 1
+			// if it's a hard coded number, it'll be null so we won't even be here
+			try {
+				Long.parseLong(maxRows);
+			} catch (NumberFormatException e) {
+				// dynamic
+				w.append(maxRows).append(" > 0 && ");
+			}
+			w.append("++_rowCount > ").append(maxRows).append(")\n\t\t\t\t\tbreak;\n");
+		}
+		return w;
 	}
 
 	private Writer clean(final Writer w, final String cleaner) throws IOException {

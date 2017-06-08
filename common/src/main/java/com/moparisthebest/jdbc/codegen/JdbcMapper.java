@@ -59,18 +59,14 @@ public interface JdbcMapper extends Closeable {
 		OptionalBool cachePreparedStatement() default OptionalBool.DEFAULT;
 
 		/**
-		 * Maximum array length.
-		 * Optional element.
-		 * This element has no effect on the call unless the method return type is an array.
-		 * When used in conjunction with the maxRows element, the size of the array generated
-		 * from the result set will be the smaller of maxRows and arrayMaxLength.
-		 * <p>
-		 * arrayMaxLength's default value is 1024, but may be set to zero to specify that
-		 * there is no size limit for the array generated from the ResultSet.
-		 * Since the generated array is stored in-memory, care should be taken when dealing
-		 * with very large ResultSets when the value of this element is set to zero.
+		 * Maximum rows returned in collections/maps/arrays/etc, < 1 mean no limit
+		 *
+		 * Use with care because you normally do not want truncated query results
+		 *
+		 * Can also send in dynamically to function as a primitive integer (long/int/short/byte) named one of the options
+		 * in JdbcMapper.allowedMaxRowParamNames (default one of maxRows,rowLimit,arrayMaxLength if not set)
 		 */
-		int arrayMaxLength() default -1;
+		long maxRows() default -1;
 	}
 
 	// these are to annotate parameters for special bind to PreparedStatement behavior

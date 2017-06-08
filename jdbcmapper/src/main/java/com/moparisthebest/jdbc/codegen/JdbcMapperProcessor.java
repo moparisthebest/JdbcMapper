@@ -23,7 +23,7 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
  * Created by mopar on 5/24/17.
  */
 @SupportedAnnotationTypes("com.moparisthebest.jdbc.codegen.JdbcMapper.Mapper")
-@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName"})
+@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "JdbcMapper.allowedMaxRowParamNames"})
 @SupportedSourceVersion(SourceVersion.RELEASE_5)
 public class JdbcMapperProcessor extends AbstractProcessor {
 
@@ -35,6 +35,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
+	private Set<String> allowedMaxRowParamNames;
 	private CompileTimeResultSetMapper rsm;
 
 	public JdbcMapperProcessor() {
@@ -75,6 +76,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		defaultArrayStringTypeName = processingEnv.getOptions().get("JdbcMapper.arrayStringTypeName");
 		if (defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
 			defaultArrayStringTypeName = defaultDatabaseType.arrayStringTypeName;
+
+		String allowedMaxRowParamNames = processingEnv.getOptions().get("JdbcMapper.allowedMaxRowParamNames");
+		if (allowedMaxRowParamNames == null || allowedMaxRowParamNames.isEmpty())
+			allowedMaxRowParamNames = "maxRows,rowLimit,arrayMaxLength";
+		this.allowedMaxRowParamNames = new HashSet<String>(Arrays.asList(allowedMaxRowParamNames.split(",")));
 
 		rsm = new CompileTimeResultSetMapper(processingEnv);
 	}
@@ -219,7 +225,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// build query and bind param order
 							final List<VariableElement> bindParams = new ArrayList<VariableElement>();
 							final String sqlStatement;
-							String calendarName = null, cleanerName = null;
+							String calendarName = null, cleanerName = null, maxRowsName = sql.maxRows() < 1 ? null : Long.toString(sql.maxRows());
 							boolean sqlExceptionThrown = false;
 							{
 								// now parameters
@@ -311,6 +317,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 													String.format("@JdbcMapper.SQL method has unused parameter '%s' of cleaner type '%s' when cleaner type required is '%s'", unusedParam.getKey(), unusedType, requiredType),
 													unusedParam.getValue());
 										*/
+									} else if(isPrimitiveInteger(unusedType.getKind()) && maxRowsName == null && this.allowedMaxRowParamNames.contains(unusedParam.getKey())) {
+										maxRowsName = unusedParam.getKey();
 									} else
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
@@ -361,7 +369,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
 										return false;
 									}
-								rsm.mapToResultType(w, keys, eeMethod, sql.arrayMaxLength(), calendarName, cleanerName);
+								rsm.mapToResultType(w, keys, eeMethod, maxRowsName, calendarName, cleanerName);
 							}
 
 							// if no SQLException is thrown, we have to catch it here and wrap it with RuntimeException...
@@ -667,5 +675,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return methodElement.getReturnType().getKind() == TypeKind.VOID &&
 				methodElement.getSimpleName().toString().equals("close") &&
 				methodElement.getParameters().isEmpty() ? methodElement : null;
+	}
+
+	public static boolean isPrimitiveInteger(final TypeKind kind) {
+		switch(kind) {
+			case BYTE:
+			case SHORT:
+			case INT:
+			case LONG:
+				return true;
+			default:
+				return false;
+		}
 	}
 }

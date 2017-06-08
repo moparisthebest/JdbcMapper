@@ -112,4 +112,20 @@ public interface PersonDAO {
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPersonCleanNumber(long personNo, Cleaner<Number> clean) throws SQLException;
 	*/
+
+	// max row checks
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	List<FieldPerson> getPersonDynamicLimit(long personNo, int maxRows) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	Map<String, FieldPerson> getPersonDynamicLimit(long personNo, short arrayMaxLength) throws SQLException;
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	Map<String, List<FieldPerson>> getPersonDynamicLimit(long personNo, long rowLimit) throws SQLException;
+
+
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = 1)
+	List<FieldPerson> getPersonStaticLimitList(long personNo) throws SQLException;
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = 1)
+	Map<String, FieldPerson> getPersonStaticLimitMap(long personNo) throws SQLException;
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = 1)
+	Map<String, List<FieldPerson>> getPersonStaticLimitMapList(long personNo) throws SQLException;
 }
