@@ -3,7 +3,9 @@ package com.moparisthebest.jdbc.codegen;
 import com.moparisthebest.jdbc.Cleaner;
 import com.moparisthebest.jdbc.dto.FieldPerson;
 import com.moparisthebest.jdbc.dto.Person;
+import com.moparisthebest.jdbc.util.ResultSetIterable;
 
+import java.io.Closeable;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -15,10 +17,10 @@ import java.util.*;
 @JdbcMapper.Mapper(
 //		jndiName = "bob",
 //		databaseType = JdbcMapper.DatabaseType.ORACLE
-//		cachePreparedStatements = false
+		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 //		, sqlParser = SimpleSQLParser.class
 )
-public interface PersonDAO {
+public interface PersonDAO extends Closeable {
 
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE last_name = {lastName}")
 	int setFirstName(String firstName, String lastName);
@@ -132,4 +134,14 @@ public interface PersonDAO {
 	Map<String, FieldPerson> getPersonStaticLimitMap(long personNo) throws SQLException;
 	@JdbcMapper.SQL(value = "SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}", maxRows = Long.MAX_VALUE)
 	Map<String, List<FieldPerson>> getPersonStaticLimitMapList(long personNo) throws SQLException;
+
+
+	@JdbcMapper.SQL("SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no")
+	List<FieldPerson> getPeopleList(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no")
+	ResultSetIterable<FieldPerson> getPeopleResultSetIterable(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
+	ResultSetIterable<FieldPerson> getPeopleResultSetIterableCachedPreparedStatement(long personNo1, long personNo2, long personNo3) throws SQLException;
 }

@@ -349,6 +349,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							for (final VariableElement param : bindParams)
 								setObject(w, ++count, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
 
+							boolean closeRs = true;
 							if (!parsedSQl.isSelect()) {
 								if (returnType.equals("void")) {
 									w.write("\t\t\tps.executeUpdate();\n");
@@ -370,20 +371,32 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
 										return false;
 									}
-								rsm.mapToResultType(w, keys, eeMethod, maxRows, calendarName, cleanerName);
-							}
-
-							// if no SQLException is thrown, we have to catch it here and wrap it with RuntimeException...
-							if (!sqlExceptionThrown) {
-								w.write("\t\t} catch(SQLException e) {\n\t\t\tthrow new RuntimeException(e);\n");
+								closeRs = rsm.mapToResultType(w, keys, eeMethod, maxRows, calendarName, cleanerName, !cachePreparedStatements);
 							}
 
 							// close things
-							w.write("\t\t} finally {\n");
-							if (parsedSQl.isSelect())
-								w.write("\t\t\ttryClose(rs);\n");
-							if (!cachePreparedStatements)
-								w.write("\t\t\ttryClose(ps);\n");
+							if(closeRs) {
+								// like normal
+								// if no SQLException is thrown, we have to catch it here and wrap it with RuntimeException...
+								if (!sqlExceptionThrown)
+									w.write("\t\t} catch(SQLException e) {\n\t\t\tthrow new RuntimeException(e);\n");
+								w.write("\t\t} finally {\n");
+								if (parsedSQl.isSelect())
+									w.write("\t\t\ttryClose(rs);\n");
+								if (!cachePreparedStatements)
+									w.write("\t\t\ttryClose(ps);\n");
+							} else {
+								// very annoying special handling in that if any exceptions are thrown, we have to close everything even if closeRs == false...
+								w.write("\t\t} catch(Throwable e) {\n");
+								if (parsedSQl.isSelect())
+									w.write("\t\t\ttryClose(rs);\n");
+								if (!cachePreparedStatements)
+									w.write("\t\t\ttryClose(ps);\n");
+								if (sqlExceptionThrown)
+									w.write("\t\t\tif(e instanceof SQLException)\n\t\t\t\tthrow (SQLException)e;\n");
+								w.write("\t\t\tif(e instanceof RuntimeException)\n\t\t\t\tthrow (RuntimeException)e;\n");
+								w.write("\t\t\tthrow new RuntimeException(e);\n");
+							}
 							w.write("\t\t}\n");
 
 							w.write("\t}\n");

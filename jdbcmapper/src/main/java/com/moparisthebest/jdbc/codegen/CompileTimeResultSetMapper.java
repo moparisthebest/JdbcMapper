@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Finishable;
 import com.moparisthebest.jdbc.ResultSetMapper;
+import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.ExecutableElement;
@@ -26,7 +27,8 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToCl
 public class CompileTimeResultSetMapper {
 
 	public final Types types;
-	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType;
+	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType;
+	private final boolean java8 = false;
 
 	public CompileTimeResultSetMapper(final ProcessingEnvironment processingEnv) {
 		types = processingEnv.getTypeUtils();
@@ -41,6 +43,8 @@ public class CompileTimeResultSetMapper {
 
 		finishableType = elements.getTypeElement(Finishable.class.getCanonicalName()).asType();
 		resultSetType = elements.getTypeElement(ResultSet.class.getCanonicalName()).asType();
+
+		resultSetIterableType = types.getDeclaredType(elements.getTypeElement(ResultSetIterable.class.getCanonicalName()), types.getWildcardType(null, null));
 	}
 
 	public static String getConcreteClassCanonicalName(final TypeMirror returnType, final Class defaultConcreteClass) {
@@ -56,7 +60,11 @@ public class CompileTimeResultSetMapper {
 		return typeMirrorStringNoGenerics(returnType);
 	}
 
-	public void mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final MaxRows maxRows, final String cal, final String cleaner) throws IOException, NoSuchMethodException, ClassNotFoundException {
+	/**
+	 *
+	 * @return true if calling code should close rs (ResultSet) and ps (PreparedStatement) if closePs is false, false otherwise
+	 */
+	public boolean mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final MaxRows maxRows, final String cal, final String cleaner, final boolean closePs) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
@@ -79,18 +87,22 @@ public class CompileTimeResultSetMapper {
 						collectionTypeMirror,
 						componentTypeMirror,
 						maxRows, cal, cleaner);
-				return;
+				return true;
 			}
 			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), maxRows, cal, cleaner);
 		} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			if (types.isAssignable(returnTypeMirror, listIteratorType))
+			if (types.isAssignable(returnTypeMirror, resultSetIterableType)) {
+				toResultSetIterable(w, keys, typeArguments.get(0), cal, cleaner, closePs);
+				return false;
+			} else if (types.isAssignable(returnTypeMirror, listIteratorType))
 				toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
 			else
 				toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
 		} else {
 			toObject(w, keys, returnTypeMirror, cal, cleaner);
 		}
+		return true;
 	}
 
 	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, String cal, TypeMirror mapValType, TypeMirror mapKeyType) {
@@ -107,6 +119,35 @@ public class CompileTimeResultSetMapper {
 		w.write("\t\t\t\treturn ");
 		// this does not clean null on purpose, neither does CleaningResultSetMapper
 		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
+	}
+
+	private void toResultSetIterable(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs) throws IOException, ClassNotFoundException {
+		w.write("\t\t\treturn com.moparisthebest.jdbc.util.ResultSetIterable.getResultSetIterable(rs,\n\t\t\t\t\trs.next() ? ");
+
+		if(java8) {
+			w.append("(rs, ").append(cal == null ? "_cal" : cal).append(") -> {\n");
+		} else {
+			final String returnTypeString = returnTypeMirror.toString();
+			w.append("new com.moparisthebest.jdbc.util.ResultSetToObject<")
+					.append(returnTypeString).append(">() {\n\t\t\t\t\tpublic ")
+					.append(returnTypeString).append(" toObject(final ResultSet rs, final java.util.Calendar ")
+					.append(cal == null ? "_cal" : cal)
+					.append(") throws SQLException {\n");
+		}
+
+		// com.moparisthebest.jdbc.util.ResultSetToObject implementation
+		writeObject(w, keys, returnTypeMirror, cal);
+		w.write("\t\t\t\t\t\treturn ");
+		clean(w, cleaner).write(";\n");
+		// end ResultSetToObject implementation
+
+		if(!java8)
+			w.write("\t\t\t\t\t}\n");
+
+		w.append("\t\t\t\t\t}\n\t\t\t\t: null, ").append(cal == null ? "null" : cal).append(")");
+		if(closePs)
+			w.append(".setPreparedStatementToClose(ps)");
+		w.append(";\n");
 	}
 
 	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
