@@ -19,6 +19,8 @@
 
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetToObject;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -33,7 +35,7 @@ import java.util.Calendar;
  * RowMapperFactory.
  *
  */
-public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
+public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T>, ResultSetToObject<T> {
 
     /** ResultSet to map. */
     protected final ResultSet _resultSet;
@@ -110,4 +112,14 @@ public abstract class AbstractRowMapper<K, T> implements RowMapper<K,T> {
         }
         return this.keys = keys;
     }
+
+	@Override
+	public T toObject(final ResultSet rs, final Calendar cal) throws SQLException {
+		return this.mapRowToReturnType();
+	}
+
+	@Override
+	public ResultSetToObject<T> getResultSetToObject() {
+		return this;
+	}
 }

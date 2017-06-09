@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetToObject;
+
 import java.sql.SQLException;
 
 /**
@@ -18,4 +20,6 @@ public interface RowMapper<K,T> {
 	 * @throws MapperException if _mapKeyType is null
 	 */
 	K getMapKey() throws SQLException;
+
+	ResultSetToObject<T> getResultSetToObject();
 }

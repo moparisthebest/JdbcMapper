@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetIterable;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -338,6 +340,48 @@ public class QueryMapper implements Closeable {
 		}
 	}
 
+	// these are handled specially and not generated because we need it to hold open PreparedStatement until the ResultSetIterable is closed
+
+	public <T> ResultSetIterable<T> toResultSetIterable(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		boolean error = true;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ResultSetIterable<T> ret = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = this.toResultSet(ps, bindObjects);
+			ret = cm.toResultSetIterable(rs, componentType).setPreparedStatementToClose(ps);
+			error = false;
+			return ret;
+		} finally {
+			if (error) {
+				tryClose(ret);
+				tryClose(rs);
+				tryClose(ps);
+			}
+		}
+	}
+
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		boolean error = true;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ResultSetIterable<Map<String, V>> ret = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = this.toResultSet(ps, bindObjects);
+			ret = cm.toResultSetIterableMap(rs, componentType, mapValType).setPreparedStatementToClose(ps);
+			error = false;
+			return ret;
+		} finally {
+			if (error) {
+				tryClose(ret);
+				tryClose(rs);
+				tryClose(ps);
+			}
+		}
+	}
+
 	// these are standard getters
 
 	public ResultSetMapper getCustomResultSetMapper() {
@@ -362,6 +406,14 @@ public class QueryMapper implements Closeable {
 		} finally {
 			tryClose(ps);
 		}
+	}
+
+	public <T> ResultSetIterable<T> toResultSetIterable(PreparedStatement ps, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return cm.toResultSetIterable(bindExecute(ps, bindObjects), componentType);
+	}
+
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return cm.toResultSetIterableMap(bindExecute(ps, bindObjects), componentType, mapValType);
 	}
 
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {

@@ -19,8 +19,11 @@ package com.moparisthebest.jdbc;
  * $Header:$
  */
 
+import com.moparisthebest.jdbc.util.ResultSetIterable;
+
 import java.lang.ref.SoftReference;
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -122,10 +125,20 @@ public class ResultSetMapper implements RowMapperProvider {
 			if (rs.next())
 				ret = getRowMapper(rs, componentType, cal, mapValType, null).mapRowToReturnType();
 		} catch (SQLException e) {
-			// ignore
+			// ignore // todo: this looks crazy dangerous look into it...
 		}
 		tryClose(rs);
 		return ret == null ? RowToObjectMapper.fixNull(componentType) : ret;
+	}
+
+	protected <T> ResultSetIterable<T> privToResultSetIterable(ResultSet rs, Class<T> componentType, Calendar cal, Class<?> mapValType) {
+		try {
+			return ResultSetIterable.getResultSetIterable(rs,
+					rs.next() ? getRowMapper(rs, componentType, cal, mapValType, null).getResultSetToObject() : null,
+					cal);
+		} catch (SQLException e) {
+			throw new MapperException("cannot create ResultSetIterable", e);
+		}
 	}
 
 	protected <T extends Collection<E>, E> T privToCollection(ResultSet rs, final Class<T> collectionType, Class<E> componentType, int arrayMaxLength, Calendar cal, Class<?> mapValType) {
@@ -437,6 +450,15 @@ public class ResultSetMapper implements RowMapperProvider {
 		return privToObject(rs, componentType, cal, null);
 	}
 
+	public <T> ResultSetIterable<T> toResultSetIterable(ResultSet rs, Class<T> componentType, Calendar cal) {
+		return privToResultSetIterable(rs, componentType, cal, null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(ResultSet rs, Class<T> componentType, Class<V> mapValType, Calendar cal) {
+		return (ResultSetIterable<Map<String, V>>)privToResultSetIterable(rs, componentType, cal, mapValType);
+	}
+
 	public <T extends Collection<E>, E> T toCollection(ResultSet rs, final Class<T> collectionType, Class<E> componentType, int arrayMaxLength, Calendar cal) {
 		return privToCollection(rs, collectionType, componentType, arrayMaxLength, cal, null);
 	}
@@ -605,6 +627,14 @@ public class ResultSetMapper implements RowMapperProvider {
 
 	public <T> T toObject(ResultSet rs, Class<T> componentType) {
 		return this.toObject(rs, componentType, cal);
+	}
+
+	public <T> ResultSetIterable<T> toResultSetIterable(ResultSet rs, Class<T> componentType) {
+		return this.toResultSetIterable(rs, componentType, cal);
+	}
+
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(ResultSet rs, Class<T> componentType, Class<V> mapValType) {
+		return this.toResultSetIterableMap(rs, componentType, mapValType, cal);
 	}
 
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(ResultSet rs, Class<T> componentType, Class<V> mapValType) {

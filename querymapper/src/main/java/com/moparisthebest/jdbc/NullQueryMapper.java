@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetIterable;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -251,6 +253,46 @@ public class NullQueryMapper extends QueryMapper {
 	public <T> T toObject(String query, Class<T> componentType, final Object... bindObjects) {
 		try {
 			return delegate.toObject(query, componentType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T> ResultSetIterable<T> toResultSetIterable(PreparedStatement query, Class<T> componentType, final Object... bindObjects) {
+		try {
+			return delegate.toResultSetIterable(query, componentType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T> ResultSetIterable<T> toResultSetIterable(String query, Class<T> componentType, final Object... bindObjects) {
+		try {
+			return delegate.toResultSetIterable(query, componentType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(PreparedStatement query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
+		try {
+			return delegate.toResultSetIterableMap(query, componentType, mapValType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
+		try {
+			return delegate.toResultSetIterableMap(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
 			if (verbose) e.printStackTrace();
 		}

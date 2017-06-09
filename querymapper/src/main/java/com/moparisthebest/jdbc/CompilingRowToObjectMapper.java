@@ -2,7 +2,6 @@ package com.moparisthebest.jdbc;
 
 import com.moparisthebest.classgen.Compiler;
 
-import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
@@ -84,6 +83,16 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	}
 
 	@Override
+	public T toObject(final ResultSet rs, final Calendar cal) throws SQLException {
+		return resultSetToObject.toObject(rs, cal);
+	}
+
+	@Override
+	public com.moparisthebest.jdbc.util.ResultSetToObject<T> getResultSetToObject() {
+		return resultSetToObject;
+	}
+
+	@Override
 	protected String[] getKeysFromResultSet() throws SQLException {
 		if (keys == null)
 			throw new MapperException("not supported here");
@@ -95,7 +104,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		throw new MapperException("not supported here");
 	}
 
-	public interface ResultSetToObject<K, T> {
+	public interface ResultSetToObject<K, T> extends com.moparisthebest.jdbc.util.ResultSetToObject<T> {
 		K getFirstColumn(final ResultSet rs, final Calendar cal) throws SQLException;
 		T toObject(final ResultSet rs, final Calendar cal) throws SQLException;
 	}

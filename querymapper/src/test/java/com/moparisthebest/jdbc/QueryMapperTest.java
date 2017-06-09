@@ -1,15 +1,18 @@
 package com.moparisthebest.jdbc;
 
 import com.moparisthebest.jdbc.dto.*;
+import com.moparisthebest.jdbc.util.ResultSetIterable;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -25,6 +28,11 @@ public class QueryMapperTest {
 	public static final Boss fieldBoss1 = new FieldBoss(2, new Date(0), "Second", "Person", "Finance", "Second");
 	public static final Boss fieldBoss2 = new FieldBoss(3, new Date(0), "Third", "Person", "Finance", null);
 	public static final Boss fieldBoss3 = new FieldBoss(4, new Date(0), null, "Person", "Finance", "Fourth");
+	public static final Person fieldPerson2 = new FieldPerson(5, new Date(0), "Second", "Person");
+	public static final Person fieldPerson3 = new FieldPerson(6, new Date(0), "Third", "Person");
+
+	public static final Person[] people = new Person[]{fieldPerson1, fieldPerson2, fieldPerson3};
+	public static final Boss[] bosses =new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3};
 
 	public static final Person setPerson1 = new SetPerson(fieldPerson1);
 	public static final Boss setBoss1 = new SetBoss(fieldBoss1);
@@ -70,9 +78,9 @@ public class QueryMapperTest {
 				qm = new QueryMapper(conn);
 				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
 				qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
-				for (final Person person : new Person[]{fieldPerson1})
+				for (final Person person : people)
 					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
-				for (final Boss boss : new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3}) {
+				for (final Boss boss : bosses) {
 					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
 					qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
 				}
@@ -249,7 +257,7 @@ public class QueryMapperTest {
 	@Test
 	public void testSelectArrayMap() throws Throwable {
 		final List<Map<String, String>> arrayMap = getListMap();
-		Assert.assertArrayEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.toArrayMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
+		assertArrayEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.toArrayMap("SELECT first_name, last_name FROM person WHERE person_no < 4", arrayMap.get(0).getClass(), String.class));
 	}
 
 	@Test
@@ -304,19 +312,19 @@ public class QueryMapperTest {
 	@Test
 	public void testSelectLongObjectArray() throws Throwable {
 		final Long[] expected = {fieldPerson1.getPersonNo()};
-		Assert.assertArrayEquals(expected, qm.toArray("SELECT person_no FROM person WHERE person_no = ?", Long.class, expected[0]));
+		assertArrayEquals(expected, qm.toArray("SELECT person_no FROM person WHERE person_no = ?", Long.class, expected[0]));
 	}
 
 	@Test
 	public void testSelectObjectArray() throws Throwable {
 		final Long[] arr = {1L, 2L, 3L};
-		Assert.assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", Long[].class, fieldPerson1.getPersonNo()));
+		assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", Long[].class, fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testSelectPrimitiveArray() throws Throwable {
 		final long[] arr = {1L, 2L, 3L};
-		Assert.assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", long[].class, fieldPerson1.getPersonNo()));
+		assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", long[].class, fieldPerson1.getPersonNo()));
 	}
 
 	@Test(expected = com.moparisthebest.jdbc.MapperException.class)
@@ -370,5 +378,32 @@ public class QueryMapperTest {
 			assertNull(map.get("TOm"));
 			assertNull(map.get("TOM"));
 		}
+	}
+
+	@Test
+	public void testList() throws SQLException {
+		final List<FieldPerson> fromDb = qm.toList("SELECT * from person WHERE person_no IN (?,?,?) ORDER BY person_no",
+				FieldPerson.class, people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
+		assertArrayEquals(people, fromDb.toArray());
+	}
+
+	@Test
+	public void testListQueryMapperList() throws SQLException {
+		final ListQueryMapper lqm = new ListQueryMapper(qm);
+		final List<FieldPerson> fromDb = lqm.toList("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no",
+				FieldPerson.class, lqm.inList("person_no", Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo())));
+		assertArrayEquals(people, fromDb.toArray());
+		lqm.close();
+	}
+
+	@Test
+	public void testResultSetIterable() throws SQLException {
+		final ResultSetIterable<FieldPerson> rsi = qm.toResultSetIterable("SELECT * from person WHERE person_no IN (?,?,?) ORDER BY person_no",
+				FieldPerson.class, people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
+		final List<FieldPerson> fromDb = new ArrayList<FieldPerson>();
+		for(final FieldPerson fieldPerson : rsi)
+			fromDb.add(fieldPerson);
+		rsi.close();
+		assertArrayEquals(people, fromDb.toArray());
 	}
 }

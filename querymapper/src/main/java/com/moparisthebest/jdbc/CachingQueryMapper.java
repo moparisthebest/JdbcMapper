@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetIterable;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -135,6 +137,16 @@ public class CachingQueryMapper extends QueryMapper {
 	@Override
 	public <T> T toObject(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
 		return super.toObject(getPreparedStatement(sql), componentType, bindObjects);
+	}
+
+	@Override
+	public <T> ResultSetIterable<T> toResultSetIterable(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return super.toResultSetIterable(getPreparedStatement(sql), componentType, bindObjects);
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return super.toResultSetIterableMap(getPreparedStatement(sql), componentType, mapValType, bindObjects);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetIterable;
+
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -238,6 +240,26 @@ public class ListQueryMapper extends QueryMapper {
 	@Override
 	public <T> T toObject(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
 		return delegate.toObject(prepareSql(sql, bindObjects), componentType, bindObjects);
+	}
+
+	@Override
+	public <T> ResultSetIterable<T> toResultSetIterable(PreparedStatement ps, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return delegate.toResultSetIterable(ps, componentType, bindObjects);
+	}
+
+	@Override
+	public <T> ResultSetIterable<T> toResultSetIterable(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return delegate.toResultSetIterable(prepareSql(sql, bindObjects), componentType, bindObjects);
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return delegate.toResultSetIterableMap(ps, componentType, mapValType, bindObjects);
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return delegate.toResultSetIterableMap(prepareSql(sql, bindObjects), componentType, mapValType, bindObjects);
 	}
 
 	@Override
