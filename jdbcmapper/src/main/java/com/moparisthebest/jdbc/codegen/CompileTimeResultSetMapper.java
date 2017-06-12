@@ -5,6 +5,7 @@ import com.moparisthebest.jdbc.ResultSetMapper;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.type.ArrayType;
@@ -26,13 +27,28 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToCl
  */
 public class CompileTimeResultSetMapper {
 
+	public static final SourceVersion RELEASE_8;
+
+	static {
+		SourceVersion rl8 = null;
+		try {
+			rl8 = SourceVersion.valueOf("RELEASE_8");
+		} catch(Throwable e) {
+			// ignore
+		}
+		RELEASE_8 = rl8;
+	}
+
 	public final Types types;
 	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType;
-	private final boolean java8 = false;
+	private final boolean java8;
 
 	public CompileTimeResultSetMapper(final ProcessingEnvironment processingEnv) {
 		types = processingEnv.getTypeUtils();
 		final Elements elements = processingEnv.getElementUtils();
+
+		// is this the proper way to do this?
+		java8 = RELEASE_8 != null && processingEnv.getSourceVersion().ordinal() >= RELEASE_8.ordinal();
 
 		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
 		mapType = types.getDeclaredType(elements.getTypeElement(Map.class.getCanonicalName()), types.getWildcardType(null, null), types.getWildcardType(null, null));
@@ -106,11 +122,19 @@ public class CompileTimeResultSetMapper {
 	}
 
 	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, String cal, TypeMirror mapValType, TypeMirror mapKeyType) {
-		return new CompileTimeRowToObjectMapper(this, keys, returnTypeClass, cal, mapValType, mapKeyType);
+		return getRowMapper(keys, returnTypeClass, "rs", cal, mapValType, mapKeyType);
+	}
+
+	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, final String resultSetName, String cal, TypeMirror mapValType, TypeMirror mapKeyType) {
+		return new CompileTimeRowToObjectMapper(this, keys, returnTypeClass, resultSetName, cal, mapValType, mapKeyType);
 	}
 
 	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal) throws IOException, ClassNotFoundException {
-		getRowMapper(keys, returnTypeMirror, cal, null, null).gen(w, returnTypeMirror.toString());
+		writeObject(w, keys, returnTypeMirror, "rs", cal);
+	}
+
+	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String resultSetName, final String cal) throws IOException, ClassNotFoundException {
+		getRowMapper(keys, returnTypeMirror, resultSetName, cal, null, null).gen(w, returnTypeMirror.toString());
 	}
 
 	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner) throws IOException, ClassNotFoundException {
@@ -125,18 +149,16 @@ public class CompileTimeResultSetMapper {
 		w.write("\t\t\treturn com.moparisthebest.jdbc.util.ResultSetIterable.getResultSetIterable(rs,\n\t\t\t\t\trs.next() ? ");
 
 		if(java8) {
-			w.append("(rs, ").append(cal == null ? "_cal" : cal).append(") -> {\n");
+			w.append("(_rs, _cal) -> {\n");
 		} else {
 			final String returnTypeString = returnTypeMirror.toString();
 			w.append("new com.moparisthebest.jdbc.util.ResultSetToObject<")
 					.append(returnTypeString).append(">() {\n\t\t\t\t\tpublic ")
-					.append(returnTypeString).append(" toObject(final ResultSet rs, final java.util.Calendar ")
-					.append(cal == null ? "_cal" : cal)
-					.append(") throws SQLException {\n");
+					.append(returnTypeString).append(" toObject(final ResultSet _rs, final java.util.Calendar _cal) throws SQLException {\n");
 		}
 
 		// com.moparisthebest.jdbc.util.ResultSetToObject implementation
-		writeObject(w, keys, returnTypeMirror, cal);
+		writeObject(w, keys, returnTypeMirror, "_rs", cal == null ? null : "_cal");
 		w.write("\t\t\t\t\t\treturn ");
 		clean(w, cleaner).write(";\n");
 		// end ResultSetToObject implementation

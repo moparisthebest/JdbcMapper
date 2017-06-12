@@ -31,7 +31,7 @@ public class CompileTimeRowToObjectMapper {
 	/**
 	 * Calendar instance for date/time mappings.
 	 */
-	protected final String _calendarName;
+	protected final String _calendarName, _resultSetName;
 
 	/**
 	 * Class to map ResultSet Rows to.
@@ -51,11 +51,12 @@ public class CompileTimeRowToObjectMapper {
 	protected Element[] _fields = null;
 	protected int[] _fieldTypes;
 
-	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final String calendarName, final TypeMirror mapValType, final TypeMirror mapKeyType) {
+	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final String resultSetName, final String calendarName, final TypeMirror mapValType, final TypeMirror mapKeyType) {
 		this.rsm = rsm;
 		this.keys = keys;
 
 		_calendarName = calendarName;
+		_resultSetName = resultSetName;
 		_mapKeyType = mapKeyType;
 
 		_columnCount = keys.length - 1;
@@ -389,10 +390,10 @@ public class CompileTimeRowToObjectMapper {
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException, ClassNotFoundException {
-		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType, _calendarName);
+		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType, _resultSetName, _calendarName);
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final TypeMirror resultType) throws IOException, ClassNotFoundException {
-		CompilingRowToObjectMapper.extractColumnValueString(java, index, typeMirrorToClass(resultType), _calendarName);
+		CompilingRowToObjectMapper.extractColumnValueString(java, index, typeMirrorToClass(resultType), _resultSetName, _calendarName);
 	}
 }
