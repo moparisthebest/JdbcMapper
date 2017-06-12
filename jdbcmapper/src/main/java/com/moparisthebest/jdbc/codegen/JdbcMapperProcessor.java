@@ -235,6 +235,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								final int numParams = params.size();
 								int count = 0;
 								for (final VariableElement param : params) {
+									writeAllParamAnnotations(w, param);
 									w.write("final ");
 									w.write(param.asType().toString());
 									w.write(' ');
@@ -591,6 +592,12 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		w.write(", ");
 		w.write(variableName);
 		w.write(");\n");
+	}
+
+	private void writeAllParamAnnotations(final Writer w, final VariableElement param) throws IOException {
+		// todo: should this always be done for everything? allow turn off, exclude some annotations, or what?
+		for(final AnnotationMirror am : param.getAnnotationMirrors())
+			w.append(am.toString()).append(' ');
 	}
 
 	private static TypeMirror getSqlParser(final JdbcMapper.Mapper mapper) {
