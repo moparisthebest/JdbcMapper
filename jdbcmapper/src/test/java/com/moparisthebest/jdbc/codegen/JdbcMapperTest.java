@@ -9,6 +9,10 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+//IFJAVA8_START
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.QueryMapperTest.fieldPerson1;
 import static com.moparisthebest.jdbc.QueryMapperTest.getConnection;
@@ -65,4 +69,26 @@ public class JdbcMapperTest {
 		rsi.close();
 		assertArrayEquals(people, fromDb.toArray());
 	}
+
+	//IFJAVA8_START
+
+	@Test
+	public void testStream() throws SQLException {
+		final List<FieldPerson> fromDb;
+		try(Stream<FieldPerson> rsi = dao.getPeopleStream(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());) {
+			fromDb = rsi.collect(Collectors.toList());
+		}
+		assertArrayEquals(people, fromDb.toArray());
+	}
+
+	@Test
+	public void testStreamCachedPreparedStatement() throws SQLException {
+		final List<FieldPerson> fromDb;
+		try(Stream<FieldPerson> rsi = dao.getPeopleStreamCachedPreparedStatement(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());) {
+			fromDb = rsi.collect(Collectors.toList());
+		}
+		assertArrayEquals(people, fromDb.toArray());
+	}
+
+	//IFJAVA8_END
 }

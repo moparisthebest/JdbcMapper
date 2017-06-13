@@ -24,8 +24,4 @@ public class PrestoPersonDAOTest extends JdbcMapperTest {
     public static void tearDown() throws Throwable {
         tryClose(dao);
     }
-
-    public PersonDAO getDao() {
-        return dao;
-    }
 }

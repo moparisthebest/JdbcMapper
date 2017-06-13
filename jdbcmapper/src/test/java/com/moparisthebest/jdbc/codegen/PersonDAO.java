@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 /**
  * Created by mopar on 5/24/17.
@@ -144,4 +147,14 @@ public interface PersonDAO extends Closeable {
 
 	@JdbcMapper.SQL(value = "SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
 	ResultSetIterable<FieldPerson> getPeopleResultSetIterableCachedPreparedStatement(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	//IFJAVA8_START
+
+	@JdbcMapper.SQL("SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no")
+	Stream<FieldPerson> getPeopleStream(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
+	Stream<FieldPerson> getPeopleStreamCachedPreparedStatement(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	//IFJAVA8_END
 }

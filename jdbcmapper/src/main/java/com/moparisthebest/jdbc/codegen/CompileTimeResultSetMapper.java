@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.sql.ResultSet;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorStringNoGenerics;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToClass;
@@ -41,6 +44,9 @@ public class CompileTimeResultSetMapper {
 
 	public final Types types;
 	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType;
+	//IFJAVA8_START
+	public final TypeMirror streamType;
+	//IFJAVA8_END
 	private final boolean java8;
 
 	public CompileTimeResultSetMapper(final ProcessingEnvironment processingEnv) {
@@ -61,6 +67,10 @@ public class CompileTimeResultSetMapper {
 		resultSetType = elements.getTypeElement(ResultSet.class.getCanonicalName()).asType();
 
 		resultSetIterableType = types.getDeclaredType(elements.getTypeElement(ResultSetIterable.class.getCanonicalName()), types.getWildcardType(null, null));
+
+		//IFJAVA8_START
+		streamType = types.getDeclaredType(elements.getTypeElement(Stream.class.getCanonicalName()), types.getWildcardType(null, null));
+		//IFJAVA8_END
 	}
 
 	public static String getConcreteClassCanonicalName(final TypeMirror returnType, final Class defaultConcreteClass) {
@@ -115,7 +125,14 @@ public class CompileTimeResultSetMapper {
 				toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
 			else
 				toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
-		} else {
+		}
+		//IFJAVA8_START
+		else if (types.isAssignable(returnTypeMirror, streamType)) {
+			toStream(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), cal, cleaner, closePs);
+			return false;
+		}
+		//IFJAVA8_END
+		else {
 			toObject(w, keys, returnTypeMirror, cal, cleaner);
 		}
 		return true;
@@ -171,6 +188,32 @@ public class CompileTimeResultSetMapper {
 			w.append(".setPreparedStatementToClose(ps)");
 		w.append(";\n");
 	}
+
+	//IFJAVA8_START
+
+	// being in this method implies java8 is true already, how else could you be compiling code using Stream? so this won't have the checks for lambdas toResultSetIterable does...
+	private void toStream(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs) throws IOException, ClassNotFoundException {
+
+		if(closePs)
+			w.write("\t\t\tfinal PreparedStatement finalPs = ps;\n");
+
+		w.write("\t\t\treturn com.moparisthebest.jdbc.util.ResultSetIterable.getStream(rs,\n\t\t\t\t\trs.next() ? ");
+
+		w.append("(_rs, _cal) -> {\n");
+
+		// com.moparisthebest.jdbc.util.ResultSetToObject implementation
+		writeObject(w, keys, returnTypeMirror, "_rs", cal == null ? null : "_cal");
+		w.write("\t\t\t\t\t\treturn ");
+		clean(w, cleaner).write(";\n");
+		// end ResultSetToObject implementation
+
+		w.append("\t\t\t\t\t}\n\t\t\t\t: null, ").append(cal == null ? "null" : cal).append(")");
+		if(closePs)
+			w.append(".onClose(() -> tryClose(finalPs))");
+		w.append(";\n");
+	}
+
+	//IFJAVA8_END
 
 	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
 		maxRowInit(w, maxRows).write("\t\t\tfinal ");

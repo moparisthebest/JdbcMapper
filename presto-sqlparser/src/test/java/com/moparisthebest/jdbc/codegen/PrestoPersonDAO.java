@@ -5,21 +5,25 @@ import com.moparisthebest.jdbc.dto.FieldPerson;
 import com.moparisthebest.jdbc.dto.Person;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
+import java.io.Closeable;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 /**
  * Created by mopar on 5/24/17.
  */
 @JdbcMapper.Mapper(
 //		jndiName = "bob",
-//        cachePreparedStatements = false,
-		sqlParser = PrestoSQLParser.class
+//		databaseType = JdbcMapper.DatabaseType.ORACLE
+		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
+		, sqlParser = PrestoSQLParser.class
 )
 public interface PrestoPersonDAO extends PersonDAO {
-
 
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE last_name = {lastName}")
 	int setFirstName(String firstName, String lastName);
@@ -144,4 +148,13 @@ public interface PrestoPersonDAO extends PersonDAO {
 	@JdbcMapper.SQL(value = "SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
 	ResultSetIterable<FieldPerson> getPeopleResultSetIterableCachedPreparedStatement(long personNo1, long personNo2, long personNo3) throws SQLException;
 
+	//IFJAVA8_START
+
+	@JdbcMapper.SQL("SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no")
+	Stream<FieldPerson> getPeopleStream(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT person_no, birth_date, last_name, first_name from person WHERE person_no IN ({personNo1},{personNo2},{personNo3}) ORDER BY person_no", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
+	Stream<FieldPerson> getPeopleStreamCachedPreparedStatement(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	//IFJAVA8_END
 }
