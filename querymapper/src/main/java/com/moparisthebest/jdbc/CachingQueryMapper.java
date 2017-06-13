@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
@@ -145,9 +148,27 @@ public class CachingQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
-		return super.toResultSetIterableMap(getPreparedStatement(sql), componentType, mapValType, bindObjects);
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return super.toResultSetIterable(getPreparedStatement(sql), componentType, mapValType, bindObjects);
 	}
+
+	//IFJAVA8_START
+
+	@Override
+	public <T> Stream<T> toStream(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return super.toStream(getPreparedStatement(sql), componentType, bindObjects);
+	}
+
+	//IFJAVA8_END
+
+	//IFJAVA8_START
+
+	@Override
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return super.toStream(getPreparedStatement(sql), componentType, mapValType, bindObjects);
+	}
+
+	//IFJAVA8_END
 
 	@Override
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {

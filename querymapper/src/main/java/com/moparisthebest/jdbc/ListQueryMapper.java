@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 public class ListQueryMapper extends QueryMapper {
 
@@ -253,14 +256,42 @@ public class ListQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
-		return delegate.toResultSetIterableMap(ps, componentType, mapValType, bindObjects);
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return delegate.toResultSetIterable(ps, componentType, mapValType, bindObjects);
 	}
 
 	@Override
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
-		return delegate.toResultSetIterableMap(prepareSql(sql, bindObjects), componentType, mapValType, bindObjects);
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return delegate.toResultSetIterable(prepareSql(sql, bindObjects), componentType, mapValType, bindObjects);
 	}
+
+	//IFJAVA8_START
+
+	@Override
+	public <T> Stream<T> toStream(PreparedStatement ps, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return delegate.toStream(ps, componentType, bindObjects);
+	}
+
+	@Override
+	public <T> Stream<T> toStream(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return delegate.toStream(prepareSql(sql, bindObjects), componentType, bindObjects);
+	}
+
+	//IFJAVA8_END
+
+	//IFJAVA8_START
+
+	@Override
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return delegate.toStream(ps, componentType, mapValType, bindObjects);
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return delegate.toStream(prepareSql(sql, bindObjects), componentType, mapValType, bindObjects);
+	}
+
+	//IFJAVA8_END
 
 	@Override
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {

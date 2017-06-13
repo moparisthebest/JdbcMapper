@@ -22,11 +22,13 @@ function finishFile(){
 result="$(prepareFile "src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java")"
 
 # single object types
-cat src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java | grep public | egrep '(toObject|toSingleMap|toResultSetIterable|toResultSetIterableMap)\(' | grep ', Calendar cal)' | while read method
+cat src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java | grep public | egrep '(toObject|toSingleMap|toResultSetIterable|toStream)\(' | grep ', Calendar cal)' | while read method
 do
     #echo "method: $method"
     method_name=$(echo $method | egrep -o '[^ ]+\(')
     echo "ResultSetMapper.$method_name)"
+
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_START\n' >> "$result"
 
         cat >> "$result" <<EOF
 	$(echo $method | sed "s/, Calendar cal)/)/")
@@ -34,6 +36,8 @@ do
 	}
 
 EOF
+
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_END\n' >> "$result"
 done
 
 #everything else
@@ -67,6 +71,8 @@ do
     method_name=$(echo $method | egrep -o '[^ ]+\(')
     echo "QueryMapper.$method_name)"
 
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_START\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" >/dev/null
+
     # QueryMapper.java
     cat >> "$query" <<EOF
 	$(echo $method | sed -e 's/ResultSet rs/PreparedStatement ps/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
@@ -76,7 +82,7 @@ do
 EOF
 
     # handle this specially in QueryMapper because we need it to hold open PreparedStatement until the ResultSetIterable is closed
-    if [ "$method_name" != 'toResultSetIterable(' -a "$method_name" != 'toResultSetIterableMap(' ]; then
+    if [ "$method_name" != 'toResultSetIterable(' -a "$method_name" != 'toStream(' ]; then
 
     cat >> "$query" <<EOF
 	$(echo $method | sed -e 's/ResultSet rs/String sql/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
@@ -91,7 +97,7 @@ EOF
 
 EOF
 
-    fi # end special case toResultSetIterable
+    fi # end special case toResultSetIterable/toStream
 
     # CachingQueryMapper.java
     cat >> "$caching_query" <<EOF
@@ -133,6 +139,9 @@ EOF
 	}
 
 EOF
+
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_END\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" >/dev/null
+
 done
 
 finishFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java"

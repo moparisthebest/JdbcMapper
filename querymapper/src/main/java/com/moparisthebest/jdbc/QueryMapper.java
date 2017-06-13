@@ -9,6 +9,9 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
@@ -362,7 +365,7 @@ public class QueryMapper implements Closeable {
 		}
 	}
 
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		boolean error = true;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -370,7 +373,7 @@ public class QueryMapper implements Closeable {
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = this.toResultSet(ps, bindObjects);
-			ret = cm.toResultSetIterableMap(rs, componentType, mapValType).setPreparedStatementToClose(ps);
+			ret = cm.toResultSetIterable(rs, componentType, mapValType).setPreparedStatementToClose(ps);
 			error = false;
 			return ret;
 		} finally {
@@ -381,6 +384,50 @@ public class QueryMapper implements Closeable {
 			}
 		}
 	}
+
+	//IFJAVA8_START
+	public <T> Stream<T> toStream(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		boolean error = true;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Stream<T> ret = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = this.toResultSet(ps, bindObjects);
+			final PreparedStatement finalPs = ps;
+			ret = cm.toStream(rs, componentType).onClose(() -> tryClose(finalPs));
+			error = false;
+			return ret;
+		} finally {
+			if (error) {
+				tryClose(ret);
+				tryClose(rs);
+				tryClose(ps);
+			}
+		}
+	}
+
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		boolean error = true;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Stream<Map<String, V>> ret = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = this.toResultSet(ps, bindObjects);
+			final PreparedStatement finalPs = ps;
+			ret = cm.toStream(rs, componentType, mapValType).onClose(() -> tryClose(finalPs));
+			error = false;
+			return ret;
+		} finally {
+			if (error) {
+				tryClose(ret);
+				tryClose(rs);
+				tryClose(ps);
+			}
+		}
+	}
+	//IFJAVA8_END
 
 	// these are standard getters
 
@@ -412,9 +459,25 @@ public class QueryMapper implements Closeable {
 		return cm.toResultSetIterable(bindExecute(ps, bindObjects), componentType);
 	}
 
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
-		return cm.toResultSetIterableMap(bindExecute(ps, bindObjects), componentType, mapValType);
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return cm.toResultSetIterable(bindExecute(ps, bindObjects), componentType, mapValType);
 	}
+
+	//IFJAVA8_START
+
+	public <T> Stream<T> toStream(PreparedStatement ps, Class<T> componentType, final Object... bindObjects) throws SQLException {
+		return cm.toStream(bindExecute(ps, bindObjects), componentType);
+	}
+
+	//IFJAVA8_END
+
+	//IFJAVA8_START
+
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
+		return cm.toStream(bindExecute(ps, bindObjects), componentType, mapValType);
+	}
+
+	//IFJAVA8_END
 
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(PreparedStatement ps, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		return cm.toSingleMap(bindExecute(ps, bindObjects), componentType, mapValType);

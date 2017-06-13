@@ -57,4 +57,18 @@ public class TryClose { 	// tries to close certain object types
 			// ignore...
 		}
 	}
+
+	//IFJAVA8_START
+
+	public static void tryClose(AutoCloseable obj) {
+		if (obj == null)
+			return;
+		try {
+			obj.close();
+		} catch (Throwable e) {
+			// ignore...
+		}
+	}
+
+	//IFJAVA8_END
 }

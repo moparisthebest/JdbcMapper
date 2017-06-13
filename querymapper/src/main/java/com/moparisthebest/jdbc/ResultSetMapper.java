@@ -29,6 +29,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 /**
  * Default ResultSetMapper implementation for Objects.
@@ -140,6 +143,20 @@ public class ResultSetMapper implements RowMapperProvider {
 			throw new MapperException("cannot create ResultSetIterable", e);
 		}
 	}
+
+	//IFJAVA8_START
+
+	protected <T> Stream<T> privToStream(ResultSet rs, Class<T> componentType, Calendar cal, Class<?> mapValType) {
+		try {
+			return ResultSetIterable.getStream(rs,
+					rs.next() ? getRowMapper(rs, componentType, cal, mapValType, null).getResultSetToObject() : null,
+					cal);
+		} catch (SQLException e) {
+			throw new MapperException("cannot create Stream", e);
+		}
+	}
+
+	//IFJAVA8_END
 
 	protected <T extends Collection<E>, E> T privToCollection(ResultSet rs, final Class<T> collectionType, Class<E> componentType, int arrayMaxLength, Calendar cal, Class<?> mapValType) {
 		return privToCollection(rs, instantiateClass(collectionType, ArrayList.class), componentType, arrayMaxLength, cal, mapValType);
@@ -455,9 +472,22 @@ public class ResultSetMapper implements RowMapperProvider {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(ResultSet rs, Class<T> componentType, Class<V> mapValType, Calendar cal) {
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(ResultSet rs, Class<T> componentType, Class<V> mapValType, Calendar cal) {
 		return (ResultSetIterable<Map<String, V>>)privToResultSetIterable(rs, componentType, cal, mapValType);
 	}
+
+	//IFJAVA8_START
+
+	public <T> Stream<T> toStream(ResultSet rs, Class<T> componentType, Calendar cal) {
+		return privToStream(rs, componentType, cal, null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(ResultSet rs, Class<T> componentType, Class<V> mapValType, Calendar cal) {
+		return (Stream<Map<String, V>>)privToStream(rs, componentType, cal, mapValType);
+	}
+
+	//IFJAVA8_END
 
 	public <T extends Collection<E>, E> T toCollection(ResultSet rs, final Class<T> collectionType, Class<E> componentType, int arrayMaxLength, Calendar cal) {
 		return privToCollection(rs, collectionType, componentType, arrayMaxLength, cal, null);
@@ -633,9 +663,25 @@ public class ResultSetMapper implements RowMapperProvider {
 		return this.toResultSetIterable(rs, componentType, cal);
 	}
 
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(ResultSet rs, Class<T> componentType, Class<V> mapValType) {
-		return this.toResultSetIterableMap(rs, componentType, mapValType, cal);
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(ResultSet rs, Class<T> componentType, Class<V> mapValType) {
+		return this.toResultSetIterable(rs, componentType, mapValType, cal);
 	}
+
+	//IFJAVA8_START
+
+	public <T> Stream<T> toStream(ResultSet rs, Class<T> componentType) {
+		return this.toStream(rs, componentType, cal);
+	}
+
+	//IFJAVA8_END
+
+	//IFJAVA8_START
+
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(ResultSet rs, Class<T> componentType, Class<V> mapValType) {
+		return this.toStream(rs, componentType, mapValType, cal);
+	}
+
+	//IFJAVA8_END
 
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(ResultSet rs, Class<T> componentType, Class<V> mapValType) {
 		return this.toSingleMap(rs, componentType, mapValType, cal);

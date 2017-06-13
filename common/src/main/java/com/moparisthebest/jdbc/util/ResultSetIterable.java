@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+//IFJAVA8_START
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
@@ -42,18 +47,48 @@ public class ResultSetIterable<T> implements Iterable<T>, Iterator<T>, Closeable
 	 * ResultSetIterable<T> rsi = ResultSetIterable.getResultSetIterable(rs, rs.next() ? complicatedBuildResultSetToObject(rs) : null, cal);
 	 * <p>
 	 * This way you can avoid building or sending in a ResultSetToObject all together if there are no rows, therefore if rsto
-	 * sent into this is null, it returns an EMPTY_RESULT_SET_ITERABLE
+	 * sent into this is null, it returns an EMPTY_RESULT_SET_ITERABLE and closes rs immediately
 	 * <p>
 	 * This assumes rs.next() was called once before sent into this function
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> ResultSetIterable<T> getResultSetIterable(final ResultSet rs, final ResultSetToObject<T> rsto, final Calendar cal) {
-		if (rsto == null)
+		if (rsto == null) {
+			tryClose(rs); // have to do this here...
 			return (ResultSetIterable<T>) EMPTY_RESULT_SET_ITERABLE;
+		}
 		final ResultSetIterable<T> ret = new ResultSetIterable<T>(rs, rsto, cal);
 		ret.calledNext = true;
 		return ret;
 	}
+
+	/**
+	 * This is a convenience method meant to be called like this, where rs is a ResultSet
+	 * <p>
+	 * Stream<T> rsi = ResultSetIterable.getStream(rs, rs.next() ? complicatedBuildResultSetToObject(rs) : null, cal);
+	 * <p>
+	 * This way you can avoid building or sending in a ResultSetToObject all together if there are no rows, therefore if rsto
+	 * sent into this is null, it returns an empty Stream, rs might be closed before returning the empty Stream or on .close() to the Stream
+	 * <p>
+	 * The stream returned MUST be closed in a try-with-resources or finally because the ResultSet is held open until then
+	 * <p>
+	 * This assumes rs.next() was called once before sent into this function
+	 */
+	//IFJAVA8_START
+	@SuppressWarnings("unchecked")
+	public static <T> Stream<T> getStream(final ResultSet rs, final ResultSetToObject<T> rsto, final Calendar cal) {
+		final Stream<T> ret;
+		if (rsto == null) {
+			// todo: static object for this? don't forget to close resultset if so
+			return (Stream<T>) StreamSupport.stream(Spliterators.emptySpliterator(), false);
+		} else {
+			final ResultSetIterable<T> rsi = new ResultSetIterable<T>(rs, rsto, cal);
+			rsi.calledNext = true;
+			ret = StreamSupport.stream(rsi.spliterator(), false);
+		}
+		return ret.onClose(() -> tryClose(rs));
+	}
+	//IFJAVA8_END
 
 	private final ResultSet rs;
 	private final Calendar cal;

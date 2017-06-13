@@ -24,4 +24,20 @@
     <build>
         <finalName>${project.artifactId}</finalName>
     </build>
+    <profiles>
+        <profile>
+            <id>jdk16</id>
+            <activation>
+                <jdk>[1.6,1.8)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>replacer</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

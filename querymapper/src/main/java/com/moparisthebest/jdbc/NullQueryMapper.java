@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
 
 public class NullQueryMapper extends QueryMapper {
 
@@ -280,9 +283,9 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(PreparedStatement query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(PreparedStatement query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
 		try {
-			return delegate.toResultSetIterableMap(query, componentType, mapValType, bindObjects);
+			return delegate.toResultSetIterable(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
 			if (verbose) e.printStackTrace();
 		}
@@ -290,14 +293,62 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterableMap(String query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
+	public <T extends Map<String, V>, V> ResultSetIterable<Map<String, V>> toResultSetIterable(String query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
 		try {
-			return delegate.toResultSetIterableMap(query, componentType, mapValType, bindObjects);
+			return delegate.toResultSetIterable(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
 			if (verbose) e.printStackTrace();
 		}
 		return null;
 	}
+
+	//IFJAVA8_START
+
+	@Override
+	public <T> Stream<T> toStream(PreparedStatement query, Class<T> componentType, final Object... bindObjects) {
+		try {
+			return delegate.toStream(query, componentType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T> Stream<T> toStream(String query, Class<T> componentType, final Object... bindObjects) {
+		try {
+			return delegate.toStream(query, componentType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	//IFJAVA8_END
+
+	//IFJAVA8_START
+
+	@Override
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(PreparedStatement query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
+		try {
+			return delegate.toStream(query, componentType, mapValType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T extends Map<String, V>, V> Stream<Map<String, V>> toStream(String query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
+		try {
+			return delegate.toStream(query, componentType, mapValType, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	//IFJAVA8_END
 
 	@Override
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(PreparedStatement query, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) {
