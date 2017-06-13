@@ -14,8 +14,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class PrestoPersonDAOTest extends JdbcMapperTest {
 
-    private static PersonDAO dao;
-
     @BeforeClass
     public static void setUp() throws Throwable {
         dao = JdbcMapperFactory.create(PrestoPersonDAO.class, getConnection());
@@ -24,7 +22,7 @@ public class PrestoPersonDAOTest extends JdbcMapperTest {
 
     @AfterClass
     public static void tearDown() throws Throwable {
-        //tryClose(dao);
+        tryClose(dao);
     }
 
     public PersonDAO getDao() {

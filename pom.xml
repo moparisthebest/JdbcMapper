@@ -62,15 +62,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <pushChanges>false</pushChanges>
         <localCheckout>true</localCheckout>
+        <source.classifier>sources</source.classifier>
+        <javadoc.classifier>javadoc</javadoc.classifier>
+        <jar.classifier />
     </properties>
     <packaging>pom</packaging>
-    <modules>
-        <module>common</module>
-        <module>runtime-compiler</module>
-        <module>querymapper</module>
-        <module>jdbcmapper</module>
-        <module>presto-sqlparser</module>
-    </modules>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -172,4 +168,136 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profiles>
+        <profile>
+            <id>jdk6</id>
+            <activation>
+                <jdk>[1.6,1.8)</jdk>
+            </activation>
+            <properties>
+                <source.classifier>jdk16-sources</source.classifier>
+                <maven.javadoc.skip>true</maven.javadoc.skip>
+                <jar.classifier>jdk16</jar.classifier>
+            </properties>
+            <modules>
+                <module>common</module>
+                <module>runtime-compiler</module>
+                <module>querymapper</module>
+                <module>jdbcmapper</module>
+            </modules>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.google.code.maven-replacer-plugin</groupId>
+                            <artifactId>replacer</artifactId>
+                            <version>1.5.2</version>
+                            <executions>
+                                <execution>
+                                    <phase>process-sources</phase>
+                                    <goals>
+                                        <goal>replace</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <includes>
+                                    <include>*/src/main/java/**/*</include>
+                                </includes>
+                                <excludes>
+                                    <exclude>target/**</exclude>
+                                </excludes>
+                                <replacements>
+                                    <replacement>
+                                        <token>//IFJAVA8_START</token>
+                                        <value>/*IFJAVA8_START</value>
+                                    </replacement>
+                                    <replacement>
+                                        <token>//IFJAVA8_END</token>
+                                        <value>IFJAVA8_END*/</value>
+                                    </replacement>
+                                </replacements>
+                            </configuration>
+                        </plugin>
+
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <configuration>
+                                <source>1.6</source>
+                                <target>1.6</target>
+                                <excludes>
+                                    <exclude>**/module-info.java</exclude>
+                                </excludes>
+                            </configuration>
+
+                            <executions>
+                                <execution>
+                                    <id>default-testCompile</id>
+                                    <phase>test-compile</phase>
+                                    <configuration>
+                                        <testExcludes>
+                                            <exclude>**/module-info.java</exclude>
+                                        </testExcludes>
+                                    </configuration>
+                                    <goals>
+                                        <goal>testCompile</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>jdk8</id>
+
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+
+            <modules>
+                <module>common</module>
+                <module>runtime-compiler</module>
+                <module>querymapper</module>
+                <module>jdbcmapper</module>
+                <module>presto-sqlparser</module>
+            </modules>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <excludes>
+                                <exclude>**/module-info.java</exclude>
+                            </excludes>
+                        </configuration>
+
+                        <executions>
+                            <execution>
+                                <id>default-testCompile</id>
+                                <phase>test-compile</phase>
+                                <configuration>
+                                    <testExcludes>
+                                        <exclude>**/module-info.java</exclude>
+                                    </testExcludes>
+                                </configuration>
+                                <goals>
+                                    <goal>testCompile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

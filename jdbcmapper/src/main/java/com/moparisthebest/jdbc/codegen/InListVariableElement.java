@@ -76,4 +76,13 @@ class InListVariableElement implements VariableElement {
 	public <R, P> R accept(final ElementVisitor<R, P> v, final P p) {
 		return delegate.accept(v, p);
 	}
+
+	//IFJAVA8_START
+
+	@Override
+	public <A extends Annotation> A[] getAnnotationsByType(final Class<A> annotationType) {
+		return delegate.getAnnotationsByType(annotationType);
+	}
+
+	//IFJAVA8_END
 }
