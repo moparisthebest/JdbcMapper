@@ -425,4 +425,15 @@ public class QueryMapperTest {
 
 
 	//IFJAVA8_END
+
+
+	@Test
+	public void testEnumPerson() throws SQLException {
+		assertEquals(new EnumPerson(FirstName.First), qm.toObject("SELECT first_name, last_name FROM person WHERE person_no = ?", EnumPerson.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testEnum() throws SQLException {
+		assertEquals(FirstName.First, qm.toObject("SELECT first_name FROM person WHERE person_no = ?", FirstName.class, fieldPerson1.getPersonNo()));
+	}
 }

@@ -198,7 +198,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				if(componentType != null && componentType != Object.class){ // we want a specific value type
 					int typeId = _tmf.getTypeId(componentType);
 					for(int x = 1; x < columnLength; ++x)
-						ret.put(keys[x].toLowerCase(), extractColumnValue(x, typeId));
+						ret.put(keys[x].toLowerCase(), extractColumnValue(x, typeId, componentType));
 				} else // we want a generic object type
 					for(int x = 1; x < columnLength; ++x)
 						ret.put(keys[x].toLowerCase(), _resultSet.getObject(x));
@@ -213,7 +213,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				final Object ret = Array.newInstance(componentType, _columnCount);
 				final int typeId = _tmf.getTypeId(componentType);
 				for(int x = 0; x < _columnCount;)
-					Array.set(ret, x, extractColumnValue(++x, typeId));
+					Array.set(ret, x, extractColumnValue(++x, typeId, componentType));
 					//ret[x] = extractColumnValue(++x, typeId);
 				return _returnTypeClass.cast(ret);
 			} catch (Throwable e) {
@@ -233,10 +233,10 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 
 			try {
 				if (typeId != TypeMappingsFactory.TYPE_UNKNOWN) {
-					return (T)extractColumnValue(1, typeId);
+					return (T)extractColumnValue(1, typeId, _returnTypeClass);
 				} else {
 					// we still might want a single value (i.e. java.util.Date)
-					Object val = extractColumnValue(1, typeId);
+					Object val = extractColumnValue(1, typeId, _returnTypeClass);
 					if (_returnTypeClass.isAssignableFrom(val.getClass())) {
 						return _returnTypeClass.cast(val);
 					}
@@ -267,14 +267,8 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 			AccessibleObject f = _fields[i];
 
 			try {
-				_args[0] = extractColumnValue(i, _fieldTypes[i]);
+				_args[0] = extractColumnValue(i, _fieldTypes[i], null); // be lazy about this
 				//System.out.printf("field: '%s' obj: '%s' fieldType: '%s'\n", _fields[i], _args[0], _fieldTypes[i]);
-				// custom hacked-in support for enums, can do better when we scrap org.apache.beehive.controls.system.jdbc.TypeMappingsFactory
-				if(_fieldTypes[i] == 0 && _args[0] instanceof String){
-					Class<?> fieldType = f instanceof Field ? ((Field)f).getType() : ((Method)f).getParameterTypes()[0];
-					if(Enum.class.isAssignableFrom(fieldType))
-						_args[0] = Enum.valueOf((Class<? extends Enum>)fieldType, (String)_args[0]);
-				}
 				if (f instanceof Field) {
 					((Field) f).set(resultObject, _args[0]);
 				} else {
@@ -333,7 +327,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	 */
 	@SuppressWarnings({"unchecked"})
 	public <E> E extractColumnValue(int index, Class<E> classType) throws SQLException {
-			return classType.cast(extractColumnValue(index, _tmf.getTypeId(classType)));
+			return classType.cast(extractColumnValue(index, _tmf.getTypeId(classType), classType));
 	}
 
 	/**
@@ -499,7 +493,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	 * @return The extracted value
 	 * @throws java.sql.SQLException on error.
 	 */
-	protected Object extractColumnValue(int index, int resultType) throws SQLException {
+	protected Object extractColumnValue(final int index, final int resultType, Class<?> resultTypeClass) throws SQLException {
 		try{
 			switch (resultType) {
 				case TypeMappingsFactory.TYPE_INT:
@@ -572,6 +566,15 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				case TypeMappingsFactory.TYPE_STRING:
 				case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
 					return _resultSet.getString(index);
+				case TypeMappingsFactory.TYPE_ENUM:
+					if(resultTypeClass == null) {
+						// load lazily, todo: could cache? meh
+						final AccessibleObject f = _fields[index];
+						resultTypeClass = f instanceof Field ? ((Field)f).getType() : ((Method)f).getParameterTypes()[0];
+					}
+					@SuppressWarnings("unchecked")
+					final Enum ret = Enum.valueOf((Class<? extends Enum>)resultTypeClass, _resultSet.getString(index));
+					return ret;
 				case TypeMappingsFactory.TYPE_BIG_DECIMAL:
 					return _resultSet.getBigDecimal(index);
 				case TypeMappingsFactory.TYPE_BYTES:

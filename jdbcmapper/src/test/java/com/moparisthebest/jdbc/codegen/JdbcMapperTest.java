@@ -1,6 +1,8 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.dto.EnumPerson;
 import com.moparisthebest.jdbc.dto.FieldPerson;
+import com.moparisthebest.jdbc.dto.FirstName;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -91,4 +93,14 @@ public class JdbcMapperTest {
 	}
 
 	//IFJAVA8_END
+
+	@Test
+	public void testEnumPerson() throws SQLException {
+		assertEquals(new EnumPerson(FirstName.First), dao.getEnumPerson(fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testEnum() throws SQLException {
+		assertEquals(FirstName.First, dao.getFirstNameEnum(fieldPerson1.getPersonNo()));
+	}
 }

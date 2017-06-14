@@ -194,7 +194,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
 		if(mapOnlySecondColumn){
 			java.append("final ").append(tType).append(" ret = ");
-			extractColumnValueString(java, 2, _tmf.getTypeId(_returnTypeClass));
+			extractColumnValueString(java, 2, _returnTypeClass);
 			java.append(";\n");
 			return;
 		}
@@ -212,9 +212,10 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 				final int columnLength = _columnCount + 1;
 				if (componentType != null && componentType != Object.class) { // we want a specific value type
 					int typeId = _tmf.getTypeId(componentType);
+					final String enumName = componentType.getCanonicalName();
 					for (int x = 1; x < columnLength; ++x) {
 						java.append("ret.put(").append(escapeMapKeyString(keys[x]).toLowerCase()).append(", ");
-						extractColumnValueString(java, x, typeId);
+						extractColumnValueString(java, x, typeId, enumName);
 						java.append(");\n");
 					}
 				} else // we want a generic object type
@@ -230,9 +231,10 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			try {
 				java.append("final ").append(tType).append(" ret = new ").append(tType.substring(0, tType.length() - 1)).append(String.valueOf(_columnCount)).append("];\n");
 				final int typeId = _tmf.getTypeId(componentType);
+				final String enumName = componentType.getCanonicalName();
 				for (int x = 0; x < _columnCount; ) {
 					java.append("ret[").append(String.valueOf(x)).append("] = ");
-					extractColumnValueString(java, ++x, typeId);
+					extractColumnValueString(java, ++x, typeId, enumName);
 					java.append(";\n");
 				}
 				return;
@@ -251,7 +253,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			try {
 				if (typeId != TypeMappingsFactory.TYPE_UNKNOWN) {
 					java.append("final ").append(tType).append(" ret = ");
-					extractColumnValueString(java, 1, typeId);
+					extractColumnValueString(java, 1, typeId, _returnTypeClass.getCanonicalName());
 					java.append(";\n");
 					return;
 				} else {
@@ -264,7 +266,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 					*/
 					// we could actually pull from first row like above and test it first and fail now, but maybe just failing during compilation is enough?
 					java.append("final ").append(tType).append(" ret = (").append(tType).append(") ");
-					extractColumnValueString(java, 1, typeId);
+					extractColumnValueString(java, 1, typeId, _returnTypeClass.getCanonicalName());
 					java.append(";\n");
 					return;
 				}
@@ -286,33 +288,18 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 		for (int i = 1; i < _fields.length; i++) {
 			AccessibleObject f = _fields[i];
 
-			//_args[0] = extractColumnValue(i, _fieldTypes[i]);
-			//System.out.printf("field: '%s' obj: '%s' fieldType: '%s'\n", _fields[i], _args[0], _fieldTypes[i]);
-			// custom hacked-in support for enums, can do better when we scrap org.apache.beehive.controls.system.jdbc.TypeMappingsFactory
-			if (_fieldTypes[i] == 0) {
-				final Class<?> fieldType = f instanceof Field ? ((Field) f).getType() : ((Method) f).getParameterTypes()[0];
-				if (Enum.class.isAssignableFrom(fieldType)) {
-					_args[0] = Enum.valueOf((Class<? extends Enum>) fieldType, (String) _args[0]);
-					if (f instanceof Field) {
-						// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
-						java.append("ret.").append(((Field) f).getName()).append(" = ").append(typeFromName(fieldType)).append(".valueOf(");
-						extractColumnValueString(java, i, _fieldTypes[i]);
-						java.append(");\n");
-					} else {
-						java.append("ret.").append(((Method) f).getName()).append("(").append(typeFromName(fieldType)).append(".valueOf(");
-						extractColumnValueString(java, i, _fieldTypes[i]);
-						java.append("));\n");
-					}
-				}
+			String enumName = null;
+			if (_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM) {
+				enumName = (f instanceof Field ? ((Field) f).getType() : ((Method) f).getParameterTypes()[0]).getCanonicalName();
 			}
 			if (f instanceof Field) {
 				// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
 				java.append("ret.").append(((Field) f).getName()).append(" = ");
-				extractColumnValueString(java, i, _fieldTypes[i]);
+				extractColumnValueString(java, i, _fieldTypes[i], enumName);
 				java.append(";\n");
 			} else {
 				java.append("ret.").append(((Method) f).getName()).append("(");
-				extractColumnValueString(java, i, _fieldTypes[i]);
+				extractColumnValueString(java, i, _fieldTypes[i], enumName);
 				java.append(");\n");
 			}
 		}
@@ -321,8 +308,8 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			java.append("ret.finish(rs);\n");
 	}
 
-	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException {
-		extractColumnValueString(java, index, resultType, _calendarName);
+	public void extractColumnValueString(final Appendable java, final int index, final int resultType, final String enumName) throws IOException {
+		extractColumnValueString(java, index, resultType, enumName, _calendarName);
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final Class resultType) throws IOException {
@@ -354,16 +341,11 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	}
 
 	public static void extractColumnValueString(final Appendable java, final int index, final Class resultType, final String calendarName) throws IOException {
-		extractColumnValueString(java, index, _tmf.getTypeId(resultType), "rs", calendarName);
+		extractColumnValueString(java, index, _tmf.getTypeId(resultType), resultType.getCanonicalName(), "rs", calendarName);
 	}
 
-	public static void extractColumnValueString(final Appendable java, final int index, final Class resultType, final String resultSetName, final String calendarName) throws IOException {
-		extractColumnValueString(java, index, _tmf.getTypeId(resultType), resultSetName, calendarName);
-	}
-
-
-	public static void extractColumnValueString(final Appendable java, final int index, final int resultType, final String calendarName) throws IOException {
-		extractColumnValueString(java, index, resultType, "rs", calendarName);
+	public static void extractColumnValueString(final Appendable java, final int index, final int resultType, final String enumName, final String calendarName) throws IOException {
+		extractColumnValueString(java, index, resultType, enumName, "rs", calendarName);
 	}
 
 	/**
@@ -374,7 +356,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	 * @return The extracted value
 	 * @throws java.sql.SQLException on error.
 	 */
-	public static void extractColumnValueString(final Appendable java, final int index, final int resultType, final String resultSetName, final String calendarName) throws IOException {
+	public static void extractColumnValueString(final Appendable java, final int index, final int resultType, final String enumName, final String resultSetName, final String calendarName) throws IOException {
 		switch (resultType) {
 			case TypeMappingsFactory.TYPE_INT:
 				java.append(resultSetName).append(".getInt(").append(String.valueOf(index)).append(")");
@@ -421,6 +403,9 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			case TypeMappingsFactory.TYPE_STRING:
 			case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
 				java.append(resultSetName).append(".getString(").append(String.valueOf(index)).append(")");
+				return;
+			case TypeMappingsFactory.TYPE_ENUM:
+				java.append(enumName).append(".valueOf(").append(resultSetName).append(".getString(").append(String.valueOf(index)).append("))");
 				return;
 			case TypeMappingsFactory.TYPE_BIG_DECIMAL:
 				java.append(resultSetName).append(".getBigDecimal(").append(String.valueOf(index)).append(")");

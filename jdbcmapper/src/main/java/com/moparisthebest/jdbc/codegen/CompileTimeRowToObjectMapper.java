@@ -272,10 +272,11 @@ public class CompileTimeRowToObjectMapper {
 				java.append("final ").append(tType).append("<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
 				final int columnLength = _columnCount + 1;
 				int typeId = getTypeId(componentType);
+				final String enumName = componentType.toString();
 				if (componentType != null && typeId != TypeMappingsFactory.TYPE_UNKNOWN) { // we want a specific value type
 					for (int x = 1; x < columnLength; ++x) {
 						java.append("ret.put(").append(escapeMapKeyString(keys[x]).toLowerCase()).append(", ");
-						extractColumnValueString(java, x, typeId);
+						extractColumnValueString(java, x, typeId, enumName);
 						java.append(");\n");
 					}
 				} else // we want a generic object type
@@ -291,9 +292,10 @@ public class CompileTimeRowToObjectMapper {
 			try {
 				java.append("final ").append(tType).append(" ret = new ").append(tType.substring(0, tType.length() - 1)).append(String.valueOf(_columnCount)).append("];\n");
 				final int typeId = getTypeId(componentType);
+				final String enumName = componentType.toString();
 				for (int x = 0; x < _columnCount; ) {
 					java.append("ret[").append(String.valueOf(x)).append("] = ");
-					extractColumnValueString(java, ++x, typeId);
+					extractColumnValueString(java, ++x, typeId, enumName);
 					java.append(";\n");
 				}
 				return;
@@ -312,7 +314,7 @@ public class CompileTimeRowToObjectMapper {
 				final int typeId = getTypeId(_returnTypeClass);
 				if (typeId != TypeMappingsFactory.TYPE_UNKNOWN) {
 					java.append("final ").append(tType).append(" ret = ");
-					extractColumnValueString(java, 1, typeId);
+					extractColumnValueString(java, 1, typeId, _returnTypeClass.toString());
 					java.append(";\n");
 					return;
 				} else {
@@ -325,7 +327,7 @@ public class CompileTimeRowToObjectMapper {
 					*/
 					// we could actually pull from first row like above and test it first and fail now, but maybe just failing during compilation is enough?
 					java.append("final ").append(tType).append(" ret = (").append(tType).append(") ");
-					extractColumnValueString(java, 1, typeId);
+					extractColumnValueString(java, 1, typeId, _returnTypeClass.toString());
 					java.append(";\n");
 					return;
 				}
@@ -343,36 +345,22 @@ public class CompileTimeRowToObjectMapper {
 			final Element f = _fields[i];
 			final boolean isField = f.getKind() == ElementKind.FIELD;
 
-			//_args[0] = extractColumnValue(i, _fieldTypes[i]);
-			//System.out.printf("field: '%s' obj: '%s' fieldType: '%s'\n", _fields[i], _args[0], _fieldTypes[i]);
-			// custom hacked-in support for enums, can do better when we scrap org.apache.beehive.controls.system.jdbc.TypeMappingsFactory
-			if (_fieldTypes[i] == 0) {
-				/*
-				final Class<?> fieldType = isField ? ((Field) f).getType() : ((Method) f).getParameterTypes()[0];
-				if (Enum.class.isAssignableFrom(fieldType)) {
-					_args[0] = Enum.valueOf((Class<? extends Enum>) fieldType, (String) _args[0]);
-					if (f instanceof Field) {
-						// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
-						java.append("ret.").append(((Field) f).getName()).append(" = ").append(typeFromName(fieldType)).append(".valueOf(");
-						extractColumnValueString(java, i, _fieldTypes[i]);
-						java.append(");\n");
-					} else {
-						java.append("ret.").append(((Method) f).getName()).append("(").append(typeFromName(fieldType)).append(".valueOf(");
-						extractColumnValueString(java, i, _fieldTypes[i]);
-						java.append("));\n");
-					}
+			String enumName = null;
+			if (_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM) {
+				if (f.getKind() == ElementKind.FIELD) {
+					enumName = ((VariableElement) f).asType().toString();
+				} else {
+					enumName = ((ExecutableElement) f).getParameters().get(0).asType().toString();
 				}
-				*/
-				// no for now...
 			}
 			if (isField) {
 				// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
 				java.append("ret.").append(f.getSimpleName().toString()).append(" = ");
-				extractColumnValueString(java, i, _fieldTypes[i]);
+				extractColumnValueString(java, i, _fieldTypes[i], enumName);
 				java.append(";\n");
 			} else {
 				java.append("ret.").append(f.getSimpleName().toString()).append("(");
-				extractColumnValueString(java, i, _fieldTypes[i]);
+				extractColumnValueString(java, i, _fieldTypes[i], enumName);
 				java.append(");\n");
 			}
 		}
@@ -385,15 +373,16 @@ public class CompileTimeRowToObjectMapper {
 		try {
 			return _tmf.getTypeId(typeMirrorToClass(classType));
 		} catch (ClassNotFoundException e) {
+			// todo: what about enums?
 			return TypeMappingsFactory.TYPE_UNKNOWN;
 		}
 	}
 
-	public void extractColumnValueString(final Appendable java, final int index, final int resultType) throws IOException, ClassNotFoundException {
-		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType, _resultSetName, _calendarName);
+	public void extractColumnValueString(final Appendable java, final int index, final int resultType, final String enumName) throws IOException, ClassNotFoundException {
+		CompilingRowToObjectMapper.extractColumnValueString(java, index, resultType, enumName, _resultSetName, _calendarName);
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final TypeMirror resultType) throws IOException, ClassNotFoundException {
-		CompilingRowToObjectMapper.extractColumnValueString(java, index, typeMirrorToClass(resultType), _resultSetName, _calendarName);
+		CompilingRowToObjectMapper.extractColumnValueString(java, index, getTypeId(resultType), resultType.toString(), _resultSetName, _calendarName);
 	}
 }

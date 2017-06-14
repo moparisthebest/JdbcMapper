@@ -1,7 +1,9 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Cleaner;
+import com.moparisthebest.jdbc.dto.EnumPerson;
 import com.moparisthebest.jdbc.dto.FieldPerson;
+import com.moparisthebest.jdbc.dto.FirstName;
 import com.moparisthebest.jdbc.dto.Person;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
@@ -157,4 +159,10 @@ public interface PersonDAO extends Closeable {
 	Stream<FieldPerson> getPeopleStreamCachedPreparedStatement(long personNo1, long personNo2, long personNo3) throws SQLException;
 
 	//IFJAVA8_END
+
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE person_no = {personNo}")
+	EnumPerson getEnumPerson(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
+	FirstName getFirstNameEnum(long personNo) throws SQLException;
 }
