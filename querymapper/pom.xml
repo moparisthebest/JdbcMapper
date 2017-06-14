@@ -13,11 +13,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>common</artifactId>
             <version>${project.version}</version>
+            <classifier>${jar.classifier}</classifier>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>runtime-compiler</artifactId>
             <version>${project.version}</version>
+            <classifier>${jar.classifier}</classifier>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -11,13 +11,9 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>querymapper</artifactId>
             <version>${project.version}</version>
+            <classifier>${jar.classifier}</classifier>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

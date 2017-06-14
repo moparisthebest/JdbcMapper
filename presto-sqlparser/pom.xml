@@ -13,6 +13,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>jdbcmapper</artifactId>
             <version>${project.version}</version>
+            <classifier>${jar.classifier}</classifier>
         </dependency>
         <dependency>
             <groupId>com.facebook.presto</groupId>
