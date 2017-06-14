@@ -20,6 +20,7 @@ package com.moparisthebest.jdbc;
  */
 
 import com.moparisthebest.jdbc.util.CaseInsensitiveHashMap;
+import com.moparisthebest.jdbc.util.ResultSetUtil;
 
 import java.lang.reflect.*;
 import java.sql.ResultSet;
@@ -30,6 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+//IFJAVA8_START
+import java.time.*;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.UpdateableDTO.YES;
 import static com.moparisthebest.jdbc.UpdateableDTO.NO;
@@ -629,6 +633,32 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				case TypeMappingsFactory.TYPE_READER:
 				case TypeMappingsFactory.TYPE_STREAM:
 					throw new MapperException("streaming return types are not supported by the JdbcControl; use ResultSet instead");
+				//IFJAVA8_START
+				// start java.time support
+				case TypeMappingsFactory.TYPE_INSTANT:
+					return ResultSetUtil.getInstant(_resultSet, index, _cal);
+				case TypeMappingsFactory.TYPE_LOCALDATETIME:
+					return ResultSetUtil.getLocalDateTime(_resultSet, index, _cal);
+				case TypeMappingsFactory.TYPE_LOCALDATE:
+					return ResultSetUtil.getLocalDate(_resultSet, index, _cal);
+				case TypeMappingsFactory.TYPE_LOCALTIME:
+					return ResultSetUtil.getLocalTime(_resultSet, index, _cal);
+				// todo: send in ZoneId here?
+				case TypeMappingsFactory.TYPE_ZONEDDATETIME:
+					return ResultSetUtil.getZonedDateTime(_resultSet, index, _cal);
+				case TypeMappingsFactory.TYPE_OFFSETDATETIME:
+					return ResultSetUtil.getOffsetDateTime(_resultSet, index, _cal);
+				case TypeMappingsFactory.TYPE_OFFSETTIME:
+					return ResultSetUtil.getOffsetTime(_resultSet, index, _cal);
+				case TypeMappingsFactory.TYPE_YEAR:
+					// done this way instead of of(int) because usually int->string database coercion is allowed and the other isn't?
+					return Year.parse(_resultSet.getString(index));
+				case TypeMappingsFactory.TYPE_ZONEID:
+					return ZoneId.of(_resultSet.getString(index));
+				case TypeMappingsFactory.TYPE_ZONEOFFSET:
+					return ZoneOffset.of(_resultSet.getString(index));
+				// end java.time support
+				//IFJAVA8_END
 				case TypeMappingsFactory.TYPE_STRUCT:
 				case TypeMappingsFactory.TYPE_UNKNOWN:
 					// JAVA_TYPE (could be any), or REF

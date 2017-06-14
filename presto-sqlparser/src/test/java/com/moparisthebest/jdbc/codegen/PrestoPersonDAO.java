@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.*;
 //IFJAVA8_START
 import java.util.stream.Stream;
+import java.time.*;
 //IFJAVA8_END
 
 /**
@@ -165,4 +166,44 @@ public interface PrestoPersonDAO extends PersonDAO {
 
 	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
 	FirstName getFirstNameEnum(long personNo) throws SQLException;
+
+	//IFJAVA8_START
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	Instant getBirthDateInstant(long personNo);
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	LocalDateTime getBirthDateLocalDateTime(long personNo);
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	LocalDate getBirthDateLocalDate(long personNo);
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	LocalTime getBirthDateLocalTime(long personNo);
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	ZonedDateTime getBirthDateZonedDateTime(long personNo);
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	OffsetDateTime getBirthDateOffsetDateTime(long personNo);
+
+	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
+	OffsetTime getBirthDateZonedOffsetTime(long personNo);
+
+	@JdbcMapper.SQL("SELECT num_val FROM val WHERE val_no = {valNo}")
+	Year getYearInt(long valNo);
+
+	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = {valNo}")
+	Year getYearString(long valNo);
+
+	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = {valNo}")
+	ZoneId getZoneId(long valNo);
+
+	@JdbcMapper.SQL("SELECT num_val FROM val WHERE val_no = {valNo}")
+	ZoneOffset getZoneOffsetInt(long valNo);
+
+	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = {valNo}")
+	ZoneOffset getZoneOffsetStr(long valNo);
+
+	//IFJAVA8_END
 }

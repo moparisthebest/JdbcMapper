@@ -29,15 +29,6 @@ import java.util.Map;
 public final class TypeMappingsFactory {
 
     private final static TypeMappingsFactory _instance = new TypeMappingsFactory();
-    private static Class<?> XMLBEANS_STRING_ENUM_ABSTRACT_BASE = null;
-
-    static {
-        try {
-            XMLBEANS_STRING_ENUM_ABSTRACT_BASE = Class.forName("org.apache.xmlbeans.StringEnumAbstractBase");
-        } catch (ClassNotFoundException e) {
-            // not an error, just means XmlBeans is not available
-        }
-    }
 
     /**
      * Get an instance of this class.
@@ -79,7 +70,21 @@ public final class TypeMappingsFactory {
     public static final int TYPE_STRUCT = 29;
     public static final int TYPE_XMLBEAN_ENUM = 30;
 	public static final int TYPE_ENUM = 31;
-    private static final int TYPE_MAX = TYPE_ENUM + 1; // should always reference the max
+
+	// start java.time support
+	public static final int TYPE_INSTANT = 32;
+	public static final int TYPE_LOCALDATE = 33;
+	public static final int TYPE_LOCALDATETIME= 34;
+	public static final int TYPE_LOCALTIME = 35;
+	public static final int TYPE_OFFSETDATETIME = 36;
+	public static final int TYPE_OFFSETTIME = 37;
+	public static final int TYPE_YEAR = 38;
+	public static final int TYPE_ZONEDDATETIME = 39;
+	public static final int TYPE_ZONEID = 40;
+	public static final int TYPE_ZONEOFFSET = 41;
+	// end java.time support
+
+    private static final int TYPE_MAX = TYPE_ZONEOFFSET + 1; // should always reference the max
 
     private final Map<Class, Object> _primitiveDefaults;
 
@@ -137,11 +142,30 @@ public final class TypeMappingsFactory {
         _typeMap.put(java.util.Date.class, TYPE_DATE);
         _typeMap.put(java.util.Calendar.class, TYPE_CALENDAR);
         _typeMap.put(java.util.GregorianCalendar.class, TYPE_CALENDAR);
-        if (XMLBEANS_STRING_ENUM_ABSTRACT_BASE != null) {
-            _typeMap.put(XMLBEANS_STRING_ENUM_ABSTRACT_BASE, TYPE_XMLBEAN_ENUM);
-        }
+		put("org.apache.xmlbeans.StringEnumAbstractBase", TYPE_XMLBEAN_ENUM);
         _typeMap.put(Enum.class, TYPE_ENUM);
+
+		// start java.time support
+		put("java.time.Instant", TYPE_INSTANT);
+		put("java.time.LocalDate", TYPE_LOCALDATE);
+		put("java.time.LocalDateTime", TYPE_LOCALDATETIME);
+		put("java.time.LocalTime", TYPE_LOCALTIME);
+		put("java.time.OffsetDateTime", TYPE_OFFSETDATETIME);
+		put("java.time.OffsetTime", TYPE_OFFSETTIME);
+		put("java.time.Year", TYPE_YEAR);
+		put("java.time.ZonedDateTime", TYPE_ZONEDDATETIME);
+		put("java.time.ZoneId", TYPE_ZONEID);
+		put("java.time.ZoneOffset", TYPE_ZONEOFFSET);
+		// end java.time support
     }
+
+    private void put(final String className, final int type) {
+		try {
+			_typeMap.put(Class.forName(className), type);
+		} catch (ClassNotFoundException e) {
+			// not an error, just means this class is not available
+		}
+	}
 
     /**
      * Get the type id (defined by this class) for the given class.

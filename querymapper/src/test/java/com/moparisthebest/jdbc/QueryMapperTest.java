@@ -13,6 +13,7 @@ import java.util.*;
 //IFJAVA8_START
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.time.*;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
@@ -36,7 +37,13 @@ public class QueryMapperTest {
 	public static final Person fieldPerson3 = new FieldPerson(6, new Date(0), "Third", "Person");
 
 	public static final Person[] people = new Person[]{fieldPerson1, fieldPerson2, fieldPerson3};
-	public static final Boss[] bosses =new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3};
+	public static final Boss[] bosses = new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3};
+
+	public static final Val[] vals = new Val[]{
+			new Val(1, 1969, "1969"),
+			new Val(2, 0, "America/New_York"),
+			new Val(3, -5, "-5"),
+	};
 
 	public static final Person setPerson1 = new SetPerson(fieldPerson1);
 	public static final Boss setBoss1 = new SetBoss(fieldBoss1);
@@ -82,12 +89,16 @@ public class QueryMapperTest {
 				qm = new QueryMapper(conn);
 				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
 				qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
+				qm.executeUpdate("CREATE TABLE val (val_no NUMERIC, num_val NUMERIC, str_val VARCHAR(40))");
 				for (final Person person : people)
 					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
 				for (final Boss boss : bosses) {
 					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
 					qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
 				}
+				for (final Val val : vals)
+					qm.executeUpdate("INSERT INTO val (val_no, num_val, str_val) VALUES (?, ?, ?)", val.valNo, val.numVal, val.strVal);
+
 			} finally {
 				tryClose(qm);
 				tryClose(conn);
@@ -436,4 +447,90 @@ public class QueryMapperTest {
 	public void testEnum() throws SQLException {
 		assertEquals(FirstName.First, qm.toObject("SELECT first_name FROM person WHERE person_no = ?", FirstName.class, fieldPerson1.getPersonNo()));
 	}
+
+	//IFJAVA8_START
+
+	@Test
+	public void testInstant() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant(),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", Instant.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testLocalDateTime() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", LocalDateTime.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testLocalDate() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", LocalDate.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testLocalTime() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalTime(),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", LocalTime.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testZonedDateTime() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", ZonedDateTime.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testOffsetDateTime() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime(),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", OffsetDateTime.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testZonedOffsetTime() throws SQLException {
+		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime().toOffsetTime(),
+				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", OffsetTime.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testYearInt() throws SQLException {
+		final Val val = vals[0];
+		assertEquals(Year.of((int)val.numVal),
+				qm.toObject("SELECT num_val FROM val WHERE val_no = ?", Year.class, val.valNo)
+		);
+	}
+
+	@Test
+	public void testYearString() throws SQLException {
+		final Val val = vals[0];
+		assertEquals(Year.parse(val.strVal),
+				qm.toObject("SELECT str_val FROM val WHERE val_no = ?", Year.class, val.valNo)
+		);
+	}
+
+	@Test
+	public void testZoneId() throws SQLException {
+		final Val val = vals[1];
+		assertEquals(ZoneId.of(val.strVal),
+				qm.toObject("SELECT str_val FROM val WHERE val_no = ?", ZoneId.class, val.valNo)
+		);
+	}
+
+	@Test
+	public void testZoneOffsetInt() throws SQLException {
+		final Val val = vals[2];
+		assertEquals(ZoneOffset.of(val.strVal),
+				qm.toObject("SELECT str_val FROM val WHERE val_no = ?", ZoneOffset.class, val.valNo)
+		);
+	}
+
+	@Test
+	public void testZoneOffsetStr() throws SQLException {
+		final Val val = vals[2];
+		assertEquals(ZoneOffset.ofHours((int)val.numVal),
+				qm.toObject("SELECT num_val FROM val WHERE val_no = ?", ZoneOffset.class, val.valNo)
+		);
+	}
+
+	//IFJAVA8_END
 }

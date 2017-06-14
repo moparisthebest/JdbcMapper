@@ -2,9 +2,10 @@ package com.moparisthebest.jdbc.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Calendar;
+//IFJAVA8_START
+import java.time.*;
+//IFJAVA8_END
 
 /**
  * Created by mopar on 5/16/17.
@@ -79,6 +80,8 @@ public class ResultSetUtil {
 	}
 
 	public static java.util.Date getUtilDate(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getUtilDate(_resultSet, index);
 		// convert explicity to java.util.Date
 		// 12918 |  knex does not return java.sql.Date properly from web service
 		java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
@@ -97,6 +100,8 @@ public class ResultSetUtil {
 	}
 
 	public static Calendar getCalendar(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getCalendar(_resultSet, index);
 		java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
 		if (null == ts)
 			return null;
@@ -104,5 +109,93 @@ public class ResultSetUtil {
 		c.setTimeInMillis(ts.getTime());
 		return c;
 	}
+
+	//IFJAVA8_START
+
+	public static Instant getInstant(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		return ts == null ? null : ts.toInstant();
+	}
+
+	public static Instant getInstant(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getInstant(_resultSet, index);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		return ts == null ? null : ts.toInstant();
+	}
+
+	public static LocalDateTime getLocalDateTime(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		return ts == null ? null : ts.toLocalDateTime();
+	}
+
+	public static LocalDateTime getLocalDateTime(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getLocalDateTime(_resultSet, index);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		return ts == null ? null : ts.toLocalDateTime();
+	}
+
+	public static LocalDate getLocalDate(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Date ts =  _resultSet.getDate(index);
+		return ts == null ? null : ts.toLocalDate();
+	}
+
+	public static LocalDate getLocalDate(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getLocalDate(_resultSet, index);
+		final java.sql.Date ts =  _resultSet.getDate(index, _cal);
+		return ts == null ? null : ts.toLocalDate();
+	}
+
+	public static LocalTime getLocalTime(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Time ts = _resultSet.getTime(index);
+		return ts == null ? null : ts.toLocalTime();
+	}
+
+	public static LocalTime getLocalTime(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getLocalTime(_resultSet, index);
+		final java.sql.Time ts = _resultSet.getTime(index, _cal);
+		return ts == null ? null : ts.toLocalTime();
+	}
+
+	public static ZonedDateTime getZonedDateTime(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		return ts == null ? null : ZonedDateTime.ofInstant(ts.toInstant(), ZoneId.systemDefault());
+	}
+
+	public static ZonedDateTime getZonedDateTime(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getZonedDateTime(_resultSet, index);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		return ts == null ? null : ZonedDateTime.ofInstant(ts.toInstant(), _cal.getTimeZone().toZoneId());
+	}
+
+	public static OffsetDateTime getOffsetDateTime(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		return ts == null ? null : OffsetDateTime.ofInstant(ts.toInstant(), ZoneId.systemDefault());
+	}
+
+	public static OffsetDateTime getOffsetDateTime(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getOffsetDateTime(_resultSet, index);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		return ts == null ? null : OffsetDateTime.ofInstant(ts.toInstant(), _cal.getTimeZone().toZoneId());
+	}
+
+	public static OffsetTime getOffsetTime(final ResultSet _resultSet, final int index) throws SQLException {
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		return ts == null ? null : OffsetTime.ofInstant(ts.toInstant(), ZoneId.systemDefault());
+	}
+
+	public static OffsetTime getOffsetTime(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
+		if(_cal == null)
+			return getOffsetTime(_resultSet, index);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		return ts == null ? null : OffsetTime.ofInstant(ts.toInstant(), _cal.getTimeZone().toZoneId());
+	}
+
+	//IFJAVA8_END
 
 }
