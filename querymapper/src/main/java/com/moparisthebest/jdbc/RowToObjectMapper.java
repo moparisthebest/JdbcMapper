@@ -452,14 +452,20 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 						+ "names and public setter methods on the return class. Columns are also "
 						+ "stripped of '_' and compared if no match is found with them.");
 			}
-			f.setAccessible(true);
 			_fields[i] = f;
 			if (f instanceof Field) {
-				_fieldTypes[i] = _tmf.getTypeId(((Field) f).getType());
+				final Field field = (Field) f;
+				_fields[i] = modField(field, i);
+				_fieldTypes[i] = _tmf.getTypeId(field.getType());
 			} else {
 				_fieldTypes[i] = _tmf.getTypeId(((Method) f).getParameterTypes()[0]);
 			}
 		}
+	}
+
+	protected AccessibleObject modField(final Field field, final int index) {
+		field.setAccessible(true);
+		return field;
 	}
 
 	public static <T> T fixNull(Class<T> returnType) {

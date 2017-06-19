@@ -1,15 +1,20 @@
 package com.moparisthebest.jdbc;
 
 import com.moparisthebest.classgen.Compiler;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import java.io.IOException;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Map a ResultSet row to an Object. This mapper generates/compiles/executes java code to perform the mapping.
@@ -20,7 +25,8 @@ import java.util.Map;
  * <p>
  * Usage differences:
  * 1. Reflection can set non-public or final fields directly, direct java code cannot, so DTOs like that will result in
- * a compilation and therefore mapping error.
+ * a compilation and therefore mapping error, unless the Cache sent in has allowReflection = true which will use reflection
+ * for these Fields in the generated code.
 */
 public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
@@ -32,24 +38,28 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
 	protected String _calendarName = null;
 
-	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
+	protected int reflectionFieldIndex = -1;
+	protected boolean allowReflection = false;
+
+	public CompilingRowToObjectMapper(final Compiler compiler, final Cache cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType) {
 		this(compiler, cache, resultSet, returnTypeClass, cal, mapValType, mapKeyType, false);
 	}
 
-	public CompilingRowToObjectMapper(final Compiler compiler, final Map<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, final boolean caseInsensitiveMap) {
+	public CompilingRowToObjectMapper(final Compiler compiler, final Cache cache, ResultSet resultSet, Class<T> returnTypeClass, Calendar cal, Class<?> mapValType, Class<K> mapKeyType, final boolean caseInsensitiveMap) {
 		super(resultSet, returnTypeClass, cal, mapValType, mapKeyType, caseInsensitiveMap);
 		this.compiler = compiler;
 		try {
 			final CompilingRowToObjectMapper.ResultSetKey keys = new CompilingRowToObjectMapper.ResultSetKey(super.getKeysFromResultSet(), _returnTypeClass, _mapKeyType, cal != null);
 			//System.out.printf("keys: %s\n", keys);
 			@SuppressWarnings("unchecked")
-			final ResultSetToObject<K,T> resultSetToObject = (ResultSetToObject<K,T>) cache.get(keys);
+			final ResultSetToObject<K,T> resultSetToObject = (ResultSetToObject<K,T>) cache.cache.get(keys);
 			if (resultSetToObject == null) {
 				//System.out.printf("cache miss, keys: %s\n", keys);
 				// generate and put into cache
 				if(keys.hasCalendar)
 					_calendarName = "cal";
-				cache.put(keys, this.resultSetToObject = genClass());
+				allowReflection = cache.allowReflection;
+				cache.cache.put(keys, this.resultSetToObject = genClass());
 				this.keys = null;
 				this._fields = null;
 				this._fieldTypes = null;
@@ -107,6 +117,30 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 	public interface ResultSetToObject<K, T> extends com.moparisthebest.jdbc.util.ResultSetToObject<T> {
 		K getFirstColumn(final ResultSet rs, final Calendar cal) throws SQLException;
 		T toObject(final ResultSet rs, final Calendar cal) throws SQLException;
+	}
+
+	public static class Cache {
+		private final Map<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>> cache;
+		private final boolean allowReflection;
+
+		public Cache(final Map<ResultSetKey, ResultSetToObject<?, ?>> cache, final boolean allowReflection) {
+			if(cache == null)
+				throw new NullPointerException("cache cannot be null");
+			this.cache = cache;
+			this.allowReflection = allowReflection;
+		}
+
+		public Cache(final Map<ResultSetKey, ResultSetToObject<?, ?>> cache) {
+			this(cache, false);
+		}
+
+		public Cache() {
+			this(new HashMap<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>>());
+		}
+
+		public Cache(final boolean allowReflection) {
+			this(new HashMap<CompilingRowToObjectMapper.ResultSetKey, ResultSetToObject<?,?>>(), allowReflection);
+		}
 	}
 
 	protected String typeFromName(final Class<?> type) {
@@ -185,7 +219,21 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			java.append("throw new com.moparisthebest.jdbc.MapperException(com.moparisthebest.jdbc.CompilingRowToObjectMapper.firstColumnError)");
 		}
 
-		java.append(footer);
+		if(reflectionFieldIndex == -1) {
+			java.append(footer);
+		} else {
+			// otherwise we have a reflection field array to set up...
+			java.append(";\n  }\n\n");
+			java.append("private static final java.lang.reflect.Field[] _fields = new java.lang.reflect.Field[]{\n");
+			for(final AccessibleObject ao : _fields)
+				if(ao instanceof ReflectionAccessibleObject) {
+					final Field f = ((ReflectionAccessibleObject)ao).field;
+					java.append("com.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(")
+							.append(f.getDeclaringClass().getCanonicalName()).append(".class, \"")
+							.append(f.getName()).append("\"),\n");
+				}
+			java.append("};\n}\n");
+		}
 		//System.out.println(java);
 		return compiler.compile(className, java);
 	}
@@ -287,25 +335,38 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 
 		for (int i = 1; i < _fields.length; i++) {
 			AccessibleObject f = _fields[i];
-
-			String enumName = null;
-			if (_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM) {
-				enumName = (f instanceof Field ? ((Field) f).getType() : ((Method) f).getParameterTypes()[0]).getCanonicalName();
-			}
 			if (f instanceof Field) {
 				// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
 				java.append("ret.").append(((Field) f).getName()).append(" = ");
-				extractColumnValueString(java, i, _fieldTypes[i], enumName);
+				extractColumnValueString(java, i, _fieldTypes[i],
+						_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM ? ((Field) f).getType().getCanonicalName() : null);
 				java.append(";\n");
+			} else if (f instanceof ReflectionAccessibleObject) {
+				java.append("com.moparisthebest.jdbc.util.ReflectionUtil.setValue(_fields[").append(String.valueOf(((ReflectionAccessibleObject)f).index)).append("], ret, ");
+				extractColumnValueString(java, i, _fieldTypes[i],
+						_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM ? ((ReflectionAccessibleObject) f).field.getType().getCanonicalName() : null);
+				java.append(");\n");
 			} else {
 				java.append("ret.").append(((Method) f).getName()).append("(");
-				extractColumnValueString(java, i, _fieldTypes[i], enumName);
+				extractColumnValueString(java, i, _fieldTypes[i],
+						_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM ? ((Method) f).getParameterTypes()[0].getCanonicalName() : null);
 				java.append(");\n");
 			}
 		}
 		// if this resultObject is Finishable, call finish()
 		if (Finishable.class.isAssignableFrom(_returnTypeClass))
 			java.append("ret.finish(rs);\n");
+	}
+
+	@Override
+	protected AccessibleObject modField(final Field field, final int index) {
+		if(!allowReflection)
+			return field;
+		final int modifiers = field.getModifiers();
+		if(Modifier.isFinal(modifiers) || Modifier.isPrivate(modifiers) || Modifier.isProtected(modifiers)) {
+			return new ReflectionAccessibleObject(field, ++reflectionFieldIndex);
+		}
+		return field;
 	}
 
 	public void extractColumnValueString(final Appendable java, final int index, final int resultType, final String enumName) throws IOException {

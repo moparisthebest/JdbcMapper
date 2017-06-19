@@ -1,15 +1,15 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.CacheUtil;
+
 import java.util.Calendar;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Global for entire application, hopefully you know what you are doing.
  */
 public class StaticCompilingResultSetMapper extends CompilingResultSetMapper {
 
-	private static final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>> cache = new ConcurrentHashMap<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>();
+	private static final CompilingRowToObjectMapper.Cache cache = new CompilingRowToObjectMapper.Cache(CacheUtil.<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?,?>>getCache(true), true);
 
 	public static final StaticCompilingResultSetMapper instance = new StaticCompilingResultSetMapper();
 

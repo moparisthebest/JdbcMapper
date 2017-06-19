@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.CacheUtil;
+
 import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -24,18 +26,7 @@ public class CachingResultSetMapper extends ResultSetMapper {
 	 */
 	public CachingResultSetMapper(final Calendar cal, final int arrayMaxLength, final int maxEntries) {
 		super(cal, arrayMaxLength);
-		if (maxEntries > 0) { // we want a limited cache
-			final float loadFactor = 0.75f; // default for HashMaps
-			// if we set the initialCapacity this way, nothing should ever need re-sized
-			final int initialCapacity = ((int) Math.ceil(maxEntries / loadFactor)) + 1;
-			cache = new LinkedHashMap<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>>(initialCapacity, loadFactor, true) {
-				@Override
-				protected boolean removeEldestEntry(final Map.Entry<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>> eldest) {
-					return size() > maxEntries;
-				}
-			};
-		} else
-			cache = new HashMap<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>>();
+		cache = CacheUtil.getCache(maxEntries);
 	}
 
 	/**
@@ -105,11 +96,7 @@ public class CachingResultSetMapper extends ResultSetMapper {
 	 * @param threadSafe     true uses a thread-safe cache implementation (currently ConcurrentHashMap), false uses regular HashMap
 	 */
 	public CachingResultSetMapper(final Calendar cal, final int arrayMaxLength, final boolean threadSafe) {
-		this(cal, arrayMaxLength, threadSafe ?
-				new ConcurrentHashMap<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>>()
-				:
-				new HashMap<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>>()
-		);
+		this(cal, arrayMaxLength, CacheUtil.<CachingRowToObjectMapper.ResultSetKey, CachingRowToObjectMapper.FieldMapping<?>>getCache(threadSafe));
 	}
 
 	/**

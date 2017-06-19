@@ -146,7 +146,7 @@ public class QueryMapperTest {
 				{ new ResultSetMapper() },
 				{ new CachingResultSetMapper() },
 				{ new CaseInsensitiveMapResultSetMapper() },
-				{ new CompilingResultSetMapper() },
+				{ new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
 		});
 	}
 

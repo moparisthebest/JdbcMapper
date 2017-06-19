@@ -11,52 +11,22 @@ public class CleaningCompilingResultSetMapper<E> extends CompilingResultSetMappe
 
 	private final Cleaner<E> cleaner;
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength, final int maxEntries) {
-		super(cal, arrayMaxLength, maxEntries);
-		this.cleaner = cleaner;
-	}
-
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength) {
-		super(cal, arrayMaxLength);
-		this.cleaner = cleaner;
-	}
-
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final int arrayMaxLength) {
-		super(arrayMaxLength);
-		this.cleaner = cleaner;
-	}
-
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner) {
-		this.cleaner = cleaner;
-	}
-
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
+	public CleaningCompilingResultSetMapper(final Calendar cal, final int arrayMaxLength, final CompilingRowToObjectMapper.Cache cache, final Cleaner<E> cleaner) {
 		super(cal, arrayMaxLength, cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final int arrayMaxLength, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
-		super(arrayMaxLength, cache);
-		this.cleaner = cleaner;
-	}
-
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Map<CompilingRowToObjectMapper.ResultSetKey, CompilingRowToObjectMapper.ResultSetToObject<?, ?>> cache) {
+	public CleaningCompilingResultSetMapper(final CompilingRowToObjectMapper.Cache cache, final Cleaner<E> cleaner) {
 		super(cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength, final boolean threadSafe) {
-		super(cal, arrayMaxLength, threadSafe);
+	public CleaningCompilingResultSetMapper(final int arrayMaxLength, final CompilingRowToObjectMapper.Cache cache, final Cleaner<E> cleaner) {
+		super(arrayMaxLength, cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final int arrayMaxLength, final boolean threadSafe) {
-		super(arrayMaxLength, threadSafe);
-		this.cleaner = cleaner;
-	}
-
-	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final boolean threadSafe) {
-		super(threadSafe);
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner) {
 		this.cleaner = cleaner;
 	}
 
