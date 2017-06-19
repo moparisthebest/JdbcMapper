@@ -37,6 +37,11 @@ public interface JdbcMapper extends Closeable {
 		Class<? extends SQLParser> sqlParser() default SQLParser.class;
 
 		/**
+		 * This defaults to false
+		 */
+		OptionalBool allowReflection() default OptionalBool.DEFAULT;
+
+		/**
 		 * This defaults to SimpleSQLParser, PrestoSQLParser is another option for Java 8, or implement your own
 		 * @return
 		 */
@@ -57,6 +62,11 @@ public interface JdbcMapper extends Closeable {
 		 * This defaults to the value of the class-level @JdbcMapper.Mapper.cachePreparedStatements annotation, but can be configured on a per-method level here
 		 */
 		OptionalBool cachePreparedStatement() default OptionalBool.DEFAULT;
+
+		/**
+		 * This defaults to the value of the class-level @JdbcMapper.Mapper.allowReflection annotation, but can be configured on a per-method level here
+		 */
+		OptionalBool allowReflection() default OptionalBool.DEFAULT;
 
 		/**
 		 * Maximum rows returned in collections/maps/arrays/etc, < 1 mean no limit

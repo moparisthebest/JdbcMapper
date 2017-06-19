@@ -51,9 +51,12 @@ public class CompileTimeRowToObjectMapper {
 	protected Element[] _fields = null;
 	protected int[] _fieldTypes;
 
-	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final String resultSetName, final String calendarName, final TypeMirror mapValType, final TypeMirror mapKeyType) {
+	protected final ReflectionFields reflectionFields;
+
+	public CompileTimeRowToObjectMapper(final CompileTimeResultSetMapper rsm, final String[] keys, final TypeMirror returnTypeClass, final String resultSetName, final String calendarName, final TypeMirror mapValType, final TypeMirror mapKeyType, final ReflectionFields reflectionFields) {
 		this.rsm = rsm;
 		this.keys = keys;
+		this.reflectionFields = reflectionFields;
 
 		_calendarName = calendarName;
 		_resultSetName = resultSetName;
@@ -176,7 +179,7 @@ public class CompileTimeRowToObjectMapper {
 				final VariableElement f = (VariableElement)e;
 				//System.out.println("f.fieldName: "+f.getSimpleName());
 				if (f.getModifiers().contains(Modifier.STATIC)) continue;
-				if (!f.getModifiers().contains(Modifier.PUBLIC)) continue;
+				//if (reflectionFields == null && !f.getModifiers().contains(Modifier.PUBLIC)) continue;
 				String fieldName = f.getSimpleName().toString().toUpperCase();
 				//System.out.println("fieldName: "+fieldName);
 				if (!mapFields.containsKey(fieldName)) {
@@ -355,9 +358,16 @@ public class CompileTimeRowToObjectMapper {
 			}
 			if (isField) {
 				// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
-				java.append("ret.").append(f.getSimpleName().toString()).append(" = ");
-				extractColumnValueString(java, i, _fieldTypes[i], enumName);
-				java.append(";\n");
+				final Set<Modifier> mods = reflectionFields == null ? null : f.getModifiers();
+				if(mods != null && (mods.contains(Modifier.PRIVATE) || mods.contains(Modifier.PROTECTED) || mods.contains(Modifier.FINAL))) {
+					java.append("com.moparisthebest.jdbc.util.ReflectionUtil.setValue(_fields[").append(String.valueOf((reflectionFields.addGetIndex((VariableElement)f)))).append("], ret, ");
+					extractColumnValueString(java, i, _fieldTypes[i], enumName);
+					java.append(");\n");
+				} else {
+					java.append("ret.").append(f.getSimpleName().toString()).append(" = ");
+					extractColumnValueString(java, i, _fieldTypes[i], enumName);
+					java.append(";\n");
+				}
 			} else {
 				java.append("ret.").append(f.getSimpleName().toString()).append("(");
 				extractColumnValueString(java, i, _fieldTypes[i], enumName);

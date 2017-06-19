@@ -65,7 +65,7 @@ public class CleaningQueryMapperTest {
 		return Arrays.asList(new Object[][] {
 				{ new CleaningResultSetMapper<FieldPerson>(personCleaner) },
 				{ new CleaningCachingResultSetMapper<FieldPerson>(personCleaner) },
-				{ new CleaningCompilingResultSetMapper<FieldPerson>(personCleaner) },
+				{ new CleaningCompilingResultSetMapper<FieldPerson>(personCleaner, new CompilingRowToObjectMapper.Cache(true)) },
 		});
 	}
 

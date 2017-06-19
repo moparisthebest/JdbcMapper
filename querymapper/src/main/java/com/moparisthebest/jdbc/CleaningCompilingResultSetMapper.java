@@ -11,17 +11,17 @@ public class CleaningCompilingResultSetMapper<E> extends CompilingResultSetMappe
 
 	private final Cleaner<E> cleaner;
 
-	public CleaningCompilingResultSetMapper(final Calendar cal, final int arrayMaxLength, final CompilingRowToObjectMapper.Cache cache, final Cleaner<E> cleaner) {
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final Calendar cal, final int arrayMaxLength, final CompilingRowToObjectMapper.Cache cache) {
 		super(cal, arrayMaxLength, cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final CompilingRowToObjectMapper.Cache cache, final Cleaner<E> cleaner) {
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final CompilingRowToObjectMapper.Cache cache) {
 		super(cache);
 		this.cleaner = cleaner;
 	}
 
-	public CleaningCompilingResultSetMapper(final int arrayMaxLength, final CompilingRowToObjectMapper.Cache cache, final Cleaner<E> cleaner) {
+	public CleaningCompilingResultSetMapper(final Cleaner<E> cleaner, final int arrayMaxLength, final CompilingRowToObjectMapper.Cache cache) {
 		super(arrayMaxLength, cache);
 		this.cleaner = cleaner;
 	}

@@ -1,7 +1,6 @@
 package com.moparisthebest.jdbc;
 
 import com.moparisthebest.classgen.Compiler;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import java.io.IOException;
 import java.lang.reflect.AccessibleObject;

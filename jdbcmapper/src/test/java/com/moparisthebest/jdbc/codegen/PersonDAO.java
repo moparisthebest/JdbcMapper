@@ -25,6 +25,7 @@ import java.time.*;
 //		databaseType = JdbcMapper.DatabaseType.ORACLE
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 //		, sqlParser = SimpleSQLParser.class
+		, allowReflection = JdbcMapper.OptionalBool.TRUE
 )
 public interface PersonDAO extends Closeable {
 
@@ -46,7 +47,7 @@ public interface PersonDAO extends Closeable {
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo, Calendar cal) throws SQLException;
 
-	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")

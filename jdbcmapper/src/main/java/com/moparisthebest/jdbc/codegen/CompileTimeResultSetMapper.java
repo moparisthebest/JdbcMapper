@@ -90,17 +90,17 @@ public class CompileTimeResultSetMapper {
 	 *
 	 * @return true if calling code should close rs (ResultSet) and ps (PreparedStatement) if closePs is false, false otherwise
 	 */
-	public boolean mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final MaxRows maxRows, final String cal, final String cleaner, final boolean closePs) throws IOException, NoSuchMethodException, ClassNotFoundException {
+	public boolean mapToResultType(final Writer w, final String[] keys, final ExecutableElement eeMethod, final MaxRows maxRows, final String cal, final String cleaner, final boolean closePs, final ReflectionFields reflectionFields) throws IOException, NoSuchMethodException, ClassNotFoundException {
 		//final Method m = fromExecutableElement(eeMethod);
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
 		//final Class returnType = typeMirrorToClass(returnTypeMirror);
 		if (returnTypeMirror.getKind() == TypeKind.ARRAY) {
 			final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
-			toArray(w, keys, componentType, maxRows, cal, cleaner);
+			toArray(w, keys, componentType, maxRows, cal, cleaner, reflectionFields);
 		} else if (types.isAssignable(returnTypeMirror, collectionType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), maxRows, cal, cleaner);
+			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
 		} else if (types.isAssignable(returnTypeMirror, mapType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			//if (types[1] instanceof ParameterizedType) { // for collectionMaps
@@ -112,57 +112,57 @@ public class CompileTimeResultSetMapper {
 						typeArguments.get(0),
 						collectionTypeMirror,
 						componentTypeMirror,
-						maxRows, cal, cleaner);
+						maxRows, cal, cleaner, reflectionFields);
 				return true;
 			}
-			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), maxRows, cal, cleaner);
+			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), maxRows, cal, cleaner, reflectionFields);
 		} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
 			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
 			if (types.isAssignable(returnTypeMirror, resultSetIterableType)) {
-				toResultSetIterable(w, keys, typeArguments.get(0), cal, cleaner, closePs);
+				toResultSetIterable(w, keys, typeArguments.get(0), cal, cleaner, closePs, reflectionFields);
 				return false;
 			} else if (types.isAssignable(returnTypeMirror, listIteratorType))
-				toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
+				toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
 			else
-				toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner);
+				toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
 		}
 		//IFJAVA8_START
 		else if (types.isAssignable(returnTypeMirror, streamType)) {
-			toStream(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), cal, cleaner, closePs);
+			toStream(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), cal, cleaner, closePs, reflectionFields);
 			return false;
 		}
 		//IFJAVA8_END
 		else {
-			toObject(w, keys, returnTypeMirror, cal, cleaner);
+			toObject(w, keys, returnTypeMirror, cal, cleaner, reflectionFields);
 		}
 		return true;
 	}
 
-	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, String cal, TypeMirror mapValType, TypeMirror mapKeyType) {
-		return getRowMapper(keys, returnTypeClass, "rs", cal, mapValType, mapKeyType);
+	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, String cal, TypeMirror mapValType, TypeMirror mapKeyType, final ReflectionFields reflectionFields) {
+		return getRowMapper(keys, returnTypeClass, "rs", cal, mapValType, mapKeyType, reflectionFields);
 	}
 
-	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, final String resultSetName, String cal, TypeMirror mapValType, TypeMirror mapKeyType) {
-		return new CompileTimeRowToObjectMapper(this, keys, returnTypeClass, resultSetName, cal, mapValType, mapKeyType);
+	public CompileTimeRowToObjectMapper getRowMapper(final String[] keys, TypeMirror returnTypeClass, final String resultSetName, String cal, TypeMirror mapValType, TypeMirror mapKeyType, final ReflectionFields reflectionFields) {
+		return new CompileTimeRowToObjectMapper(this, keys, returnTypeClass, resultSetName, cal, mapValType, mapKeyType, reflectionFields);
 	}
 
-	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal) throws IOException, ClassNotFoundException {
-		writeObject(w, keys, returnTypeMirror, "rs", cal);
+	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
+		writeObject(w, keys, returnTypeMirror, "rs", cal, reflectionFields);
 	}
 
-	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String resultSetName, final String cal) throws IOException, ClassNotFoundException {
-		getRowMapper(keys, returnTypeMirror, resultSetName, cal, null, null).gen(w, returnTypeMirror.toString());
+	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String resultSetName, final String cal, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
+		getRowMapper(keys, returnTypeMirror, resultSetName, cal, null, null, reflectionFields).gen(w, returnTypeMirror.toString());
 	}
 
-	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		w.write("\t\t\tif(rs.next()) {\n");
-		writeObject(w, keys, returnTypeMirror, cal);
+		writeObject(w, keys, returnTypeMirror, cal, reflectionFields);
 		w.write("\t\t\t\treturn ");
 		// this does not clean null on purpose, neither does CleaningResultSetMapper
 		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
 	}
 
-	private void toResultSetIterable(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs) throws IOException, ClassNotFoundException {
+	private void toResultSetIterable(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		w.write("\t\t\treturn com.moparisthebest.jdbc.util.ResultSetIterable.getResultSetIterable(rs,\n\t\t\t\t\trs.next() ? ");
 
 		if(java8) {
@@ -175,7 +175,7 @@ public class CompileTimeResultSetMapper {
 		}
 
 		// com.moparisthebest.jdbc.util.ResultSetToObject implementation
-		writeObject(w, keys, returnTypeMirror, "_rs", cal == null ? null : "_cal");
+		writeObject(w, keys, returnTypeMirror, "_rs", cal == null ? null : "_cal", reflectionFields);
 		w.write("\t\t\t\t\t\treturn ");
 		clean(w, cleaner).write(";\n");
 		// end ResultSetToObject implementation
@@ -192,7 +192,7 @@ public class CompileTimeResultSetMapper {
 	//IFJAVA8_START
 
 	// being in this method implies java8 is true already, how else could you be compiling code using Stream? so this won't have the checks for lambdas toResultSetIterable does...
-	private void toStream(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs) throws IOException, ClassNotFoundException {
+	private void toStream(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 
 		if(closePs)
 			w.write("\t\t\tfinal PreparedStatement finalPs = ps;\n");
@@ -202,7 +202,7 @@ public class CompileTimeResultSetMapper {
 		w.append("(_rs, _cal) -> {\n");
 
 		// com.moparisthebest.jdbc.util.ResultSetToObject implementation
-		writeObject(w, keys, returnTypeMirror, "_rs", cal == null ? null : "_cal");
+		writeObject(w, keys, returnTypeMirror, "_rs", cal == null ? null : "_cal", reflectionFields);
 		w.write("\t\t\t\t\t\treturn ");
 		clean(w, cleaner).write(";\n");
 		// end ResultSetToObject implementation
@@ -215,46 +215,46 @@ public class CompileTimeResultSetMapper {
 
 	//IFJAVA8_END
 
-	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void writeCollection(final Writer w, final String[] keys, final String returnTypeString, final String concreteTypeString, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		maxRowInit(w, maxRows).write("\t\t\tfinal ");
 		w.write(returnTypeString);
 		w.write(" _colret = new ");
 		w.write(concreteTypeString);
 		w.write(returnTypeString.substring(returnTypeString.indexOf('<')));
 		w.write("();\n\t\t\twhile(rs.next()) {\n");
-		writeObject(w, keys, componentTypeMirror, cal);
+		writeObject(w, keys, componentTypeMirror, cal, reflectionFields);
 		w.write("\t\t\t\t_colret.add(");
 		clean(w, cleaner).write(");\n");
 		maxRowBreak(w, maxRows).write("\t\t\t}\n");
 	}
 
-	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public  void toCollection(final Writer w, final String[] keys, final TypeMirror collectionTypeMirror, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
-		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, maxRows, cal, cleaner);
+		writeCollection(w, keys, collectionTypeMirror.toString(), collectionType, componentTypeMirror, maxRows, cal, cleaner, reflectionFields);
 		w.write("\t\t\treturn _colret;\n");
 	}
 
-	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner, reflectionFields);
 		w.write("\t\t\treturn _colret.toArray(new ");
 		w.write(returnTypeString);
 		w.write("[_colret.size()]);\n");
 	}
 
-	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner, reflectionFields);
 		w.write("\t\t\treturn _colret.listIterator();\n");
 	}
 
-	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
-		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner);
+		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner, reflectionFields);
 		w.write("\t\t\treturn _colret.iterator();\n");
 	}
 
-	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+	public void toMap(final Writer w, final String[] keys, final TypeMirror mapTypeMirror, final TypeMirror mapKeyTypeMirror, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String returnTypeString = mapTypeMirror.toString();
 		maxRowInit(w, maxRows).write("\t\t\tfinal ");
@@ -265,7 +265,7 @@ public class CompileTimeResultSetMapper {
 		w.write("();\n\t\t\twhile(rs.next()) {\n");
 
 		//writeObject(w, keys, componentTypeMirror, componentType, cal);
-		final CompileTimeRowToObjectMapper rm = getRowMapper(keys, componentTypeMirror, cal, null, mapKeyTypeMirror);
+		final CompileTimeRowToObjectMapper rm = getRowMapper(keys, componentTypeMirror, cal, null, mapKeyTypeMirror, reflectionFields);
 		rm.gen(w, componentTypeMirror.toString());
 		w.write("\t\t\t\t_colret.put(");
 		rm.extractColumnValueString(w, 1, mapKeyTypeMirror);
@@ -280,7 +280,7 @@ public class CompileTimeResultSetMapper {
 								final TypeMirror mapKeyTypeMirror,
 								final TypeMirror collectionTypeMirror,
 								final TypeMirror componentTypeMirror,
-								MaxRows maxRows, String cal, final String cleaner) throws IOException, ClassNotFoundException {
+								MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String mapType = getConcreteClassCanonicalName(mapTypeMirror, HashMap.class);
 		final String collectionType = getConcreteClassCanonicalName(collectionTypeMirror, ArrayList.class);
 		final String returnTypeString = mapTypeMirror.toString();
@@ -294,7 +294,7 @@ public class CompileTimeResultSetMapper {
 		w.write("();\n\t\t\twhile(rs.next()) {\n");
 
 		//writeObject(w, keys, componentTypeMirror, componentType, cal);
-		final CompileTimeRowToObjectMapper rm = getRowMapper(keys, componentTypeMirror, cal, null, mapKeyTypeMirror);
+		final CompileTimeRowToObjectMapper rm = getRowMapper(keys, componentTypeMirror, cal, null, mapKeyTypeMirror, reflectionFields);
 		rm.gen(w, componentTypeMirror.toString());
 
 		w.write("\t\t\t\tfinal ");

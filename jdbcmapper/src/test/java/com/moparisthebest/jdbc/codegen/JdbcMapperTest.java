@@ -189,4 +189,9 @@ public class JdbcMapperTest {
 	}
 
 	//IFJAVA8_END
+
+	@Test
+	public void testPerson() throws SQLException {
+		assertEquals(fieldPerson1, dao.getPerson(fieldPerson1.getPersonNo()));
+	}
 }

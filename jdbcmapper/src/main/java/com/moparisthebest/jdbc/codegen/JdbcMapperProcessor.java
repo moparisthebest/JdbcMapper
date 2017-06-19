@@ -200,6 +200,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								lookupCloseMethod = false;
 						}
 
+						final boolean defaultAllowReflection = mapper.allowReflection().combine(false);
+						final ReflectionFields reflectionFields = new ReflectionFields();
+
 						for (final Element methodElement : genClass.getEnclosedElements()) {
 							// can only implement abstract methods
 							if (methodElement.getKind() != ElementKind.METHOD || !methodElement.getModifiers().contains(Modifier.ABSTRACT))
@@ -215,6 +218,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL with non-empty query is required on abstract or interface methods", methodElement);
 								continue;
 							}
+							final boolean allowReflection = sql.allowReflection().combine(defaultAllowReflection);
 							w.write("\n\t@Override\n\tpublic ");
 							final String returnType = eeMethod.getReturnType().toString();
 							w.write(returnType);
@@ -372,7 +376,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
 										return false;
 									}
-								closeRs = rsm.mapToResultType(w, keys, eeMethod, maxRows, calendarName, cleanerName, !cachePreparedStatements);
+								closeRs = rsm.mapToResultType(w, keys, eeMethod, maxRows, calendarName, cleanerName, !cachePreparedStatements, allowReflection ? reflectionFields : null);
 							}
 
 							// close things
@@ -410,6 +414,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						if (closeMethod == null && (cachedPreparedStatements > 0 || doJndi)) {
 							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@Jdbc.Mapper extended classes with cachedPreparedStatements or jndiNames must have a public void close() method to override or implement, because they must be closed", genClass);
 							continue;
+						}
+
+						if(!reflectionFields.isEmpty()) {
+							w.append("\n\tprivate static final java.lang.reflect.Field[] _fields = new java.lang.reflect.Field[] {\n");
+							for(final VariableElement ve : reflectionFields) {
+								w.append("\t\tcom.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(")
+											.append(ve.getEnclosingElement().asType().toString()).append(".class, \"")
+											.append(ve.getSimpleName().toString()).append("\"),\n");
+							}
+							w.append("\t};\n");
 						}
 
 						if (cachedPreparedStatements > 0) {
