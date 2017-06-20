@@ -246,10 +246,26 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 			return;
 		}
 
-		lazyLoadConstructor();
+		try {
+			lazyLoadConstructor();
+		} catch (SQLException e) {
+			throw new MapperException(e.getMessage(), e);
+		}
 
 		if (resultSetConstructor) {
 			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(rs);\n");
+			return;
+		}
+
+		if(_fieldOrder != null) {
+			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(\n");
+			for(int x = 1; x <= _columnCount; ++x) {
+				extractColumnValueString(java, _fieldOrder[x], _fieldTypes[x], _fieldClasses[x] == null ? null : _fieldClasses[x].getCanonicalName());
+				if(x != _columnCount)
+					java.append(",\n");
+				//_args[x-1] = extractColumnValue(_fieldOrder[x], _fieldTypes[x], _fieldClasses[x]);
+			}
+			java.append(");\n");
 			return;
 		}
 
@@ -338,17 +354,17 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 				// if f not accessible (but super.getFieldMappings() sets it), throw exception during compilation is fine
 				java.append("ret.").append(((Field) f).getName()).append(" = ");
 				extractColumnValueString(java, i, _fieldTypes[i],
-						_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM ? ((Field) f).getType().getCanonicalName() : null);
+						_fieldClasses[i] == null ? null : _fieldClasses[i].getCanonicalName());
 				java.append(";\n");
 			} else if (f instanceof ReflectionAccessibleObject) {
 				java.append("com.moparisthebest.jdbc.util.ReflectionUtil.setValue(_fields[").append(String.valueOf(((ReflectionAccessibleObject)f).index)).append("], ret, ");
 				extractColumnValueString(java, i, _fieldTypes[i],
-						_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM ? ((ReflectionAccessibleObject) f).field.getType().getCanonicalName() : null);
+						_fieldClasses[i] == null ? null : _fieldClasses[i].getCanonicalName());
 				java.append(");\n");
 			} else {
 				java.append("ret.").append(((Method) f).getName()).append("(");
 				extractColumnValueString(java, i, _fieldTypes[i],
-						_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM ? ((Method) f).getParameterTypes()[0].getCanonicalName() : null);
+						_fieldClasses[i] == null ? null : _fieldClasses[i].getCanonicalName());
 				java.append(");\n");
 			}
 		}

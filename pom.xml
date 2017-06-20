@@ -299,6 +299,10 @@
                                     <testExcludes>
                                         <exclude>**/module-info.java</exclude>
                                     </testExcludes>
+                                    <compilerArgs>
+                                        <compilerArg>-parameters</compilerArg>
+                                        <compilerArg>-Xlint:unchecked</compilerArg>
+                                    </compilerArgs>
                                 </configuration>
                                 <goals>
                                     <goal>testCompile</goal>

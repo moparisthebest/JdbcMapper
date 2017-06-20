@@ -26,6 +26,7 @@ import java.lang.reflect.*;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,15 +68,16 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	protected boolean resultSetConstructor, constructorLoaded = false;
 	protected Constructor<? extends T> constructor;
 	protected final Class<? extends T> _returnTypeClass; // over-ride non-generic version of this in super class
-	
+
 	// only non-null when _returnTypeClass is an array, or a map
 	protected final Class<?> componentType;
 	protected final boolean returnMap;
 
 	protected AccessibleObject[] _fields = null;
-	protected int[] _fieldTypes;
+	protected int[] _fieldTypes, _fieldOrder;
+	protected Class<? extends Enum>[] _fieldClasses;
 
-	protected final Object[] _args = new Object[1];
+	protected Object[] _args;
 
 	public RowToObjectMapper(ResultSet resultSet, Class<T> returnTypeClass) {
 		this(resultSet, returnTypeClass, null, null);
@@ -129,7 +131,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 		}
 	}
 
-	protected void lazyLoadConstructor() {
+	protected void lazyLoadConstructor() throws SQLException {
 		if(constructorLoaded)
 			return;
 		// detect if returnTypeClass has a constructor that takes a ResultSet, if so, our job couldn't be easier...
@@ -142,19 +144,69 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 			resultSetConstructor = true;
 		} catch (Throwable e) {
 			// if no resultSetConstructor find the constructor
-			try {
-				constructor = _returnTypeClass.getDeclaredConstructor();
-				if (!constructor.isAccessible())
-					constructor.setAccessible(true);
-			} catch (Throwable e1) {
-				// if column count is 2 or less, it might map directly to a type like a Long or something, or be a map which does
-				// or if componentType is non-null, then we want an array like Long[] or String[]
-				if(_columnCount > 2 && componentType == null)
-					throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+
+			// use con.getParameterAnnotations(); for java 6? ugly
+			//IFJAVA8_START
+			// look for constructor with matching parameters first
+			String[] keys = null;
+			Map<String, Integer> strippedKeys = null;
+			outer:
+			for(final Constructor<?> con : _returnTypeClass.getConstructors()) {
+				final Parameter[] params = con.getParameters();
+				if(params.length == _columnCount) {
+					if(!params[0].isNamePresent())
+						break; // nothing to do here, compile with -params?
+					// do this stuff only once
+					if(keys == null) {
+						keys = getKeysFromResultSet();
+						strippedKeys = new HashMap<String, Integer>(keys.length * 2);
+						for (int x = 1; x <= _columnCount; ++x) {
+							final String key = keys[x];
+							strippedKeys.put(key, x);
+							strippedKeys.put(key.replaceAll("_", ""), x);
+						}
+						_fieldOrder = new int[keys.length];
+						_fieldTypes = new int[keys.length];
+						@SuppressWarnings("unchecked")
+						final Class<? extends Enum>[] noWarnings = (Class<? extends Enum>[]) new Class[keys.length];
+						_fieldClasses = noWarnings;
+					}
+					int count = 0;
+					for(final Parameter param : params) {
+						final Integer index = strippedKeys.get(param.getName().toUpperCase());
+						if(index == null)
+							continue outer;
+						_fieldOrder[++count] = index;
+						_fieldTypes[count] = _tmf.getTypeId(param.getType());
+						if(_fieldTypes[count] == TypeMappingsFactory.TYPE_ENUM) {
+							@SuppressWarnings("unchecked")
+							final Class<? extends Enum> noWarnings = (Class<? extends Enum>) param.getType();
+							_fieldClasses[count] = noWarnings;
+						}
+					}
+					@SuppressWarnings("unchecked")
+					final Constructor<? extends T> noWarnings = (Constructor<? extends T>)con;
+					this._args = new Object[params.length];
+					constructor = noWarnings;
+				}
 			}
+			//IFJAVA8_END
+			if(constructor == null)
+				try {
+					constructor = _returnTypeClass.getDeclaredConstructor();
+					if (!constructor.isAccessible())
+						constructor.setAccessible(true);
+				} catch (Throwable e1) {
+					// if column count is 2 or less, it might map directly to a type like a Long or something, or be a map which does
+					// or if componentType is non-null, then we want an array like Long[] or String[]
+					if(_columnCount > 2 && componentType == null)
+						throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+				}
 		}
 		this.resultSetConstructor = resultSetConstructor;
 		this.constructor = constructor;
+		if(this._args == null)
+			this._args = new Object[1];
 		this.constructorLoaded = true;
 	}
 
@@ -192,8 +244,19 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
 						+ _returnTypeClass.getName() + " sending in a ResultSet object as a parameter", e);
-			}  		
-		
+			}
+
+		if(_fieldOrder != null)
+			try {
+				for(int x = 1; x <= _columnCount; ++x)
+					_args[x-1] = extractColumnValue(_fieldOrder[x], _fieldTypes[x], _fieldClasses[x]);
+				//System.out.println("creating " + constructor + " sending in a objects: " + Arrays.toString(_args));
+				return constructor.newInstance(_args);
+			} catch (Throwable e) {
+				throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
+						+ _returnTypeClass.getName() + " sending in a objects: " + Arrays.toString(_args), e);
+			}
+
 		if(returnMap) // we want a map
 			try {
 				final Map<String, Object> ret = getMapImplementation();
@@ -271,7 +334,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 			AccessibleObject f = _fields[i];
 
 			try {
-				_args[0] = extractColumnValue(i, _fieldTypes[i], null); // be lazy about this
+				_args[0] = extractColumnValue(i, _fieldTypes[i], _fieldClasses[i]);
 				//System.out.printf("field: '%s' obj: '%s' fieldType: '%s'\n", _fields[i], _args[0], _fieldTypes[i]);
 				if (f instanceof Field) {
 					((Field) f).set(resultObject, _args[0]);
@@ -440,7 +503,13 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 
 		// finally actually init the fields array
 		_fields = new AccessibleObject[_columnCount + 1];
-		_fieldTypes = new int[_columnCount + 1];
+		if(_fieldTypes == null)
+			_fieldTypes = new int[_fields.length];
+		if(_fieldClasses == null) {
+			@SuppressWarnings("unchecked")
+			final Class<? extends Enum>[] noWarnings = (Class<? extends Enum>[]) new Class[_fields.length];
+			_fieldClasses = noWarnings;
+		}
 
 		for (int i = 1; i < _fields.length; i++) {
 			AccessibleObject f = mapFields.get(keys[i]);
@@ -457,6 +526,11 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				final Field field = (Field) f;
 				_fields[i] = modField(field, i);
 				_fieldTypes[i] = _tmf.getTypeId(field.getType());
+				if(_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM) {
+					@SuppressWarnings("unchecked")
+					final Class<? extends Enum> noWarnings = (Class<? extends Enum>) field.getType();
+					_fieldClasses[i] = noWarnings;
+				}
 			} else {
 				_fieldTypes[i] = _tmf.getTypeId(((Method) f).getParameterTypes()[0]);
 			}
@@ -503,7 +577,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	 * @return The extracted value
 	 * @throws java.sql.SQLException on error.
 	 */
-	protected Object extractColumnValue(final int index, final int resultType, Class<?> resultTypeClass) throws SQLException {
+	protected Object extractColumnValue(final int index, final int resultType, final Class<?> resultTypeClass) throws SQLException {
 		try{
 			switch (resultType) {
 				case TypeMappingsFactory.TYPE_INT:
@@ -577,11 +651,6 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
 					return _resultSet.getString(index);
 				case TypeMappingsFactory.TYPE_ENUM:
-					if(resultTypeClass == null) {
-						// load lazily, todo: could cache? meh
-						final AccessibleObject f = _fields[index];
-						resultTypeClass = f instanceof Field ? ((Field)f).getType() : ((Method)f).getParameterTypes()[0];
-					}
 					@SuppressWarnings("unchecked")
 					final Enum ret = Enum.valueOf((Class<? extends Enum>)resultTypeClass, _resultSet.getString(index));
 					return ret;
