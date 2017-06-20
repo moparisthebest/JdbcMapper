@@ -132,7 +132,10 @@ public class CompileTimeResultSetMapper {
 			return false;
 		}
 		//IFJAVA8_END
-		else {
+		else if(types.isAssignable(returnTypeMirror, resultSetType)) {
+			toResultSet(w, closePs);
+			return false;
+		} else {
 			toObject(w, keys, returnTypeMirror, cal, cleaner, reflectionFields);
 		}
 		return true;
@@ -152,6 +155,15 @@ public class CompileTimeResultSetMapper {
 
 	public void writeObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String resultSetName, final String cal, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		getRowMapper(keys, returnTypeMirror, resultSetName, cal, null, null, reflectionFields).gen(w, returnTypeMirror.toString());
+	}
+
+	private void toResultSet(final Writer w, final boolean closePs) throws IOException {
+		w.append("\t\t\treturn ");
+		if(closePs)
+			w.append("new com.moparisthebest.jdbc.StatementClosingResultSet(rs, ps)");
+		else
+			w.append("rs");
+		w.append(";\n");
 	}
 
 	public void toObject(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {

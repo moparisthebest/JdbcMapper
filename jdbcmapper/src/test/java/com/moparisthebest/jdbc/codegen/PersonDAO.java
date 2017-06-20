@@ -8,6 +8,7 @@ import com.moparisthebest.jdbc.dto.Person;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import java.io.Closeable;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -29,6 +30,12 @@ import java.time.*;
 )
 public interface PersonDAO extends Closeable {
 
+	@JdbcMapper.SQL("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)")
+	void createTablePerson();
+
+	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({personNo}, {birthDate}, {firstName}, {lastName})")
+	int insertPerson(long personNo, Date birthDate, String firstName, String lastName);
+
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE last_name = {lastName}")
 	int setFirstName(String firstName, String lastName);
 
@@ -40,6 +47,12 @@ public interface PersonDAO extends Closeable {
 
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE person_no = {personNo}")
 	void setFirstNameBlob(@JdbcMapper.Blob String firstName, long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")
+	ResultSet getPeopleResultSet(String lastName) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT first_name, last_name FROM person WHERE last_name = {lastName}", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
+	ResultSet getPeopleResultSetCached(String lastName) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
 	String getFirstName(long personNo) throws SQLException;
