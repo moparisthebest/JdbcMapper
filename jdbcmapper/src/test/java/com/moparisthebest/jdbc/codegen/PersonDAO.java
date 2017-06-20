@@ -44,11 +44,11 @@ public interface PersonDAO extends Closeable {
 	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
 	String getFirstName(long personNo) throws SQLException;
 
-	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
-	FieldPerson getPerson(long personNo, Calendar cal) throws SQLException;
-
 	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	FieldPerson getPerson(long personNo, Calendar cal) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")
 	List<FieldPerson> getPeople(String lastName) throws SQLException;

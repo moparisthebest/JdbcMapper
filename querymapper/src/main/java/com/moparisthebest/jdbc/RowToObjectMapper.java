@@ -191,7 +191,8 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				}
 			}
 			//IFJAVA8_END
-			if(constructor == null)
+			if(constructor == null) {
+				_fieldOrder = null; // we didn't complete this...
 				try {
 					constructor = _returnTypeClass.getDeclaredConstructor();
 					if (!constructor.isAccessible())
@@ -199,9 +200,10 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				} catch (Throwable e1) {
 					// if column count is 2 or less, it might map directly to a type like a Long or something, or be a map which does
 					// or if componentType is non-null, then we want an array like Long[] or String[]
-					if(_columnCount > 2 && componentType == null)
-						throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+					if (_columnCount > 2 && componentType == null)
+						throw new MapperException("Exception when trying to get constructor for : " + _returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
 				}
+			}
 		}
 		this.resultSetConstructor = resultSetConstructor;
 		this.constructor = constructor;

@@ -49,7 +49,8 @@ public class CompileTimeRowToObjectMapper {
 	protected final boolean returnMap, resultSetConstructor;
 
 	protected Element[] _fields = null;
-	protected int[] _fieldTypes;
+	protected int[] _fieldTypes, _fieldOrder;
+	protected String[] _fieldClasses;
 
 	protected final ReflectionFields reflectionFields;
 
@@ -78,21 +79,62 @@ public class CompileTimeRowToObjectMapper {
 			componentType = returnTypeClass.getKind() == TypeKind.ARRAY ? ((ArrayType) returnTypeClass).getComponentType() : null;
 
 			// detect if returnTypeClass has a constructor that takes a ResultSet, if so, our job couldn't be easier...
-			boolean resultSetConstructor = false, defaultConstructor = false;
+			boolean resultSetConstructor = false, defaultConstructor = false, paramConstructor = false;
 			if(_returnTypeClass.getKind() == TypeKind.DECLARED) {
+				Map<String, Integer> strippedKeys = null;
 				final List<? extends Element> methodsAndConstructors = ((TypeElement)((DeclaredType)_returnTypeClass).asElement()).getEnclosedElements();
+
+				/*
+				// uncomment this to show difference between java 1.8 with -parameters and not, prints this without -parameters (javac 1.6 gets this correct also):
+				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long PERSONNO, java.util.Date BIRTHDATE, java.lang.String FIRSTNAME, java.lang.String LASTNAME', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person PERSON'
+				// but javac 1.8 prints this with -parameters (wrongly):
+				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long PERSONNO, java.util.Date FIRSTNAME, java.lang.String LASTNAME, java.lang.String ARG3', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person PERSON'
+				if(_returnTypeClass.toString().equals("com.moparisthebest.jdbc.dto.FieldPerson"))
+					throw new RuntimeException("methodsAndConstructors: " + methodsAndConstructors.stream().filter(e -> e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)).map(e -> e.toString() +
+							": '" + ((ExecutableElement)e).getParameters().stream().map(param ->  param.asType() + " " + param.getSimpleName().toString().toUpperCase()).collect(java.util.stream.Collectors.joining(", ")) + "'"
+					).collect(java.util.stream.Collectors.joining(", ")));
+				*/
+				outer:
 				for(final Element e : methodsAndConstructors) {
-					if(e.getKind() == ElementKind.CONSTRUCTOR) {
+					if(e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)) {
 						final List<? extends VariableElement> params = ((ExecutableElement)e).getParameters();
 						if(params.isEmpty())
 							defaultConstructor = true;
 						else if(params.size() == 1 && rsm.types.isSameType(params.get(0).asType(), rsm.resultSetType))
 							resultSetConstructor = true;
+						else if(params.size() == _columnCount) {
+							// maybe we want to call the constructor, if the names line up
+							if(strippedKeys == null) {
+								strippedKeys = new HashMap<String, Integer>(keys.length * 2);
+								for (int x = 1; x <= _columnCount; ++x) {
+									final String key = keys[x];
+									strippedKeys.put(key, x);
+									strippedKeys.put(key.replaceAll("_", ""), x);
+								}
+								_fieldOrder = new int[keys.length];
+								_fieldTypes = new int[keys.length];
+								_fieldClasses = new String[keys.length];
+							}
+							int count = 0;
+							for(final VariableElement param : params) {
+								final Integer index = strippedKeys.get(param.getSimpleName().toString().toUpperCase());
+								if(index == null)
+									continue outer;
+								_fieldOrder[++count] = index;
+								_fieldTypes[count] = getTypeId(param.asType());
+								if(_fieldTypes[count] == TypeMappingsFactory.TYPE_ENUM) {
+									_fieldClasses[count] = param.asType().toString();
+								}
+							}
+							paramConstructor = true;
+						}
 					}
 				}
 			}
+			if(!paramConstructor)
+				_fieldOrder = null; // didn't successfully finish
 			this.resultSetConstructor = resultSetConstructor;
-			if(!resultSetConstructor && !defaultConstructor && _columnCount > 2 && componentType == null)
+			if(!resultSetConstructor && !defaultConstructor && !paramConstructor && _columnCount > 2 && componentType == null)
 				throw new RuntimeException("Exception when trying to get constructor for : "+_returnTypeClass.toString() + " Must have default no-arg constructor or one that takes a single ResultSet.");
 		}
 	}
@@ -267,6 +309,17 @@ public class CompileTimeRowToObjectMapper {
 
 		if (resultSetConstructor) {
 			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(rs);\n");
+			return;
+		}
+
+		if(_fieldOrder != null) {
+			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(\n");
+			for(int x = 1; x <= _columnCount; ++x) {
+				extractColumnValueString(java, _fieldOrder[x], _fieldTypes[x], _fieldClasses[x]);
+				if(x != _columnCount)
+					java.append(",\n");
+			}
+			java.append(");\n");
 			return;
 		}
 
