@@ -29,6 +29,7 @@ public class SimpleSQLParserTest {
 				"select bob, tom from tom"
 				, "select some_bob bob, some_tom as tom from tom"
 				, "select tom.bob, some_tom as tom from tom"
+				, "select tom.bob, COALESCE(some_tom, 'UNKNOWN') as tom from tom"
 		}) {
 			final SQLParser ret = getFactory().parse(sql);
 			assertTrue(ret.isSelect());

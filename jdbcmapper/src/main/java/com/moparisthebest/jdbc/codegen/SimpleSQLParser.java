@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public class SimpleSQLParser extends AbstractSQLParser {
 
 	private static final Pattern aliasPattern = Pattern.compile("^.*\\.");
+	private static final Pattern parenPattern = Pattern.compile("\\([^)]+\\)");
 
 	public SimpleSQLParser() {
 		super(null, false);
@@ -24,7 +25,7 @@ public class SimpleSQLParser extends AbstractSQLParser {
 		final boolean isSelect = sql.startsWith("SELECT");
 		String[] columnNames = null;
 		if (isSelect) {
-			final String columns = sql.substring(sql.indexOf("SELECT") + 6, sql.indexOf("FROM")).trim();
+			final String columns = parenPattern.matcher(sql.substring(sql.indexOf("SELECT") + 6, sql.indexOf("FROM"))).replaceAll("").trim();
 			final String[] splitColumns = columns.split(",");
 			columnNames = new String[splitColumns.length + 1];
 			int index = 0;
