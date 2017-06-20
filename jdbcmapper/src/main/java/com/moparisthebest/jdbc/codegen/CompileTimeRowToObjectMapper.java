@@ -86,12 +86,12 @@ public class CompileTimeRowToObjectMapper {
 
 				/*
 				// uncomment this to show difference between java 1.8 with -parameters and not, prints this without -parameters (javac 1.6 gets this correct also):
-				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long PERSONNO, java.util.Date BIRTHDATE, java.lang.String FIRSTNAME, java.lang.String LASTNAME', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person PERSON'
+				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long personNo, java.util.Date birthDate, java.lang.String firstName, java.lang.String lastName', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person person'
 				// but javac 1.8 prints this with -parameters (wrongly):
-				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long PERSONNO, java.util.Date FIRSTNAME, java.lang.String LASTNAME, java.lang.String ARG3', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person PERSON'
+				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long personNo, java.util.Date firstName, java.lang.String lastName, java.lang.String arg3', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person person'
 				if(_returnTypeClass.toString().equals("com.moparisthebest.jdbc.dto.FieldPerson"))
 					throw new RuntimeException("methodsAndConstructors: " + methodsAndConstructors.stream().filter(e -> e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)).map(e -> e.toString() +
-							": '" + ((ExecutableElement)e).getParameters().stream().map(param ->  param.asType() + " " + param.getSimpleName().toString().toUpperCase()).collect(java.util.stream.Collectors.joining(", ")) + "'"
+							": '" + ((ExecutableElement)e).getParameters().stream().map(param ->  param.asType() + " " + param.getSimpleName().toString()).collect(java.util.stream.Collectors.joining(", ")) + "'"
 					).collect(java.util.stream.Collectors.joining(", ")));
 				*/
 				outer:
