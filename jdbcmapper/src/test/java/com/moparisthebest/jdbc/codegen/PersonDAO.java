@@ -48,6 +48,9 @@ public interface PersonDAO extends Closeable {
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE person_no = {personNo}")
 	void setFirstNameBlob(@JdbcMapper.Blob String firstName, long personNo) throws SQLException;
 
+	@JdbcMapper.SQL("SELECT person_no FROM person WHERE last_name = {lastName}")
+	long getPersonNo(String lastName) throws SQLException;
+
 	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")
 	ResultSet getPeopleResultSet(String lastName) throws SQLException;
 

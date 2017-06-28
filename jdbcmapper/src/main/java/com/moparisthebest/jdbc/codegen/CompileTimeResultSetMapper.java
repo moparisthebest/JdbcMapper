@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Finishable;
 import com.moparisthebest.jdbc.ResultSetMapper;
+import com.moparisthebest.jdbc.TypeMappingsFactory;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -171,7 +172,12 @@ public class CompileTimeResultSetMapper {
 		writeObject(w, keys, returnTypeMirror, cal, reflectionFields);
 		w.write("\t\t\t\treturn ");
 		// this does not clean null on purpose, neither does CleaningResultSetMapper
-		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn null;\n\t\t\t}\n");
+		clean(w, cleaner).write(";\n\t\t\t} else {\n\t\t\t\treturn ");
+		if(returnTypeMirror.getKind().isPrimitive())
+			w.append(TypeMappingsFactory.getInstance().fixNull(typeMirrorToClass(returnTypeMirror)).toString()); // todo: ok, but could be better
+		else
+			w.append("null");
+		w.append(";\n\t\t\t}\n");
 	}
 
 	private void toResultSetIterable(final Writer w, final String[] keys, final TypeMirror returnTypeMirror, final String cal, final String cleaner, final boolean closePs, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
