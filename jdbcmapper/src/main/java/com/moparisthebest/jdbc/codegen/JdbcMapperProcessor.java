@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+//IFJAVA8_START
+import java.time.*;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
@@ -32,6 +35,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	private Types types;
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType;
+	//IFJAVA8_START
+	private TypeMirror instantType;
+	//IFJAVA8_END
 	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
@@ -57,6 +63,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		fileType = elements.getTypeElement(File.class.getCanonicalName()).asType();
 		blobType = elements.getTypeElement(Blob.class.getCanonicalName()).asType();
 		calendarType = elements.getTypeElement(Calendar.class.getCanonicalName()).asType();
+		//IFJAVA8_START
+		instantType = elements.getTypeElement(Instant.class.getCanonicalName()).asType();
+		//IFJAVA8_END
 		// throws NPE:
 		//byteArrayType = elements.getTypeElement(byte[].class.getCanonicalName()).asType();
 		//byteArrayType = this.types.getArrayType(elements.getTypeElement(byte.class.getCanonicalName()).asType());
@@ -346,7 +355,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								w.write("conn.prepareStatement(");
 							}
 							w.write('"');
-							w.write(sqlStatement);
+							w.write(sqlStatement.replaceAll("\n", "\\n").replaceAll("\"", "\\\""));
 							w.write("\");\n");
 
 							// now bind parameters
@@ -575,9 +584,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				method = "Object";
 				// might need to wrap with Timestamp
 				if (types.isSameType(o, utilDateType))
-					variableName = "new java.sql.Timestamp(" + variableName + ".getTime())";
+					variableName = variableName + " == null ? null : new java.sql.Timestamp(" + variableName + ".getTime())";
+			}
+			//IFJAVA8_START
+			// todo: other java.time types
+			else if (types.isAssignable(o, instantType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : new java.sql.Timestamp(" + variableName + ".toEpochMilli())";
+			}
+			//IFJAVA8_END
 				// CLOB support
-			} else if (types.isAssignable(o, readerType) || types.isAssignable(o, clobType)) {
+			else if (types.isAssignable(o, readerType) || types.isAssignable(o, clobType)) {
 				method = "Clob";
 			} else if (types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType)) {
 				method = "Blob";
@@ -591,7 +608,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				return;
 			} else if (types.isAssignable(o, byteArrayType)) {
 				method = "Blob";
-				variableName = "new java.io.ByteArrayInputStream(" + variableName + ")";
+				variableName = variableName + " == null ? null : new java.io.ByteArrayInputStream(" + variableName + ")";
 			} else if (types.isAssignable(o, sqlArrayType)) {
 				method = "Array";
 			} else {
