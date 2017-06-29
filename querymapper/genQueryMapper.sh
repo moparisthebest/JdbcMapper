@@ -82,7 +82,7 @@ do
 EOF
 
     # handle this specially in QueryMapper because we need it to hold open PreparedStatement until the ResultSetIterable is closed
-    if [ "$method_name" != 'toResultSetIterable(' -a "$method_name" != 'toStream(' ]; then
+    if [ "$method_name" != 'toResultSetIterable(' -a "$method_name" != 'toStream(' -a "$method_name" != 'toType(' ]; then
 
     cat >> "$query" <<EOF
 	$(echo $method | sed -e 's/ResultSet rs/String sql/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
@@ -97,7 +97,7 @@ EOF
 
 EOF
 
-    fi # end special case toResultSetIterable/toStream
+    fi # end special case toResultSetIterable/toStream/toType
 
     # CachingQueryMapper.java
     cat >> "$caching_query" <<EOF

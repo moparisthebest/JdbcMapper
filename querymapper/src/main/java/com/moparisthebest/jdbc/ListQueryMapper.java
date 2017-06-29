@@ -314,6 +314,16 @@ public class ListQueryMapper extends QueryMapper {
 	}
 
 	@Override
+	public <T> T toType(PreparedStatement ps, TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		return delegate.toType(ps, typeReference, bindObjects);
+	}
+
+	@Override
+	public <T> T toType(String sql, TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		return delegate.toType(prepareSql(sql, bindObjects), typeReference, bindObjects);
+	}
+
+	@Override
 	public <T extends Collection<E>, E> T toCollection(PreparedStatement ps, final Class<T> collectionType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		return delegate.toCollection(ps, collectionType, componentType, bindObjects);
 	}

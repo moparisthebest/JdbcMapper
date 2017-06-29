@@ -181,6 +181,11 @@ public class CachingQueryMapper extends QueryMapper {
 	}
 
 	@Override
+	public <T> T toType(String sql, TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		return super.toType(getPreparedStatement(sql), typeReference, bindObjects);
+	}
+
+	@Override
 	public <T extends Collection<E>, E> T toCollection(String sql, final Class<T> collectionType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		return super.toCollection(getPreparedStatement(sql), collectionType, componentType, bindObjects);
 	}

@@ -345,6 +345,52 @@ public class QueryMapper implements Closeable {
 
 	// these are handled specially and not generated because we need it to hold open PreparedStatement until the ResultSetIterable is closed
 
+	@SuppressWarnings("unchecked")
+	public <T> T toType(String sql, TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		boolean error = true, closePs = true;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		T ret = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = this.toResultSet(ps, bindObjects);
+			ret = cm.toType(rs, typeReference);
+			if(ret instanceof ResultSetIterable) {
+				ret = (T)((ResultSetIterable)ret).setPreparedStatementToClose(ps);
+				closePs = false;
+			}
+			//IFJAVA8_START
+			else if(ret instanceof Stream) {
+				final PreparedStatement finalPs = ps;
+				ret = (T)((Stream)ret).onClose(() -> tryClose(finalPs));
+				closePs = false;
+			}
+			//IFJAVA8_END
+			else if(ret instanceof ResultSet) {
+				ret = (T)new StatementClosingResultSet(rs, ps);
+				closePs = false;
+			}
+			error = false;
+			return ret;
+		} finally {
+			if (error) {
+				if(ret != null) {
+					if(ret instanceof ResultSet)
+						tryClose((ResultSet)ret);
+					else if(ret instanceof Closeable)
+						tryClose((Closeable)ret);
+					//IFJAVA8_START
+					else if(ret instanceof AutoCloseable)
+						tryClose((AutoCloseable)ret);
+					//IFJAVA8_END
+				}
+				tryClose(rs);
+				tryClose(ps);
+			} else if(closePs)
+				tryClose(ps);
+		}
+	}
+
 	public <T> ResultSetIterable<T> toResultSetIterable(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
 		boolean error = true;
 		PreparedStatement ps = null;
@@ -505,6 +551,10 @@ public class QueryMapper implements Closeable {
 		} finally {
 			tryClose(ps);
 		}
+	}
+
+	public <T> T toType(PreparedStatement ps, TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		return cm.toType(bindExecute(ps, bindObjects), typeReference);
 	}
 
 	public <T extends Collection<E>, E> T toCollection(PreparedStatement ps, final Class<T> collectionType, Class<E> componentType, final Object... bindObjects) throws SQLException {

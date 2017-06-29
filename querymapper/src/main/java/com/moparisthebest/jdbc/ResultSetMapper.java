@@ -24,6 +24,8 @@ import com.moparisthebest.jdbc.util.ResultSetIterable;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -463,6 +465,45 @@ public class ResultSetMapper implements RowMapperProvider {
 
 	// overloaded helper methods
 
+	@SuppressWarnings("unchecked")
+	protected Object toType(final ResultSet rs, final Class returnType, final ParameterizedType type, final int arrayMaxLength, final Calendar cal) {
+		if (returnType.isArray()) {
+			return toArray(rs, returnType.getComponentType(), arrayMaxLength, cal);
+		} else if (Collection.class.isAssignableFrom(returnType)) {
+			return toCollection(rs, returnType, (Class) type.getActualTypeArguments()[0], arrayMaxLength, cal);
+		} else if (Map.class.isAssignableFrom(returnType)) {
+			Type[] types = type.getActualTypeArguments();
+			if (types[1] instanceof ParameterizedType) { // for collectionMaps
+				ParameterizedType pt = (ParameterizedType) types[1];
+				Class collectionType = (Class) pt.getRawType();
+				if (Collection.class.isAssignableFrom(collectionType))
+					return toMapCollection(rs, returnType, (Class) types[0], collectionType, (Class) pt.getActualTypeArguments()[0], arrayMaxLength, cal);
+			}
+			return toMap(rs, com.moparisthebest.jdbc.ResultSetMapper.instantiateClass((Class<Map>)returnType, HashMap.class), (Class) types[0], (Class) types[1], arrayMaxLength, cal);
+		} else if (Iterator.class.isAssignableFrom(returnType)) {
+			if(ResultSetIterable.class.isAssignableFrom(returnType))
+				return toResultSetIterable(rs, (Class) type.getActualTypeArguments()[0], cal);
+			return ListIterator.class.isAssignableFrom(returnType) ?
+					toListIterator(rs, (Class) type.getActualTypeArguments()[0], arrayMaxLength, cal) :
+					toIterator(rs, (Class) type.getActualTypeArguments()[0], arrayMaxLength, cal);
+		}
+		//IFJAVA8_START
+		else if (Stream.class.isAssignableFrom(returnType)) {
+			return toStream(rs, (Class) type.getActualTypeArguments()[0], cal);
+		}
+		//IFJAVA8_END
+		else if(ResultSet.class.isAssignableFrom(returnType)) {
+			return rs; // odd, we didn't do much, but oh well
+		} else {
+			return toObject(rs, returnType, cal);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T toType(ResultSet rs, TypeReference<T> typeReference, int arrayMaxLength, Calendar cal) {
+		return (T)this.toType(rs, typeReference.getRawType(), typeReference.getType(), arrayMaxLength, cal);
+	}
+
 	public <T> T toObject(ResultSet rs, Class<T> componentType, Calendar cal) {
 		return privToObject(rs, componentType, cal, null);
 	}
@@ -689,6 +730,18 @@ public class ResultSetMapper implements RowMapperProvider {
 
 	public <V> Map<String, V> toSingleMap(ResultSet rs, Class<V> mapValType) {
 		return this.toSingleMap(rs, mapValType, cal);
+	}
+
+	public <T> T toType(ResultSet rs, TypeReference<T> typeReference) {
+		return this.toType(rs, typeReference, arrayMaxLength, cal);
+	}
+
+	public <T> T toType(ResultSet rs, TypeReference<T> typeReference, int arrayMaxLength) {
+		return this.toType(rs, typeReference, arrayMaxLength, cal);
+	}
+
+	public <T> T toType(ResultSet rs, TypeReference<T> typeReference, Calendar cal) {
+		return this.toType(rs, typeReference, arrayMaxLength, cal);
 	}
 
 	public <T extends Collection<E>, E> T toCollection(ResultSet rs, final Class<T> collectionType, Class<E> componentType) {

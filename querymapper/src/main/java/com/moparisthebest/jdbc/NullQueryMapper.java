@@ -391,6 +391,26 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
+	public <T> T toType(PreparedStatement query, TypeReference<T> typeReference, final Object... bindObjects) {
+		try {
+			return delegate.toType(query, typeReference, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T> T toType(String query, TypeReference<T> typeReference, final Object... bindObjects) {
+		try {
+			return delegate.toType(query, typeReference, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
 	public <T extends Collection<E>, E> T toCollection(PreparedStatement query, final Class<T> collectionType, Class<E> componentType, final Object... bindObjects) {
 		try {
 			return delegate.toCollection(query, collectionType, componentType, bindObjects);

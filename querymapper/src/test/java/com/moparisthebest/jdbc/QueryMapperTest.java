@@ -403,6 +403,13 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testListType() throws SQLException {
+		final List<FieldPerson> fromDb = qm.toType("SELECT * from person WHERE person_no IN (?,?,?) ORDER BY person_no",
+				new TypeReference<List<FieldPerson>>() {}, people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
+		assertArrayEquals(people, fromDb.toArray());
+	}
+
+	@Test
 	public void testListQueryMapperList() throws SQLException {
 		final ListQueryMapper lqm = new ListQueryMapper(qm);
 		final List<FieldPerson> fromDb = lqm.toList("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no",
