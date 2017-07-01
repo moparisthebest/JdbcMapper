@@ -22,7 +22,7 @@ import java.time.*;
  * Created by mopar on 5/24/17.
  */
 @JdbcMapper.Mapper(
-//		jndiName = "bob",
+		jndiName = "bob",
 //		databaseType = JdbcMapper.DatabaseType.ORACLE
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 //		, sqlParser = SimpleSQLParser.class

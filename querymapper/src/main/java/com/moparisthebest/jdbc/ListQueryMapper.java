@@ -34,26 +34,26 @@ public class ListQueryMapper extends QueryMapper {
 
 	public static final String inListReplace = "{inList}";
 
-	private ListQueryMapper(Connection conn, String jndiName, QueryMapper delegate, ResultSetMapper cm, InList inList) {
+	private ListQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, InList inList) {
 		this.inList = inList;
-		this.delegate = delegate == null ? new QueryMapper(conn, jndiName, cm) :
+		this.delegate = delegate == null ? new QueryMapper(conn, jndiName, factory, cm) :
 				(delegate instanceof ListQueryMapper ? ((ListQueryMapper)delegate).delegate : delegate);
 	}
 
 	public ListQueryMapper(QueryMapper delegate, InList inList) {
-		this(null, null, delegate, null, inList);
+		this(null, null, null, delegate, null, inList);
 	}
 
 	public ListQueryMapper(QueryMapper delegate) {
-		this(null, null, delegate, null, defaultInList);
+		this(null, null, null, delegate, null, defaultInList);
 	}
 
 	public ListQueryMapper(Connection conn, InList inList) {
-		this(conn, null, null, null, inList);
+		this(conn, null, null, null, null, inList);
 	}
 
 	public ListQueryMapper(Connection conn, ResultSetMapper cm, InList inList) {
-		this(conn, null, null, cm, inList);
+		this(conn, null, null, null, cm, inList);
 	}
 
 	public ListQueryMapper(Connection conn) {
@@ -65,11 +65,11 @@ public class ListQueryMapper extends QueryMapper {
 	}
 
 	public ListQueryMapper(String jndiName, InList inList) {
-		this(null, jndiName, null, null, inList);
+		this(null, jndiName, null, null, null, inList);
 	}
 
 	public ListQueryMapper(String jndiName, ResultSetMapper cm, InList inList) {
-		this(null, jndiName, null, cm, inList);
+		this(null, jndiName, null, null, cm, inList);
 	}
 
 	public ListQueryMapper(String jndiName) {
@@ -80,6 +80,23 @@ public class ListQueryMapper extends QueryMapper {
 		this(jndiName, cm, defaultInList);
 	}
 
+	public ListQueryMapper(Factory<Connection> factory, InList inList) {
+		this(null, null, factory, null, null, inList);
+	}
+
+	public ListQueryMapper(Factory<Connection> factory, ResultSetMapper cm, InList inList) {
+		this(null, null, factory, null, cm, inList);
+	}
+
+	public ListQueryMapper(Factory<Connection> factory) {
+		this(factory, defaultInList);
+	}
+
+	public ListQueryMapper(Factory<Connection> factory, ResultSetMapper cm) {
+		this(factory, cm, defaultInList);
+	}
+
+	// todo: get rid of wrap, cause, how do you know to close it or not? :'(
 	public static ListQueryMapper wrap(final QueryMapper qm){
 		return qm instanceof ListQueryMapper ? (ListQueryMapper)qm : new ListQueryMapper(qm);
 	}

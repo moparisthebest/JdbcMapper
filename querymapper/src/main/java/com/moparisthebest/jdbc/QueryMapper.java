@@ -36,29 +36,40 @@ public class QueryMapper implements JdbcMapper {
 	protected final ResultSetMapper cm;
 	protected final Connection conn;
 	protected final Context context;
+	protected final boolean closeConn;
 
-	protected QueryMapper(Connection conn, String jndiName, ResultSetMapper cm) {
+	protected QueryMapper(Connection conn, final String jndiName, final Factory<Connection> factory, final ResultSetMapper cm) {
 		this.cm = cm == null ? defaultRsm : cm;
+		boolean closeConn = false;
 		Context context = null;
-		if (conn == null && jndiName != null)
-			try {
-				context = new InitialContext();
-				DataSource ds = (DataSource) context.lookup(jndiName);
-				conn = ds.getConnection();
-			} catch (Throwable e) {
-				e.printStackTrace();
-				tryClose(conn);
-			} finally {
-				tryClose(context);
-			}
+		if(conn == null) {
+			if (factory != null) {
+				try {
+					conn = factory.create();
+					closeConn = true;
+				} catch (SQLException e) {
+					throw new RuntimeException("factory failed to create connection", e);
+				}
+			} else if (jndiName != null)
+				try {
+					context = new InitialContext();
+					DataSource ds = (DataSource) context.lookup(jndiName);
+					conn = ds.getConnection();
+					closeConn = true;
+				} catch (Throwable e) {
+					tryClose(context);
+					throw new RuntimeException("JNDI lookup failed to create connection", e);
+				}
+		}
+		if (conn == null)
+			throw new NullPointerException("Connection needs to be non-null for QueryMapper...");
 		this.conn = conn;
 		this.context = context;
-		if (this.conn == null)
-			throw new NullPointerException("Connection needs to be non-null for QueryMapper...");
+		this.closeConn = closeConn;
 	}
 
 	public QueryMapper(Connection conn, ResultSetMapper cm) {
-		this(conn, null, cm);
+		this(conn, null, null, cm);
 	}
 
 	public QueryMapper(Connection conn) {
@@ -66,11 +77,19 @@ public class QueryMapper implements JdbcMapper {
 	}
 
 	public QueryMapper(String jndiName, ResultSetMapper cm) {
-		this(null, jndiName, cm);
+		this(null, jndiName, null, cm);
 	}
 
 	public QueryMapper(String jndiName) {
 		this(jndiName, null);
+	}
+
+	public QueryMapper(Factory<Connection> factory, ResultSetMapper cm) {
+		this(null, null, factory, cm);
+	}
+
+	public QueryMapper(Factory<Connection> factory) {
+		this(factory, null);
 	}
 
 	/**
@@ -80,11 +99,12 @@ public class QueryMapper implements JdbcMapper {
 		this.cm = null;
 		this.conn = null;
 		this.context = null;
+		this.closeConn = false;
 	}
 
 	@Override
 	public void close() {
-		if (context != null) {
+		if (closeConn) {
 			tryClose(conn);
 			tryClose(context);
 		}

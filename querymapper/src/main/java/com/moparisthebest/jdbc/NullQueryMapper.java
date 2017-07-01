@@ -16,25 +16,25 @@ public class NullQueryMapper extends QueryMapper {
 	protected final boolean verbose;
 	protected final QueryMapper delegate;
 
-	private NullQueryMapper(Connection conn, String jndiName, QueryMapper delegate, ResultSetMapper cm, boolean verbose) {
+	private NullQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, boolean verbose) {
 		this.verbose = verbose;
-		this.delegate = delegate == null ? new QueryMapper(conn, jndiName, cm) : delegate;
+		this.delegate = delegate == null ? new QueryMapper(conn, jndiName, factory, cm) : delegate;
 	}
 
 	public NullQueryMapper(QueryMapper delegate, boolean verbose) {
-		this(null, null, delegate, null, verbose);
+		this(null, null, null, delegate, null, verbose);
 	}
 
 	public NullQueryMapper(QueryMapper delegate) {
-		this(null, null, delegate, null, true);
+		this(null, null, null, delegate, null, true);
 	}
 
 	public NullQueryMapper(Connection conn, boolean verbose) {
-		this(conn, null, null, null, verbose);
+		this(conn, null, null, null, null, verbose);
 	}
 
 	public NullQueryMapper(Connection conn, ResultSetMapper cm, boolean verbose) {
-		this(conn, null, null, cm, verbose);
+		this(conn, null, null, null, cm, verbose);
 	}
 
 	public NullQueryMapper(Connection conn) {
@@ -46,11 +46,11 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	public NullQueryMapper(String jndiName, boolean verbose) {
-		this(null, jndiName, null, null, verbose);
+		this(null, jndiName, null, null, null, verbose);
 	}
 
 	public NullQueryMapper(String jndiName, ResultSetMapper cm, boolean verbose) {
-		this(null, jndiName, null, cm, verbose);
+		this(null, jndiName, null, null, cm, verbose);
 	}
 
 	public NullQueryMapper(String jndiName) {
@@ -61,6 +61,23 @@ public class NullQueryMapper extends QueryMapper {
 		this(jndiName, cm, true);
 	}
 
+	public NullQueryMapper(Factory<Connection> factory, boolean verbose) {
+		this(null, null, factory, null, null, verbose);
+	}
+
+	public NullQueryMapper(Factory<Connection> factory, ResultSetMapper cm, boolean verbose) {
+		this(null, null, factory, null, cm, verbose);
+	}
+
+	public NullQueryMapper(Factory<Connection> factory) {
+		this(factory, true);
+	}
+
+	public NullQueryMapper(Factory<Connection> factory, ResultSetMapper cm) {
+		this(factory, cm, true);
+	}
+
+	// todo: remove this refer to ListQueryMapper for why
 	public static NullQueryMapper wrap(final QueryMapper qm){
 		return qm instanceof NullQueryMapper ? (NullQueryMapper)qm : new NullQueryMapper(qm);
 	}

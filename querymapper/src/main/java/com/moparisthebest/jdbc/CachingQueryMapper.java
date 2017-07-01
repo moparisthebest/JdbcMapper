@@ -22,8 +22,8 @@ public class CachingQueryMapper extends QueryMapper {
 
 	protected final Map<String, PreparedStatement> cache;
 
-	protected CachingQueryMapper(Connection conn, String jndiName, ResultSetMapper cm, final int maxEntries) {
-		super(conn, jndiName, cm);
+	protected CachingQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, ResultSetMapper cm, final int maxEntries) {
+		super(conn, jndiName, factory, cm);
 		if (maxEntries > 0) { // we want a limited cache
 			final float loadFactor = 0.75f; // default for HashMaps
 			// if we set the initialCapacity this way, nothing should ever need re-sized
@@ -43,40 +43,56 @@ public class CachingQueryMapper extends QueryMapper {
 			cache = new HashMap<String, PreparedStatement>();
 	}
 
+	protected CachingQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, ResultSetMapper cm) {
+		this(conn, jndiName, factory, cm, 20); // default size of 20
+	}
+
 	public CachingQueryMapper(Connection conn, ResultSetMapper cm, final int maxEntries) {
-		this(conn, null, cm, maxEntries);
+		this(conn, null, null, cm, maxEntries);
 	}
 
 	public CachingQueryMapper(Connection conn, final int maxEntries) {
-		this(conn, null, null, maxEntries);
+		this(conn, null, null, null, maxEntries);
 	}
 
 	public CachingQueryMapper(String jndiName, ResultSetMapper cm, final int maxEntries) {
-		this(null, jndiName, cm, maxEntries);
+		this(null, jndiName, null, cm, maxEntries);
 	}
 
 	public CachingQueryMapper(String jndiName, final int maxEntries) {
-		this(null, jndiName, null, maxEntries);
+		this(null, jndiName, null, null, maxEntries);
 	}
 
-	protected CachingQueryMapper(Connection conn, String jndiName, ResultSetMapper cm) {
-		this(conn, jndiName, cm, 20); // default size of 20
+	public CachingQueryMapper(Factory<Connection> factory, ResultSetMapper cm, final int maxEntries) {
+		this(null, null, factory, cm, maxEntries);
+	}
+
+	public CachingQueryMapper(Factory<Connection> factory, final int maxEntries) {
+		this(null, null, factory, null, maxEntries);
 	}
 
 	public CachingQueryMapper(Connection conn, ResultSetMapper cm) {
-		this(conn, null, cm);
+		this(conn, null, null, cm);
 	}
 
 	public CachingQueryMapper(Connection conn) {
-		this(conn, null, null);
+		this(conn, null, null, null);
 	}
 
 	public CachingQueryMapper(String jndiName, ResultSetMapper cm) {
-		this(null, jndiName, cm);
+		this(null, jndiName, null, cm);
 	}
 
 	public CachingQueryMapper(String jndiName) {
-		this(null, jndiName, null);
+		this(null, jndiName, null, null);
+	}
+
+	public CachingQueryMapper(Factory<Connection> factory, ResultSetMapper cm) {
+		this(null, null, factory, cm);
+	}
+
+	public CachingQueryMapper(Factory<Connection> factory) {
+		this(null, null, factory, null);
 	}
 
 	protected PreparedStatement getPreparedStatement(String sql) throws SQLException {
