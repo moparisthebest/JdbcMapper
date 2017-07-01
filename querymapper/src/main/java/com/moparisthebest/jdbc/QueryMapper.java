@@ -1,5 +1,6 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.JdbcMapper;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import javax.naming.Context;
@@ -16,9 +17,10 @@ import java.util.stream.Stream;
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
-public class QueryMapper implements Closeable {
+public class QueryMapper implements JdbcMapper {
 
 	public static final Object noBind = new Object();
+	public static final ResultSetMapper defaultRsm = new ResultSetMapper();
 
 	static {
 		try{
@@ -36,7 +38,7 @@ public class QueryMapper implements Closeable {
 	protected final Context context;
 
 	protected QueryMapper(Connection conn, String jndiName, ResultSetMapper cm) {
-		this.cm = cm == null ? new ResultSetMapper() : cm;
+		this.cm = cm == null ? defaultRsm : cm;
 		Context context = null;
 		if (conn == null && jndiName != null)
 			try {
@@ -160,8 +162,8 @@ public class QueryMapper implements Closeable {
 			ps.setClob(index, (Reader) o);
 		else if (o instanceof ClobString)
 			ps.setClob(index, ((ClobString) o).s == null ? null : new StringReader(((ClobString) o).s));
-		else if (o instanceof Clob)
-			ps.setClob(index, (Clob) o);
+		else if (o instanceof java.sql.Clob)
+			ps.setClob(index, (java.sql.Clob) o);
 			// BLOB support
 		else if (o instanceof byte[])
 			ps.setBlob(index, new ByteArrayInputStream((byte[]) o));
@@ -179,8 +181,8 @@ public class QueryMapper implements Closeable {
 			} catch (UnsupportedEncodingException e) {
 				throw new SQLException("String to Blob UnsupportedEncodingException", e);
 			}
-		else if (o instanceof Blob)
-			ps.setBlob(index, (Blob) o);
+		else if (o instanceof java.sql.Blob)
+			ps.setBlob(index, (java.sql.Blob) o);
 		else if (o instanceof ArrayInList.ArrayListObject)
 			ps.setArray(index, ((ArrayInList.ArrayListObject) o).getArray());
 		else
