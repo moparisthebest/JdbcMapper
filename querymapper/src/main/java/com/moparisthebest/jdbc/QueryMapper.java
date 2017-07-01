@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.*;
 //IFJAVA8_START
+import java.time.*;
 import java.util.stream.Stream;
 //IFJAVA8_END
 
@@ -137,6 +138,23 @@ public class QueryMapper implements Closeable {
 			// java.util.Date support, put it in a Timestamp
 		else if (o instanceof java.util.Date)
 			ps.setObject(index, o.getClass().equals(java.util.Date.class) ? new java.sql.Timestamp(((java.util.Date)o).getTime()) : o);
+		//IFJAVA8_START// todo: other java.time types
+		else if (o instanceof Instant)
+			ps.setObject(index, java.sql.Timestamp.from((Instant)o));
+		else if (o instanceof LocalDateTime)
+			ps.setObject(index, java.sql.Timestamp.valueOf((LocalDateTime)o));
+		else if (o instanceof LocalDate)
+			ps.setObject(index, java.sql.Date.valueOf((LocalDate)o));
+		else if (o instanceof LocalTime)
+			ps.setObject(index, java.sql.Time.valueOf((LocalTime)o));
+		else if (o instanceof ZonedDateTime)
+			ps.setObject(index, java.sql.Timestamp.from(((ZonedDateTime)o).toInstant()));
+		else if (o instanceof OffsetDateTime)
+			ps.setObject(index, java.sql.Timestamp.from(((OffsetDateTime)o).toInstant()));
+		else if (o instanceof OffsetTime)
+			ps.setObject(index, java.sql.Time.valueOf(((OffsetTime)o).toLocalTime())); // todo: no timezone?
+
+		//IFJAVA8_END
 			// CLOB support
 		else if (o instanceof Reader)
 			ps.setClob(index, (Reader) o);
