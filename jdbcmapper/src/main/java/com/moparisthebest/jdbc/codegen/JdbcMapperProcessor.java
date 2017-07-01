@@ -36,7 +36,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType;
 	//IFJAVA8_START
-	private TypeMirror instantType;
+	private TypeMirror instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
 	//IFJAVA8_END
 	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
@@ -65,6 +65,12 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		calendarType = elements.getTypeElement(Calendar.class.getCanonicalName()).asType();
 		//IFJAVA8_START
 		instantType = elements.getTypeElement(Instant.class.getCanonicalName()).asType();
+		localDateTimeType = elements.getTypeElement(LocalDateTime.class.getCanonicalName()).asType();
+		localDateType = elements.getTypeElement(LocalDate.class.getCanonicalName()).asType();
+		localTimeType = elements.getTypeElement(LocalTime.class.getCanonicalName()).asType();
+		zonedDateTimeType = elements.getTypeElement(ZonedDateTime.class.getCanonicalName()).asType();
+		offsetDateTimeType = elements.getTypeElement(OffsetDateTime.class.getCanonicalName()).asType();
+		offsetTimeType = elements.getTypeElement(OffsetTime.class.getCanonicalName()).asType();
 		//IFJAVA8_END
 		// throws NPE:
 		//byteArrayType = elements.getTypeElement(byte[].class.getCanonicalName()).asType();
@@ -587,10 +593,24 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					variableName = variableName + " == null ? null : new java.sql.Timestamp(" + variableName + ".getTime())";
 			}
 			//IFJAVA8_START
-			// todo: other java.time types
 			else if (types.isAssignable(o, instantType)) {
 				method = "Object";
-				variableName = variableName + " == null ? null : new java.sql.Timestamp(" + variableName + ".toEpochMilli())";
+				variableName = variableName + " == null ? null : java.sql.Timestamp.from(" + variableName + ")";
+			} else if (types.isAssignable(o, localDateTimeType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : java.sql.Timestamp.valueOf(" + variableName + ")";
+			} else if (types.isAssignable(o, localDateType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : java.sql.Date.valueOf(" + variableName + ")";
+			} else if (types.isAssignable(o, localTimeType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : java.sql.Time.valueOf(" + variableName + ")";
+			} else if (types.isAssignable(o, zonedDateTimeType) || types.isAssignable(o, offsetDateTimeType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : java.sql.Timestamp.from(" + variableName + ".toInstant())";
+			} else if (types.isAssignable(o, offsetTimeType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : java.sql.Time.valueOf(" + variableName + ".toLocalTime())";
 			}
 			//IFJAVA8_END
 				// CLOB support
