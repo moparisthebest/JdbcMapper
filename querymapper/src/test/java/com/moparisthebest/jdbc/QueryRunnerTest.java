@@ -19,15 +19,25 @@ public class QueryRunnerTest {
 		public Connection create() throws SQLException {
 			return QueryMapperTest.getConnection();
 		}
-	}));
+	}), QueryRunner.fixedDelay(5));
 
 	private void testPerson(final Person expected, final String query) throws Throwable {
-		final Person actual = qr.runInTransaction(new QueryRunner.Runner<QueryMapper, Person>() {
+		final Person actual =
+				//qr.run(
+				//qr.runRetry(
+				qr.runRetryFuture(
+				new QueryRunner.Runner<QueryMapper, Person>() {
 			@Override
 			public Person run(final QueryMapper qm) throws SQLException {
+				if(Math.random() < 0.5) {
+					System.out.println("fake fail");
+					throw new SQLException("fake 50% failure rate");
+				}
 				return qm.toObject(query, expected.getClass(), expected.getPersonNo());
 			}
-		});
+		})
+				.get()
+				;
 		/*
 		System.out.println("expected: " + expected);
 		System.out.println("actual:   " + actual);
