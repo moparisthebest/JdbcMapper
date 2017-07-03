@@ -2,10 +2,16 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Factory;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import static com.moparisthebest.jdbc.TryClose.tryClose;
 
 /**
  * Created by mopar on 5/24/17.
@@ -47,6 +53,68 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 		}
 	}
 
+	public static Factory<Connection> connectionFactory(final DataSource dataSource) {
+		if (dataSource == null)
+			throw new NullPointerException("dataSource must be non-null");
+		return
+				//IFJAVA8_START
+				dataSource::getConnection
+				//IFJAVA8_END
+				/*IFJAVA6_START
+				new Factory<Connection>() {
+					@Override
+					public Connection create() throws SQLException {
+						return dataSource.getConnection();
+					}
+				}
+				IFJAVA6_END*/
+				;
+	}
+
+	public static Factory<Connection> connectionFactorySingleLookup(final String jndiName) {
+		if (jndiName == null)
+			throw new NullPointerException("jndiName must be non-null");
+		Context context = null;
+		try {
+			context = new InitialContext();
+			return connectionFactory((DataSource) context.lookup(jndiName));
+		} catch (NamingException e) {
+			throw new RuntimeException("JNDI lookup failed to create connection", e);
+		} finally {
+			tryClose(context);
+		}
+	}
+
+	public static Factory<Connection> connectionFactory(final String jndiName) {
+		if (jndiName == null)
+			throw new NullPointerException("jndiName must be non-null");
+		return
+		/*IFJAVA6_START
+			new Factory<Connection>() {
+				@Override
+				public Connection create() throws SQLException
+		IFJAVA6_END*/
+		//IFJAVA8_START
+			() ->
+		//IFJAVA8_END
+				{
+					Context context = null;
+					try {
+						context = new InitialContext();
+						final DataSource ds = (DataSource) context.lookup(jndiName);
+						return ds.getConnection();
+					} catch (NamingException e) {
+						throw new RuntimeException("JNDI lookup failed to create connection", e);
+					} finally {
+						tryClose(context);
+					}
+				}
+		/*IFJAVA6_START
+			}
+		IFJAVA6_END*/
+		;
+	}
+
 	private final Constructor<? extends T> constructor;
 	private final Object[] args;
 
@@ -60,16 +128,16 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 	}
 
 	public JdbcMapperFactory(final Constructor<? extends T> constructor, final Object... args) {
-		if(constructor == null)
+		if (constructor == null)
 			throw new NullPointerException("constructor must be non-null");
 		this.constructor = constructor;
 		this.args = args;
 	}
 
 	public JdbcMapperFactory(final Class<T> queryMapperClass, final Factory<Connection> connectionFactory) {
-		if(queryMapperClass == null)
+		if (queryMapperClass == null)
 			throw new NullPointerException("queryMapperClass must be non-null");
-		if(connectionFactory == null)
+		if (connectionFactory == null)
 			throw new NullPointerException("connectionFactory must be non-null");
 		try {
 			this.constructor = queryMapperClass.getConstructor(Factory.class);
@@ -80,9 +148,9 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 	}
 
 	public JdbcMapperFactory(final Class<T> queryMapperClass, final String jndiName) {
-		if(queryMapperClass == null)
+		if (queryMapperClass == null)
 			throw new NullPointerException("queryMapperClass must be non-null");
-		if(jndiName == null)
+		if (jndiName == null)
 			throw new NullPointerException("jndiName must be non-null");
 		try {
 			this.constructor = queryMapperClass.getConstructor(String.class);
