@@ -19,7 +19,7 @@ public class QueryRunnerTest {
 		public Connection create() throws SQLException {
 			return QueryMapperTest.getConnection();
 		}
-	}), QueryRunner.fixedDelay(5));
+	}), QueryRunner.withJitter(QueryRunner.fixedDelay(5), 5));
 
 	private void testPerson(final Person expected, final String query) throws Throwable {
 		final Person actual =

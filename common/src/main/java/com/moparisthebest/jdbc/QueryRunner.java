@@ -164,6 +164,12 @@ public class QueryRunner<T extends JdbcMapper> {
 
 	public static interface DelayStrategy {
 		long getDelay(int attempt);
+
+		//IFJAVA8_START
+		default DelayStrategy withJitter(final int maxJitterMs) {
+			return QueryRunner.withJitter(this, maxJitterMs);
+		}
+		//IFJAVA8_END
 	}
 
 	public static DelayStrategy exponentialBackoff() {
@@ -225,6 +231,24 @@ public class QueryRunner<T extends JdbcMapper> {
 			(attempt) ->
 		//IFJAVA8_END
 						initialInterval + incrementalInterval * attempt;
+		/*IFJAVA6_START
+			}
+		};
+		IFJAVA6_END*/
+	}
+
+	public static DelayStrategy withJitter(final DelayStrategy toWrap, final int maxJitterMs) {
+		return
+		/*IFJAVA6_START
+			new DelayStrategy() {
+			@Override
+			public long getDelay(final int attempt) {
+				return
+		IFJAVA6_END*/
+		//IFJAVA8_START
+				(attempt) ->
+		//IFJAVA8_END
+						toWrap.getDelay(attempt) + ThreadLocalRandom.current().nextInt(maxJitterMs);
 		/*IFJAVA6_START
 			}
 		};
