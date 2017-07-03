@@ -218,6 +218,9 @@
                                 <excludes>
                                     <exclude>target/**</exclude>
                                 </excludes>
+                                <regexFlags>
+                                    <regexFlag>LITERAL</regexFlag>
+                                </regexFlags>
                                 <replacements>
                                     <replacement>
                                         <token>//IFJAVA8_START</token>
@@ -226,6 +229,14 @@
                                     <replacement>
                                         <token>//IFJAVA8_END</token>
                                         <value>IFJAVA8_END*/</value>
+                                    </replacement>
+                                    <replacement>
+                                        <token>/*IFJAVA6_START</token>
+                                        <value>//IFJAVA6_START</value>
+                                    </replacement>
+                                    <replacement>
+                                        <token>IFJAVA6_END*/</token>
+                                        <value>//IFJAVA6_END</value>
                                     </replacement>
                                 </replacements>
                             </configuration>

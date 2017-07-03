@@ -14,7 +14,7 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
 public class QueryRunner<T extends JdbcMapper> {
 
 	private static final int defaultRetryCount = 10;
-	private static final DelayStrategy defaultDelayStrategy = exponentialBackoff(1000, 30000, 2000);
+	private static final DelayStrategy defaultDelayStrategy = exponentialBackoff(1000, 30000, 2000, 10);
 	private static final ExecutorService defaultExecutorService = Executors.newCachedThreadPool(); // todo: good or bad default?
 
 	private final Factory<T> factory;
@@ -117,23 +117,30 @@ public class QueryRunner<T extends JdbcMapper> {
 			} catch (SQLException e) {
 				lastException = e;
 				try {
-					Thread.sleep(delayStrategy.getDelay(x));
+					Thread.sleep(delayStrategy.getDelay(++x));
 				} catch (InterruptedException e2) {
 					Thread.interrupted();
 				}
 			}
-		} while (++x <= retryCount);
+		} while (x <= retryCount);
 		throw lastException;
 	}
 
 	public <E> Future<E> runRetryFuture(final Runner<T, E> query) {
 		// todo: sleeps in thread, could use ScheduledExecutorService maybe?
-		return executorService.submit(new Callable<E>() {
-			@Override
-			public E call() throws Exception {
-				return runRetry(query);
-			}
-		});
+		return executorService.submit(
+				//IFJAVA8_START
+				() -> runRetry(query)
+				//IFJAVA8_END
+				/*IFJAVA6_START
+				new Callable<E>() {
+					@Override
+					public E call() throws Exception {
+						return runRetry(query);
+					}
+				}
+				IFJAVA6_END*/
+		);
 	}
 
 	//IFJAVA8_START
@@ -170,31 +177,74 @@ public class QueryRunner<T extends JdbcMapper> {
 	 *
 	 * @author Robert Buck (buck.robert.j@gmail.com)
 	 */
-	public static DelayStrategy exponentialBackoff(final long minBackoff, final long maxBackoff, final long slotTime) {
-		return new DelayStrategy() {
+	public static DelayStrategy exponentialBackoff(final long minBackoff, final long maxBackoff, final long slotTime, final long maxContentionPeriods) {
+		return
+		/*IFJAVA6_START
+			new DelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
-				final int MAX_CONTENTION_PERIODS = 10;
-				return attempt == 0 ? 0 : Math.min(minBackoff + ThreadLocalRandom.current().nextInt(2 << Math.min(attempt, MAX_CONTENTION_PERIODS - 1)) * slotTime, maxBackoff);
+				return
+		IFJAVA6_END*/
+		//IFJAVA8_START
+			(attempt) ->
+		//IFJAVA8_END
+						attempt == 0 ? 0 : Math.min(minBackoff + ThreadLocalRandom.current().nextInt(2 << Math.min(attempt, maxContentionPeriods - 1)) * slotTime, maxBackoff);
+		/*IFJAVA6_START
 			}
 		};
+		IFJAVA6_END*/
 	}
 
 	public static DelayStrategy fixedDelay(final long delay) {
-		return new DelayStrategy() {
+		return
+		/*IFJAVA6_START
+			new DelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
-				return delay;
+				return
+		IFJAVA6_END*/
+		//IFJAVA8_START
+			(attempt) ->
+		//IFJAVA8_END
+						delay;
+		/*IFJAVA6_START
 			}
 		};
+		IFJAVA6_END*/
 	}
 
 	public static DelayStrategy incrementalDelay(final long initialInterval, final long incrementalInterval) {
-		return new DelayStrategy() {
+		return
+		/*IFJAVA6_START
+			new DelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
-				return initialInterval + incrementalInterval * attempt;
+				return
+		IFJAVA6_END*/
+		//IFJAVA8_START
+			(attempt) ->
+		//IFJAVA8_END
+						initialInterval + incrementalInterval * attempt;
+		/*IFJAVA6_START
 			}
 		};
+		IFJAVA6_END*/
 	}
+
+	/*IFJAVA6_START
+	// terrible, I know, use java8
+	private static class ThreadLocalRandom {
+		private static final ThreadLocal<java.util.Random> randomThreadLocal = new ThreadLocal<java.util.Random>() {
+			@Override
+			protected java.util.Random initialValue() {
+				return new java.util.Random();
+			}
+		};
+
+		private static java.util.Random current() {
+			return randomThreadLocal.get();
+		}
+	}
+	IFJAVA6_END*/
+
 }

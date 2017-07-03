@@ -25,8 +25,8 @@ public class QueryRunnerTest {
 		final Person actual =
 				//qr.run(
 				//qr.runRetry(
-				//qr.runRetryFuture(
-				qr.runRetryCompletableFuture(
+				qr.runRetryFuture(
+				//qr.runRetryCompletableFuture(
 				new QueryRunner.Runner<QueryMapper, Person>() {
 			@Override
 			public Person run(final QueryMapper qm) throws SQLException {
