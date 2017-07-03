@@ -14,7 +14,7 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
 public class QueryRunner<T extends JdbcMapper> {
 
 	private static final int defaultRetryCount = 10;
-	private static final DelayStrategy defaultDelayStrategy = new ExponentialBackoff();
+	private static final DelayStrategy defaultDelayStrategy = exponentialBackoff(1000, 30000, 2000);
 	private static final ExecutorService defaultExecutorService = Executors.newCachedThreadPool(); // todo: good or bad default?
 
 	private final Factory<T> factory;
@@ -136,6 +136,21 @@ public class QueryRunner<T extends JdbcMapper> {
 		});
 	}
 
+	//IFJAVA8_START
+
+	public <E> CompletableFuture<E> runRetryCompletableFuture(final Runner<T, E> query) {
+		// todo: sleeps in thread, could use ScheduledExecutorService maybe?
+		return CompletableFuture.supplyAsync(() -> {
+			try {
+				return runRetry(query);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}, executorService);
+	}
+
+	//IFJAVA8_END
+
 	public static interface Runner<T, E> {
 		E run(T dao) throws SQLException;
 	}
@@ -148,18 +163,6 @@ public class QueryRunner<T extends JdbcMapper> {
 		return defaultDelayStrategy;
 	}
 
-	public static DelayStrategy exponentialBackoff(long minBackoff, long maxBackoff, long slotTime) {
-		return new ExponentialBackoff(minBackoff, maxBackoff, slotTime);
-	}
-
-	public static DelayStrategy fixedDelay(long delay) {
-		return new FixedDelay(delay);
-	}
-
-	public static DelayStrategy incrementalDelay(long initialInterval, long incrementalInterval) {
-		return new IncrementalDelay(initialInterval, incrementalInterval);
-	}
-
 	/**
 	 * Implements truncated binary exponential backoff to calculate retry delay per
 	 * IEEE 802.3-2008 Section 1. There will be at most ten (10) contention periods
@@ -167,60 +170,31 @@ public class QueryRunner<T extends JdbcMapper> {
 	 *
 	 * @author Robert Buck (buck.robert.j@gmail.com)
 	 */
-	private static class ExponentialBackoff implements DelayStrategy {
-
-		public static final long DEFAULT_MIN_BACKOFF = TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS);
-		public static final long DEFAULT_MAX_BACKOFF = TimeUnit.MILLISECONDS.convert(30, TimeUnit.SECONDS);
-		public static final long DEFAULT_SLOT_TIME = TimeUnit.MILLISECONDS.convert(2, TimeUnit.SECONDS);
-
-		private final long minBackoff;
-		private final long maxBackoff;
-		private final long slotTime;
-
-		private ExponentialBackoff() {
-			this(DEFAULT_MIN_BACKOFF, DEFAULT_MAX_BACKOFF, DEFAULT_SLOT_TIME);
-		}
-
-		private ExponentialBackoff(long minBackoff, long maxBackoff, long slotTime) {
-			this.minBackoff = minBackoff;
-			this.maxBackoff = maxBackoff;
-			this.slotTime = slotTime;
-		}
-
-		@Override
-		public long getDelay(final int retryCount) {
-			final int MAX_CONTENTION_PERIODS = 10;
-			return retryCount == 0 ? 0 : Math.min(minBackoff + ThreadLocalRandom.current().nextInt(2 << Math.min(retryCount, MAX_CONTENTION_PERIODS - 1)) * slotTime, maxBackoff);
-		}
+	public static DelayStrategy exponentialBackoff(final long minBackoff, final long maxBackoff, final long slotTime) {
+		return new DelayStrategy() {
+			@Override
+			public long getDelay(final int attempt) {
+				final int MAX_CONTENTION_PERIODS = 10;
+				return attempt == 0 ? 0 : Math.min(minBackoff + ThreadLocalRandom.current().nextInt(2 << Math.min(attempt, MAX_CONTENTION_PERIODS - 1)) * slotTime, maxBackoff);
+			}
+		};
 	}
 
-	private static class FixedDelay implements DelayStrategy {
-		private final long delay;
-
-		private FixedDelay(final long delay) {
-			this.delay = delay;
-		}
-
-		@Override
-		public long getDelay(final int attempt) {
-			return delay;
-		}
+	public static DelayStrategy fixedDelay(final long delay) {
+		return new DelayStrategy() {
+			@Override
+			public long getDelay(final int attempt) {
+				return delay;
+			}
+		};
 	}
 
-	private static class IncrementalDelay implements DelayStrategy {
-
-		private final long initialInterval;
-		private final long incrementalInterval;
-
-		private IncrementalDelay(long initialInterval, long incrementalInterval) {
-			this.initialInterval = initialInterval;
-			this.incrementalInterval = incrementalInterval;
-		}
-
-		@Override
-		public long getDelay(final int attempt) {
-			return initialInterval + incrementalInterval * attempt;
-		}
+	public static DelayStrategy incrementalDelay(final long initialInterval, final long incrementalInterval) {
+		return new DelayStrategy() {
+			@Override
+			public long getDelay(final int attempt) {
+				return initialInterval + incrementalInterval * attempt;
+			}
+		};
 	}
-
 }

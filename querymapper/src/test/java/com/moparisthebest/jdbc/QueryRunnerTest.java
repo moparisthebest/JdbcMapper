@@ -25,7 +25,8 @@ public class QueryRunnerTest {
 		final Person actual =
 				//qr.run(
 				//qr.runRetry(
-				qr.runRetryFuture(
+				//qr.runRetryFuture(
+				qr.runRetryCompletableFuture(
 				new QueryRunner.Runner<QueryMapper, Person>() {
 			@Override
 			public Person run(final QueryMapper qm) throws SQLException {
@@ -37,6 +38,8 @@ public class QueryRunnerTest {
 			}
 		})
 				.get()
+				//.join()
+				//.thenAccept(actual -> Assert.assertEquals(expected, actual))
 				;
 		/*
 		System.out.println("expected: " + expected);
