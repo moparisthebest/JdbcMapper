@@ -1,13 +1,10 @@
 package com.moparisthebest.jdbc;
 
 import com.moparisthebest.jdbc.codegen.JdbcMapper;
+import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.io.*;
-import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.*;
 //IFJAVA8_START
@@ -22,27 +19,16 @@ public class QueryMapper implements JdbcMapper {
 	public static final Object noBind = new Object();
 	public static final ResultSetMapper defaultRsm = new ResultSetMapper();
 
-	static {
-		try{
-			final Class<?> ensureContext = Class.forName(System.getProperty("QueryMapper.ensureContext.class", "com.gcl.containerless.EnsureContext"));
-			final Method method = ensureContext.getMethod(System.getProperty("QueryMapper.ensureContext.method", "setup"));
-			method.invoke(null);
-		}catch(Throwable e){
-			// ignore
-			//e.printStackTrace();
-		}
-	}
-
 	protected final ResultSetMapper cm;
 	protected final Connection conn;
-	protected final Context context;
 	protected final boolean closeConn;
 
-	protected QueryMapper(Connection conn, final String jndiName, final Factory<Connection> factory, final ResultSetMapper cm) {
+	protected QueryMapper(Connection conn, final String jndiName, Factory<Connection> factory, final ResultSetMapper cm) {
 		this.cm = cm == null ? defaultRsm : cm;
 		boolean closeConn = false;
-		Context context = null;
 		if(conn == null) {
+			if(factory == null && jndiName != null)
+				factory = JdbcMapperFactory.connectionFactory(jndiName);
 			if (factory != null) {
 				try {
 					conn = factory.create();
@@ -50,21 +36,11 @@ public class QueryMapper implements JdbcMapper {
 				} catch (SQLException e) {
 					throw new RuntimeException("factory failed to create connection", e);
 				}
-			} else if (jndiName != null)
-				try {
-					context = new InitialContext();
-					DataSource ds = (DataSource) context.lookup(jndiName);
-					conn = ds.getConnection();
-					closeConn = true;
-				} catch (Throwable e) {
-					tryClose(context);
-					throw new RuntimeException("JNDI lookup failed to create connection", e);
-				}
+			}
 		}
 		if (conn == null)
 			throw new NullPointerException("Connection needs to be non-null for QueryMapper...");
 		this.conn = conn;
-		this.context = context;
 		this.closeConn = closeConn;
 	}
 
@@ -98,7 +74,6 @@ public class QueryMapper implements JdbcMapper {
 	protected QueryMapper() {
 		this.cm = null;
 		this.conn = null;
-		this.context = null;
 		this.closeConn = false;
 	}
 
@@ -106,7 +81,6 @@ public class QueryMapper implements JdbcMapper {
 	public void close() {
 		if (closeConn) {
 			tryClose(conn);
-			tryClose(context);
 		}
 	}
 

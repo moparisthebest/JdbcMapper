@@ -8,6 +8,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -20,9 +22,23 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 
 	static final String SUFFIX = "Bean";
 
+	static {
+		try{
+			final Class<?> ensureContext = Class.forName(System.getProperty("QueryMapper.ensureContext.class", System.getProperty("JdbcMapper.ensureContext.class", "com.gcl.containerless.EnsureContext")));
+			final Method method = ensureContext.getMethod(System.getProperty("QueryMapper.ensureContext.method", System.getProperty("JdbcMapper.ensureContext.method", "setup")));
+			method.invoke(null);
+		}catch(Throwable e){
+			// ignore
+			//e.printStackTrace();
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getImplementationClass(final Class<T> jdbcMapper) throws ClassNotFoundException {
-		return (Class<? extends T>) Class.forName(jdbcMapper.getName() + SUFFIX);
+		if(jdbcMapper.isInterface() || Modifier.isAbstract(jdbcMapper.getModifiers()))
+			return (Class<? extends T>) Class.forName(jdbcMapper.getName() + SUFFIX);
+		else
+			return jdbcMapper;
 	}
 
 	public static <T> Constructor<? extends T> getConnectionConstructor(final Class<T> jdbcMapper) throws ClassNotFoundException, NoSuchMethodException {
@@ -40,6 +56,14 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 	public static <T> T create(final Class<T> jdbcMapper, final Connection connection) {
 		try {
 			return getConnectionConstructor(jdbcMapper).newInstance(connection);
+		} catch (Throwable e) {
+			throw new RuntimeException("could not create JdbcMapper, did the processor run at compile time?", e);
+		}
+	}
+
+	public static <T> T create(final Class<T> jdbcMapper, final Factory<Connection> connectionFactory) {
+		try {
+			return getFactoryConstructor(jdbcMapper).newInstance(connectionFactory);
 		} catch (Throwable e) {
 			throw new RuntimeException("could not create JdbcMapper, did the processor run at compile time?", e);
 		}
@@ -115,10 +139,22 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 		;
 	}
 
+	public static <T> Factory<T> of(final Class<T> jdbcMapper) {
+		return new JdbcMapperFactory<T>(jdbcMapper);
+	}
+
+	public static <T> Factory<T> of(final Class<T> jdbcMapper, final Factory<Connection> connectionFactory) {
+		return new JdbcMapperFactory<T>(jdbcMapper, connectionFactory);
+	}
+
+	public static <T> Factory<T> of(final Class<T> jdbcMapper, final String jndiName) {
+		return of(jdbcMapper, connectionFactory(jndiName));
+	}
+
 	private final Constructor<? extends T> constructor;
 	private final Object[] args;
 
-	public JdbcMapperFactory(final Class<T> jdbcMapper) {
+	private JdbcMapperFactory(final Class<T> jdbcMapper) {
 		try {
 			this.constructor = getDefaultConstructor(jdbcMapper);
 			this.args = null;
@@ -127,37 +163,17 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 		}
 	}
 
-	public JdbcMapperFactory(final Constructor<? extends T> constructor, final Object... args) {
-		if (constructor == null)
-			throw new NullPointerException("constructor must be non-null");
-		this.constructor = constructor;
-		this.args = args;
-	}
-
-	public JdbcMapperFactory(final Class<T> queryMapperClass, final Factory<Connection> connectionFactory) {
-		if (queryMapperClass == null)
-			throw new NullPointerException("queryMapperClass must be non-null");
+	private JdbcMapperFactory(final Class<T> jdbcMapper, final Factory<Connection> connectionFactory) {
+		if (jdbcMapper == null)
+			throw new NullPointerException("jdbcMapper must be non-null");
 		if (connectionFactory == null)
 			throw new NullPointerException("connectionFactory must be non-null");
 		try {
-			this.constructor = queryMapperClass.getConstructor(Factory.class);
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException("queryMapperClass must have a constructor that takes Factory<Connection>", e);
+			this.constructor = getFactoryConstructor(jdbcMapper);
+		} catch (Throwable e) {
+			throw new RuntimeException("jdbcMapper must have a constructor that takes Factory<Connection>", e);
 		}
 		this.args = new Object[]{connectionFactory};
-	}
-
-	public JdbcMapperFactory(final Class<T> queryMapperClass, final String jndiName) {
-		if (queryMapperClass == null)
-			throw new NullPointerException("queryMapperClass must be non-null");
-		if (jndiName == null)
-			throw new NullPointerException("jndiName must be non-null");
-		try {
-			this.constructor = queryMapperClass.getConstructor(String.class);
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException("queryMapperClass must have a constructor that takes String", e);
-		}
-		this.args = new Object[]{jndiName};
 	}
 
 	@Override

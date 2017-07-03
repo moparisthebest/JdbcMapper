@@ -28,7 +28,7 @@ import java.time.*;
 //		, sqlParser = SimpleSQLParser.class
 		, allowReflection = JdbcMapper.OptionalBool.TRUE
 )
-public interface PersonDAO extends Closeable {
+public interface PersonDAO extends JdbcMapper {
 
 	@JdbcMapper.SQL("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)")
 	void createTablePerson();

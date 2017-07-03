@@ -14,7 +14,7 @@ import static com.moparisthebest.jdbc.QueryMapperTest.*;
  * Created by mopar on 7/1/17.
  */
 public class QueryRunnerTest {
-	public static final QueryRunner<QueryMapper> qr = QueryRunner.withRetry(new JdbcMapperFactory<QueryMapper>(QueryMapper.class, new Factory<Connection>() {
+	public static final QueryRunner<QueryMapper> qr = QueryRunner.withRetry(JdbcMapperFactory.of(QueryMapper.class, new Factory<Connection>() {
 		@Override
 		public Connection create() throws SQLException {
 			return QueryMapperTest.getConnection();

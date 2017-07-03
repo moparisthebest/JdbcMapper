@@ -149,10 +149,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(packageName);
 							w.write(";\n\n");
 						}
-						if (doJndi) {
-							w.write("import javax.naming.InitialContext;\n");
-							w.write("import javax.sql.DataSource;\n");
-						}
+						w.write("import com.moparisthebest.jdbc.Factory;\n\n");
 						w.write("import java.sql.*;\n\n");
 						w.write("import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n");
 						w.write("import static com.moparisthebest.jdbc.TryClose.tryClose;\n\n");
@@ -164,36 +161,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(" extends ");
 						}
 						w.write(genClass.getSimpleName().toString());
-						w.write(" {\n\n\tprivate final Connection conn;\n");
+						w.write(" {\n\n\tprivate final Connection conn;\n\tprivate final boolean closeConn;\n\n");
 						if (doJndi) {
-							w.write("\tprivate final InitialContext ctx;\n\n\tpublic ");
+							w.write("\tprivate static final Factory<Connection> _conFactory = com.moparisthebest.jdbc.codegen.JdbcMapperFactory.connectionFactory(\"");
+							w.append(mapper.jndiName()).append("\");\n\n\tpublic ");
 							w.write(className);
-							w.write("() {\n\t\tthis(null);\n\t}\n");
+							w.write("() throws SQLException {\n\t\tthis(_conFactory);\n\t}\n");
 						}
 						w.write("\n\tpublic ");
 						w.write(className);
-						w.write("(Connection conn) {\n\t\t");
-						if (doJndi) {
-							w.write("InitialContext ctx = null;\n" +
-									"\t\tif (conn == null)\n" +
-									"\t\t\ttry {\n" +
-									"\t\t\t\tctx = new InitialContext();\n" +
-									"\t\t\t\tDataSource ds = (DataSource) ctx.lookup(\"");
-							w.write(mapper.jndiName()); // todo: escape this? I don't think anyone needs that, for now...
-							w.write("\");\n" +
-									"\t\t\t\tconn = ds.getConnection();\n" +
-									"\t\t\t} catch (Throwable e) {\n" +
-									"\t\t\t\ttryClose(ctx);\n" +
-									"\t\t\t\ttryClose(conn);\n" +
-									"\t\t\t\tthrow new RuntimeException(e);\n" +
-									"\t\t\t}\n" +
-									"\t\tthis.conn = conn;\n" +
-									"\t\tthis.ctx = ctx;"
-							);
-						} else {
-							w.write("this.conn = conn;");
-						}
-						w.write("\n\t\tif (this.conn == null)\n" +
+						w.write("(Connection conn) {\n\t\tthis.conn = conn;\n\t\tthis.closeConn = false;\n\t\tif (this.conn == null)\n" +
 								"\t\t\tthrow new NullPointerException(\"Connection needs to be non-null for JdbcMapper...\");\n\t}\n" +
 								"\n\tpublic Connection getConnection() {\n\t\treturn this.conn;\n\t}\n"
 						);
@@ -458,10 +435,22 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							if (cachedPreparedStatements > 0)
 								w.write("\t\tfor(final PreparedStatement ps : psCache)\n\t\t\ttryClose(ps);\n");
 							if (doJndi)
-								w.write("\t\ttryClose(ctx);\n\t\tif(ctx != null)\n\t\t\ttryClose(conn);\n");
+								w.write("\t\tif(closeConn)\n\t\t\ttryClose(conn);\n");
 							if (closeMethod.getEnclosingElement().getKind() != ElementKind.INTERFACE && !closeMethod.getEnclosingElement().equals(genClass))
 								w.write("\t\tsuper.close();\n");
 							w.write("\t}\n");
+
+							// and we can create constructors that set closeConn to true!
+							w.write("\n\tpublic ");
+							w.write(className);
+							w.write("(final Factory<Connection> connectionFactory) throws SQLException {\n\t\tthis.conn = connectionFactory.create();\n\t\tthis.closeConn = true;\n\t\tif (this.conn == null)\n" +
+									"\t\t\tthrow new NullPointerException(\"Connection needs to be non-null for JdbcMapper...\");\n\t}\n"
+							);
+
+							w.write("\n\tpublic ");
+							w.write(className);
+							w.write("(final String jndiName) throws SQLException {\n\t\tthis(com.moparisthebest.jdbc.codegen.JdbcMapperFactory.connectionFactory(jndiName));\n\t}\n"
+							);
 						}
 						// end close method
 
