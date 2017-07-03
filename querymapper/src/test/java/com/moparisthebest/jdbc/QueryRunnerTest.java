@@ -14,14 +14,15 @@ import static com.moparisthebest.jdbc.QueryMapperTest.*;
  * Created by mopar on 7/1/17.
  */
 public class QueryRunnerTest {
-	public static final QueryRunner<QueryMapper> qr = new QueryRunner<QueryMapper>(new JdbcMapperFactory<QueryMapper>(QueryMapper.class, new Factory<Connection>() {
+	public static final QueryRunner<QueryMapper> qr = QueryRunner.withRetry(new JdbcMapperFactory<QueryMapper>(QueryMapper.class, new Factory<Connection>() {
 		@Override
 		public Connection create() throws SQLException {
 			return QueryMapperTest.getConnection();
 		}
-	}), QueryRunner.withJitter(QueryRunner.fixedDelay(5), 5));
+	}), 10, QueryRunner.fixedDelay(5).withJitter(5));
 
 	private void testPerson(final Person expected, final String query) throws Throwable {
+		//final QueryRunner<ListQueryMapper> lqr = qr.withFactory(() -> new ListQueryMapper(QueryMapperTest::getConnection));
 		final Person actual =
 				//qr.run(
 				//qr.runRetry(

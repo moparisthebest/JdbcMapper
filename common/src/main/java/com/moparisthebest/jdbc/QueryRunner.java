@@ -13,52 +13,70 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
  */
 public class QueryRunner<T extends JdbcMapper> {
 
-	private static final int defaultRetryCount = 10;
 	private static final DelayStrategy defaultDelayStrategy = exponentialBackoff(1000, 30000, 2000, 10);
-	private static final ExecutorService defaultExecutorService = Executors.newCachedThreadPool(); // todo: good or bad default?
+	private static final ExecutorService defaultExecutorService =
+			Executors.newCachedThreadPool()
+			//ForkJoinPool.commonPool()
+			; // todo: good or bad default?
 
 	private final Factory<T> factory;
 	private final DelayStrategy delayStrategy;
 	private final int retryCount;
 	private final ExecutorService executorService;
 
-	public QueryRunner(final Factory<T> factory, final DelayStrategy delayStrategy, final ExecutorService executorService, final int retryCount) {
+	private QueryRunner(final Factory<T> factory, final int retryCount, final DelayStrategy delayStrategy, final ExecutorService executorService) {
 		if (factory == null)
 			throw new NullPointerException("factory must be non-null");
 		if (delayStrategy == null)
 			throw new NullPointerException("delayStrategy must be non-null");
 		if (executorService == null)
 			throw new NullPointerException("executorService must be non-null");
-		if (retryCount < 1)
-			throw new IllegalArgumentException("retryCount must be > 0");
+		if (retryCount < 0)
+			throw new IllegalArgumentException("retryCount must be >= 0");
 		this.factory = factory;
 		this.delayStrategy = delayStrategy;
 		this.retryCount = retryCount;
-		this.executorService = Executors.newSingleThreadExecutor();
+		this.executorService = executorService;
 	}
 
-	public QueryRunner(final Factory<T> factory) {
-		this(factory, defaultDelayStrategy, defaultExecutorService, defaultRetryCount);
+	public static <T extends JdbcMapper> QueryRunner<T> noRetry(final Factory<T> factory, final ExecutorService executorService) {
+		return new QueryRunner<T>(factory, 0, defaultDelayStrategy, executorService);
 	}
 
-	public QueryRunner(final Factory<T> factory, final DelayStrategy delayStrategy) {
-		this(factory, delayStrategy, defaultExecutorService, defaultRetryCount);
+	public static <T extends JdbcMapper> QueryRunner<T> noRetry(final Factory<T> factory) {
+		return noRetry(factory, defaultExecutorService);
 	}
 
-	public QueryRunner(final Factory<T> factory, final int retryCount) {
-		this(factory, defaultDelayStrategy, defaultExecutorService, retryCount);
+	public static <T extends JdbcMapper> QueryRunner<T> withRetry(final Factory<T> factory, final int retryCount, final DelayStrategy delayStrategy, final ExecutorService executorService) {
+		return new QueryRunner<T>(factory, retryCount, delayStrategy, executorService);
 	}
 
-	public QueryRunner(final Factory<T> factory, final ExecutorService executorService) {
-		this(factory, defaultDelayStrategy, executorService, defaultRetryCount);
+	public static <T extends JdbcMapper> QueryRunner<T> withRetry(final Factory<T> factory, final int retryCount, final DelayStrategy delayStrategy) {
+		return withRetry(factory, retryCount, delayStrategy, defaultExecutorService);
 	}
 
-	public QueryRunner(final Factory<T> factory, final DelayStrategy delayStrategy, final ExecutorService executorService) {
-		this(factory, delayStrategy, executorService, defaultRetryCount);
+	public static <T extends JdbcMapper> QueryRunner<T> withRetry(final Factory<T> factory, final int retryCount) {
+		return withRetry(factory, retryCount, defaultDelayStrategy, defaultExecutorService);
 	}
 
-	public QueryRunner(final Factory<T> factory, final ExecutorService executorService, final int retryCount) {
-		this(factory, defaultDelayStrategy, executorService, retryCount);
+	public static <T extends JdbcMapper> QueryRunner<T> withRetry(final Factory<T> factory, final int retryCount, final ExecutorService executorService) {
+		return withRetry(factory, retryCount, defaultDelayStrategy, executorService);
+	}
+
+	public QueryRunner<T> withRetryCount(final int retryCount) {
+		return new QueryRunner<T>(factory, retryCount, delayStrategy, executorService);
+	}
+
+	public QueryRunner<T> withDelayStrategy(final DelayStrategy delayStrategy) {
+		return new QueryRunner<T>(factory, retryCount, delayStrategy, executorService);
+	}
+
+	public QueryRunner<T> withExecutorService(final ExecutorService executorService) {
+		return new QueryRunner<T>(factory, retryCount, delayStrategy, executorService);
+	}
+
+	public <T extends JdbcMapper> QueryRunner<T> withFactory(final Factory<T> factory) {
+		return new QueryRunner<T>(factory, retryCount, delayStrategy, executorService);
 	}
 
 	public <E> E run(final Runner<T, E> query) throws SQLException {
@@ -109,21 +127,20 @@ public class QueryRunner<T extends JdbcMapper> {
 	}
 
 	public <E> E runRetry(final Runner<T, E> query) throws SQLException {
-		SQLException lastException = null;
 		int x = 0;
-		do {
+		while(true) {
 			try {
 				return runInTransaction(query);
 			} catch (SQLException e) {
-				lastException = e;
+				if(x == retryCount)
+					throw e;
 				try {
 					Thread.sleep(delayStrategy.getDelay(++x));
 				} catch (InterruptedException e2) {
 					Thread.interrupted();
 				}
 			}
-		} while (x <= retryCount);
-		throw lastException;
+		}
 	}
 
 	public <E> Future<E> runRetryFuture(final Runner<T, E> query) {
@@ -170,6 +187,9 @@ public class QueryRunner<T extends JdbcMapper> {
 			return QueryRunner.withJitter(this, maxJitterMs);
 		}
 		//IFJAVA8_END
+		/*IFJAVA6_START
+		DelayStrategy withJitter(final int maxJitterMs);
+		IFJAVA6_END*/
 	}
 
 	public static DelayStrategy exponentialBackoff() {
@@ -186,7 +206,7 @@ public class QueryRunner<T extends JdbcMapper> {
 	public static DelayStrategy exponentialBackoff(final long minBackoff, final long maxBackoff, final long slotTime, final long maxContentionPeriods) {
 		return
 		/*IFJAVA6_START
-			new DelayStrategy() {
+			new AbstractDelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
 				return
@@ -204,7 +224,7 @@ public class QueryRunner<T extends JdbcMapper> {
 	public static DelayStrategy fixedDelay(final long delay) {
 		return
 		/*IFJAVA6_START
-			new DelayStrategy() {
+			new AbstractDelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
 				return
@@ -222,7 +242,7 @@ public class QueryRunner<T extends JdbcMapper> {
 	public static DelayStrategy incrementalDelay(final long initialInterval, final long incrementalInterval) {
 		return
 		/*IFJAVA6_START
-			new DelayStrategy() {
+			new AbstractDelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
 				return
@@ -237,10 +257,10 @@ public class QueryRunner<T extends JdbcMapper> {
 		IFJAVA6_END*/
 	}
 
-	public static DelayStrategy withJitter(final DelayStrategy toWrap, final int maxJitterMs) {
+	private static DelayStrategy withJitter(final DelayStrategy toWrap, final int maxJitterMs) {
 		return
 		/*IFJAVA6_START
-			new DelayStrategy() {
+			new AbstractDelayStrategy() {
 			@Override
 			public long getDelay(final int attempt) {
 				return
@@ -267,6 +287,11 @@ public class QueryRunner<T extends JdbcMapper> {
 
 		private static java.util.Random current() {
 			return randomThreadLocal.get();
+		}
+	}
+	private static abstract class AbstractDelayStrategy implements DelayStrategy {
+		public DelayStrategy withJitter(final int maxJitterMs) {
+			return QueryRunner.withJitter(this, maxJitterMs);
 		}
 	}
 	IFJAVA6_END*/
