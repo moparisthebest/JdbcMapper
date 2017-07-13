@@ -223,4 +223,8 @@ public interface PersonDAO extends JdbcMapper {
 	ZoneOffset getZoneOffsetStr(long valNo);
 
 	//IFJAVA8_END
+
+	// test blob
+	@JdbcMapper.SQL("SELECT some_blob FROM val WHERE val_no = {valNo}")
+	byte[] getBlob(long valNo);
 }

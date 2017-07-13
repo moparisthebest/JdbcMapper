@@ -22,7 +22,7 @@ import java.time.*;
  * Created by mopar on 5/24/17.
  */
 @JdbcMapper.Mapper(
-//		jndiName = "bob",
+		jndiName = "bob",
 //		databaseType = JdbcMapper.DatabaseType.ORACLE
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 		, sqlParser = PrestoSQLParser.class
@@ -223,4 +223,8 @@ public interface PrestoPersonDAO extends PersonDAO {
 	ZoneOffset getZoneOffsetStr(long valNo);
 
 	//IFJAVA8_END
+
+	// test blob
+	@JdbcMapper.SQL("SELECT some_blob FROM val WHERE val_no = {valNo}")
+	byte[] getBlob(long valNo);
 }

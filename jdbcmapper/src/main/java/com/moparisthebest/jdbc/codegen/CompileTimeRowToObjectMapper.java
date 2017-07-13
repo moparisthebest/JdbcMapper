@@ -76,7 +76,7 @@ public class CompileTimeRowToObjectMapper {
 		} else {
 			_returnTypeClass = returnTypeClass;
 			// detect if we want an array back
-			componentType = returnTypeClass.getKind() == TypeKind.ARRAY ? ((ArrayType) returnTypeClass).getComponentType() : null;
+			componentType = returnTypeClass.getKind() == TypeKind.ARRAY && !rsm.types.isSameType(returnTypeClass, rsm.byteArrayType) ? ((ArrayType) returnTypeClass).getComponentType() : null;
 
 			// detect if returnTypeClass has a constructor that takes a ResultSet, if so, our job couldn't be easier...
 			boolean resultSetConstructor = false, defaultConstructor = false, paramConstructor = false;

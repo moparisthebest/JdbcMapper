@@ -44,7 +44,7 @@ public class CompileTimeResultSetMapper {
 	}
 
 	public final Types types;
-	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType;
+	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType, byteArrayType;
 	//IFJAVA8_START
 	public final TypeMirror streamType;
 	//IFJAVA8_END
@@ -68,6 +68,8 @@ public class CompileTimeResultSetMapper {
 		resultSetType = elements.getTypeElement(ResultSet.class.getCanonicalName()).asType();
 
 		resultSetIterableType = types.getDeclaredType(elements.getTypeElement(ResultSetIterable.class.getCanonicalName()), types.getWildcardType(null, null));
+
+		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
 
 		//IFJAVA8_START
 		streamType = types.getDeclaredType(elements.getTypeElement(Stream.class.getCanonicalName()), types.getWildcardType(null, null));
@@ -96,7 +98,7 @@ public class CompileTimeResultSetMapper {
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
 		//final Class returnType = typeMirrorToClass(returnTypeMirror);
-		if (returnTypeMirror.getKind() == TypeKind.ARRAY) {
+		if (returnTypeMirror.getKind() == TypeKind.ARRAY && !types.isSameType(returnTypeMirror, byteArrayType)) {
 			final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
 			toArray(w, keys, componentType, maxRows, cal, cleaner, reflectionFields);
 		} else if (types.isAssignable(returnTypeMirror, collectionType)) {
