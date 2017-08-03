@@ -338,7 +338,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								w.write("conn.prepareStatement(");
 							}
 							w.write('"');
-							w.write(sqlStatement.replaceAll("\n", "\\n").replaceAll("\"", "\\\""));
+							w.write(sqlStatement.replace("\n", "\\n").replace("\"", "\\\""));
 							w.write("\");\n");
 
 							// now bind parameters
