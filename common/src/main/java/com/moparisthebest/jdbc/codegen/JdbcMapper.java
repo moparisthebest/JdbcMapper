@@ -59,6 +59,16 @@ public interface JdbcMapper extends Closeable {
 		String value();
 
 		/**
+		 * This avoids parsing SQL for select statements by specifying column names directly, implies SELECT statement, ie isSelect = true
+		 */
+		String[] columnNames() default {};
+
+		/**
+		 * This avoids parsing SQL for non-select statements, set to false if executeUpdate should be ran instead of selection
+		 */
+		boolean isSelect() default true;
+
+		/**
 		 * This defaults to the value of the class-level @JdbcMapper.Mapper.cachePreparedStatements annotation, but can be configured on a per-method level here
 		 */
 		OptionalBool cachePreparedStatement() default OptionalBool.DEFAULT;

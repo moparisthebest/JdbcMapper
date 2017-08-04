@@ -57,8 +57,19 @@ public interface PrestoPersonDAO extends PersonDAO {
 	@JdbcMapper.SQL(value = "SELECT first_name, last_name FROM person WHERE last_name = {lastName}", cachePreparedStatement = JdbcMapper.OptionalBool.TRUE)
 	ResultSet getPeopleResultSetCached(String lastName) throws SQLException;
 
+
+	@JdbcMapper.SQL(value = "SELECT first_name FROM person WHERE person_no = {personNo}", columnNames = {"firstName"})
+	String getFirstNameColumnNames(long personNo) throws SQLException;
+
 	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
 	String getFirstName(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT first_name FROM person WHERE person_no = {personNo}", isSelect = false)
+	int getFirstNameUpdate(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}",
+					columnNames = {"personNo", "firstName", "lastName", "birthDate"})
+	FieldPerson getPersonColumnNames(long personNo) throws SQLException;
 
 	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo) throws SQLException;

@@ -322,7 +322,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								}
 							}
 
-							final SQLParser parsedSQl = parser.parse(sqlStatement);
+							final SQLParser parsedSQl = ManualSQLParser.getSQLParser(sql, parser, sqlStatement);
 							// now implementation
 							w.write("\t\tPreparedStatement ps = null;\n");
 							if (parsedSQl.isSelect())
