@@ -52,6 +52,13 @@ public interface JdbcMapper extends Closeable {
 
 	@Retention(RetentionPolicy.SOURCE)
 	@Target({ElementType.METHOD})
+	/**
+	 * Instead of a compile-time error this will only warn on unused params, mainly for debugging or presenting an unfinished API
+	 */
+	public @interface WarnOnUnusedParams {}
+
+	@Retention(RetentionPolicy.SOURCE)
+	@Target({ElementType.METHOD})
 	public @interface SQL {
 		/**
 		 * The SQL statement to send to the database. Required annotation element.

@@ -205,6 +205,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									lookupCloseMethod = false;
 									continue; // skip close method
 								}
+							final JdbcMapper.WarnOnUnusedParams warnOnUnusedParams = eeMethod.getAnnotation(JdbcMapper.WarnOnUnusedParams.class);
 							final JdbcMapper.SQL sql = eeMethod.getAnnotation(JdbcMapper.SQL.class);
 							if (sql == null || sql.value().isEmpty()) {
 								processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL with non-empty query is required on abstract or interface methods", methodElement);
@@ -318,7 +319,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									} else if(isPrimitiveInteger(unusedType.getKind()) && maxRows == null && this.allowedMaxRowParamNames.contains(unusedParam.getKey())) {
 										maxRows = CompileTimeResultSetMapper.MaxRows.getMaxRows(unusedParam.getKey(), unusedType.toString());
 									} else
-										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
+										processingEnv.getMessager().printMessage(warnOnUnusedParams != null ? Diagnostic.Kind.MANDATORY_WARNING : Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
 							}
 
