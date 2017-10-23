@@ -242,4 +242,13 @@ public interface PrestoPersonDAO extends PersonDAO {
 	// test blob
 	@JdbcMapper.SQL("SELECT some_blob FROM val WHERE val_no = {valNo}")
 	byte[] getBlob(long valNo);
+
+	// test Single rows
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE person_no = {personNo}")
+	@SingleRow
+	String[] getSinglePersonNameArray(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE person_no = {personNo}")
+	@SingleRow
+	Map<String,String> getSinglePersonNameMap(long personNo) throws SQLException;
 }

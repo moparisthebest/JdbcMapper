@@ -16,6 +16,7 @@ import java.util.regex.Matcher;
 
 import static com.moparisthebest.jdbc.CompilingRowToObjectMapper.escapeMapKeyString;
 import static com.moparisthebest.jdbc.RowToObjectMapper._setterRegex;
+import static com.moparisthebest.jdbc.codegen.CompileTimeResultSetMapper.getConcreteClassCanonicalName;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToClass;
 
 /**
@@ -69,9 +70,9 @@ public class CompileTimeRowToObjectMapper {
 
 		returnMap = rsm.types.isAssignable(returnTypeClass, rsm.mapType);
 		if (returnMap) {
-			// todo: need this? _returnTypeClass = ResultSetMapper.getConcreteClass(returnTypeClass, HashMap.class);
-			_returnTypeClass = null;
-			componentType = mapValType;
+			_returnTypeClass = returnTypeClass;
+			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeClass).getTypeArguments();
+			componentType = typeArguments.size() > 1 ? typeArguments.get(1) : mapValType;
 			resultSetConstructor = false;
 		} else {
 			_returnTypeClass = returnTypeClass;
@@ -325,11 +326,11 @@ public class CompileTimeRowToObjectMapper {
 
 		if (returnMap) // we want a map
 			try {
-				java.append("final ").append(tType).append("<String, Object> ret = new ").append(tType).append("<String, Object>();\n");
+				java.append("final ").append(tType).append(" ret = new ").append(getConcreteClassCanonicalName(_returnTypeClass, HashMap.class)).append(tType.substring(tType.indexOf('<'))).append("();\n");
 				final int columnLength = _columnCount + 1;
 				int typeId = getTypeId(componentType);
-				final String enumName = componentType.toString();
 				if (componentType != null && typeId != TypeMappingsFactory.TYPE_UNKNOWN) { // we want a specific value type
+					final String enumName = componentType.toString();
 					for (int x = 1; x < columnLength; ++x) {
 						java.append("ret.put(").append(escapeMapKeyString(keys[x]).toLowerCase()).append(", ");
 						extractColumnValueString(java, x, typeId, enumName);

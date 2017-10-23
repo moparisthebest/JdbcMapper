@@ -125,6 +125,13 @@ public interface JdbcMapper extends Closeable {
 	@Target({ElementType.PARAMETER})
 	public @interface Clob {}
 
+	/**
+	 * Equivalent to QueryMapper.toObject for arrays, and .toSingleMap for maps
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@Target({ElementType.METHOD})
+	public @interface SingleRow {}
+
 	public enum OptionalBool {
 		DEFAULT,
 		TRUE,

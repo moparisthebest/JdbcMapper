@@ -11,8 +11,10 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 //IFJAVA8_START
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.time.*;
@@ -193,5 +195,18 @@ public class JdbcMapperTest {
 	@Test
 	public void testPerson() throws SQLException {
 		assertEquals(fieldPerson1, dao.getPerson(fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testSinglePersonNameArray() throws SQLException {
+		assertArrayEquals(new String[]{fieldPerson1.getFirstName(), fieldPerson1.getLastName()}, dao.getSinglePersonNameArray(fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testSinglePersonNameMap() throws SQLException {
+		final Map<String, String> expected = new HashMap<String, String>();
+		expected.put("first_name", fieldPerson1.getFirstName());
+		expected.put("last_name", fieldPerson1.getLastName());
+		assertEquals(expected, dao.getSinglePersonNameMap(fieldPerson1.getPersonNo()));
 	}
 }
