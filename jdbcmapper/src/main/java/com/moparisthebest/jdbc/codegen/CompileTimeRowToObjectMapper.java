@@ -91,7 +91,7 @@ public class CompileTimeRowToObjectMapper {
 				// but javac 1.8 prints this with -parameters (wrongly):
 				// methodsAndConstructors: FieldPerson(): '', FieldPerson(long,java.util.Date,java.lang.String,java.lang.String): 'long personNo, java.util.Date firstName, java.lang.String lastName, java.lang.String arg3', FieldPerson(com.moparisthebest.jdbc.dto.Person): 'com.moparisthebest.jdbc.dto.Person person'
 				if(_returnTypeClass.toString().equals("com.moparisthebest.jdbc.dto.FieldPerson"))
-					throw new RuntimeException("methodsAndConstructors: " + methodsAndConstructors.stream().filter(e -> e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)).map(e -> e.toString() +
+					throw new MapperException("methodsAndConstructors: " + methodsAndConstructors.stream().filter(e -> e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)).map(e -> e.toString() +
 							": '" + ((ExecutableElement)e).getParameters().stream().map(param ->  param.asType() + " " + param.getSimpleName().toString()).collect(java.util.stream.Collectors.joining(", ")) + "'"
 					).collect(java.util.stream.Collectors.joining(", ")));
 				*/
@@ -136,7 +136,7 @@ public class CompileTimeRowToObjectMapper {
 				_fieldOrder = null; // didn't successfully finish
 			this.resultSetConstructor = resultSetConstructor;
 			if(!resultSetConstructor && !defaultConstructor && !paramConstructor && _columnCount > 2 && componentType == null)
-				throw new RuntimeException("Exception when trying to get constructor for : "+_returnTypeClass.toString() + " Must have default no-arg constructor or one that takes a single ResultSet.");
+				throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.toString() + " Must have default no-arg constructor or one that takes a single ResultSet.");
 		}
 	}
 
@@ -156,7 +156,7 @@ public class CompileTimeRowToObjectMapper {
 	protected void getFieldMappings() {
 
 		if(_returnTypeClass.getKind() != TypeKind.DECLARED)
-			throw new RuntimeException("_returnTypeClass " + _returnTypeClass + " not TypeKind.DECLARED ?? how??");
+			throw new MapperException("_returnTypeClass " + _returnTypeClass + " not TypeKind.DECLARED ?? how??");
 
 		final DeclaredType declaredReturnType = (DeclaredType)_returnTypeClass;
 

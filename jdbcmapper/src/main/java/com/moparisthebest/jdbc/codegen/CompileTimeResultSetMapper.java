@@ -1,6 +1,7 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Finishable;
+import com.moparisthebest.jdbc.MapperException;
 import com.moparisthebest.jdbc.ResultSetMapper;
 import com.moparisthebest.jdbc.TypeMappingsFactory;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
@@ -15,6 +16,7 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+import javax.tools.Diagnostic;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.ResultSet;
@@ -98,48 +100,52 @@ public class CompileTimeResultSetMapper {
 		//final Class returnType = m.getReturnType();
 		final TypeMirror returnTypeMirror = eeMethod.getReturnType();
 		//final Class returnType = typeMirrorToClass(returnTypeMirror);
-		if (returnTypeMirror.getKind() == TypeKind.ARRAY && !types.isSameType(returnTypeMirror, byteArrayType) && eeMethod.getAnnotation(JdbcMapper.SingleRow.class) == null) {
-			final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
-			toArray(w, keys, componentType, maxRows, cal, cleaner, reflectionFields);
-		} else if (types.isAssignable(returnTypeMirror, collectionType)) {
-			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			toCollection(w, keys, returnTypeMirror, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
-		} else if (types.isAssignable(returnTypeMirror, mapType) && eeMethod.getAnnotation(JdbcMapper.SingleRow.class) == null) {
-			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			//if (types[1] instanceof ParameterizedType) { // for collectionMaps
-			if (types.isAssignable(returnTypeMirror, mapCollectionType)) { // for collectionMaps
-				final TypeMirror collectionTypeMirror = typeArguments.get(1);
-				final TypeMirror componentTypeMirror = ((DeclaredType) collectionTypeMirror).getTypeArguments().get(0);
-				toMapCollection(w, keys,
-						returnTypeMirror,
-						typeArguments.get(0),
-						collectionTypeMirror,
-						componentTypeMirror,
-						maxRows, cal, cleaner, reflectionFields);
-				return true;
+		try {
+			if (returnTypeMirror.getKind() == TypeKind.ARRAY && !types.isSameType(returnTypeMirror, byteArrayType) && eeMethod.getAnnotation(JdbcMapper.SingleRow.class) == null) {
+				final TypeMirror componentType = ((ArrayType) returnTypeMirror).getComponentType();
+				toArray(w, keys, componentType, maxRows, cal, cleaner, reflectionFields);
+			} else if (types.isAssignable(returnTypeMirror, collectionType)) {
+				final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
+				toCollection(w, keys, returnTypeMirror, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
+			} else if (types.isAssignable(returnTypeMirror, mapType) && eeMethod.getAnnotation(JdbcMapper.SingleRow.class) == null) {
+				final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
+				//if (types[1] instanceof ParameterizedType) { // for collectionMaps
+				if (types.isAssignable(returnTypeMirror, mapCollectionType)) { // for collectionMaps
+					final TypeMirror collectionTypeMirror = typeArguments.get(1);
+					final TypeMirror componentTypeMirror = ((DeclaredType) collectionTypeMirror).getTypeArguments().get(0);
+					toMapCollection(w, keys,
+							returnTypeMirror,
+							typeArguments.get(0),
+							collectionTypeMirror,
+							componentTypeMirror,
+							maxRows, cal, cleaner, reflectionFields);
+					return true;
+				}
+				toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), maxRows, cal, cleaner, reflectionFields);
+			} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
+				final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
+				if (types.isAssignable(returnTypeMirror, resultSetIterableType)) {
+					toResultSetIterable(w, keys, typeArguments.get(0), cal, cleaner, closePs, reflectionFields);
+					return false;
+				} else if (types.isAssignable(returnTypeMirror, listIteratorType))
+					toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
+				else
+					toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
 			}
-			toMap(w, keys, returnTypeMirror, typeArguments.get(0), typeArguments.get(1), maxRows, cal, cleaner, reflectionFields);
-		} else if (types.isAssignable(returnTypeMirror, iteratorType)) {
-			final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
-			if (types.isAssignable(returnTypeMirror, resultSetIterableType)) {
-				toResultSetIterable(w, keys, typeArguments.get(0), cal, cleaner, closePs, reflectionFields);
+			//IFJAVA8_START
+			else if (types.isAssignable(returnTypeMirror, streamType)) {
+				toStream(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), cal, cleaner, closePs, reflectionFields);
 				return false;
-			} else if (types.isAssignable(returnTypeMirror, listIteratorType))
-				toListIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
-			else
-				toIterator(w, keys, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
-		}
-		//IFJAVA8_START
-		else if (types.isAssignable(returnTypeMirror, streamType)) {
-			toStream(w, keys, ((DeclaredType) returnTypeMirror).getTypeArguments().get(0), cal, cleaner, closePs, reflectionFields);
-			return false;
-		}
-		//IFJAVA8_END
-		else if(types.isAssignable(returnTypeMirror, resultSetType)) {
-			toResultSet(w, closePs);
-			return false;
-		} else {
-			toObject(w, keys, returnTypeMirror, cal, cleaner, reflectionFields);
+			}
+			//IFJAVA8_END
+			else if (types.isAssignable(returnTypeMirror, resultSetType)) {
+				toResultSet(w, closePs);
+				return false;
+			} else {
+				toObject(w, keys, returnTypeMirror, cal, cleaner, reflectionFields);
+			}
+		} catch(MapperException e) {
+			JdbcMapperProcessor.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage(), eeMethod);
 		}
 		return true;
 	}

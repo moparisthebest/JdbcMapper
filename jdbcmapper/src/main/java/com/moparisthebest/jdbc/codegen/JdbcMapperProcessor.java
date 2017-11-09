@@ -1,6 +1,7 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Cleaner;
+import com.moparisthebest.jdbc.MapperException;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -703,7 +704,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					case DOUBLE:
 						return double[].class;
 					case ARRAY:
-						throw new RuntimeException("multi-dimensional arrays are not supported");
+						throw new MapperException("multi-dimensional arrays are not supported");
 					default:
 						return Class.forName("[L" + arrayComponentType.toString() + ";");
 				}
