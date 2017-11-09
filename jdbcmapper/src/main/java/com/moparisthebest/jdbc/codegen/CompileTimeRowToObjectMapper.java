@@ -140,6 +140,14 @@ public class CompileTimeRowToObjectMapper {
 		}
 	}
 
+	public static List<DeclaredType> getAllImplementedTypes(final DeclaredType type, final List<DeclaredType> ret) {
+		ret.add(type);
+		for(final TypeMirror tm : JdbcMapperProcessor.getTypes().directSupertypes(type))
+			if(tm.getKind() == TypeKind.DECLARED && !tm.toString().equals("java.lang.Object"))
+				getAllImplementedTypes((DeclaredType) tm, ret);
+		return ret;
+	}
+
 	/**
 	 * Build the structures necessary to do the mapping
 	 *
@@ -172,49 +180,52 @@ public class CompileTimeRowToObjectMapper {
 			mapFields.put(keys[i], null);
 		}
 
-		// public methods todo: does this do super methods too?
-		for (Element e : ((TypeElement)declaredReturnType.asElement()).getEnclosedElements()) {
-			if(e.getKind() != ElementKind.METHOD)
-				continue;
-			final ExecutableElement m = (ExecutableElement)e;
-			//System.out.printf("method: '%s', isSetterMethod: '%s'\n", m, isSetterMethod(m));
-			if (isSetterMethod(m)) {
-				String fieldName = m.getSimpleName().toString().substring(3).toUpperCase();
-				//System.out.println("METHOD-fieldName1: "+fieldName);
-				if (!mapFields.containsKey(fieldName)) {
-					fieldName = strippedKeys.get(fieldName);
-					if (fieldName == null)
-						continue;
-					//System.out.println("METHOD-fieldName2: "+fieldName);
-				}
-				final Element field = mapFields.get(fieldName);
-				// check for overloads
-				if (field == null) {
-					mapFields.put(fieldName, m);
-				} else {
-					// todo: does this work?
-					// fix for 'overloaded' methods when it comes to stripped keys, we want the exact match
-					final String thisName = m.getSimpleName().toString().substring(3).toUpperCase();
-					final String previousName = field.getSimpleName().toString().substring(3).toUpperCase();
-					//System.out.printf("thisName: '%s', previousName: '%s', mapFields.containsKey(thisName): %b, strippedKeys.containsKey(previousName): %b\n", thisName, previousName, mapFields.containsKey(thisName), strippedKeys.containsKey(previousName));
-					if(mapFields.containsKey(thisName) && strippedKeys.containsKey(previousName)) {
-						mapFields.put(fieldName, m);
-					} else if (!mapFields.containsKey(previousName) || !strippedKeys.containsKey(thisName)) {
-						throw new MapperException("Unable to choose between overloaded methods '" + m.getSimpleName().toString()
-								+ "' and '" + field.getSimpleName().toString() + "' for field '" + fieldName + "' on the '" + _returnTypeClass.toString() + "' class. Mapping is done using "
-								+ "a case insensitive comparison of SQL ResultSet columns to field "
-								+ "names and public setter methods on the return class. Columns are also "
-								+ "stripped of '_' and compared if no match is found with them.");
+		final List<DeclaredType> allTypes = getAllImplementedTypes(declaredReturnType, new ArrayList<>());
+
+		// public methods
+		// have to loop to get super methods too
+		for (final DeclaredType clazz : allTypes) {
+			for (Element e : ((TypeElement) clazz.asElement()).getEnclosedElements()) {
+				if (e.getKind() != ElementKind.METHOD)
+					continue;
+				final ExecutableElement m = (ExecutableElement) e;
+				//System.out.printf("method: '%s', isSetterMethod: '%s'\n", m, isSetterMethod(m));
+				if (isSetterMethod(m)) {
+					String fieldName = m.getSimpleName().toString().substring(3).toUpperCase();
+					//System.out.println("METHOD-fieldName1: "+fieldName);
+					if (!mapFields.containsKey(fieldName)) {
+						fieldName = strippedKeys.get(fieldName);
+						if (fieldName == null)
+							continue;
+						//System.out.println("METHOD-fieldName2: "+fieldName);
 					}
-					// then the 'overloaded' method is already correct
+					final Element field = mapFields.get(fieldName);
+					// check for overloads
+					if (field == null) {
+						mapFields.put(fieldName, m);
+					} else {
+						// todo: does this work?
+						// fix for 'overloaded' methods when it comes to stripped keys, we want the exact match
+						final String thisName = m.getSimpleName().toString().substring(3).toUpperCase();
+						final String previousName = field.getSimpleName().toString().substring(3).toUpperCase();
+						//System.out.printf("thisName: '%s', previousName: '%s', mapFields.containsKey(thisName): %b, strippedKeys.containsKey(previousName): %b\n", thisName, previousName, mapFields.containsKey(thisName), strippedKeys.containsKey(previousName));
+						if (mapFields.containsKey(thisName) && strippedKeys.containsKey(previousName)) {
+							mapFields.put(fieldName, m);
+						} else if (!mapFields.containsKey(previousName) || !strippedKeys.containsKey(thisName)) {
+							throw new MapperException("Unable to choose between overloaded methods '" + m.getSimpleName().toString()
+									+ "' and '" + field.getSimpleName().toString() + "' for field '" + fieldName + "' on the '" + _returnTypeClass.toString() + "' class. Mapping is done using "
+									+ "a case insensitive comparison of SQL ResultSet columns to field "
+									+ "names and public setter methods on the return class. Columns are also "
+									+ "stripped of '_' and compared if no match is found with them.");
+						}
+						// then the 'overloaded' method is already correct
+					}
 				}
 			}
 		}
 
 		// fix for 8813: include inherited and non-public fields
-		for (DeclaredType clazz = declaredReturnType; clazz != null && !clazz.toString().equals("java.lang.Object");
-			 clazz = clazz.getEnclosingType().getKind() == TypeKind.DECLARED ? (DeclaredType)clazz.getEnclosingType() : null
-				) {
+		for (final DeclaredType clazz : allTypes) {
 			//System.out.println("fields in class: "+Arrays.toString(classFields));
 			for (Element e : ((TypeElement)clazz.asElement()).getEnclosedElements()) {
 				if(e.getKind() != ElementKind.FIELD)

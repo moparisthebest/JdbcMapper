@@ -32,7 +32,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([^}]+)\\}");
 
-	private Types types;
+	private static Types types;
+	private static Messager messager;
+
+	public static Types getTypes() {
+		return types;
+	}
+
+	public static Messager getMessager() {
+		return messager;
+	}
+
 	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType;
 	//IFJAVA8_START
@@ -51,7 +61,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	@Override
 	public synchronized void init(final ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
-		this.types = processingEnv.getTypeUtils();
+		types = processingEnv.getTypeUtils();
+		messager = processingEnv.getMessager();
 		final Elements elements = processingEnv.getElementUtils();
 		sqlExceptionType = elements.getTypeElement(SQLException.class.getCanonicalName()).asType();
 		stringType = elements.getTypeElement(String.class.getCanonicalName()).asType();
