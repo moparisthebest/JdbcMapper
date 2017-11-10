@@ -180,7 +180,7 @@ public class CompileTimeRowToObjectMapper {
 			mapFields.put(keys[i], null);
 		}
 
-		final List<DeclaredType> allTypes = getAllImplementedTypes(declaredReturnType, new ArrayList<>());
+		final List<DeclaredType> allTypes = getAllImplementedTypes(declaredReturnType, new ArrayList<DeclaredType>());
 
 		// public methods
 		// have to loop to get super methods too
