@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc;
 
 import com.moparisthebest.jdbc.codegen.JdbcMapper;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.concurrent.*;
 
@@ -97,31 +98,103 @@ public class QueryRunner<T extends JdbcMapper> {
 		T dao = null;
 		try {
 			dao = factory.create();
-			dao.getConnection().setAutoCommit(false);
-			final E ret = query.run(dao);
-			dao.getConnection().commit();
-			return ret;
-		} catch (final Throwable e) {
-			if (dao != null) {
+			return runInTransaction(dao, query);
+		} finally {
+			if (dao != null)
+				tryClose(dao);
+		}
+	}
+
+	/**
+	 * For running existing JdbcMapper in transaction
+	 * @param dao
+	 * @param query
+	 * @param <T>
+	 * @param <E>
+	 * @return
+	 * @throws SQLException
+	 */
+	public static <T extends JdbcMapper, E> E runInTransaction(final T dao, final Runner<T, E> query) throws SQLException {
+		if (query == null)
+			throw new NullPointerException("query must be non-null");
+		if (dao == null)
+			throw new NullPointerException("dao must be non-null");
+		if(!dao.getConnection().getAutoCommit()) {
+			// if we are already in a transaction, the calling code will do the right thing
+			// we don't want to change autoCommit, commit, or rollback
+			return query.run(dao);
+		} else {
+			try {
+				dao.getConnection().setAutoCommit(false);
+				final E ret = query.run(dao);
+				dao.getConnection().commit();
+				return ret;
+			} catch (final Throwable e) {
 				try {
 					dao.getConnection().rollback();
 				} catch (SQLException excep) {
 					// ignore to throw original
 				}
-			}
-			if (e instanceof SQLException)
-				throw (SQLException) e;
-			if (e instanceof RuntimeException)
-				throw (RuntimeException) e;
-			throw new RuntimeException("odd error should never happen", e);
-		} finally {
-			if (dao != null) {
+				if (e instanceof SQLException)
+					throw (SQLException) e;
+				if (e instanceof RuntimeException)
+					throw (RuntimeException) e;
+				throw new RuntimeException("odd error should never happen", e);
+			} finally {
 				try {
 					dao.getConnection().setAutoCommit(true);
 				} catch (SQLException excep) {
 					// ignore
 				}
-				tryClose(dao);
+			}
+		}
+	}
+
+	/**
+	 * For running against an existing raw connection for things not implementing JdbcMapper
+	 *
+	 * this could construct a JdbcMapper instance with the Connection and re-use the method above,
+	 * with a bit of a performance/allocation hit, we'll skip for now
+	 *
+	 * @param dao
+	 * @param query
+	 * @param <T>
+	 * @param <E>
+	 * @return
+	 * @throws SQLException
+	 */
+	public static <T extends Connection, E> E runConnectionInTransaction(final T dao, final Runner<T, E> query) throws SQLException {
+		if (query == null)
+			throw new NullPointerException("query must be non-null");
+		if (dao == null)
+			throw new NullPointerException("dao must be non-null");
+		if(!dao.getAutoCommit()) {
+			// if we are already in a transaction, the calling code will do the right thing
+			// we don't want to change autoCommit, commit, or rollback
+			return query.run(dao);
+		} else {
+			try {
+				dao.setAutoCommit(false);
+				final E ret = query.run(dao);
+				dao.commit();
+				return ret;
+			} catch (final Throwable e) {
+				try {
+					dao.rollback();
+				} catch (SQLException excep) {
+					// ignore to throw original
+				}
+				if (e instanceof SQLException)
+					throw (SQLException) e;
+				if (e instanceof RuntimeException)
+					throw (RuntimeException) e;
+				throw new RuntimeException("odd error should never happen", e);
+			} finally {
+				try {
+					dao.setAutoCommit(true);
+				} catch (SQLException excep) {
+					// ignore
+				}
 			}
 		}
 	}

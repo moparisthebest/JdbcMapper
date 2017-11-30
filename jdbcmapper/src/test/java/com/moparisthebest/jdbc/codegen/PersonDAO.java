@@ -237,6 +237,11 @@ public interface PersonDAO extends JdbcMapper {
 	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = {valNo}")
 	ZoneOffset getZoneOffsetStr(long valNo);
 
+	@JdbcMapper.RunInTransaction
+	default Person getPersonInTransaction(final String lastName) throws SQLException {
+		return getPerson(getPersonNo(lastName));
+	}
+
 	//IFJAVA8_END
 
 	// test blob

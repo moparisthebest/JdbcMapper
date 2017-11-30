@@ -59,6 +59,13 @@ public interface JdbcMapper extends Closeable {
 
 	@Retention(RetentionPolicy.SOURCE)
 	@Target({ElementType.METHOD})
+	/**
+	 * Run this method in a transaction, useless on @SQL methods because they only run single statements, helpful on default or abstract methods that chain calls
+	 */
+	public @interface RunInTransaction {}
+
+	@Retention(RetentionPolicy.SOURCE)
+	@Target({ElementType.METHOD})
 	public @interface SQL {
 		/**
 		 * The SQL statement to send to the database. Required annotation element.

@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.stream.Stream;
 //IFJAVA8_END
 
+import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.java8;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorStringNoGenerics;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToClass;
 
@@ -33,31 +34,15 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToCl
  */
 public class CompileTimeResultSetMapper {
 
-	public static final SourceVersion RELEASE_8;
-
-	static {
-		SourceVersion rl8 = null;
-		try {
-			rl8 = SourceVersion.valueOf("RELEASE_8");
-		} catch(Throwable e) {
-			// ignore
-		}
-		RELEASE_8 = rl8;
-	}
-
 	public final Types types;
 	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType, byteArrayType;
 	//IFJAVA8_START
 	public final TypeMirror streamType;
 	//IFJAVA8_END
-	private final boolean java8;
 
 	public CompileTimeResultSetMapper(final ProcessingEnvironment processingEnv) {
 		types = processingEnv.getTypeUtils();
 		final Elements elements = processingEnv.getElementUtils();
-
-		// is this the proper way to do this?
-		java8 = RELEASE_8 != null && processingEnv.getSourceVersion().ordinal() >= RELEASE_8.ordinal();
 
 		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
 		mapType = types.getDeclaredType(elements.getTypeElement(Map.class.getCanonicalName()), types.getWildcardType(null, null), types.getWildcardType(null, null));

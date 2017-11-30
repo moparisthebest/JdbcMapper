@@ -33,6 +33,19 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 	private static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([^}]+)\\}");
 
+	public static final SourceVersion RELEASE_8;
+	public static boolean java8;
+
+	static {
+		SourceVersion rl8 = null;
+		try {
+			rl8 = SourceVersion.valueOf("RELEASE_8");
+		} catch(Throwable e) {
+			// ignore
+		}
+		RELEASE_8 = rl8;
+	}
+
 	private static Types types;
 	private static Messager messager;
 
@@ -44,7 +57,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return messager;
 	}
 
-	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType,
+	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, jdbcMapperType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType;
 	//IFJAVA8_START
 	private TypeMirror instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
@@ -62,6 +75,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	@Override
 	public synchronized void init(final ProcessingEnvironment processingEnv) {
 		super.init(processingEnv);
+
+		// is this the proper way to do this?
+		java8 = RELEASE_8 != null && processingEnv.getSourceVersion().ordinal() >= RELEASE_8.ordinal();
+
 		types = processingEnv.getTypeUtils();
 		messager = processingEnv.getMessager();
 		final Elements elements = processingEnv.getElementUtils();
@@ -71,6 +88,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		utilDateType = elements.getTypeElement(java.util.Date.class.getCanonicalName()).asType();
 		readerType = elements.getTypeElement(Reader.class.getCanonicalName()).asType();
 		clobType = elements.getTypeElement(Clob.class.getCanonicalName()).asType();
+		jdbcMapperType = elements.getTypeElement(JdbcMapper.class.getCanonicalName()).asType();
 		inputStreamType = elements.getTypeElement(InputStream.class.getCanonicalName()).asType();
 		fileType = elements.getTypeElement(File.class.getCanonicalName()).asType();
 		blobType = elements.getTypeElement(Blob.class.getCanonicalName()).asType();
@@ -209,8 +227,14 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 						for (final Element methodElement : genClass.getEnclosedElements()) {
 							// can only implement abstract methods
-							if (methodElement.getKind() != ElementKind.METHOD || !methodElement.getModifiers().contains(Modifier.ABSTRACT))
+							if (methodElement.getKind() != ElementKind.METHOD) {
 								continue;
+							}
+							if (!methodElement.getModifiers().contains(Modifier.ABSTRACT)) {
+								if (methodElement.getAnnotation(JdbcMapper.RunInTransaction.class) != null)
+									outputRunInTransaction((ExecutableElement) methodElement, w);
+								continue;
+							}
 							final ExecutableElement eeMethod = (ExecutableElement) methodElement;
 							if (lookupCloseMethod)
 								if ((closeMethod = getCloseMethod(eeMethod)) != null) {
@@ -221,6 +245,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							final JdbcMapper.SQL sql = eeMethod.getAnnotation(JdbcMapper.SQL.class);
 							if (sql == null || sql.value().isEmpty()) {
 								processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL with non-empty query is required on abstract or interface methods", methodElement);
+								continue;
+							}
+							if (eeMethod.getAnnotation(JdbcMapper.RunInTransaction.class) != null) {
+								processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL is incompatible with @JdbcMapper.RunInTransaction", methodElement);
 								continue;
 							}
 							final boolean allowReflection = sql.allowReflection().combine(defaultAllowReflection);
@@ -479,6 +507,97 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					return false;
 				}
 		return true;
+	}
+
+	private void outputRunInTransaction(final ExecutableElement eeMethod, final Writer w) throws IOException {
+		w.write("\n\t@Override\n\tpublic ");
+		final String returnType = eeMethod.getReturnType().toString();
+		w.write(returnType);
+		w.write(" ");
+		w.write(eeMethod.getSimpleName().toString());
+		w.write('(');
+
+		boolean sqlExceptionThrown = false;
+		final List<? extends VariableElement> params = eeMethod.getParameters();
+		final int numParams = params.size();
+		{
+			// now parameters
+			int count = 0;
+			for (final VariableElement param : params) {
+				writeAllParamAnnotations(w, param);
+				w.write("final ");
+				w.write(param.asType().toString());
+				w.write(' ');
+				final String name = param.getSimpleName().toString();
+				w.write(name);
+				if (++count != numParams)
+					w.write(", ");
+			}
+
+			// throws?
+			w.write(")");
+			final List<? extends TypeMirror> thrownTypes = eeMethod.getThrownTypes();
+			final int numThrownTypes = thrownTypes.size();
+			if (numThrownTypes > 0) {
+				count = 0;
+				w.write(" throws ");
+			}
+			for (final TypeMirror thrownType : thrownTypes) {
+				sqlExceptionThrown |= types.isSameType(thrownType, sqlExceptionType);
+				w.write(thrownType.toString());
+				if (++count != numThrownTypes)
+					w.write(", ");
+			}
+			w.write(" {\n");
+		}
+
+		final Element thisDao = eeMethod.getEnclosingElement();
+		final boolean thisDaoImplementsJdbcMapper = types.isAssignable(thisDao.asType(), jdbcMapperType);
+		final String thisDaoName = thisDao.getSimpleName().toString();
+
+		if(!java8)
+			processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.RunInTransaction cannot be used in java6 yet, java8+ only", eeMethod);
+
+		// todo: *can* this be done in java6 without reflection or something? we need to call super, not this, which causes infinite recursion, bail for now
+		if(!java8)
+			w.append("\t\tfinal ").append(thisDaoName).append(" jdbcMapperGeneratedTransactionThis = this;\n");
+
+		w.write("\t\treturn com.moparisthebest.jdbc.QueryRunner.run");
+		if(thisDaoImplementsJdbcMapper)
+			w.write("InTransaction(this, ");
+		else
+			w.write("ConnectionInTransaction(this.conn, ");
+
+		if(!java8) {
+			w.append("new com.moparisthebest.jdbc.QueryRunner.Runner<").append(thisDaoName).append(", ").append(returnType).append(">() {\n" +
+					"\t\t\t@Override\n" +
+					"\t\t\tpublic ").append(returnType).append(" run(").append(eeMethod.getEnclosingElement().getSimpleName()).append(" dao) throws SQLException {\n" +
+					"\t\t\t\treturn jdbcMapperGeneratedTransactionThis");
+		} else {
+
+			w.append("dao -> ");
+			//IFJAVA8_START
+			if (eeMethod.getModifiers().contains(Modifier.DEFAULT))
+				w.append(thisDaoName).append(".");
+			//IFJAVA8_END
+			w.append("super");
+		}
+		w.append(".").append(eeMethod.getSimpleName().toString()).append('(');
+		int count = 0;
+		for (final VariableElement param : params) {
+			final String name = param.getSimpleName().toString();
+			w.write(name);
+			if (++count != numParams)
+				w.write(", ");
+		}
+		w.append(')');
+
+		if(!java8)
+			w.append(";\n\t\t\t}\n" +
+				"\t\t}");
+
+		w.write(");\n");
+		w.write("\t}\n");
 	}
 
 	private void setObject(final Writer w, final int index, final JdbcMapper.DatabaseType databaseType, final String arrayNumberTypeName, final String arrayStringTypeName, final VariableElement param) throws SQLException, IOException {
