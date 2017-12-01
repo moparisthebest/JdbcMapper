@@ -22,6 +22,7 @@ import java.time.*;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
+import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
 
 /**
  * Created by mopar on 5/24/17.
@@ -171,9 +172,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					final boolean doJndi = !mapper.jndiName().isEmpty();
 					Writer w = null;
 					try {
-						w = processingEnv.getFiler().createSourceFile(qualifiedName + JdbcMapperFactory.SUFFIX).openWriter();
+						w = processingEnv.getFiler().createSourceFile(qualifiedName + SUFFIX).openWriter();
 						final String packageName = ((PackageElement) genClass.getEnclosingElement()).getQualifiedName().toString();
-						final String className = genClass.getSimpleName() + JdbcMapperFactory.SUFFIX;
+						final String className = genClass.getSimpleName() + SUFFIX;
 						if (!packageName.isEmpty()) {
 							w.write("package ");
 							w.write(packageName);
@@ -555,13 +556,6 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		final boolean thisDaoImplementsJdbcMapper = types.isAssignable(thisDao.asType(), jdbcMapperType);
 		final String thisDaoName = thisDao.getSimpleName().toString();
 
-		if(!java8)
-			processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.RunInTransaction cannot be used in java6 yet, java8+ only", eeMethod);
-
-		// todo: *can* this be done in java6 without reflection or something? we need to call super, not this, which causes infinite recursion, bail for now
-		if(!java8)
-			w.append("\t\tfinal ").append(thisDaoName).append(" jdbcMapperGeneratedTransactionThis = this;\n");
-
 		w.write("\t\treturn com.moparisthebest.jdbc.QueryRunner.run");
 		if(thisDaoImplementsJdbcMapper)
 			w.write("InTransaction(this, ");
@@ -569,10 +563,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			w.write("ConnectionInTransaction(this.conn, ");
 
 		if(!java8) {
-			w.append("new com.moparisthebest.jdbc.QueryRunner.Runner<").append(thisDaoName).append(", ").append(returnType).append(">() {\n" +
+			final String tType = thisDaoImplementsJdbcMapper ? thisDaoName : "Connection";
+			w.append("new com.moparisthebest.jdbc.QueryRunner.Runner<").append(tType).append(", ").append(returnType).append(">() {\n" +
 					"\t\t\t@Override\n" +
-					"\t\t\tpublic ").append(returnType).append(" run(").append(eeMethod.getEnclosingElement().getSimpleName()).append(" dao) throws SQLException {\n" +
-					"\t\t\t\treturn jdbcMapperGeneratedTransactionThis");
+					"\t\t\tpublic ").append(returnType).append(" run(").append(tType).append(" dao) throws SQLException {\n" +
+					"\t\t\t\treturn ").append(thisDaoName).append(SUFFIX).append(".super");
 		} else {
 
 			w.append("dao -> ");

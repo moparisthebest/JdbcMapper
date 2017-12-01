@@ -114,3 +114,9 @@ try(QueryMapper qm = new QueryMapper("java:/comp/env/jdbc/testPool", new ResultS
     System.out.println(qm.toCollection("SELECT person_no, first_name, last_name, birth_date FROM person WHERE last_name = ?", new ArrayList<String>(), String.class, "Person"));  // [Person{personNo=0,birthDate=null,firstName=First,lastName=Person}, Person{personNo=1,birthDate=null,firstName=Second,lastName=Person}]
 }
 ```
+
+TODO
+----
+
+ * Binding of Enum to String by default
+ * sql other than select return boolean, int > 0 ?
