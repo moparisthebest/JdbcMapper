@@ -687,7 +687,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			if (clob != null) {
 				if (types.isAssignable(o, stringType)) {
 					method = "Clob";
-					variableName = variableName + " == null ? null : new StringReader(" + variableName + ")";
+					variableName = variableName + " == null ? null : new java.io.StringReader(" + variableName + ")";
 				} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
 					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Clob only valid for String, Clob, Reader", param);
 					return;
