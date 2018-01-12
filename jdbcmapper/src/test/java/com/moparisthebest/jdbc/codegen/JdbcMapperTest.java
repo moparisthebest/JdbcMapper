@@ -102,8 +102,23 @@ public class JdbcMapperTest {
 	}
 
 	@Test
+	public void testEnumPersonConstructor() throws SQLException {
+		assertEquals(new EnumPerson(FirstName.First), dao.getEnumPersonConstructor(fieldPerson1.getPersonNo()));
+	}
+
+	@Test
 	public void testEnum() throws SQLException {
 		assertEquals(FirstName.First, dao.getFirstNameEnum(fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testEnumPersonNull() throws SQLException {
+		assertEquals(new EnumPerson(null), dao.getEnumPersonNull());
+	}
+
+	@Test
+	public void testEnumNull() throws SQLException {
+		assertEquals(null, dao.getEnumNull());
 	}
 
 	//IFJAVA8_START

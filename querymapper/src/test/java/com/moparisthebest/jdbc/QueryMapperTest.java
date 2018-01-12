@@ -36,6 +36,8 @@ public class QueryMapperTest {
 	public static final Person fieldPerson2 = new FieldPerson(5, new Date(0), "Second", "Person");
 	public static final Person fieldPerson3 = new FieldPerson(6, new Date(0), "Third", "Person");
 
+	public static final Person fieldPerson1NullName = new FieldPerson(1, new Date(0), null, null);
+
 	public static final Person[] people = new Person[]{fieldPerson1, fieldPerson2, fieldPerson3};
 	public static final Boss[] bosses = new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3};
 
@@ -43,6 +45,7 @@ public class QueryMapperTest {
 			new Val(1, 1969, "1969"),
 			new Val(2, 0, "America/New_York"),
 			new Val(3, -5, "-5"),
+			new Val(4, 4, null),
 	};
 
 	public static final Person setPerson1 = new SetPerson(fieldPerson1);
@@ -91,7 +94,7 @@ public class QueryMapperTest {
 				qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
 				qm.executeUpdate("CREATE TABLE val (val_no NUMERIC, num_val NUMERIC, str_val VARCHAR(40))");
 				for (final Person person : people)
-					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
+					insertPerson(qm, person);
 				for (final Boss boss : bosses) {
 					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
 					qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
@@ -106,6 +109,10 @@ public class QueryMapperTest {
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static void insertPerson(final QueryMapper qm, final Person person) throws SQLException {
+		qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", person.getPersonNo(), person.getBirthDate(), person.getLastName(), person.getFirstName());
 	}
 
 	public static Connection getConnection() throws SQLException {
@@ -451,8 +458,23 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testEnumPersonConstructor() throws SQLException {
+		assertEquals(new EnumPerson(FirstName.First), qm.toObject("SELECT first_name FROM person WHERE person_no = ?", EnumPerson.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
 	public void testEnum() throws SQLException {
 		assertEquals(FirstName.First, qm.toObject("SELECT first_name FROM person WHERE person_no = ?", FirstName.class, fieldPerson1.getPersonNo()));
+	}
+
+	@Test
+	public void testEnumPersonNull() throws SQLException {
+		assertEquals(new EnumPerson(null), qm.toObject("SELECT str_val as first_name, str_val as last_name FROM val WHERE val_no = 4", EnumPerson.class));
+	}
+
+	@Test
+	public void testEnumNull() throws SQLException {
+		assertEquals(null, qm.toObject("SELECT str_val FROM val WHERE val_no = 4", FirstName.class));
 	}
 
 	//IFJAVA8_START

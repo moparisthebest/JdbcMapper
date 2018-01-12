@@ -197,7 +197,16 @@ public interface PersonDAO extends JdbcMapper {
 	EnumPerson getEnumPerson(long personNo) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
+	EnumPerson getEnumPersonConstructor(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
 	FirstName getFirstNameEnum(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT str_val as first_name, str_val as last_name FROM val WHERE val_no = 4")
+	EnumPerson getEnumPersonNull() throws SQLException;
+
+	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = 4")
+	FirstName getEnumNull() throws SQLException;
 
 	//IFJAVA8_START
 

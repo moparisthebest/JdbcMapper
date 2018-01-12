@@ -110,6 +110,11 @@ public class ResultSetUtil {
 		return c;
 	}
 
+	public static <T extends Enum<T>> T getEnum(final ResultSet _resultSet, final int index, final Class<T> enumType) throws SQLException {
+		final String name = _resultSet.getString(index);
+		return name == null ? null : Enum.valueOf(enumType, name);
+	}
+
 	//IFJAVA8_START
 
 	public static Instant getInstant(final ResultSet _resultSet, final int index) throws SQLException {
@@ -194,6 +199,22 @@ public class ResultSetUtil {
 			return getOffsetTime(_resultSet, index);
 		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
 		return ts == null ? null : OffsetTime.ofInstant(ts.toInstant(), _cal.getTimeZone().toZoneId());
+	}
+
+	public static Year getYear(final ResultSet _resultSet, final int index) throws SQLException {
+		// done this way instead of of(int) because usually int->string database coercion is allowed and the other isn't?
+		final String s = _resultSet.getString(index);
+		return s == null ? null : Year.parse(s);
+	}
+
+	public static ZoneId getZoneId(final ResultSet _resultSet, final int index) throws SQLException {
+		final String s = _resultSet.getString(index);
+		return s == null ? null : ZoneId.of(s);
+	}
+
+	public static ZoneOffset getZoneOffset(final ResultSet _resultSet, final int index) throws SQLException {
+		final String s = _resultSet.getString(index);
+		return s == null ? null : ZoneOffset.of(s);
 	}
 
 	//IFJAVA8_END

@@ -654,7 +654,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 					return _resultSet.getString(index);
 				case TypeMappingsFactory.TYPE_ENUM:
 					@SuppressWarnings("unchecked")
-					final Enum ret = Enum.valueOf((Class<? extends Enum>)resultTypeClass, _resultSet.getString(index));
+					final Enum ret = ResultSetUtil.getEnum(_resultSet, index, (Class<? extends Enum>) resultTypeClass);
 					return ret;
 				case TypeMappingsFactory.TYPE_BIG_DECIMAL:
 					return _resultSet.getBigDecimal(index);
@@ -728,12 +728,11 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				case TypeMappingsFactory.TYPE_OFFSETTIME:
 					return ResultSetUtil.getOffsetTime(_resultSet, index, _cal);
 				case TypeMappingsFactory.TYPE_YEAR:
-					// done this way instead of of(int) because usually int->string database coercion is allowed and the other isn't?
-					return Year.parse(_resultSet.getString(index));
+					return ResultSetUtil.getYear(_resultSet, index);
 				case TypeMappingsFactory.TYPE_ZONEID:
-					return ZoneId.of(_resultSet.getString(index));
+					return ResultSetUtil.getZoneId(_resultSet, index);
 				case TypeMappingsFactory.TYPE_ZONEOFFSET:
-					return ZoneOffset.of(_resultSet.getString(index));
+					return ResultSetUtil.getZoneOffset(_resultSet, index);
 				// end java.time support
 				//IFJAVA8_END
 				case TypeMappingsFactory.TYPE_STRUCT:

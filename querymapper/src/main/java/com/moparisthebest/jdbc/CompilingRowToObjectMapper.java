@@ -453,35 +453,35 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 				java.append(resultSetName).append(".getInt(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BOOLEAN:
-				java.append("getBooleanYN(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getBooleanYN(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_INT_OBJ:
-				java.append("getObjectInt(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectInt(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_LONG_OBJ:
-				java.append("getObjectLong(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectLong(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_FLOAT_OBJ:
-				java.append("getObjectFloat(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectFloat(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_DOUBLE_OBJ:
-				java.append("getObjectDouble(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectDouble(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BYTE_OBJ:
-				java.append("getObjectByte(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectByte(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_SHORT_OBJ:
-				java.append("getObjectShort(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectShort(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_BOOLEAN_OBJ:
-				java.append("getObjectBooleanYN(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectBooleanYN(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_STRING:
 			case TypeMappingsFactory.TYPE_XMLBEAN_ENUM:
 				java.append(resultSetName).append(".getString(").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_ENUM:
-				java.append(enumName).append(".valueOf(").append(resultSetName).append(".getString(").append(String.valueOf(index)).append("))");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getEnum(").append(resultSetName).append(", ").append(String.valueOf(index)).append(", ").append(enumName).append(".class)");
 				return;
 			case TypeMappingsFactory.TYPE_BIG_DECIMAL:
 				java.append(resultSetName).append(".getBigDecimal(").append(String.valueOf(index)).append(")");
@@ -508,13 +508,13 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_DATE:
-				java.append("getUtilDate(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getUtilDate(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_CALENDAR:
-				java.append("getCalendar(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getCalendar(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
@@ -536,56 +536,56 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 				throw new MapperException("streaming return types are not supported by the JdbcControl; use ResultSet instead");
 			// start java.time support
 			case TypeMappingsFactory.TYPE_INSTANT:
-				java.append("getInstant(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getInstant(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_LOCALDATETIME:
-				java.append("getLocalDateTime(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getLocalDateTime(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_LOCALDATE:
-				java.append("getLocalDate(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getLocalDate(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_LOCALTIME:
-				java.append("getLocalTime(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getLocalTime(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			// todo: send in ZoneId here?
 			case TypeMappingsFactory.TYPE_ZONEDDATETIME:
-				java.append("getZonedDateTime(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getZonedDateTime(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_OFFSETDATETIME:
-				java.append("getOffsetDateTime(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getOffsetDateTime(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_OFFSETTIME:
-				java.append("getOffsetTime(").append(resultSetName).append(", ").append(String.valueOf(index));
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getOffsetTime(").append(resultSetName).append(", ").append(String.valueOf(index));
 				if(calendarName != null)
 					java.append(", ").append(calendarName);
 				java.append(")");
 				return;
 			case TypeMappingsFactory.TYPE_YEAR:
-				java.append("java.time.Year.parse(").append(resultSetName).append(".getString(").append(String.valueOf(index)).append("))");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getYear(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_ZONEID:
-				java.append("java.time.ZoneId.of(").append(resultSetName).append(".getString(").append(String.valueOf(index)).append("))");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getZoneId(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			case TypeMappingsFactory.TYPE_ZONEOFFSET:
-				java.append("java.time.ZoneOffset.of(").append(resultSetName).append(".getString(").append(String.valueOf(index)).append("))");
+				java.append("com.moparisthebest.jdbc.util.ResultSetUtil.getZoneOffset(").append(resultSetName).append(", ").append(String.valueOf(index)).append(")");
 				return;
 			// end java.time support
 			case TypeMappingsFactory.TYPE_STRUCT:
