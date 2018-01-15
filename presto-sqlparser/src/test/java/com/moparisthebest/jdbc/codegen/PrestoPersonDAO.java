@@ -1,10 +1,7 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.Cleaner;
-import com.moparisthebest.jdbc.dto.EnumPerson;
-import com.moparisthebest.jdbc.dto.FieldPerson;
-import com.moparisthebest.jdbc.dto.FirstName;
-import com.moparisthebest.jdbc.dto.Person;
+import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import java.io.Closeable;
@@ -77,6 +74,9 @@ public interface PrestoPersonDAO extends PersonDAO {
 
 	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	BuilderPerson getBuilderPerson(long personNo) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo, Calendar cal) throws SQLException;
@@ -207,6 +207,9 @@ public interface PrestoPersonDAO extends PersonDAO {
 
 	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = 4")
 	FirstName getEnumNull() throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = {personNo}")
+	CaseSensitivePerson getCaseSensitivePerson(long personNo);
 
 	//IFJAVA8_START
 
