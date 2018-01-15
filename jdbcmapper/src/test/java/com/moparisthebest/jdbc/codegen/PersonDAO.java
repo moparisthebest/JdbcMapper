@@ -75,6 +75,9 @@ public interface PersonDAO extends JdbcMapper {
 	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo) throws SQLException;
 
+	@JdbcMapper.SQL(value = "SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
+	BuilderPerson getBuilderPerson(long personNo) throws SQLException;
+
 	@JdbcMapper.SQL("SELECT first_name, last_name, birth_date FROM person WHERE person_no = {personNo}")
 	FieldPerson getPerson(long personNo, Calendar cal) throws SQLException;
 

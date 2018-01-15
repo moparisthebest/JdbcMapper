@@ -217,6 +217,11 @@ public class JdbcMapperTest {
 	}
 
 	@Test
+	public void testBuilderPerson() throws SQLException {
+		assertEquals(new BuilderPerson(fieldPerson1), dao.getBuilderPerson(fieldPerson1.getPersonNo()));
+	}
+
+	@Test
 	public void testSinglePersonNameArray() throws SQLException {
 		assertArrayEquals(new String[]{fieldPerson1.getFirstName(), fieldPerson1.getLastName()}, dao.getSinglePersonNameArray(fieldPerson1.getPersonNo()));
 	}

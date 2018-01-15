@@ -165,6 +165,11 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testBuilderPerson() throws Throwable {
+		testPerson(new BuilderPerson(fieldPerson1), personRegular);
+	}
+
+	@Test
 	public void testFieldRegularAndUnderscore() throws Throwable {
 		testPerson(fieldBoss1, bossRegularAndUnderscore);
 	}

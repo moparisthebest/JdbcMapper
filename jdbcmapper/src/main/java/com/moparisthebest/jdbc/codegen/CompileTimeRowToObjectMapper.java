@@ -188,7 +188,7 @@ public class CompileTimeRowToObjectMapper {
 					continue;
 				final ExecutableElement m = (ExecutableElement) e;
 				//System.out.printf("method: '%s', isSetterMethod: '%s'\n", m, isSetterMethod(m));
-				if (isSetterMethod(m)) {
+				if (isSetterMethod(m, declaredReturnType)) { // todo: in RowToObjectMapper we send in this top one, but how does it or this handle methods on parent classes?
 					String fieldName = m.getSimpleName().toString().substring(3).toUpperCase();
 					//System.out.println("METHOD-fieldName1: "+fieldName);
 					if (!mapFields.containsKey(fieldName)) {
@@ -289,13 +289,14 @@ public class CompileTimeRowToObjectMapper {
 	 * @param method Method to check
 	 * @return True if the method is a setter method.
 	 */
-	protected boolean isSetterMethod(final ExecutableElement method) {
+	protected boolean isSetterMethod(final ExecutableElement method, final TypeMirror enclosingClass) {
 		if (method.getSimpleName().toString().startsWith("set")) {
 
 			final Set<Modifier> modifiers = method.getModifiers();
 			if (modifiers.contains(Modifier.STATIC)) return false;
 			if (!modifiers.contains(Modifier.PUBLIC)) return false;
-			if (TypeKind.VOID != method.getReturnType().getKind()) return false;
+			final TypeMirror methodReturnType = method.getReturnType();
+			if (TypeKind.VOID != method.getReturnType().getKind() && !rsm.types.isSameType(enclosingClass, methodReturnType)) return false;
 
 			// method parameter checks
 			final List<? extends VariableElement> params = method.getParameters();

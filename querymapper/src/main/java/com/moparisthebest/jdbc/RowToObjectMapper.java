@@ -430,7 +430,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 		Method[] classMethods = _returnTypeClass.getMethods();
 		for (Method m : classMethods) {
 			//System.out.printf("method: '%s', isSetterMethod: '%s'\n", m, isSetterMethod(m));
-			if (isSetterMethod(m)) {
+			if (isSetterMethod(m, _returnTypeClass)) {
 				String fieldName = m.getName().substring(3).toUpperCase();
 				//System.out.println("METHOD-fieldName1: "+fieldName);
 				if (!mapFields.containsKey(fieldName)) {
@@ -551,12 +551,13 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	 * @param method Method to check
 	 * @return True if the method is a setter method.
 	 */
-	protected boolean isSetterMethod(Method method) {
+	protected boolean isSetterMethod(final Method method, final Class<?> enclosingClass) {
 		if (method.getName().startsWith("set")) {
 
 			if (Modifier.isStatic(method.getModifiers())) return false;
 			if (!Modifier.isPublic(method.getModifiers())) return false;
-			if (!Void.TYPE.equals(method.getReturnType())) return false;
+			final Class<?> methodReturnType = method.getReturnType();
+			if (!Void.TYPE.equals(methodReturnType) && !enclosingClass.equals(methodReturnType)) return false;
 
 			// method parameter checks
 			Class[] params = method.getParameterTypes();

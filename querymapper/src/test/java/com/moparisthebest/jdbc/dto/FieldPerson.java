@@ -46,27 +46,13 @@ public class FieldPerson implements Person {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof FieldPerson)) return false;
-
-		FieldPerson person = (FieldPerson) o;
-
-		if (personNo != person.personNo) return false;
-		if (birthDate != null ? !birthDate.equals(person.birthDate) : person.birthDate != null) return false;
-		if (firstName != null ? !firstName.equals(person.firstName) : person.firstName != null) return false;
-		if (lastName != null ? !lastName.equals(person.lastName) : person.lastName != null) return false;
-
-		return true;
+	public boolean equals(final Object o) {
+		return PersonEqualsHashCode.equals(this, o);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (int) (personNo ^ (personNo >>> 32));
-		result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
-		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-		return result;
+		return PersonEqualsHashCode.hashCode(this);
 	}
 
 	@Override
