@@ -1,9 +1,6 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.jdbc.dto.EnumPerson;
-import com.moparisthebest.jdbc.dto.FieldPerson;
-import com.moparisthebest.jdbc.dto.FirstName;
-import com.moparisthebest.jdbc.dto.Val;
+import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -119,6 +116,13 @@ public class JdbcMapperTest {
 	@Test
 	public void testEnumNull() throws SQLException {
 		assertEquals(null, dao.getEnumNull());
+	}
+
+	@Test
+	public void testCaseInsensitiveMethods() throws SQLException {
+		final CaseSensitivePerson expected = new CaseSensitivePerson();
+		expected.setmPersonFirstName(fieldPerson1.getFirstName());
+		assertEquals(expected, dao.getCaseSensitivePerson(fieldPerson1.getPersonNo()));
 	}
 
 	//IFJAVA8_START

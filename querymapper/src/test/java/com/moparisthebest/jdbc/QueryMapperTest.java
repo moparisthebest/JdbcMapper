@@ -477,6 +477,13 @@ public class QueryMapperTest {
 		assertEquals(null, qm.toObject("SELECT str_val FROM val WHERE val_no = 4", FirstName.class));
 	}
 
+	@Test
+	public void testCaseInsensitiveMethods() throws SQLException {
+		final CaseSensitivePerson expected = new CaseSensitivePerson();
+		expected.setmPersonFirstName(fieldPerson1.getFirstName());
+		assertEquals(expected, qm.toObject("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = ?", CaseSensitivePerson.class, fieldPerson1.getPersonNo()));
+	}
+
 	//IFJAVA8_START
 
 	@Test

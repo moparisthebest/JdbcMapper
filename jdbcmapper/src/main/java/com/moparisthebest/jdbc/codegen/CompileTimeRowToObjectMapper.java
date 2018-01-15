@@ -12,10 +12,8 @@ import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.regex.Matcher;
 
 import static com.moparisthebest.jdbc.CompilingRowToObjectMapper.escapeMapKeyString;
-import static com.moparisthebest.jdbc.RowToObjectMapper._setterRegex;
 import static com.moparisthebest.jdbc.codegen.CompileTimeResultSetMapper.getConcreteClassCanonicalName;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToClass;
 
@@ -292,8 +290,7 @@ public class CompileTimeRowToObjectMapper {
 	 * @return True if the method is a setter method.
 	 */
 	protected boolean isSetterMethod(final ExecutableElement method) {
-		Matcher matcher = _setterRegex.matcher(method.getSimpleName());
-		if (matcher.matches()) {
+		if (method.getSimpleName().toString().startsWith("set")) {
 
 			final Set<Modifier> modifiers = method.getModifiers();
 			if (modifiers.contains(Modifier.STATIC)) return false;
@@ -393,11 +390,7 @@ public class CompileTimeRowToObjectMapper {
 						return _returnTypeClass.cast(val);
 					}
 					*/
-					// we could actually pull from first row like above and test it first and fail now, but maybe just failing during compilation is enough?
-					java.append("final ").append(tType).append(" ret = (").append(tType).append(") ");
-					extractColumnValueString(java, 1, typeId, _returnTypeClass.toString());
-					java.append(";\n");
-					return;
+					// todo: we could actually pull from first row like above and test it first, but for now we will fall-through to field mappings...
 				}
 			} catch (Exception e) {
 				throw new MapperException(e.getMessage(), e);

@@ -30,8 +30,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 //IFJAVA8_START
 import java.time.*;
 //IFJAVA8_END
@@ -58,9 +56,7 @@ import static com.moparisthebest.jdbc.UpdateableDTO.NO;
  */
 public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 
-	private static final String SETTER_NAME_REGEX = "^(set)([A-Z_]\\w*+)";
 	protected static final TypeMappingsFactory _tmf = TypeMappingsFactory.getInstance();
-	public static final Pattern _setterRegex = Pattern.compile(SETTER_NAME_REGEX);
 
 	public static final int TYPE_BOOLEAN = _tmf.getTypeId(Boolean.TYPE);//TypeMappingsFactory.TYPE_BOOLEAN; // not public? 
 	public static final int TYPE_BOOLEAN_OBJ = _tmf.getTypeId(Boolean.class);//TypeMappingsFactory.TYPE_BOOLEAN_OBJ; // not public?
@@ -556,8 +552,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 	 * @return True if the method is a setter method.
 	 */
 	protected boolean isSetterMethod(Method method) {
-		Matcher matcher = _setterRegex.matcher(method.getName());
-		if (matcher.matches()) {
+		if (method.getName().startsWith("set")) {
 
 			if (Modifier.isStatic(method.getModifiers())) return false;
 			if (!Modifier.isPublic(method.getModifiers())) return false;
