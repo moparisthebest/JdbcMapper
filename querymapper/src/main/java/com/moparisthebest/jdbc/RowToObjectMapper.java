@@ -238,7 +238,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 
 		if (resultSetConstructor)
 			try {
-				return constructor.newInstance(_resultSet);
+				return finishIfNeeded(constructor.newInstance(_resultSet), _resultSet);
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
 						+ _returnTypeClass.getName() + " sending in a ResultSet object as a parameter", e);
@@ -249,7 +249,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 				for(int x = 1; x <= _columnCount; ++x)
 					_args[x-1] = extractColumnValue(_fieldOrder[x], _fieldTypes[x], _fieldClasses[x]);
 				//System.out.println("creating " + constructor + " sending in a objects: " + Arrays.toString(_args));
-				return constructor.newInstance(_args);
+				return finishIfNeeded(constructor.newInstance(_args), _resultSet);
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create instance of : "
 						+ _returnTypeClass.getName() + " sending in a objects: " + Arrays.toString(_args), e);
@@ -298,12 +298,12 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 
 			try {
 				if (typeId != TypeMappingsFactory.TYPE_UNKNOWN) {
-					return (T)extractColumnValue(1, typeId, _returnTypeClass);
+					return finishIfNeeded((T)extractColumnValue(1, typeId, _returnTypeClass), _resultSet);
 				} else {
 					// we still might want a single value (i.e. java.util.Date)
 					Object val = extractColumnValue(1, typeId, _returnTypeClass);
 					if (_returnTypeClass.isAssignableFrom(val.getClass())) {
-						return _returnTypeClass.cast(val);
+						return finishIfNeeded(_returnTypeClass.cast(val), _resultSet);
 					}
 				}
 			} catch (Exception e) {
@@ -379,6 +379,14 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 			} catch (SQLException e) {
 				throw new MapperException(e.getMessage(), e);
 			}
+		finishIfNeeded(resultObject, _resultSet);
+		return resultObject;
+	}
+
+	public static <T> T finishIfNeeded(final T resultObject, final ResultSet _resultSet) throws SQLException {
+		// if this resultObject is Finishable, call finish()
+		if (resultObject instanceof Finishable) // todo: use isAssignable and cache this...
+			((Finishable) resultObject).finish(_resultSet);
 		return resultObject;
 	}
 

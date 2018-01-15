@@ -319,6 +319,7 @@ public class CompileTimeRowToObjectMapper {
 
 		if (resultSetConstructor) {
 			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(rs);\n");
+			finishIfNeeded(java);
 			return;
 		}
 
@@ -330,6 +331,7 @@ public class CompileTimeRowToObjectMapper {
 					java.append(",\n");
 			}
 			java.append(");\n");
+			finishIfNeeded(java);
 			return;
 		}
 
@@ -382,6 +384,7 @@ public class CompileTimeRowToObjectMapper {
 					java.append("final ").append(tType).append(" ret = ");
 					extractColumnValueString(java, 1, typeId, _returnTypeClass.toString());
 					java.append(";\n");
+					finishIfNeeded(java);
 					return;
 				} else {
 					// we still might want a single value (i.e. java.util.Date)
@@ -433,6 +436,10 @@ public class CompileTimeRowToObjectMapper {
 				java.append(");\n");
 			}
 		}
+		finishIfNeeded(java);
+	}
+
+	public void finishIfNeeded(final Appendable java) throws IOException {
 		// if this resultObject is Finishable, call finish()
 		if (rsm.types.isAssignable(_returnTypeClass, rsm.finishableType))
 			java.append("ret.finish(rs);\n");
