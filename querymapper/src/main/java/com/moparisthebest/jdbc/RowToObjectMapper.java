@@ -524,17 +524,19 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 						+ "stripped of '_' and compared if no match is found with them.");
 			}
 			_fields[i] = f;
+			final Class<?> type;
 			if (f instanceof Field) {
 				final Field field = (Field) f;
 				_fields[i] = modField(field, i);
-				_fieldTypes[i] = _tmf.getTypeId(field.getType());
-				if(_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM) {
-					@SuppressWarnings("unchecked")
-					final Class<? extends Enum> noWarnings = (Class<? extends Enum>) field.getType();
-					_fieldClasses[i] = noWarnings;
-				}
+				type = field.getType();
 			} else {
-				_fieldTypes[i] = _tmf.getTypeId(((Method) f).getParameterTypes()[0]);
+				type = ((Method) f).getParameterTypes()[0];
+			}
+			_fieldTypes[i] = _tmf.getTypeId(type);
+			if(_fieldTypes[i] == TypeMappingsFactory.TYPE_ENUM) {
+				@SuppressWarnings("unchecked")
+				final Class<? extends Enum> noWarnings = (Class<? extends Enum>) type;
+				_fieldClasses[i] = noWarnings;
 			}
 		}
 	}

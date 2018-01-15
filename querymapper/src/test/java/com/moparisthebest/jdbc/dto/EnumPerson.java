@@ -37,6 +37,14 @@ public class EnumPerson implements Person {
 		return lastName;
 	}
 
+	public void setFirstName(final FirstName firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
+	}
+
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;

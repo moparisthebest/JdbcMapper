@@ -327,11 +327,7 @@ public class CompilingRowToObjectMapper<K, T> extends RowToObjectMapper<K, T> {
 						return _returnTypeClass.cast(val);
 					}
 					*/
-					// we could actually pull from first row like above and test it first and fail now, but maybe just failing during compilation is enough?
-					java.append("final ").append(tType).append(" ret = (").append(tType).append(") ");
-					extractColumnValueString(java, 1, typeId, _returnTypeClass.getCanonicalName());
-					java.append(";\n");
-					return;
+					// todo: we could actually pull from first row like above and test it first, but for now we will fall-through to field mappings...
 				}
 			} catch (Exception e) {
 				throw new MapperException(e.getMessage(), e);
