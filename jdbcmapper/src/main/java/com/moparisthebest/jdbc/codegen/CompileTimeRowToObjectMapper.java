@@ -438,12 +438,11 @@ public class CompileTimeRowToObjectMapper {
 			java.append("ret.finish(rs);\n");
 	}
 
-	public static int getTypeId(TypeMirror classType) {
+	public int getTypeId(TypeMirror classType) {
 		try {
 			return _tmf.getTypeId(typeMirrorToClass(classType));
 		} catch (ClassNotFoundException e) {
-			// todo: what about enums?
-			return TypeMappingsFactory.TYPE_UNKNOWN;
+			return rsm.types.isAssignable(classType, rsm.enumType) ? TypeMappingsFactory.TYPE_ENUM : TypeMappingsFactory.TYPE_UNKNOWN;
 		}
 	}
 

@@ -35,7 +35,7 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToCl
 public class CompileTimeResultSetMapper {
 
 	public final Types types;
-	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType, byteArrayType;
+	public final TypeMirror collectionType, mapType, mapCollectionType, iteratorType, listIteratorType, finishableType, resultSetType, resultSetIterableType, byteArrayType, enumType;
 	//IFJAVA8_START
 	public final TypeMirror streamType;
 	//IFJAVA8_END
@@ -57,6 +57,8 @@ public class CompileTimeResultSetMapper {
 		resultSetIterableType = types.getDeclaredType(elements.getTypeElement(ResultSetIterable.class.getCanonicalName()), types.getWildcardType(null, null));
 
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
+
+		enumType = types.getDeclaredType(elements.getTypeElement(Enum.class.getCanonicalName()), types.getWildcardType(null, null));
 
 		//IFJAVA8_START
 		streamType = types.getDeclaredType(elements.getTypeElement(Stream.class.getCanonicalName()), types.getWildcardType(null, null));

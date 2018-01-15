@@ -211,6 +211,21 @@ public interface PrestoPersonDAO extends PersonDAO {
 	@JdbcMapper.SQL("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = {personNo}")
 	CaseSensitivePerson getCaseSensitivePerson(long personNo);
 
+	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE person_no = {personNo}")
+	SameClassPathEnumPerson getSameClassPathEnumPerson(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
+	SameClassPathEnumPerson getSameClassPathEnumPersonConstructor(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
+	SameClassPathEnumPerson.FirstName getSameClassPathFirstNameEnum(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("SELECT str_val as first_name, str_val as last_name FROM val WHERE val_no = 4")
+	SameClassPathEnumPerson getSameClassPathEnumPersonNull() throws SQLException;
+
+	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = 4")
+	SameClassPathEnumPerson.FirstName getSameClassPathEnumNull() throws SQLException;
+
 	//IFJAVA8_START
 
 	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
