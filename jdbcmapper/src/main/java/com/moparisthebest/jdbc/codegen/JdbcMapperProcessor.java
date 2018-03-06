@@ -1,7 +1,9 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.ArrayInList;
 import com.moparisthebest.jdbc.Cleaner;
 import com.moparisthebest.jdbc.MapperException;
+import com.moparisthebest.jdbc.OracleArrayInList;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -28,7 +30,7 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
  * Created by mopar on 5/24/17.
  */
 @SupportedAnnotationTypes("com.moparisthebest.jdbc.codegen.JdbcMapper.Mapper")
-@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "JdbcMapper.allowedMaxRowParamNames"})
+@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "jdbcMapper.allowedMaxRowParamNames", "jdbcMapper.sqlCheckerClass"})
 @SupportedSourceVersion(SourceVersion.RELEASE_5)
 public class JdbcMapperProcessor extends AbstractProcessor {
 
@@ -47,8 +49,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		RELEASE_8 = rl8;
 	}
 
-	private static Types types;
-	private static Messager messager;
+	static Types types;
+	static Messager messager;
 
 	public static Types getTypes() {
 		return types;
@@ -58,14 +60,15 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return messager;
 	}
 
-	private TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, jdbcMapperType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType;
+	static TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, jdbcMapperType,
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType, enumType;
 	//IFJAVA8_START
-	private TypeMirror instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
+	static TypeMirror instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
 	//IFJAVA8_END
 	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
+	private SQLChecker sqlChecker;
 	private Set<String> allowedMaxRowParamNames;
 	private CompileTimeResultSetMapper rsm;
 
@@ -114,14 +117,25 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		cleanerElement = elements.getTypeElement(Cleaner.class.getCanonicalName());
 		cleanerType = types.getDeclaredType(cleanerElement, types.getWildcardType(null, null));
 
-		final String databaseType = processingEnv.getOptions().get("JdbcMapper.databaseType");
+		enumType = types.getDeclaredType(elements.getTypeElement(Enum.class.getCanonicalName()), types.getWildcardType(null, null));
+
+		final String databaseType = processingEnv.getOptions().get("jdbcMapper.databaseType");
 		defaultDatabaseType = databaseType == null ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
-		defaultArrayNumberTypeName = processingEnv.getOptions().get("JdbcMapper.arrayNumberTypeName");
+		defaultArrayNumberTypeName = processingEnv.getOptions().get("jdbcMapper.arrayNumberTypeName");
 		if (defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
 			defaultArrayNumberTypeName = defaultDatabaseType.arrayNumberTypeName;
-		defaultArrayStringTypeName = processingEnv.getOptions().get("JdbcMapper.arrayStringTypeName");
+		defaultArrayStringTypeName = processingEnv.getOptions().get("jdbcMapper.arrayStringTypeName");
 		if (defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
 			defaultArrayStringTypeName = defaultDatabaseType.arrayStringTypeName;
+		final String sqlCheckerClass = processingEnv.getOptions().get("jdbcMapper.sqlCheckerClass");
+		if(sqlCheckerClass != null) {
+			try {
+				sqlChecker = (SQLChecker) Class.forName(sqlCheckerClass).newInstance();
+			} catch (Throwable e) {
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
+						"Error instantiating class specified by jdbcMapper.sqlCheckerClass, needs to implement SQLChecker and have a public no-arg constructor:" + toString(e));
+			}
+		}
 
 		String allowedMaxRowParamNames = processingEnv.getOptions().get("JdbcMapper.allowedMaxRowParamNames");
 		if (allowedMaxRowParamNames == null || allowedMaxRowParamNames.isEmpty())
@@ -161,6 +175,22 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								(mapper.databaseType() == defaultDatabaseType ? defaultArrayNumberTypeName : mapper.databaseType().arrayNumberTypeName);
 						arrayStringTypeName = !mapper.arrayStringTypeName().isEmpty() ? mapper.arrayStringTypeName() :
 								(mapper.databaseType() == defaultDatabaseType ? defaultArrayStringTypeName : mapper.databaseType().arrayStringTypeName);
+					}
+					final ArrayInList arrayInList;
+					if(sqlChecker != null) {
+						switch(databaseType) {
+							case ORACLE:
+								arrayInList = new OracleArrayInList(arrayNumberTypeName, arrayStringTypeName);
+								break;
+							case STANDARD:
+								arrayInList = new ArrayInList(arrayNumberTypeName, arrayStringTypeName);
+								break;
+							default:
+								// no support
+								arrayInList = null;
+						}
+					} else {
+						arrayInList = null;
 					}
 					final String sqlParserMirror = getSqlParser(mapper).toString();
 					//final SQLParser parser = new SimpleSQLParser();//(SQLParser)Class.forName(mapper.sqlParser().getCanonicalName()).newInstance();
@@ -380,7 +410,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								w.write("conn.prepareStatement(");
 							}
 							w.write('"');
-							w.write(sqlStatement.replace("\n", "\\n").replace("\"", "\\\""));
+							w.write(sqlStatement.replace("\"", "\\\"").replace("\n", "\\n\" +\n\t\t\t                                      \""));
 							w.write("\");\n");
 
 							// now bind parameters
@@ -439,6 +469,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write("\t\t}\n");
 
 							w.write("\t}\n");
+
+							if(sqlChecker != null)
+								sqlChecker.checkSql(processingEnv, genClass, mapper, databaseType, eeMethod, sqlStatement, bindParams, arrayInList);
 						}
 
 						// look on super classes and interfaces recursively
@@ -501,10 +534,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						tryClose(w);
 					}
 				} catch (Exception e) {
-					final StringWriter sw = new StringWriter();
-					sw.write('\n');
-					e.printStackTrace(new PrintWriter(sw));
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage() + sw.toString(), element);
+					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage() + toString(e), element);
 					return false;
 				}
 		return true;
@@ -874,6 +904,22 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				return true;
 			default:
 				return false;
+		}
+	}
+
+	public static String toString(final Throwable e) {
+		StringWriter sw = null;
+		PrintWriter pw = null;
+		try {
+			sw = new StringWriter();
+			sw.write(String.format("%n"));
+			pw = new PrintWriter(sw);
+			e.printStackTrace(new PrintWriter(pw));
+			pw.flush();
+			return sw.toString();
+		} finally {
+			tryClose(sw);
+			tryClose(pw);
 		}
 	}
 }

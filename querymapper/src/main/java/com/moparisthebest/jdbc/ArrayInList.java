@@ -16,18 +16,31 @@ public class ArrayInList implements InList {
 		return instance;
 	}
 
-	protected ArrayInList() {
+	protected final String numericType, otherType;
+
+	public ArrayInList(final String numericType, final String otherType) {
+		this.numericType = numericType;
+		this.otherType = otherType;
+	}
+
+	public ArrayInList() {
+		this("number", "text");
 	}
 
 	protected String columnAppend(final String columnName) {
 		return "(" + columnName + " = ANY(?))";
 	}
 
+	public Array toArray(final Connection conn, final String typeName, final Object[] elements) throws SQLException {
+		return conn.createArrayOf(typeName, elements);
+	}
+
+	public Array toArray(final Connection conn, final boolean numeric, final Object[] elements) throws SQLException {
+		return toArray(conn, numeric ? numericType : otherType, elements);
+	}
+
 	protected <T> Array toArray(final Connection conn, final Collection<T> values) throws SQLException {
-		return conn.createArrayOf(
-				values.iterator().next() instanceof Number ? "number" : "text",
-				values.toArray()
-		);
+		return toArray(conn, values.iterator().next() instanceof Number, values.toArray());
 	}
 
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException {

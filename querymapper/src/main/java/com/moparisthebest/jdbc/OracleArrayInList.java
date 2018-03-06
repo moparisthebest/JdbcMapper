@@ -34,25 +34,22 @@ public class OracleArrayInList extends ArrayInList {
 		createArray = ca;
 	}
 
-	protected OracleArrayInList() {
+	public OracleArrayInList(final String numberType, final String otherType) {
+		super(numberType, otherType);
+	}
+
+	public OracleArrayInList() {
+		this("ARRAY_NUM_TYPE", "ARRAY_STR_TYPE");
 	}
 
 	protected String columnAppend(final String columnName) {
 		return "(" + columnName + " IN(select column_value from table(?)))";
 	}
 
-	protected <T> Array toArray(final Connection conn, final Collection<T> values) throws SQLException {
-		/*
-		return conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(
-				values.iterator().next() instanceof Number ? "ARRAY_NUM_TYPE" : "ARRAY_STR_TYPE",
-				values.toArray()
-		);
-		*/
+	public Array toArray(final Connection conn, final String typeName, final Object[] elements) throws SQLException {
+		//return conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(typeName, elements);
 		try {
-			return (Array) createArray.invoke(conn.unwrap(oracleConnection),
-					values.iterator().next() instanceof Number ? "ARRAY_NUM_TYPE" : "ARRAY_STR_TYPE",
-					values.toArray()
-			);
+			return (Array) createArray.invoke(conn.unwrap(oracleConnection), typeName, elements);
 		} catch (SQLException e) {
 			throw e;
 		} catch (Exception e) {

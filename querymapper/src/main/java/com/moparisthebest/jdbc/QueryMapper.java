@@ -179,6 +179,8 @@ public class QueryMapper implements JdbcMapper {
 			ps.setBlob(index, (java.sql.Blob) o);
 		else if (o instanceof ArrayInList.ArrayListObject)
 			ps.setArray(index, ((ArrayInList.ArrayListObject) o).getArray());
+		else if (o instanceof java.sql.Array)
+			ps.setArray(index, (java.sql.Array) o);
 		else
 			ps.setObject(index, o); // probably won't get here ever, but just in case...
 		/*
