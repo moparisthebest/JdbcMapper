@@ -127,7 +127,7 @@ public class SimpleSQLChecker implements SQLChecker {
 		}
 		// end special behavior
 		// we are going to put most common ones up top so it should execute faster normally
-		if (types.isAssignable(o, stringType)) {
+		if (types.isAssignable(o, stringType) || types.isAssignable(o, enumType)) { // todo: hack for enum, might try to get one of the options? is it even possible?
 			return defaultString;
 		} else if (o.getKind().isPrimitive() || types.isAssignable(o, numberType)) {
 			switch (o.getKind()) {

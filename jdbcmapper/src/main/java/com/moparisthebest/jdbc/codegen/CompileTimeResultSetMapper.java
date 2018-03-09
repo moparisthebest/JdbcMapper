@@ -93,6 +93,10 @@ public class CompileTimeResultSetMapper {
 				toArray(w, keys, componentType, maxRows, cal, cleaner, reflectionFields);
 			} else if (types.isAssignable(returnTypeMirror, collectionType)) {
 				final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();
+				if(typeArguments.isEmpty()) {
+					JdbcMapperProcessor.getMessager().printMessage(Diagnostic.Kind.ERROR, "Collection type must have a generic type argument", eeMethod);
+					return true;
+				}
 				toCollection(w, keys, returnTypeMirror, typeArguments.get(0), maxRows, cal, cleaner, reflectionFields);
 			} else if (types.isAssignable(returnTypeMirror, mapType) && eeMethod.getAnnotation(JdbcMapper.SingleRow.class) == null) {
 				final List<? extends TypeMirror> typeArguments = ((DeclaredType) returnTypeMirror).getTypeArguments();

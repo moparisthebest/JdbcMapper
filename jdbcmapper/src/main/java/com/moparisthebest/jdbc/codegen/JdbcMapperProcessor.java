@@ -729,7 +729,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		// we are going to put most common ones up top so it should execute faster normally
 		// todo: avoid string concat here
 		if (method == null)
-			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType)) {
+			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType) || types.isAssignable(o, enumType)) {
 				method = "Object";
 				// java.util.Date support, put it in a Timestamp
 			} else if (types.isAssignable(o, utilDateType)) {
