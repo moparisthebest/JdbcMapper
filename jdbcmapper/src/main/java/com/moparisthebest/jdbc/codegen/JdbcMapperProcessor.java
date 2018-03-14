@@ -34,7 +34,7 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
 @SupportedSourceVersion(SourceVersion.RELEASE_5)
 public class JdbcMapperProcessor extends AbstractProcessor {
 
-	private static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([^}]+)\\}");
+	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCc][Ll][Oo][Bb]\\s*:\\s*([^:]+\\s*:\\s*)?)?([^}]+)\\}");
 
 	public static final SourceVersion RELEASE_8;
 	public static boolean java8;
@@ -334,19 +334,37 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								final Matcher bindParamMatcher = paramPattern.matcher(sql.value());
 								final StringBuffer sb = new StringBuffer();
 								while (bindParamMatcher.find()) {
-									final String paramName = bindParamMatcher.group(5);
+									final String paramName = bindParamMatcher.group(7);
 									final VariableElement bindParam = paramMap.get(paramName);
 									if (bindParam == null) {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL sql has bind param '%s' not in method parameter list", paramName), methodElement);
 										continue;
 									}
 									unusedParams.remove(paramName);
+									final String clobBlob = bindParamMatcher.group(5);
 									final String inColumnName = bindParamMatcher.group(2);
 									if (inColumnName == null) {
-										bindParams.add(bindParam);
 										bindParamMatcher.appendReplacement(sb, "?");
+										if(clobBlob == null){
+											bindParams.add(bindParam);
+										} else {
+											// regex ensures this can only be C for clob or B for blob
+											final boolean clobNotBlob = 'C' == Character.toUpperCase(clobBlob.charAt(0));
+											final String blobCharset = bindParamMatcher.group(6);
+											if(clobNotBlob) {
+												if(blobCharset != null)
+													processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with clob", bindParam);
+												bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.CLOB));
+											} else {
+												bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.BLOB, blobCharset == null ? null :
+														blobCharset.substring(0, blobCharset.indexOf(':')).trim()
+												));
+											}
+										}
 									} else {
-										bindParams.add(new InListVariableElement(bindParam));
+										if(clobBlob != null)
+											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob", bindParam);
+										bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.IN_LIST));
 										final boolean not = bindParamMatcher.group(4) != null;
 										final String replacement;
 										switch (databaseType) {
@@ -632,34 +650,37 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		String method = null;
 
 		// special behavior
-		if (param instanceof InListVariableElement) {
-			final boolean collection;
-			final TypeMirror componentType;
-			if (o.getKind() == TypeKind.ARRAY) {
-				collection = false;
-				componentType = ((ArrayType) o).getComponentType();
-			} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
-				collection = true;
-				final DeclaredType dt = (DeclaredType) o;
-				if (dt.getTypeArguments().isEmpty()) {
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" + o.toString(), ((InListVariableElement) param).delegate);
-					return;
-				}
-				componentType = dt.getTypeArguments().get(0);
-			} else {
-				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" + o.toString(), ((InListVariableElement) param).delegate);
-				return;
-			}
-			w.write("ps.setArray(");
-			w.write(Integer.toString(index));
-			w.write(", ");
-			final String type = types.isAssignable(componentType, numberType) ? arrayNumberTypeName : arrayStringTypeName;
-			switch (databaseType) {
-				case ORACLE:
-					w.write("conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(\"");
+		if (param instanceof SpecialVariableElement) {
+			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
+			switch (specialParam.specialType) {
+				case IN_LIST: {
+					final boolean collection;
+					final TypeMirror componentType;
+					if (o.getKind() == TypeKind.ARRAY) {
+						collection = false;
+						componentType = ((ArrayType) o).getComponentType();
+					} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
+						collection = true;
+						final DeclaredType dt = (DeclaredType) o;
+						if (dt.getTypeArguments().isEmpty()) {
+							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" + o.toString(), specialParam.delegate);
+							return;
+						}
+						componentType = dt.getTypeArguments().get(0);
+					} else {
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" + o.toString(), specialParam.delegate);
+						return;
+					}
+					w.write("ps.setArray(");
+					w.write(Integer.toString(index));
+					w.write(", ");
+					final String type = types.isAssignable(componentType, numberType) ? arrayNumberTypeName : arrayStringTypeName;
+					switch (databaseType) {
+						case ORACLE:
+							w.write("conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(\"");
 
-					// todo: if oracle driver is not on compile-time classpath, would need to do:
-					// we could also create a fake-oracle module that just had a oracle.jdbc.OracleConnection class implementing createOracleArray()...
+							// todo: if oracle driver is not on compile-time classpath, would need to do:
+							// we could also create a fake-oracle module that just had a oracle.jdbc.OracleConnection class implementing createOracleArray()...
 					/*
 					private static final Class<?> oracleConnection;
 					private static final Method createArray;
@@ -677,50 +698,49 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						createArray = ca;
 					}
 					 */
-					//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
-					break;
-				case STANDARD:
-					w.write("conn.createArrayOf(\"");
-					break;
-				default:
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", ((InListVariableElement) param).delegate);
-			}
-			w.write(type);
-			w.write("\", ");
-			w.write(variableName);
-			if (collection)
-				w.write(".toArray()");
-			w.write("));\n");
-			return;
-		}
-		final JdbcMapper.Blob blob = param.getAnnotation(JdbcMapper.Blob.class);
-		if (blob != null) {
-			if (types.isAssignable(o, stringType)) {
-				w.write("try {\n\t\t\t\tps.setBlob(");
-				w.write(Integer.toString(index));
-				w.write(", ");
-				w.write(variableName);
-				w.write(" == null ? null : new java.io.ByteArrayInputStream(");
-				w.write(variableName);
-				w.write(".getBytes(\"");
-				w.write(blob.charsetName());
-				w.write("\")));\n\t\t\t} catch (java.io.UnsupportedEncodingException e) {\n" +
-						"\t\t\t\tthrow new SQLException(\"String to Blob UnsupportedEncodingException\", e);\n" +
-						"\t\t\t}\n");
-				return;
-			} else if (!(types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType) || types.isAssignable(o, fileType) || types.isAssignable(o, byteArrayType))) {
-				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Blob only valid for String, byte[], Blob, InputStream, and File", param);
-				return;
-			}
-		} else {
-			final JdbcMapper.Clob clob = param.getAnnotation(JdbcMapper.Clob.class);
-			if (clob != null) {
-				if (types.isAssignable(o, stringType)) {
-					method = "Clob";
-					variableName = variableName + " == null ? null : new java.io.StringReader(" + variableName + ")";
-				} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
-					processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Clob only valid for String, Clob, Reader", param);
+							//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
+							break;
+						case STANDARD:
+							w.write("conn.createArrayOf(\"");
+							break;
+						default:
+							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", specialParam.delegate);
+					}
+					w.write(type);
+					w.write("\", ");
+					w.write(variableName);
+					if (collection)
+						w.write(".toArray()");
+					w.write("));\n");
 					return;
+				}
+				case BLOB: {
+					if (types.isAssignable(o, stringType)) {
+						w.write("try {\n\t\t\t\tps.setBlob(");
+						w.write(Integer.toString(index));
+						w.write(", ");
+						w.write(variableName);
+						w.write(" == null ? null : new java.io.ByteArrayInputStream(");
+						w.write(variableName);
+						w.write(".getBytes(\"");
+						w.write(specialParam.blobStringCharset == null ? "UTF-8" : specialParam.blobStringCharset);
+						w.write("\")));\n\t\t\t} catch (java.io.UnsupportedEncodingException e) {\n" +
+								"\t\t\t\tthrow new SQLException(\"String to Blob UnsupportedEncodingException\", e);\n" +
+								"\t\t\t}\n");
+						return;
+					} else if (!(types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType) || types.isAssignable(o, fileType) || types.isAssignable(o, byteArrayType))) {
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Blob only valid for String, byte[], Blob, InputStream, and File", specialParam.delegate);
+						return;
+					}
+				}
+				case CLOB: {
+					if (types.isAssignable(o, stringType)) {
+						method = "Clob";
+						variableName = variableName + " == null ? null : new java.io.StringReader(" + variableName + ")";
+					} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Clob only valid for String, Clob, Reader", specialParam.delegate);
+						return;
+					}
 				}
 			}
 		}

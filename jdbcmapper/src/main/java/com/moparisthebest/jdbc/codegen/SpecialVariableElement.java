@@ -9,12 +9,26 @@ import java.util.Set;
 /**
  * Created by mopar on 6/1/17.
  */
-class InListVariableElement implements VariableElement {
+class SpecialVariableElement implements VariableElement {
+
+	enum SpecialType {
+		IN_LIST,
+		CLOB,
+		BLOB,
+	}
 
 	final VariableElement delegate;
+	final SpecialType specialType;
+	final String blobStringCharset;
 
-	InListVariableElement(final VariableElement delegate) {
+	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType) {
+		this(delegate, specialType, null);
+	}
+
+	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType, final String blobStringCharset) {
 		this.delegate = delegate;
+		this.specialType = specialType;
+		this.blobStringCharset = blobStringCharset;
 	}
 
 	@Override
@@ -85,4 +99,11 @@ class InListVariableElement implements VariableElement {
 	}
 
 	//IFJAVA8_END
+
+	@Override
+	public String toString() {
+		return "InListVariableElement{" +
+				"delegate=" + delegate +
+				'}';
+	}
 }

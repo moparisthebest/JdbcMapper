@@ -96,33 +96,33 @@ public class SimpleSQLChecker implements SQLChecker {
 	public Object getFakeBindParam(final VariableElement param, final Connection conn, final ArrayInList arrayInList) throws SQLException {
 		final TypeMirror o = param.asType();
 		// special behavior
-		if (param instanceof InListVariableElement) {
-			final TypeMirror componentType;
-			if (o.getKind() == TypeKind.ARRAY) {
-				componentType = ((ArrayType) o).getComponentType();
-			} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
-				final DeclaredType dt = (DeclaredType) o;
-				componentType = dt.getTypeArguments().get(0);
-			} else {
-				getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING, "invalid in-list-variable type, returning null", ((InListVariableElement) param).delegate);
-				return null;
-			}
-			if (types.isAssignable(componentType, numberType)) {
-				return arrayInList.toArray(conn, true, new Long[]{0L}); // todo: not quite right, oh well for now
-			} else if (types.isAssignable(componentType, stringType) || types.isAssignable(componentType, enumType)) {
-				return arrayInList.toArray(conn, false, new String[]{defaultString});
-			} else {
-				getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING, "invalid in-list-variable type, returning null", ((InListVariableElement) param).delegate);
-				return null;
-			}
-		}
-		final JdbcMapper.Blob blob = param.getAnnotation(JdbcMapper.Blob.class);
-		if (blob != null) {
-			return new ByteArrayInputStream(new byte[1]);
-		} else {
-			final JdbcMapper.Clob clob = param.getAnnotation(JdbcMapper.Clob.class);
-			if (clob != null) {
-				return new StringReader(defaultString);
+		if (param instanceof SpecialVariableElement) {
+			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
+			switch (specialParam.specialType) {
+				case IN_LIST: {
+					final TypeMirror componentType;
+					if (o.getKind() == TypeKind.ARRAY) {
+						componentType = ((ArrayType) o).getComponentType();
+					} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
+						final DeclaredType dt = (DeclaredType) o;
+						componentType = dt.getTypeArguments().get(0);
+					} else {
+						getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING, "invalid in-list-variable type, returning null", ((SpecialVariableElement) param).delegate);
+						return null;
+					}
+					if (types.isAssignable(componentType, numberType)) {
+						return arrayInList.toArray(conn, true, new Long[]{0L}); // todo: not quite right, oh well for now
+					} else if (types.isAssignable(componentType, stringType) || types.isAssignable(componentType, enumType)) {
+						return arrayInList.toArray(conn, false, new String[]{defaultString});
+					} else {
+						getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING, "invalid in-list-variable type, returning null", ((SpecialVariableElement) param).delegate);
+						return null;
+					}
+				}
+				case BLOB:
+					return new ByteArrayInputStream(new byte[1]);
+				case CLOB:
+					return new StringReader(defaultString);
 			}
 		}
 		// end special behavior

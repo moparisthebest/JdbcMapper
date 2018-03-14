@@ -103,35 +103,6 @@ public interface JdbcMapper extends Closeable {
 		long maxRows() default -1;
 	}
 
-	// these are to annotate parameters for special bind to PreparedStatement behavior
-
-	/**
-	 * Use PreparedStatement.setBlob
-	 *
-	 * Only required for String
-	 *
-	 * Also valid for byte[], InputStream, Blob, File. But for those .setBlob is called even without this annotation
-	 */
-	@Retention(RetentionPolicy.SOURCE)
-	@Target({ElementType.PARAMETER})
-	public @interface Blob {
-		/**
-		 * The charsetName sent into String.getBytes()
-		 */
-		String charsetName() default "UTF-8";
-	}
-
-	/**
-	 * Use PreparedStatement.setClob
-	 *
-	 * Only valid for String
-	 *
-	 * Also valid for Clob, Reader. But for those .setClob is called even without this annotation
-	 */
-	@Retention(RetentionPolicy.SOURCE)
-	@Target({ElementType.PARAMETER})
-	public @interface Clob {}
-
 	/**
 	 * Equivalent to QueryMapper.toObject for arrays, and .toSingleMap for maps
 	 */
