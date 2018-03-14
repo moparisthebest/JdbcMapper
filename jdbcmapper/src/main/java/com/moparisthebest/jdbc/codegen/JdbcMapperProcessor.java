@@ -34,7 +34,7 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
 @SupportedSourceVersion(SourceVersion.RELEASE_5)
 public class JdbcMapperProcessor extends AbstractProcessor {
 
-	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCc][Ll][Oo][Bb]\\s*:\\s*([^:]+\\s*:\\s*)?)?([^}]+)\\}");
+	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCc][Ll][Oo][Bb]\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");
 
 	public static final SourceVersion RELEASE_8;
 	public static boolean java8;
