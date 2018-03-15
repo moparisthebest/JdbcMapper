@@ -31,7 +31,12 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
  */
 @SupportedAnnotationTypes("com.moparisthebest.jdbc.codegen.JdbcMapper.Mapper")
 @SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "jdbcMapper.allowedMaxRowParamNames", "jdbcMapper.sqlCheckerClass"})
-@SupportedSourceVersion(SourceVersion.RELEASE_5)
+//IFJAVA8_START
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+//IFJAVA8_END
+/*IFJAVA6_START
+@SupportedSourceVersion(SourceVersion.RELEASE_6)
+IFJAVA6_END*/
 public class JdbcMapperProcessor extends AbstractProcessor {
 
 	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCc][Ll][Oo][Bb]\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");

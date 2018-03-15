@@ -194,6 +194,7 @@
                 <module>runtime-compiler</module>
                 <module>querymapper</module>
                 <module>jdbcmapper</module>
+                <module>test</module>
             </modules>
             <build>
                 <pluginManagement>
@@ -250,6 +251,7 @@
                                 <target>1.6</target>
                                 <excludes>
                                     <exclude>**/module-info.java</exclude>
+                                    <exclude>**/PrestoPersonDAO.java</exclude>
                                 </excludes>
                             </configuration>
 
@@ -260,6 +262,8 @@
                                     <configuration>
                                         <testExcludes>
                                             <exclude>**/module-info.java</exclude>
+                                            <exclude>**/PrestoPersonDAOTest.java</exclude>
+                                            <exclude>**/PrestoSQLParserTest.java</exclude>
                                         </testExcludes>
                                     </configuration>
                                     <goals>
@@ -287,6 +291,7 @@
                 <module>querymapper</module>
                 <module>jdbcmapper</module>
                 <module>presto-sqlparser</module>
+                <module>test</module>
             </modules>
 
             <build>

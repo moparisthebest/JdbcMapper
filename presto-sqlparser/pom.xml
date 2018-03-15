@@ -20,30 +20,6 @@
             <artifactId>presto-parser</artifactId>
             <version>0.177</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jdbcmapper</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>querymapper</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -56,20 +32,6 @@
                     <debug>true</debug>
                     <!--compilerArgument>-Xlint:unchecked</compilerArgument-->
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>my-testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <configuration>
-                            <annotationProcessors>
-                                <annotationProcessor>com.moparisthebest.jdbc.codegen.JdbcMapperProcessor</annotationProcessor>
-                            </annotationProcessors>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
