@@ -749,7 +749,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		// we are going to put most common ones up top so it should execute faster normally
 		// todo: avoid string concat here
 		if (method == null)
-			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType) || types.isAssignable(o, enumType)) {
+			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType)) {
 				method = "Object";
 				// java.util.Date support, put it in a Timestamp
 			} else if (types.isAssignable(o, utilDateType)) {
@@ -797,6 +797,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				variableName = variableName + " == null ? null : new java.io.ByteArrayInputStream(" + variableName + ")";
 			} else if (types.isAssignable(o, sqlArrayType)) {
 				method = "Array";
+			} else if (types.isAssignable(o, enumType)) {
+				method = "Object";
+				variableName = variableName + " == null ? null : " + variableName + ".name()";
 			} else {
 				// shouldn't get here ever, if we do the types should be more specific
 				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param", param);

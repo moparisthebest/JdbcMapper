@@ -5,11 +5,14 @@ import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.*;
 import java.util.*;
 //IFJAVA8_START
 import java.time.*;
 import java.util.stream.Stream;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
@@ -18,6 +21,10 @@ public class QueryMapper implements JdbcMapper {
 
 	public static final Object noBind = new Object();
 	public static final ResultSetMapper defaultRsm = new ResultSetMapper();
+
+	/*IFJAVA6_START
+	private static final Charset UTF_8 = Charset.forName("UTF-8");
+	IFJAVA6_END*/
 
 	protected final ResultSetMapper cm;
 	protected final Connection conn;
@@ -114,8 +121,10 @@ public class QueryMapper implements JdbcMapper {
 	}
 
 	private static class BlobString extends StringWrapper {
-		private BlobString(String s) {
+		private final Charset charset;
+		private BlobString(final String s, final Charset charset) {
 			super(s);
+			this.charset = charset;
 		}
 	}
 
@@ -124,7 +133,11 @@ public class QueryMapper implements JdbcMapper {
 	}
 
 	public static Object wrapBlob(String s) {
-		return new BlobString(s);
+		return new BlobString(s, UTF_8);
+	}
+
+	public static Object wrapBlob(final String s, final Charset charset) {
+		return new BlobString(s, charset == null ? UTF_8 : charset);
 	}
 
 	public static void setObject(final PreparedStatement ps, final int index, final Object o) throws SQLException {
@@ -165,22 +178,20 @@ public class QueryMapper implements JdbcMapper {
 			ps.setBlob(index, (InputStream) o);
 		else if (o instanceof File)
 			try {
-				ps.setBlob(index, new FileInputStream((File) o));
+				ps.setBlob(index, new FileInputStream((File) o)); // todo: does this close this or leak a file descriptor?
 			} catch (FileNotFoundException e) {
 				throw new SQLException("File to Blob FileNotFoundException", e);
 			}
 		else if (o instanceof BlobString)
-			try {
-				ps.setBlob(index, ((BlobString) o).s == null ? null : new ByteArrayInputStream(((BlobString) o).s.getBytes("UTF-8")));
-			} catch (UnsupportedEncodingException e) {
-				throw new SQLException("String to Blob UnsupportedEncodingException", e);
-			}
+			ps.setBlob(index, ((BlobString) o).s == null ? null : new ByteArrayInputStream(((BlobString) o).s.getBytes(((BlobString) o).charset)));
 		else if (o instanceof java.sql.Blob)
 			ps.setBlob(index, (java.sql.Blob) o);
 		else if (o instanceof ArrayInList.ArrayListObject)
 			ps.setArray(index, ((ArrayInList.ArrayListObject) o).getArray());
 		else if (o instanceof java.sql.Array)
 			ps.setArray(index, (java.sql.Array) o);
+		else if (o instanceof Enum)
+			ps.setObject(index, ((Enum)o).name());
 		else
 			ps.setObject(index, o); // probably won't get here ever, but just in case...
 		/*
