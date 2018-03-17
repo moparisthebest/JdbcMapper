@@ -197,7 +197,11 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 					// if column count is 2 or less, it might map directly to a type like a Long or something, or be a map which does
 					// or if componentType is non-null, then we want an array like Long[] or String[]
 					if (_columnCount > 2 && componentType == null)
-						throw new MapperException("Exception when trying to get constructor for : " + _returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet.", e1);
+						throw new MapperException("Exception when trying to get constructor for : " + _returnTypeClass.getName() + " Must have default no-arg constructor or one that takes a single ResultSet"
+								//IFJAVA8_START
+								+ ", or one that takes parameters named like the query columns (in any order):\n" + keysToString(keys) + "\nRequires compilation with -parameters argument, beware Bug ID: JDK-8191074 with jdk8, fixed in 9+"
+								//IFJAVA8_END
+								, e1);
 				}
 			}
 		}
@@ -206,6 +210,24 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 		if(this._args == null)
 			this._args = new Object[1];
 		this.constructorLoaded = true;
+	}
+
+	public static String keysToString(final String[] a) {
+		if (a == null)
+			return "null";
+
+		int iMax = a.length - 1;
+		if (iMax == 0)
+			return "[]";
+
+		StringBuilder b = new StringBuilder();
+		b.append('[');
+		for (int i = 1; ; i++) {
+			b.append(String.valueOf(a[i]));
+			if (i == iMax)
+				return b.append(']').toString();
+			b.append(", ");
+		}
 	}
 
 	/**

@@ -118,5 +118,6 @@ try(QueryMapper qm = new QueryMapper("java:/comp/env/jdbc/testPool", new ResultS
 TODO
 ----
 
- * Binding of Enum to String by default
+ * DOCUMENTATION!!!!!
  * sql other than select return boolean, int > 0 ?
+ * @RunInTransaction void support

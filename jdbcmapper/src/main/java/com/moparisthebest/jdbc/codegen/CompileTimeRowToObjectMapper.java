@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.CompilingRowToObjectMapper;
 import com.moparisthebest.jdbc.MapperException;
+import com.moparisthebest.jdbc.RowToObjectMapper;
 import com.moparisthebest.jdbc.TypeMappingsFactory;
 
 import javax.lang.model.element.*;
@@ -95,7 +96,7 @@ public class CompileTimeRowToObjectMapper {
 				*/
 				outer:
 				for(final Element e : methodsAndConstructors) {
-					if(e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)) {
+					if(e.getKind() == ElementKind.CONSTRUCTOR && e.getModifiers().contains(Modifier.PUBLIC)) { // todo: public normally, but also package-private if same package, or protected if it's a sub-class of super...
 						final List<? extends VariableElement> params = ((ExecutableElement)e).getParameters();
 						if(params.isEmpty())
 							defaultConstructor = true;
@@ -134,7 +135,8 @@ public class CompileTimeRowToObjectMapper {
 				_fieldOrder = null; // didn't successfully finish
 			this.resultSetConstructor = resultSetConstructor;
 			if(!resultSetConstructor && !defaultConstructor && !paramConstructor && _columnCount > 2 && componentType == null)
-				throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.toString() + " Must have default no-arg constructor or one that takes a single ResultSet.");
+				throw new MapperException("Exception when trying to get constructor for : "+_returnTypeClass.toString() + " Must have default no-arg constructor, one that takes a single ResultSet, or one that takes parameters named like the query columns (in any order):\n" +
+						RowToObjectMapper.keysToString(keys)+ "\nRequires compilation with -parameters argument if source isn't being compiled this pass, beware Bug ID: JDK-8191074 with jdk8, fixed in 9+");
 		}
 	}
 

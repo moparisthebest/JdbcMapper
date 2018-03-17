@@ -15,6 +15,7 @@ import javax.tools.Diagnostic;
 import java.io.*;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -65,7 +66,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return messager;
 	}
 
-	static TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, jdbcMapperType,
+	static TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, connectionType, jdbcMapperType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType, enumType;
 	//IFJAVA8_START
 	static TypeMirror instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
@@ -97,6 +98,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		utilDateType = elements.getTypeElement(java.util.Date.class.getCanonicalName()).asType();
 		readerType = elements.getTypeElement(Reader.class.getCanonicalName()).asType();
 		clobType = elements.getTypeElement(Clob.class.getCanonicalName()).asType();
+		connectionType = elements.getTypeElement(Connection.class.getCanonicalName()).asType();
 		jdbcMapperType = elements.getTypeElement(JdbcMapper.class.getCanonicalName()).asType();
 		inputStreamType = elements.getTypeElement(InputStream.class.getCanonicalName()).asType();
 		fileType = elements.getTypeElement(File.class.getCanonicalName()).asType();
@@ -234,10 +236,19 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(className);
 							w.write("() throws SQLException {\n\t\tthis(_conFactory);\n\t}\n");
 						}
+
+						w.write("\n\tprivate ");
+						w.write(className);
+						w.write("(final Connection conn, final boolean closeConn) {\n");
+						if(hasSuperConstructorTakesConnection(genClass))
+							w.write("\t\tsuper(conn);\n");
+						w.write("\t\tthis.conn = conn;\n\t\tthis.closeConn = closeConn;\n\t\tif (this.conn == null)\n" +
+								"\t\t\tthrow new NullPointerException(\"Connection needs to be non-null for JdbcMapper...\");\n\t}\n"
+						);
+
 						w.write("\n\tpublic ");
 						w.write(className);
-						w.write("(Connection conn) {\n\t\tthis.conn = conn;\n\t\tthis.closeConn = false;\n\t\tif (this.conn == null)\n" +
-								"\t\t\tthrow new NullPointerException(\"Connection needs to be non-null for JdbcMapper...\");\n\t}\n" +
+						w.write("(Connection conn) {\n\t\tthis(conn, false);\n\t}\n" +
 								"\n\tpublic Connection getConnection() {\n\t\treturn this.conn;\n\t}\n"
 						);
 
@@ -541,8 +552,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// and we can create constructors that set closeConn to true!
 							w.write("\n\tpublic ");
 							w.write(className);
-							w.write("(final Factory<Connection> connectionFactory) throws SQLException {\n\t\tthis.conn = connectionFactory.create();\n\t\tthis.closeConn = true;\n\t\tif (this.conn == null)\n" +
-									"\t\t\tthrow new NullPointerException(\"Connection needs to be non-null for JdbcMapper...\");\n\t}\n"
+							w.write("(final Factory<Connection> connectionFactory) throws SQLException {\n\t\tthis(connectionFactory.create(), true);\n\t}\n"
 							);
 
 							w.write("\n\tpublic ");
@@ -949,5 +959,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			tryClose(sw);
 			tryClose(pw);
 		}
+	}
+
+	public boolean hasSuperConstructorTakesConnection(final TypeElement genClass) {
+		final List<? extends Element> methodsAndConstructors = genClass.getEnclosedElements();
+		for(final Element e : methodsAndConstructors) {
+			if (e.getKind() == ElementKind.CONSTRUCTOR && !e.getModifiers().contains(Modifier.PRIVATE)) {
+				final List<? extends VariableElement> params = ((ExecutableElement)e).getParameters();
+				if(params.size() == 1 && types.isSameType(params.get(0).asType(), connectionType))
+					return true;
+			}
+		}
+		return false;
 	}
 }
