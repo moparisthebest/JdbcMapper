@@ -23,6 +23,7 @@ public class QueryRunnerTest {
 
 	private void testPerson(final Person expected, final String query) throws Throwable {
 		//final QueryRunner<ListQueryMapper> lqr = qr.withFactory(() -> new ListQueryMapper(QueryMapperTest::getConnection));
+		final int[] failCount = new int[]{0};
 		final Person actual =
 				//qr.run(
 				//qr.runRetry(
@@ -31,8 +32,8 @@ public class QueryRunnerTest {
 				new QueryRunner.Runner<QueryMapper, Person>() {
 			@Override
 			public Person run(final QueryMapper qm) throws SQLException {
-				if(Math.random() < 0.5) {
-					System.out.println("fake fail");
+				if(++failCount[0] < 5) {
+					//System.out.println("fake fail");
 					throw new SQLException("fake 50% failure rate");
 				}
 				return qm.toObject(query, expected.getClass(), expected.getPersonNo());

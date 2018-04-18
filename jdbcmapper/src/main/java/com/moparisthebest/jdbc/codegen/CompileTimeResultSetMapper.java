@@ -349,7 +349,7 @@ public class CompileTimeResultSetMapper {
 		if(cleaner == null)
 			w.write("ret");
 		else {
-			w.append(cleaner).append(".clean(ret)");
+			w.append(cleaner).append(" == null ? ret : ").append(cleaner).append(".clean(ret)");
 		}
 		return w;
 	}

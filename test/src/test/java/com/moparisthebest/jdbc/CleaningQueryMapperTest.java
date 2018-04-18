@@ -1,5 +1,8 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.CleaningPersonDao;
+import com.moparisthebest.jdbc.codegen.JdbcMapper;
+import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.dto.*;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -35,15 +38,21 @@ public class CleaningQueryMapperTest {
 	}
 
 	protected QueryMapper qm;
+	protected CleaningPersonDao cleaningPersonDao;
+	protected final Cleaner<FieldPerson> personCleaner;
 	protected final ResultSetMapper rsm;
 
-	public CleaningQueryMapperTest(final ResultSetMapper rsm) {
+	public CleaningQueryMapperTest(final Cleaner<FieldPerson> personCleaner, final ResultSetMapper rsm) {
+		this.personCleaner = personCleaner;
 		this.rsm = rsm;
 	}
 
 	@Before
 	public void open() {
-		this.qm = new QueryMapper(conn, rsm);
+		if(rsm == null)
+			this.cleaningPersonDao = JdbcMapperFactory.create(CleaningPersonDao.class, conn);
+		else
+			this.qm = new QueryMapper(conn, rsm);
 	}
 
 	@After
@@ -61,9 +70,10 @@ public class CleaningQueryMapperTest {
 			}
 		};
 		return Arrays.asList(new Object[][] {
-				{ new CleaningResultSetMapper<FieldPerson>(personCleaner) },
-				{ new CleaningCachingResultSetMapper<FieldPerson>(personCleaner) },
-				{ new CleaningCompilingResultSetMapper<FieldPerson>(personCleaner, new CompilingRowToObjectMapper.Cache(true)) },
+				{ null, new CleaningResultSetMapper<FieldPerson>(personCleaner) },
+				{ null, new CleaningCachingResultSetMapper<FieldPerson>(personCleaner) },
+				{ null, new CleaningCompilingResultSetMapper<FieldPerson>(personCleaner, new CompilingRowToObjectMapper.Cache(true)) },
+				{ personCleaner, null },
 		});
 	}
 
@@ -72,7 +82,10 @@ public class CleaningQueryMapperTest {
 	@Test
 	public void testFieldRegularPerson() throws Throwable {
 		final Person expected = fieldPerson1;
-		final Person actual = qm.toObject(personRegular, expected.getClass(), expected.getPersonNo());
+		final Person actual = this.cleaningPersonDao == null ?
+				qm.toObject("SELECT * FROM person WHERE person_no = ?", expected.getClass(), expected.getPersonNo())
+				:
+				this.cleaningPersonDao.getPerson(expected.getPersonNo(), personCleaner);
 		assertEquals(expected.getFirstName() + " " + expected.getLastName(), actual.getFirstName());
 		assertNull(actual.getLastName());
 	}
