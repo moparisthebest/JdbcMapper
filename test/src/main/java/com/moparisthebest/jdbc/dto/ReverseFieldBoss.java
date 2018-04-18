@@ -6,8 +6,8 @@ import java.util.Date;
  * Created by mopar on 6/10/14.
  */
 public class ReverseFieldBoss extends ReverseFieldPerson implements Boss {
-	public String department;
-	public String firstName;
+	protected String department;
+	protected String firstName;
 
 	public ReverseFieldBoss() {
 		super();

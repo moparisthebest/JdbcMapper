@@ -57,9 +57,7 @@ public class CleaningQueryMapperTest {
 		final Cleaner<FieldPerson> personCleaner = new Cleaner<FieldPerson>() {
 			@Override
 			public FieldPerson clean(final FieldPerson dto) {
-				dto.firstName += " " + dto.lastName;
-				dto.lastName = null;
-				return dto;
+				return dto.cleanThyself();
 			}
 		};
 		return Arrays.asList(new Object[][] {

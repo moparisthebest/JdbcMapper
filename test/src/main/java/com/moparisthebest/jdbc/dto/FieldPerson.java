@@ -9,8 +9,8 @@ public class FieldPerson implements Person {
 
 	protected long personNo;
 	protected Date birthDate;
-	public String firstName;
-	public String lastName;
+	protected String firstName;
+	protected String lastName;
 
 	public FieldPerson(){
 	}
@@ -63,5 +63,11 @@ public class FieldPerson implements Person {
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				'}';
+	}
+
+	public FieldPerson cleanThyself() {
+		this.firstName += " " + this.lastName;
+		this.lastName = null;
+		return this;
 	}
 }

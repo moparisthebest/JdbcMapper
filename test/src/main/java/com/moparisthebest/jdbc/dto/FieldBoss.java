@@ -6,8 +6,8 @@ import java.util.Date;
  * Created by mopar on 6/10/14.
  */
 public class FieldBoss extends FieldPerson implements Boss {
-	public String department;
-	public String first_name;
+	protected String department;
+	protected String first_name;
 
 	public FieldBoss() {
 		super();
