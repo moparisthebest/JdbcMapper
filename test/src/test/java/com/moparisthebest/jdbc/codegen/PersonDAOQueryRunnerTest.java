@@ -25,10 +25,11 @@ public class PersonDAOQueryRunnerTest {
 	@Test
 	public void testPerson() throws Exception {
 		//final QueryRunner<ListQueryMapper> lqr = pqr.withFactory(() -> new ListQueryMapper(QueryMapperTest::getConnection));
+		final int[] failCount = new int[]{0};
 		assertEquals(fieldPerson1, pqr.runRetryFuture(new QueryRunner.Runner<PersonDAO, Person>() {
 			@Override
 			public Person run(final PersonDAO dao) throws SQLException {
-				if(Math.random() < 0.5) {
+				if(++failCount[0] < 5) {
 					System.out.println("fake fail");
 					throw new SQLException("fake 50% failure rate");
 				}
