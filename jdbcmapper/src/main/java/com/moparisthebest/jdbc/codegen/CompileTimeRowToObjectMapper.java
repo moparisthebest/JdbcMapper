@@ -320,7 +320,7 @@ public class CompileTimeRowToObjectMapper {
 		}
 
 		if (resultSetConstructor) {
-			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(rs);\n");
+			java.append("final ").append(tType).append(" ret = new ").append(tType).append("(").append(_resultSetName).append(");\n");;
 			finishIfNeeded(java);
 			return;
 		}
@@ -351,7 +351,7 @@ public class CompileTimeRowToObjectMapper {
 					}
 				} else // we want a generic object type
 					for (int x = 1; x < columnLength; ++x)
-						java.append("ret.put(").append(escapeMapKeyString(keys[x].toLowerCase())).append(", rs.getObject(").append(String.valueOf(x)).append("));\n");
+						java.append("ret.put(").append(escapeMapKeyString(keys[x].toLowerCase())).append(", ").append(_resultSetName).append(".getObject(").append(String.valueOf(x)).append("));\n");
 				return;
 			} catch (Throwable e) {
 				throw new MapperException(e.getClass().getName() + " when trying to create a Map<String, "
@@ -444,7 +444,7 @@ public class CompileTimeRowToObjectMapper {
 	public void finishIfNeeded(final Appendable java) throws IOException {
 		// if this resultObject is Finishable, call finish()
 		if (rsm.types.isAssignable(_returnTypeClass, rsm.finishableType))
-			java.append("ret.finish(rs);\n");
+			java.append("ret.finish(").append(_resultSetName).append(");\n");
 	}
 
 	public int getTypeId(TypeMirror classType) {
