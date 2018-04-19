@@ -1,19 +1,38 @@
 language: java
 sudo: false
-addons:
-  apt:
-    packages:
-      - openjdk-6-jdk
 dist: trusty
-jdk:
-  - openjdk8
-  - oraclejdk8
-  - oraclejdk9
-  - openjdk7
-  - openjdk6
+
+matrix:
+  include:
+    - env: JDK='OpenJDK 6'
+      addons:
+        apt:
+          packages:
+            - openjdk-6-jdk
+      jdk: openjdk6
+    - env: JDK='OpenJDK 7'
+      jdk: openjdk7
+    - env: JDK='OpenJDK 8'
+      jdk: openjdk8
+    - env: JDK='OracleJDK 8'
+      jdk: oraclejdk8
+    - env: JDK='OpenJDK 9'
+      install: . ./install-jdk.sh -F 9 -L GPL
+    - env: JDK='OracleJDK 9'
+      jdk: oraclejdk9
+    - env: JDK='OpenJDK 10'
+      install: . ./install-jdk.sh -F 10 -L GPL
+    - env: JDK='OracleJDK 10'
+      install: . ./install-jdk.sh -F 10 -L BCL
+    - env: JDK='OpenJDK 11'
+      install: . ./install-jdk.sh -F 11 -L GPL
+    - env: JDK='OracleJDK 11'
+      install: . ./install-jdk.sh -F 11 -L BCL
+
+before_install: wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
 
 install:
-  - if [[ "${TRAVIS_JDK_VERSION}" == 'openjdk6' ]]; then
+  - if [[ "${JDK}" == 'OpenJDK 6' ]]; then
       export CUSTOM_MVN_VERION="3.2.5"
       echo "Download Maven ${CUSTOM_MVN_VERION}....";
       wget https://archive.apache.org/dist/maven/maven-3/${CUSTOM_MVN_VERION}/binaries/apache-maven-${CUSTOM_MVN_VERION}-bin.zip || travis_terminate 1;
@@ -24,6 +43,6 @@ install:
     fi
 
 after_success:
-  - if [ "${TRAVIS_JDK_VERSION}" == 'openjdk8' ] || [ "${TRAVIS_JDK_VERSION}" == 'openjdk6' ]; then
+  - if [ "${JDK}" == 'OpenJDK 8' ] || [ "${JDK}" == 'OpenJDK 6' ]; then
       mvn deploy --settings .travis-settings.xml -DskipTests=true -B || travis_terminate 1;
     fi
