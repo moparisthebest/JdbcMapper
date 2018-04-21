@@ -14,7 +14,6 @@ import java.util.*;
 
 import static com.moparisthebest.jdbc.QueryMapperTest.fieldPerson1;
 import static com.moparisthebest.jdbc.QueryMapperTest.getConnection;
-import static com.moparisthebest.jdbc.QueryMapperTest.personRegular;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

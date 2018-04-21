@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static com.moparisthebest.jdbc.QueryMapperTest.*;
+import static com.moparisthebest.jdbc.codegen.QueryMapperQmDao.*;
 
 /**
  * Created by mopar on 7/1/17.

@@ -1,7 +1,9 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
+import com.moparisthebest.jdbc.codegen.QmDao;
+import com.moparisthebest.jdbc.codegen.QueryMapperQmDao;
 import com.moparisthebest.jdbc.dto.*;
-import com.moparisthebest.jdbc.util.ResultSetIterable;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -11,9 +13,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
 //IFJAVA8_START
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.time.*;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
@@ -63,23 +62,7 @@ public class QueryMapperTest {
 	public static final Boss reverseSetBoss2 = new ReverseSetBoss(fieldBoss2);
 	public static final Boss reverseSetBoss3 = new ReverseSetBoss(fieldBoss3);
 
-	public static final String personRegular = "SELECT * FROM person WHERE person_no = ?";
-	public static final String bossRegularAndUnderscore = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department, p.first_name " +
-			"FROM person p " +
-			"JOIN boss b ON p.person_no = b.person_no " +
-			"WHERE p.person_no = ?";
-	public static final String bossRegularAndUnderscoreReverse = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department, p.first_name AS firstName " +
-			"FROM person p " +
-			"JOIN boss b ON p.person_no = b.person_no " +
-			"WHERE p.person_no = ?";
-	public static final String bossRegular = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department " +
-			"FROM person p " +
-			"JOIN boss b ON p.person_no = b.person_no " +
-			"WHERE p.person_no = ?";
-	public static final String bossUnderscore = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department " +
-			"FROM person p " +
-			"JOIN boss b ON p.person_no = b.person_no " +
-			"WHERE p.person_no = ?";
+
 
 	static {
 		// load db once
@@ -129,7 +112,7 @@ public class QueryMapperTest {
 		tryClose(conn);
 	}
 
-	protected QueryMapper qm;
+	protected QmDao qm;
 	protected final ResultSetMapper rsm;
 
 	public QueryMapperTest(final ResultSetMapper rsm) {
@@ -138,7 +121,7 @@ public class QueryMapperTest {
 
 	@Before
 	public void open() {
-		this.qm = new QueryMapper(conn, rsm);
+		qm = this.rsm == null ? JdbcMapperFactory.create(QmDao.class, conn) : new QueryMapperQmDao(conn, rsm);
 	}
 
 	@After
@@ -154,6 +137,7 @@ public class QueryMapperTest {
 				{ new CachingResultSetMapper() },
 				{ new CaseInsensitiveMapResultSetMapper() },
 				{ new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
+				{ null /* means QmDao.class is used */ },
 		});
 	}
 
@@ -161,115 +145,136 @@ public class QueryMapperTest {
 
 	@Test
 	public void testFieldRegularPerson() throws Throwable {
-		testPerson(fieldPerson1, personRegular);
+		final Person expected = fieldPerson1;
+		Assert.assertEquals(expected, qm.getFieldRegularPerson(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testBuilderPerson() throws Throwable {
-		testPerson(new BuilderPerson(fieldPerson1), personRegular);
+		final Person expected = new BuilderPerson(fieldPerson1);
+		Assert.assertEquals(expected, qm.getBuilderPerson(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testFieldRegularAndUnderscore() throws Throwable {
-		testPerson(fieldBoss1, bossRegularAndUnderscore);
+		final Person expected = fieldBoss1;
+		Assert.assertEquals(expected, qm.getFieldRegularAndUnderscore(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testFieldRegularAndUnderscoreReverse() throws Throwable {
-		testPerson(fieldBoss1, bossRegularAndUnderscoreReverse);
+		final Person expected = fieldBoss1; // todo: these call constructor, write another test to call setters
+		Assert.assertEquals(expected, qm.getFieldRegularAndUnderscoreReverse(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testFieldRegular() throws Throwable {
-		testPerson(fieldBoss2, bossRegular);
+		final Person expected = fieldBoss2;
+		Assert.assertEquals(expected, qm.getFieldRegular(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testFieldUnderscore() throws Throwable {
-		testPerson(fieldBoss3, bossUnderscore);
+		final Person expected = fieldBoss3;
+		Assert.assertEquals(expected, qm.getFieldUnderscore(expected.getPersonNo()));
 	}
 
 	// sets
 
 	@Test
 	public void testSetRegularPerson() throws Throwable {
-		testPerson(setPerson1, personRegular);
+		final Person expected = setPerson1;
+		Assert.assertEquals(expected, qm.getSetRegularPerson(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testSetRegularAndUnderscore() throws Throwable {
-		testPerson(setBoss1, bossRegularAndUnderscore);
+		final Person expected = setBoss1;
+		Assert.assertEquals(expected, qm.getSetRegularAndUnderscore(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testSetRegularAndUnderscoreReverse() throws Throwable {
-		testPerson(setBoss1, bossRegularAndUnderscoreReverse);
+		final Person expected = setBoss1;
+		Assert.assertEquals(expected, qm.getSetRegularAndUnderscoreReverse(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testSetRegular() throws Throwable {
-		testPerson(setBoss2, bossRegular);
+		final Person expected = setBoss2;
+		Assert.assertEquals(expected, qm.getSetRegular(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testSetUnderscore() throws Throwable {
-		testPerson(setBoss3, bossUnderscore);
+		final Person expected = setBoss3;
+		Assert.assertEquals(expected, qm.getSetUnderscore(expected.getPersonNo()));
 	}
 
 	// reverse fields
 
 	@Test
 	public void testReverseFieldRegularPerson() throws Throwable {
-		testPerson(reverseFieldPerson1, personRegular);
+		final Person expected = reverseFieldPerson1;
+		Assert.assertEquals(expected, qm.getReverseFieldRegularPerson(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseFieldRegularAndUnderscore() throws Throwable {
-		testPerson(reverseFieldBoss1, bossRegularAndUnderscore);
+		final Person expected = reverseFieldBoss1;
+		Assert.assertEquals(expected, qm.getReverseFieldRegularAndUnderscore(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseFieldRegularAndUnderscoreReverse() throws Throwable {
-		testPerson(reverseFieldBoss1, bossRegularAndUnderscoreReverse);
+		final Person expected = reverseFieldBoss1;
+		Assert.assertEquals(expected, qm.getReverseFieldRegularAndUnderscoreReverse(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseFieldRegular() throws Throwable {
-		testPerson(reverseFieldBoss3, bossRegular);
+		final Person expected = reverseFieldBoss3;
+		Assert.assertEquals(expected, qm.getReverseFieldRegular(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseFieldUnderscore() throws Throwable {
-		testPerson(reverseFieldBoss2, bossUnderscore);
+		final Person expected = reverseFieldBoss2;
+		Assert.assertEquals(expected, qm.getReverseFieldUnderscore(expected.getPersonNo()));
 	}
 
 	// reverse sets
 
 	@Test
 	public void testReverseSetRegularPerson() throws Throwable {
-		testPerson(reverseSetPerson1, personRegular);
+		final Person expected = reverseSetPerson1;
+		Assert.assertEquals(expected, qm.getReverseSetRegularPerson(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseSetRegularAndUnderscore() throws Throwable {
-		testPerson(reverseSetBoss1, bossRegularAndUnderscore);
+		final Person expected = reverseSetBoss1;
+		Assert.assertEquals(expected, qm.getReverseSetRegularAndUnderscore(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseSetRegularAndUnderscoreReverse() throws Throwable {
-		testPerson(reverseSetBoss1, bossRegularAndUnderscoreReverse);
+		final Person expected = reverseSetBoss1;
+		Assert.assertEquals(expected, qm.getReverseSetRegularAndUnderscoreReverse(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseSetRegular() throws Throwable {
-		testPerson(reverseSetBoss3, bossRegular);
+		final Person expected = reverseSetBoss3;
+		Assert.assertEquals(expected, qm.getReverseSetRegular(expected.getPersonNo()));
 	}
 
 	@Test
 	public void testReverseSetUnderscore() throws Throwable {
-		testPerson(reverseSetBoss2, bossUnderscore);
+		final Person expected = reverseSetBoss2;
+		Assert.assertEquals(expected, qm.getReverseSetUnderscore(expected.getPersonNo()));
 	}
-
+/*
 	@Test
 	public void testSelectLong() throws Throwable {
 		Assert.assertEquals(new Long(1L), qm.toObject("SELECT person_no FROM person WHERE person_no = ?", Long.class, 1L));
@@ -368,15 +373,6 @@ public class QueryMapperTest {
 			arrayMap.add(map);
 		}
 		return arrayMap;
-	}
-
-	private void testPerson(final Person expected, final String query) throws Throwable {
-		final Person actual = qm.toObject(query, expected.getClass(), expected.getPersonNo());
-		/*
-		System.out.println("expected: " + expected);
-		System.out.println("actual:   " + actual);
-		*/
-		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -574,4 +570,5 @@ public class QueryMapperTest {
 	}
 
 	//IFJAVA8_END
+	*/
 }
