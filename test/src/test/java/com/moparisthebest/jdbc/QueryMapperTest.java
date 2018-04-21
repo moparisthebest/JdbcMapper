@@ -437,7 +437,7 @@ public class QueryMapperTest {
 		assertArrayEquals(people, fromDb.toArray());
 	}
 
-	//IFJAVA8_START
+	//IFJAVA 8_START
 
 	@Test
 	public void testStream() throws SQLException {
@@ -450,7 +450,7 @@ public class QueryMapperTest {
 	}
 
 
-	//IFJAVA8_END
+	//IFJAVA 8_END
 
 
 	@Test
@@ -485,7 +485,7 @@ public class QueryMapperTest {
 		assertEquals(expected, qm.toObject("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = ?", CaseSensitivePerson.class, fieldPerson1.getPersonNo()));
 	}
 
-	//IFJAVA8_START
+	//IFJAVA 8_START
 
 	@Test
 	public void testInstant() throws SQLException {
@@ -569,6 +569,6 @@ public class QueryMapperTest {
 		);
 	}
 
-	//IFJAVA8_END
+	//IFJAVA 8_END
 	*/
 }
