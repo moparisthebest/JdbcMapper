@@ -247,4 +247,14 @@ public class QueryMapperQmDao implements QmDao {
 		return  qm.toResultSetIterable(selectThreePeople,
 				FieldPerson.class, personNo1, personNo2, personNo3);
 	}
+
+	//IFJAVA 8_START
+
+	@Override
+	public java.util.stream.Stream<FieldPerson> getThreePeopleStream(final long personNo1, final long personNo2, final long personNo3) throws SQLException {
+		return  qm.toStream(selectThreePeople,
+				FieldPerson.class, personNo1, personNo2, personNo3);
+	}
+
+	//IFJAVA 8_END
 }

@@ -156,4 +156,11 @@ public interface QmDao extends JdbcMapper {
 
 	@SQL(selectThreePeople)
 	ResultSetIterable<FieldPerson> getThreePeopleResultSetIterable(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	//IFJAVA 8_START
+
+	@SQL(selectThreePeople)
+	java.util.stream.Stream<FieldPerson> getThreePeopleStream(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	//IFJAVA 8_END
 }

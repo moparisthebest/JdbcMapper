@@ -14,6 +14,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
 //IFJAVA8_START
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
@@ -451,23 +453,21 @@ public class QueryMapperTest {
 		rsi.close();
 		assertArrayEquals(people, fromDb.toArray());
 	}
-/*
+
 	//IFJAVA 8_START
 
 	@Test
 	public void testStream() throws SQLException {
 		final List<FieldPerson> fromDb;
-		try(Stream<FieldPerson> rsi = qm.toStream("SELECT * from person WHERE person_no IN (?,?,?) ORDER BY person_no",
-				FieldPerson.class, people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo())) {
+		try(Stream<FieldPerson> rsi = qm.getThreePeopleStream(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo())) {
 			fromDb = rsi.collect(Collectors.toList());
 		}
 		assertArrayEquals(people, fromDb.toArray());
 	}
 
-
 	//IFJAVA 8_END
 
-
+/*
 	@Test
 	public void testEnumPerson() throws SQLException {
 		assertEquals(new EnumPerson(FirstName.First), qm.toObject("SELECT first_name, last_name FROM person WHERE person_no = ?", EnumPerson.class, fieldPerson1.getPersonNo()));
