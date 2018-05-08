@@ -10,6 +10,7 @@ import java.util.Map;
 
 //IFJAVA8_START
 import java.util.stream.Stream;
+import java.time.*;
 //IFJAVA8_END
 
 @JdbcMapper.Mapper(
@@ -45,6 +46,10 @@ public interface QmDao extends JdbcMapper {
 	String selectLongArray = "SELECT 1, 2, 3 FROM person WHERE person_no = 1";
 	String bobTomMap = "SELECT 'bob' as bob, 'tom' as tom FROM person WHERE person_no = 1";
 	String selectThreePeople = "SELECT person_no, first_name, last_name, birth_date from person WHERE person_no IN ({personNo1}, {personNo2}, {personNo3}) ORDER BY person_no";
+
+	String selectBirthDate = "SELECT birth_date FROM person WHERE person_no = {personNo}";
+	String selectNumVal = "SELECT num_val FROM val WHERE val_no = {valNo}";
+	String selectStrVal = "SELECT str_val FROM val WHERE val_no = {valNo}";
 
 	@JdbcMapper.SQL(personRegular)
 	FieldPerson getFieldRegularPerson(long personNo) throws SQLException;
@@ -165,6 +170,64 @@ public interface QmDao extends JdbcMapper {
 
 	@SQL(selectThreePeople)
 	Stream<FieldPerson> getThreePeopleStream(long personNo1, long personNo2, long personNo3) throws SQLException;
+
+	//IFJAVA8_END
+
+	@SQL("SELECT first_name, last_name FROM person WHERE person_no = {personNo}")
+	EnumPerson getEnumPerson(long personNo) throws SQLException;
+
+	@SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
+	EnumPerson getEnumPersonConstructor(long personNo) throws SQLException;
+
+	@SQL("SELECT first_name FROM person WHERE person_no = {personNo}")
+	FirstName getFirstName(long personNo) throws SQLException;
+
+    @SQL("SELECT str_val as first_name, str_val as last_name FROM val WHERE val_no = 4")
+    EnumPerson getEnumPersonNull() throws SQLException;
+
+    @SQL("SELECT str_val FROM val WHERE val_no = 4")
+    FirstName getFirstNameNull() throws SQLException;
+
+	@SQL("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = {personNo}")
+	CaseSensitivePerson getCaseSensitivePerson(long personNo) throws SQLException;
+
+	//IFJAVA8_START
+
+	@SQL(selectBirthDate)
+	Instant getBirthdateInstant(long personNo) throws SQLException;
+
+	@SQL(selectBirthDate)
+	LocalDateTime getBirthdateLocalDateTime(long personNo) throws SQLException;
+
+	@SQL(selectBirthDate)
+	LocalDate getBirthdateLocalDate(long personNo) throws SQLException;
+
+	@SQL(selectBirthDate)
+	LocalTime getBirthdateLocalTime(long personNo) throws SQLException;
+
+	@SQL(selectBirthDate)
+	ZonedDateTime getBirthdateZonedDateTime(long personNo) throws SQLException;
+
+	@SQL(selectBirthDate)
+	OffsetDateTime getBirthdateOffsetDateTime(long personNo) throws SQLException;
+
+	@SQL(selectBirthDate)
+	OffsetTime getBirthdateOffsetTime(long personNo) throws SQLException;
+
+	@SQL(selectNumVal)
+	Year getYearInt(long valNo) throws SQLException;
+
+	@SQL(selectStrVal)
+	Year getYearString(long valNo) throws SQLException;
+
+	@SQL(selectStrVal)
+	ZoneId getZoneId(long valNo) throws SQLException;
+
+	@SQL(selectStrVal)
+	ZoneOffset getZoneOffsetInt(long valNo) throws SQLException;
+
+	@SQL(selectStrVal)
+	ZoneOffset getZoneOffsetString(long valNo) throws SQLException;
 
 	//IFJAVA8_END
 }

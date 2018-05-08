@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
 //IFJAVA8_START
+import java.time.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 //IFJAVA8_END
@@ -467,88 +468,88 @@ public class QueryMapperTest {
 
 	//IFJAVA8_END
 
-/*
+
 	@Test
 	public void testEnumPerson() throws SQLException {
-		assertEquals(new EnumPerson(FirstName.First), qm.toObject("SELECT first_name, last_name FROM person WHERE person_no = ?", EnumPerson.class, fieldPerson1.getPersonNo()));
+		assertEquals(new EnumPerson(FirstName.First), qm.getEnumPerson(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testEnumPersonConstructor() throws SQLException {
-		assertEquals(new EnumPerson(FirstName.First), qm.toObject("SELECT first_name FROM person WHERE person_no = ?", EnumPerson.class, fieldPerson1.getPersonNo()));
+		assertEquals(new EnumPerson(FirstName.First), qm.getEnumPersonConstructor(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testEnum() throws SQLException {
-		assertEquals(FirstName.First, qm.toObject("SELECT first_name FROM person WHERE person_no = ?", FirstName.class, fieldPerson1.getPersonNo()));
+		assertEquals(FirstName.First, qm.getFirstName(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testEnumPersonNull() throws SQLException {
-		assertEquals(new EnumPerson(null), qm.toObject("SELECT str_val as first_name, str_val as last_name FROM val WHERE val_no = 4", EnumPerson.class));
+		assertEquals(new EnumPerson(null), qm.getEnumPersonNull());
 	}
 
 	@Test
 	public void testEnumNull() throws SQLException {
-		assertEquals(null, qm.toObject("SELECT str_val FROM val WHERE val_no = 4", FirstName.class));
+		assertNull(qm.getFirstNameNull());
 	}
 
 	@Test
 	public void testCaseInsensitiveMethods() throws SQLException {
 		final CaseSensitivePerson expected = new CaseSensitivePerson();
 		expected.setmPersonFirstName(fieldPerson1.getFirstName());
-		assertEquals(expected, qm.toObject("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = ?", CaseSensitivePerson.class, fieldPerson1.getPersonNo()));
+		assertEquals(expected, qm.getCaseSensitivePerson(fieldPerson1.getPersonNo()));
 	}
 
-	//IFJAVA 8_START
+	//IFJAVA8_START
 
 	@Test
 	public void testInstant() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant(),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", Instant.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateInstant(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testLocalDateTime() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", LocalDateTime.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateLocalDateTime(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testLocalDate() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", LocalDate.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateLocalDate(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testLocalTime() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalTime(),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", LocalTime.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateLocalTime(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testZonedDateTime() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", ZonedDateTime.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateZonedDateTime(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testOffsetDateTime() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime(),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", OffsetDateTime.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateOffsetDateTime(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testZonedOffsetTime() throws SQLException {
 		assertEquals(fieldPerson1.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime().toOffsetTime(),
-				qm.toObject("SELECT birth_date FROM person WHERE person_no = ?", OffsetTime.class, fieldPerson1.getPersonNo()));
+				qm.getBirthdateOffsetTime(fieldPerson1.getPersonNo()));
 	}
 
 	@Test
 	public void testYearInt() throws SQLException {
 		final Val val = vals[0];
 		assertEquals(Year.of((int)val.numVal),
-				qm.toObject("SELECT num_val FROM val WHERE val_no = ?", Year.class, val.valNo)
+				qm.getYearInt(val.valNo)
 		);
 	}
 
@@ -556,7 +557,7 @@ public class QueryMapperTest {
 	public void testYearString() throws SQLException {
 		final Val val = vals[0];
 		assertEquals(Year.parse(val.strVal),
-				qm.toObject("SELECT str_val FROM val WHERE val_no = ?", Year.class, val.valNo)
+				qm.getYearString(val.valNo)
 		);
 	}
 
@@ -564,26 +565,25 @@ public class QueryMapperTest {
 	public void testZoneId() throws SQLException {
 		final Val val = vals[1];
 		assertEquals(ZoneId.of(val.strVal),
-				qm.toObject("SELECT str_val FROM val WHERE val_no = ?", ZoneId.class, val.valNo)
+				qm.getZoneId(val.valNo)
 		);
 	}
 
 	@Test
 	public void testZoneOffsetInt() throws SQLException {
 		final Val val = vals[2];
-		assertEquals(ZoneOffset.of(val.strVal),
-				qm.toObject("SELECT str_val FROM val WHERE val_no = ?", ZoneOffset.class, val.valNo)
+		assertEquals(ZoneOffset.ofHours((int)val.numVal),
+				qm.getZoneOffsetInt(val.valNo)
 		);
 	}
 
 	@Test
 	public void testZoneOffsetStr() throws SQLException {
 		final Val val = vals[2];
-		assertEquals(ZoneOffset.ofHours((int)val.numVal),
-				qm.toObject("SELECT num_val FROM val WHERE val_no = ?", ZoneOffset.class, val.valNo)
+		assertEquals(ZoneOffset.of(val.strVal),
+				qm.getZoneOffsetString(val.valNo)
 		);
 	}
 
-	//IFJAVA 8_END
-	*/
+	//IFJAVA8_END
 }

@@ -14,6 +14,7 @@ import java.util.Map;
 
 //IFJAVA8_START
 import java.util.stream.Stream;
+import java.time.*;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
@@ -39,6 +40,10 @@ public class QueryMapperQmDao implements QmDao {
 			"WHERE p.person_no = ?";
 	public static final String selectPersonNo = "SELECT person_no FROM person WHERE person_no = ?";
 	public static final String selectThreePeople = "SELECT * from person WHERE person_no IN (?,?,?) ORDER BY person_no";
+
+	public static final String selectBirthDate = "SELECT birth_date FROM person WHERE person_no = ?";
+	public static final String selectNumVal = "SELECT num_val FROM val WHERE val_no = ?";
+	public static final String selectStrVal = "SELECT str_val FROM val WHERE val_no = ?";
 
 	private final QueryMapper qm;
 
@@ -255,9 +260,103 @@ public class QueryMapperQmDao implements QmDao {
 	//IFJAVA8_START
 
 	@Override
-	public java.util.stream.Stream<FieldPerson> getThreePeopleStream(final long personNo1, final long personNo2, final long personNo3) throws SQLException {
+	public Stream<FieldPerson> getThreePeopleStream(final long personNo1, final long personNo2, final long personNo3) throws SQLException {
 		return  qm.toStream(selectThreePeople,
 				FieldPerson.class, personNo1, personNo2, personNo3);
+	}
+
+	//IFJAVA8_END
+
+	@Override
+	public EnumPerson getEnumPerson(long personNo) throws SQLException {
+		return qm.toObject("SELECT first_name, last_name FROM person WHERE person_no = ?", EnumPerson.class, personNo);
+	}
+
+	@Override
+	public EnumPerson getEnumPersonConstructor(long personNo) throws SQLException {
+		return qm.toObject("SELECT first_name FROM person WHERE person_no = ?", EnumPerson.class, personNo);
+	}
+
+	@Override
+	public FirstName getFirstName(long personNo) throws SQLException {
+		return qm.toObject("SELECT first_name FROM person WHERE person_no = ?", FirstName.class, personNo);
+	}
+
+    @Override
+    public EnumPerson getEnumPersonNull() throws SQLException {
+        return qm.toObject("SELECT str_val as first_name, str_val as last_name FROM val WHERE val_no = 4", EnumPerson.class);
+    }
+
+    @Override
+    public FirstName getFirstNameNull() throws SQLException {
+        return qm.toObject("SELECT str_val FROM val WHERE val_no = 4", FirstName.class);
+    }
+
+	@Override
+	public CaseSensitivePerson getCaseSensitivePerson(long personNo) throws SQLException {
+		return qm.toObject("SELECT first_name AS M_PERSON_FIRST_NAME FROM person WHERE person_no = ?", CaseSensitivePerson.class, personNo);
+	}
+
+	//IFJAVA8_START
+
+	@Override
+	public Instant getBirthdateInstant(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, Instant.class, personNo);
+	}
+
+	@Override
+	public LocalDateTime getBirthdateLocalDateTime(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, LocalDateTime.class, personNo);
+	}
+
+	@Override
+	public LocalDate getBirthdateLocalDate(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, LocalDate.class, personNo);
+	}
+
+	@Override
+	public LocalTime getBirthdateLocalTime(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, LocalTime.class, personNo);
+	}
+
+	@Override
+	public ZonedDateTime getBirthdateZonedDateTime(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, ZonedDateTime.class, personNo);
+	}
+
+	@Override
+	public OffsetDateTime getBirthdateOffsetDateTime(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, OffsetDateTime.class, personNo);
+	}
+
+	@Override
+	public OffsetTime getBirthdateOffsetTime(long personNo) throws SQLException {
+		return qm.toObject(selectBirthDate, OffsetTime.class, personNo);
+	}
+
+	@Override
+	public Year getYearInt(long valNo) throws SQLException {
+		return qm.toObject(selectNumVal, Year.class, valNo);
+	}
+
+	@Override
+	public Year getYearString(long valNo) throws SQLException {
+		return qm.toObject(selectStrVal, Year.class, valNo);
+	}
+
+	@Override
+	public ZoneId getZoneId(long valNo) throws SQLException {
+		return qm.toObject(selectStrVal, ZoneId.class, valNo);
+	}
+
+	@Override
+	public ZoneOffset getZoneOffsetInt(long valNo) throws SQLException {
+		return qm.toObject(selectNumVal, ZoneOffset.class, valNo);
+	}
+
+	@Override
+	public ZoneOffset getZoneOffsetString(long valNo) throws SQLException {
+		return qm.toObject(selectStrVal, ZoneOffset.class, valNo);
 	}
 
 	//IFJAVA8_END
