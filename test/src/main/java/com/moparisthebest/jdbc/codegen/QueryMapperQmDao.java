@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
+
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
 public class QueryMapperQmDao implements QmDao {
@@ -248,7 +252,7 @@ public class QueryMapperQmDao implements QmDao {
 				FieldPerson.class, personNo1, personNo2, personNo3);
 	}
 
-	//IFJAVA 8_START
+	//IFJAVA8_START
 
 	@Override
 	public java.util.stream.Stream<FieldPerson> getThreePeopleStream(final long personNo1, final long personNo2, final long personNo3) throws SQLException {
@@ -256,5 +260,5 @@ public class QueryMapperQmDao implements QmDao {
 				FieldPerson.class, personNo1, personNo2, personNo3);
 	}
 
-	//IFJAVA 8_END
+	//IFJAVA8_END
 }

@@ -454,7 +454,7 @@ public class QueryMapperTest {
 		assertArrayEquals(people, fromDb.toArray());
 	}
 
-	//IFJAVA 8_START
+	//IFJAVA8_START
 
 	@Test
 	public void testStream() throws SQLException {
@@ -465,7 +465,7 @@ public class QueryMapperTest {
 		assertArrayEquals(people, fromDb.toArray());
 	}
 
-	//IFJAVA 8_END
+	//IFJAVA8_END
 
 /*
 	@Test

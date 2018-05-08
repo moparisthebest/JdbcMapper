@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+//IFJAVA8_START
+import java.util.stream.Stream;
+//IFJAVA8_END
+
 @JdbcMapper.Mapper(
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 		, allowReflection = JdbcMapper.OptionalBool.TRUE
@@ -157,10 +161,10 @@ public interface QmDao extends JdbcMapper {
 	@SQL(selectThreePeople)
 	ResultSetIterable<FieldPerson> getThreePeopleResultSetIterable(long personNo1, long personNo2, long personNo3) throws SQLException;
 
-	//IFJAVA 8_START
+	//IFJAVA8_START
 
 	@SQL(selectThreePeople)
-	java.util.stream.Stream<FieldPerson> getThreePeopleStream(long personNo1, long personNo2, long personNo3) throws SQLException;
+	Stream<FieldPerson> getThreePeopleStream(long personNo1, long personNo2, long personNo3) throws SQLException;
 
-	//IFJAVA 8_END
+	//IFJAVA8_END
 }
