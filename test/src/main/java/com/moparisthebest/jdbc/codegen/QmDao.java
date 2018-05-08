@@ -129,10 +129,8 @@ public interface QmDao extends JdbcMapper {
 	@SQL(allNames)
 	List<Map<String, String>> getAllNames() throws SQLException;
 
-	/*
 	@SQL(allNames)
-	Map[] getAllNamesArray() throws SQLException; // todo: try Map<String, String>[] fix 'generic array creation' error
-	*/
+	Map<String, String>[] getAllNamesArray() throws SQLException;
 
 	@SQL(allNames)
 	Map<String, String> getAllNameMap() throws SQLException;

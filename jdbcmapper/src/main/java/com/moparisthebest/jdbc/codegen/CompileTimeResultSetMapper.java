@@ -255,7 +255,9 @@ public class CompileTimeResultSetMapper {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner, reflectionFields);
 		w.write("\t\t\treturn _colret.toArray(new ");
-		w.write(returnTypeString);
+        // have to strip generics to avoid "generic array creation" compilation failure
+		final int indexOfGeneric = returnTypeString.indexOf('<');
+		w.write(indexOfGeneric < 0 ? returnTypeString : returnTypeString.substring(0, indexOfGeneric));
 		w.write("[_colret.size()]);\n");
 	}
 

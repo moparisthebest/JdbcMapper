@@ -195,12 +195,10 @@ public class QueryMapperQmDao implements QmDao {
 		return qm.toListMap(allNames, Map.class, String.class);
 	}
 
-	/*
 	@Override
 	public Map<String, String>[] getAllNamesArray() throws SQLException {
 		return qm.toArrayMap(allNames, Map.class, String.class);
 	}
-	*/
 
 	@Override
 	public Map<String, String> getAllNameMap() throws SQLException {

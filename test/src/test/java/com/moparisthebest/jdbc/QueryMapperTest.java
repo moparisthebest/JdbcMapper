@@ -285,14 +285,11 @@ public class QueryMapperTest {
 		Assert.assertEquals(arrayMap, qm.getAllNames());
 	}
 
-	/*
-	// todo: fix jdbcmapper for this
 	@Test
 	public void testSelectArrayMap() throws Throwable {
 		final List<Map<String, String>> arrayMap = getListMap();
 		assertArrayEquals(arrayMap.toArray(new Map[arrayMap.size()]), qm.getAllNamesArray());
 	}
-	*/
 
 	@Test
 	public void testSelectMapString() throws Throwable {
