@@ -167,8 +167,20 @@ public class QueryMapperTest {
 
 	@Test
 	public void testFieldRegularAndUnderscoreReverse() throws Throwable {
-		final Person expected = fieldBoss1; // todo: these call constructor, write another test to call setters
+		final Person expected = fieldBoss1;
 		Assert.assertEquals(expected, qm.getFieldRegularAndUnderscoreReverse(expected.getPersonNo()));
+	}
+
+	@Test
+	public void testFieldRegularAndUnderscoreNoConstructor() throws Throwable {
+		final Person expected = fieldBoss1;
+		Assert.assertEquals(expected, qm.getFieldRegularAndUnderscoreNoConstructor(expected.getPersonNo()));
+	}
+
+	@Test
+	public void testFieldRegularAndUnderscoreReverseNoConstructor() throws Throwable {
+		final Person expected = fieldBoss1;
+		Assert.assertEquals(expected, qm.getFieldRegularAndUnderscoreReverseNoConstructor(expected.getPersonNo()));
 	}
 
 	@Test
@@ -189,6 +201,12 @@ public class QueryMapperTest {
 	public void testSetRegularPerson() throws Throwable {
 		final Person expected = setPerson1;
 		Assert.assertEquals(expected, qm.getSetRegularPerson(expected.getPersonNo()));
+	}
+
+	@Test
+	public void testSetRegularPersonNoConstructor() throws Throwable {
+		final Person expected = setPerson1;
+		Assert.assertEquals(expected, qm.getSetRegularPersonNoConstructor(expected.getPersonNo()));
 	}
 
 	@Test

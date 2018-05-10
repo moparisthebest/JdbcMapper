@@ -33,6 +33,10 @@ public class FieldBoss extends FieldPerson implements Boss {
 		return first_name;
 	}
 
+	public void setDummy(String dummy) {
+		// do nothing, this is simply to avoid calling the constructor in some cases
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

@@ -28,6 +28,17 @@ public interface QmDao extends JdbcMapper {
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = {personNo}";
+
+	public static final String personRegularNoConstructor = "SELECT person_no, first_name, last_name, birth_date, first_name AS dummy FROM person WHERE person_no = {personNo}";
+	public static final String bossRegularAndUnderscoreNoConstructor = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department, p.first_name, p.first_name AS dummy " +
+			"FROM person p " +
+			"JOIN boss b ON p.person_no = b.person_no " +
+			"WHERE p.person_no = {personNo}";
+	public static final String bossRegularAndUnderscoreReverseNoConstructor = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department, p.first_name AS firstName, p.first_name AS dummy " +
+			"FROM person p " +
+			"JOIN boss b ON p.person_no = b.person_no " +
+			"WHERE p.person_no = {personNo}";
+
 	public static final String bossRegular = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department " +
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
@@ -63,6 +74,12 @@ public interface QmDao extends JdbcMapper {
 	@JdbcMapper.SQL(bossRegularAndUnderscoreReverse)
 	FieldBoss getFieldRegularAndUnderscoreReverse(long personNo) throws SQLException;
 
+	@JdbcMapper.SQL(bossRegularAndUnderscoreNoConstructor)
+	FieldBoss getFieldRegularAndUnderscoreNoConstructor(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL(bossRegularAndUnderscoreReverseNoConstructor)
+	FieldBoss getFieldRegularAndUnderscoreReverseNoConstructor(long personNo) throws SQLException;
+
 	@JdbcMapper.SQL(bossRegular)
 	FieldBoss getFieldRegular(long personNo) throws SQLException;
 
@@ -71,6 +88,9 @@ public interface QmDao extends JdbcMapper {
 
 	@JdbcMapper.SQL(personRegular)
 	SetPerson getSetRegularPerson(long personNo) throws SQLException;
+
+	@JdbcMapper.SQL(personRegularNoConstructor)
+	SetPerson getSetRegularPersonNoConstructor(long personNo) throws SQLException;
 
 	@JdbcMapper.SQL(bossRegularAndUnderscore)
 	SetBoss getSetRegularAndUnderscore(long personNo) throws SQLException;

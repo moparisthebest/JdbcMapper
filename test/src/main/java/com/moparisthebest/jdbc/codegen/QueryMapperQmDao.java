@@ -30,6 +30,17 @@ public class QueryMapperQmDao implements QmDao {
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
 			"WHERE p.person_no = ?";
+
+	public static final String personRegularNoConstructor = "SELECT person_no, first_name, last_name, birth_date, first_name AS dummy FROM person WHERE person_no = ?";
+	public static final String bossRegularAndUnderscoreNoConstructor = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department, p.first_name, p.first_name AS dummy " +
+			"FROM person p " +
+			"JOIN boss b ON p.person_no = b.person_no " +
+			"WHERE p.person_no = ?";
+	public static final String bossRegularAndUnderscoreReverseNoConstructor = "SELECT p.person_no, p.first_name, p.last_name, p.birth_date, b.department, p.first_name AS firstName, p.first_name AS dummy " +
+			"FROM person p " +
+			"JOIN boss b ON p.person_no = b.person_no " +
+			"WHERE p.person_no = ?";
+
 	public static final String bossRegular = "SELECT p.person_no, p.first_name AS firstName, p.last_name, p.birth_date, b.department " +
 			"FROM person p " +
 			"JOIN boss b ON p.person_no = b.person_no " +
@@ -86,6 +97,16 @@ public class QueryMapperQmDao implements QmDao {
 	}
 
 	@Override
+	public FieldBoss getFieldRegularAndUnderscoreNoConstructor(final long personNo) throws SQLException {
+		return qm.toObject(bossRegularAndUnderscoreNoConstructor, FieldBoss.class, personNo);
+	}
+
+	@Override
+	public FieldBoss getFieldRegularAndUnderscoreReverseNoConstructor(final long personNo) throws SQLException {
+		return qm.toObject(bossRegularAndUnderscoreReverseNoConstructor, FieldBoss.class, personNo);
+	}
+
+	@Override
 	public FieldBoss getFieldRegular(final long personNo) throws SQLException {
 		return qm.toObject(bossRegular, FieldBoss.class, personNo);
 	}
@@ -98,6 +119,11 @@ public class QueryMapperQmDao implements QmDao {
 	@Override
 	public SetPerson getSetRegularPerson(final long personNo) throws SQLException {
 		return qm.toObject(personRegular, SetPerson.class, personNo);
+	}
+
+	@Override
+	public SetPerson getSetRegularPersonNoConstructor(final long personNo) throws SQLException {
+		return qm.toObject(personRegularNoConstructor, SetPerson.class, personNo);
 	}
 
 	@Override

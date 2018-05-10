@@ -33,4 +33,8 @@ public class SetPerson extends FieldPerson {
 		this.lastName = lastName;
 	}
 
+	public void setDummy(String dummy) {
+		// do nothing, this is simply to avoid calling the constructor in some cases
+	}
+
 }
