@@ -470,7 +470,22 @@ public class ResultSetMapper implements RowMapperProvider {
 		if (returnType.isArray()) {
 			return toArray(rs, returnType.getComponentType(), arrayMaxLength, cal);
 		} else if (Collection.class.isAssignableFrom(returnType)) {
-			return toCollection(rs, returnType, (Class) type.getActualTypeArguments()[0], arrayMaxLength, cal);
+			final Type componentType = type.getActualTypeArguments()[0];
+			if(componentType instanceof ParameterizedType) {
+				final ParameterizedType parameterizedType = ((ParameterizedType) componentType);
+				final Type rawType = parameterizedType.getRawType();
+				if(rawType instanceof Class && Map.class.isAssignableFrom((Class)rawType)) {
+					final Type[] mapTypes = parameterizedType.getActualTypeArguments();
+					if (mapTypes.length == 2 && mapTypes[0].equals(String.class) && mapTypes[1] instanceof Class)
+						return toCollectionMap(rs, returnType, (Class) rawType, (Class) mapTypes[1]);
+				}
+			}
+			// if we didn't match above signature, try just a regular collection
+			if(componentType instanceof Class) {
+				return toCollection(rs, returnType, (Class) componentType, arrayMaxLength, cal);
+			}
+			// or give up...
+			throw new MapperException("unknown Collection type to map...");
 		} else if (Map.class.isAssignableFrom(returnType)) {
 			Type[] types = type.getActualTypeArguments();
 			if (types[1] instanceof ParameterizedType) { // for collectionMaps

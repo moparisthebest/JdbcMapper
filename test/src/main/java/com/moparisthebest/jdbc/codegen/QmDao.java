@@ -156,6 +156,9 @@ public interface QmDao extends JdbcMapper {
 	@SQL(bobTomMap)
 	List<CaseInsensitiveHashMap<String, String>> getBobTomMapCaseInsensitive() throws SQLException;
 
+	@SQL(bobTomMap)
+	List<CaseInsensitiveHashMap<String, String>> getBobTomMapCaseInsensitiveType() throws SQLException;
+
 	@SQL(selectThreePeople)
 	List<FieldPerson> getThreePeople(long personNo1, long personNo2, long personNo3) throws SQLException;
 

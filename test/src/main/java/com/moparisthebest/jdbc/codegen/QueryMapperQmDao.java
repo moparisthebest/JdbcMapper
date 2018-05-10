@@ -233,9 +233,12 @@ public class QueryMapperQmDao implements QmDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<CaseInsensitiveHashMap<String, String>> getBobTomMapCaseInsensitive() throws SQLException {
-		// todo: ParameterizedTypeImpl cannot be cast to java.lang.Class
-		// return qm.toType(bobTomMap, new TypeReference<List<CaseInsensitiveHashMap<String, String>>>() {});
 		return (List<CaseInsensitiveHashMap<String, String>>)(Object)qm.toListMap(bobTomMap, CaseInsensitiveHashMap.class, String.class);
+	}
+
+	@Override
+	public List<CaseInsensitiveHashMap<String, String>> getBobTomMapCaseInsensitiveType() throws SQLException {
+		return qm.toType(bobTomMap, new TypeReference<List<CaseInsensitiveHashMap<String, String>>>() {});
 	}
 
 	@Override

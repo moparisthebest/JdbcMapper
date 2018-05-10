@@ -418,6 +418,21 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testCaseInsensitiveMapJdbcMapperType() throws Throwable {
+		final Map<String, String> map = qm.getBobTomMapCaseInsensitiveType().get(0);
+		assertEquals("bob", map.get("bob"));
+		assertEquals("bob", map.get("Bob"));
+		assertEquals("bob", map.get("BoB"));
+		assertEquals("bob", map.get("BOb"));
+		assertEquals("bob", map.get("BOB"));
+		assertEquals("tom", map.get("tom"));
+		assertEquals("tom", map.get("Tom"));
+		assertEquals("tom", map.get("ToM"));
+		assertEquals("tom", map.get("TOm"));
+		assertEquals("tom", map.get("TOM"));
+	}
+
+	@Test
 	public void testList() throws SQLException {
 		final List<FieldPerson> fromDb = qm.getThreePeople(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
 		assertArrayEquals(people, fromDb.toArray());
