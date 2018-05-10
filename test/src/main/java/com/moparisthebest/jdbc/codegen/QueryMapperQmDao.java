@@ -56,7 +56,7 @@ public class QueryMapperQmDao implements QmDao {
 	public static final String selectNumVal = "SELECT num_val FROM val WHERE val_no = ?";
 	public static final String selectStrVal = "SELECT str_val FROM val WHERE val_no = ?";
 
-	private final QueryMapper qm;
+	protected final QueryMapper qm;
 
 	public QueryMapperQmDao(final Connection conn, final ResultSetMapper rsm) {
 		this.qm = new QueryMapper(conn, rsm);

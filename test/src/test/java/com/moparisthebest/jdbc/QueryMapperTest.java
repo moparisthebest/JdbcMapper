@@ -3,6 +3,7 @@ package com.moparisthebest.jdbc;
 import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.codegen.QmDao;
 import com.moparisthebest.jdbc.codegen.QueryMapperQmDao;
+import com.moparisthebest.jdbc.codegen.QueryMapperTypeQmDao;
 import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 import org.junit.*;
@@ -117,15 +118,28 @@ public class QueryMapperTest {
 	}
 
 	protected QmDao qm;
+    protected final int qmDaoType;
 	protected final ResultSetMapper rsm;
 
-	public QueryMapperTest(final ResultSetMapper rsm) {
+	public QueryMapperTest(final int qmDaoType, final ResultSetMapper rsm) {
+        this.qmDaoType = qmDaoType;
 		this.rsm = rsm;
 	}
 
 	@Before
 	public void open() {
-		qm = this.rsm == null ? JdbcMapperFactory.create(QmDao.class, conn) : new QueryMapperQmDao(conn, rsm);
+	    switch (qmDaoType) {
+            case 0:
+                this.qm = new QueryMapperQmDao(conn, rsm);
+                return;
+            case 1:
+                this.qm = new QueryMapperTypeQmDao(conn, rsm);
+                return;
+            case 2:
+                this.qm = JdbcMapperFactory.create(QmDao.class, conn);
+                return;
+        }
+		throw new RuntimeException("unknown qmDaoType");
 	}
 
 	@After
@@ -137,11 +151,17 @@ public class QueryMapperTest {
 	public static Collection<Object[]> getParameters()
 	{
 		return Arrays.asList(new Object[][] {
-				{ new ResultSetMapper() },
-				{ new CachingResultSetMapper() },
-				{ new CaseInsensitiveMapResultSetMapper() },
-				{ new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
-				{ null /* means QmDao.class is used */ },
+				{ 0, new ResultSetMapper() },
+				{ 0, new CachingResultSetMapper() },
+				{ 0, new CaseInsensitiveMapResultSetMapper() },
+				{ 0, new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
+
+                { 1, new ResultSetMapper() },
+                { 1, new CachingResultSetMapper() },
+                { 1, new CaseInsensitiveMapResultSetMapper() },
+                { 1, new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
+
+				{ 2, null /* means QmDao.class is used */ },
 		});
 	}
 
