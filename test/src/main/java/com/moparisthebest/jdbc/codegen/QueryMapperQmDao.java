@@ -215,7 +215,6 @@ public class QueryMapperQmDao implements QmDao {
 		return qm.toMap(selectLongLong, Long.class, Long.class);
 	}
 
-	/*
 	@Override
 	public Long[] getLongObjectArray() throws SQLException {
 		return qm.toObject(selectLongArray, Long[].class);
@@ -225,7 +224,6 @@ public class QueryMapperQmDao implements QmDao {
 	public long[] getLongPrimitiveArray() throws SQLException {
 		return qm.toObject(selectLongArray, long[].class);
 	}
-	*/
 
 	@Override
 	public List<Map<String, String>> getBobTomMap() throws SQLException {
@@ -233,8 +231,11 @@ public class QueryMapperQmDao implements QmDao {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<CaseInsensitiveHashMap<String, String>> getBobTomMapCaseInsensitive() throws SQLException {
-		return qm.toType(bobTomMap, new TypeReference<List<CaseInsensitiveHashMap<String, String>>>() {});
+		// todo: ParameterizedTypeImpl cannot be cast to java.lang.Class
+		// return qm.toType(bobTomMap, new TypeReference<List<CaseInsensitiveHashMap<String, String>>>() {});
+		return (List<CaseInsensitiveHashMap<String, String>>)(Object)qm.toListMap(bobTomMap, CaseInsensitiveHashMap.class, String.class);
 	}
 
 	@Override

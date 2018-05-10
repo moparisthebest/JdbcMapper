@@ -141,13 +141,14 @@ public interface QmDao extends JdbcMapper {
 	@SQL(selectLongLong)
 	Map<Long, Long> getMapLongLong() throws SQLException;
 
-	/*
+
 	@SQL(selectLongArray)
+	@SingleRow
 	Long[] getLongObjectArray() throws SQLException;
 
 	@SQL(selectLongArray)
+	@SingleRow
 	long[] getLongPrimitiveArray() throws SQLException;
-	*/
 
 	@SQL(bobTomMap)
 	List<Map<String, String>> getBobTomMap() throws SQLException;

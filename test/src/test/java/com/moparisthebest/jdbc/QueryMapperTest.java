@@ -342,8 +342,7 @@ public class QueryMapperTest {
 		final Long[] expected = {fieldPerson1.getPersonNo()};
 		assertArrayEquals(expected, qm.getPersonNoObjectArray(expected[0]));
 	}
-/*
-	// todo: fix these
+
 	@Test
 	public void testSelectObjectArray() throws Throwable {
 		final Long[] arr = {1L, 2L, 3L};
@@ -353,9 +352,9 @@ public class QueryMapperTest {
 	@Test
 	public void testSelectPrimitiveArray() throws Throwable {
 		final long[] arr = {1L, 2L, 3L};
-		assertArrayEquals(arr, qm.toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", long[].class, fieldPerson1.getPersonNo()));
+		assertArrayEquals(arr, qm.getLongPrimitiveArray());
 	}
-*/
+
 	@Test(expected = com.moparisthebest.jdbc.MapperException.class)
 	public void testNoDefaultConstructorFails() throws Throwable {
 		if(qm instanceof QueryMapperQmDao)
@@ -405,8 +404,6 @@ public class QueryMapperTest {
 
 	@Test
 	public void testCaseInsensitiveMapJdbcMapper() throws Throwable {
-		if(qm instanceof QueryMapperQmDao)
-			return; // skip todo: java.lang.ClassCastException: sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl cannot be cast to java.lang.Class
 		final Map<String, String> map = qm.getBobTomMapCaseInsensitive().get(0);
 		assertEquals("bob", map.get("bob"));
 		assertEquals("bob", map.get("Bob"));
@@ -431,17 +428,18 @@ public class QueryMapperTest {
 		final List<FieldPerson> fromDb = qm.getThreePeopleType(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
 		assertArrayEquals(people, fromDb.toArray());
 	}
-/*
-	// todo: port this one
+
 	@Test
 	public void testListQueryMapperList() throws SQLException {
-		final ListQueryMapper lqm = new ListQueryMapper(qm);
+		if(!(qm instanceof QueryMapperQmDao))
+			return; // todo: port this when JdbcMapper supports in-lists on generic SQL backends
+		final ListQueryMapper lqm = new ListQueryMapper(((QueryMapperQmDao)qm).getQm());
 		final List<FieldPerson> fromDb = lqm.toList("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no",
 				FieldPerson.class, lqm.inList("person_no", Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo())));
 		assertArrayEquals(people, fromDb.toArray());
 		lqm.close();
 	}
-*/
+
 	@Test
 	public void testResultSetIterable() throws SQLException {
 		final ResultSetIterable<FieldPerson> rsi = qm.getThreePeopleResultSetIterable(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
