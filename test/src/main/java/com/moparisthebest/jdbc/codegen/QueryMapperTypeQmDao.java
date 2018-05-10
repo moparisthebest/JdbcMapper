@@ -8,12 +8,12 @@ import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.*;
 import java.util.List;
 import java.util.Map;
 
 //IFJAVA8_START
 import java.util.stream.Stream;
+import java.time.*;
 //IFJAVA8_END
 
 public class QueryMapperTypeQmDao extends QueryMapperQmDao {
