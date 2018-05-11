@@ -1,5 +1,6 @@
 package com.moparisthebest.jdbc;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -57,16 +58,32 @@ public abstract class TypeReference<T> implements Comparable<TypeReference<T>> {
 			this.genericArray = false;
 		} else if (type instanceof GenericArrayType) {
 			final Type arrayComponentType = ((GenericArrayType)type).getGenericComponentType();
-			if (arrayComponentType instanceof Class<?>) {
-				this.type = null;
-				this.rawType = (Class<?>) arrayComponentType;
-			} else if (arrayComponentType instanceof ParameterizedType) {
+			if (arrayComponentType instanceof ParameterizedType) {
 				this.type = (ParameterizedType) arrayComponentType;
 				this.rawType = (Class<?>) this.type.getRawType();
+				this.genericArray = true;
+			} else if (arrayComponentType instanceof Class<?>) {
+				/*
+				 * java 6 differs from every other version here in a very specific way:
+				 *
+				 * this code used to be:
+				 * this.rawType = (Class<?>) arrayComponentType;
+				 * this.genericArray = true;
+				 *
+				 * for new TypeReference<Long[]>() {}, these were the results:
+				 *
+				 * java 6 TypeReference{type=null, rawType=class java.lang.Long, genericArray=true}
+				 * java 7+ TypeReference{type=null, rawType=class [Ljava.lang.Long;, genericArray=false}
+				 *
+				 * turns out this block only ever runs for java 6 and not 7+, which is handled automatically by the first
+				 * if (type instanceof Class<?>) block, replicate that with a hack for java 6
+				 */
+				this.type = null;
+				this.rawType = Array.newInstance((Class<?>) arrayComponentType, 0).getClass();
+				this.genericArray = false;
 			} else {
 				throw new IllegalArgumentException("Internal error: TypeReference constructed with unknown type: '" + type + "' class: '" + type.getClass() + "'");
 			}
-			this.genericArray = true;
 		} else {
 			throw new IllegalArgumentException("Internal error: TypeReference constructed with unknown type: '" + type + "' class: '" + type.getClass() + "'");
 		}
@@ -94,5 +111,14 @@ public abstract class TypeReference<T> implements Comparable<TypeReference<T>> {
 		return 0;
 	}
 	// just need an implementation, not a good one... hence ^^^
+
+	@Override
+	public String toString() {
+		return "TypeReference{" +
+				"type=" + type +
+				", rawType=" + rawType +
+				", genericArray=" + genericArray +
+				'}';
+	}
 }
 
