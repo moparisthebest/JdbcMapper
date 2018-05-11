@@ -64,8 +64,9 @@ public class CleaningQueryMapperTest {
 	{
 		final Cleaner<FieldPerson> personCleaner = new Cleaner<FieldPerson>() {
 			@Override
-			public FieldPerson clean(final FieldPerson dto) {
-				return dto.cleanThyself();
+			@SuppressWarnings("unchecked")
+			public <E extends FieldPerson> E clean(final E dto) {
+				return (E) dto.cleanThyself();
 			}
 		};
 		return Arrays.asList(new Object[][] {

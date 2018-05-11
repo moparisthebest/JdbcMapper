@@ -253,6 +253,9 @@
                                     <exclude>**/module-info.java</exclude>
                                     <exclude>**/PrestoPersonDAO.java</exclude>
                                 </excludes>
+                                <compilerArgs>
+                                    <compilerArg>-Xlint:unchecked</compilerArg>
+                                </compilerArgs>
                             </configuration>
 
                             <executions>
@@ -305,6 +308,9 @@
                             <excludes>
                                 <exclude>**/module-info.java</exclude>
                             </excludes>
+                            <compilerArgs>
+                                <compilerArg>-Xlint:unchecked</compilerArg>
+                            </compilerArgs>
                         </configuration>
 
                         <executions>
