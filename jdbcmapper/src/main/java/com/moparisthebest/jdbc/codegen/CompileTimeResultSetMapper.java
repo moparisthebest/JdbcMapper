@@ -254,11 +254,19 @@ public class CompileTimeResultSetMapper {
 	public void toArray(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
 		final String returnTypeString = componentTypeMirror.toString();
 		writeCollection(w, keys, "java.util.List<" + returnTypeString + ">", "java.util.ArrayList", componentTypeMirror, maxRows, cal, cleaner, reflectionFields);
-		w.write("\t\t\treturn _colret.toArray(new ");
-        // have to strip generics to avoid "generic array creation" compilation failure
+		// have to strip generics to avoid "generic array creation" compilation failure
 		final int indexOfGeneric = returnTypeString.indexOf('<');
-		w.write(indexOfGeneric < 0 ? returnTypeString : returnTypeString.substring(0, indexOfGeneric));
-		w.write("[_colret.size()]);\n");
+		if(indexOfGeneric < 0) {
+			w.write("\t\t\treturn _colret.toArray(new ");
+			w.write(returnTypeString);
+			w.write("[_colret.size()]);\n");
+		} else {
+			w.write("\t\t\t@SuppressWarnings(\"unchecked\")\n");
+			w.append("\t\t\tfinal ").append(returnTypeString).append("[] _warnret = _colret.toArray(new ");
+			w.write(returnTypeString.substring(0, indexOfGeneric));
+			w.write("[_colret.size()]);\n");
+			w.write("\t\t\treturn _warnret;\n");
+		}
 	}
 
 	public void toListIterator(final Writer w, final String[] keys, final TypeMirror componentTypeMirror, MaxRows maxRows, String cal, final String cleaner, final ReflectionFields reflectionFields) throws IOException, ClassNotFoundException {
