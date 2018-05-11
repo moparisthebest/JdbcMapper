@@ -1,8 +1,8 @@
 package com.moparisthebest.jdbc;
 
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 
 /**
  * This generic abstract class is used for obtaining full generics type information
@@ -32,6 +32,7 @@ public abstract class TypeReference<T> implements Comparable<TypeReference<T>> {
 
 	private final ParameterizedType type;
 	private final Class<?> rawType;
+	private final boolean genericArray;
 
 	protected TypeReference() {
 		final Type superClass = getClass().getGenericSuperclass();
@@ -49,9 +50,23 @@ public abstract class TypeReference<T> implements Comparable<TypeReference<T>> {
 		if (type instanceof Class<?>) {
 			this.type = null;
 			this.rawType = (Class<?>) type;
+			this.genericArray = false;
 		} else if (type instanceof ParameterizedType) {
 			this.type = (ParameterizedType) type;
 			this.rawType = (Class<?>) this.type.getRawType();
+			this.genericArray = false;
+		} else if (type instanceof GenericArrayType) {
+			final Type arrayComponentType = ((GenericArrayType)type).getGenericComponentType();
+			if (arrayComponentType instanceof Class<?>) {
+				this.type = null;
+				this.rawType = (Class<?>) arrayComponentType;
+			} else if (arrayComponentType instanceof ParameterizedType) {
+				this.type = (ParameterizedType) arrayComponentType;
+				this.rawType = (Class<?>) this.type.getRawType();
+			} else {
+				throw new IllegalArgumentException("Internal error: TypeReference constructed with unknown type: '" + type + "' class: '" + type.getClass() + "'");
+			}
+			this.genericArray = true;
 		} else {
 			throw new IllegalArgumentException("Internal error: TypeReference constructed with unknown type: '" + type + "' class: '" + type.getClass() + "'");
 		}
@@ -63,6 +78,10 @@ public abstract class TypeReference<T> implements Comparable<TypeReference<T>> {
 
 	public final Class<?> getRawType() {
 		return rawType;
+	}
+
+	public boolean isGenericArray() {
+		return genericArray;
 	}
 
 	/**

@@ -173,9 +173,7 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 
 	@Override
 	public Map<String, String>[] getAllNamesArray() throws SQLException {
-		return super.getAllNamesArray();
-		// todo: fix this
-		//return qm.toType(allNames, new TypeReference<Map<String, String>[]>() {});
+		return qm.toType(allNames, new TypeReference<Map<String, String>[]>() {});
 	}
 
 	@Override

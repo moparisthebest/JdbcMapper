@@ -466,7 +466,7 @@ public class ResultSetMapper implements RowMapperProvider {
 	// overloaded helper methods
 
 	@SuppressWarnings("unchecked")
-	protected Object toType(final ResultSet rs, final Class returnType, final ParameterizedType type, final int arrayMaxLength, final Calendar cal) {
+	protected Object toType(final ResultSet rs, final Class returnType, final ParameterizedType type, final boolean genericArray, final int arrayMaxLength, final Calendar cal) {
 		if (returnType.isArray()) {
 			return toArray(rs, returnType.getComponentType(), arrayMaxLength, cal);
 		} else if (Collection.class.isAssignableFrom(returnType)) {
@@ -493,6 +493,8 @@ public class ResultSetMapper implements RowMapperProvider {
 				Class collectionType = (Class) pt.getRawType();
 				if (Collection.class.isAssignableFrom(collectionType))
 					return toMapCollection(rs, returnType, (Class) types[0], collectionType, (Class) pt.getActualTypeArguments()[0], arrayMaxLength, cal);
+			} else if(genericArray && types[1] instanceof Class) {
+				return toArrayMap(rs, returnType, (Class) types[1], arrayMaxLength, cal);
 			}
 			return toMap(rs, com.moparisthebest.jdbc.ResultSetMapper.instantiateClass((Class<Map>)returnType, HashMap.class), (Class) types[0], (Class) types[1], arrayMaxLength, cal);
 		} else if (Iterator.class.isAssignableFrom(returnType)) {
@@ -516,7 +518,7 @@ public class ResultSetMapper implements RowMapperProvider {
 
 	@SuppressWarnings("unchecked")
 	public <T> T toType(ResultSet rs, TypeReference<T> typeReference, int arrayMaxLength, Calendar cal) {
-		return (T)this.toType(rs, typeReference.getRawType(), typeReference.getType(), arrayMaxLength, cal);
+		return (T)this.toType(rs, typeReference.getRawType(), typeReference.getType(), typeReference.isGenericArray(), arrayMaxLength, cal);
 	}
 
 	public <T> T toObject(ResultSet rs, Class<T> componentType, Calendar cal) {
