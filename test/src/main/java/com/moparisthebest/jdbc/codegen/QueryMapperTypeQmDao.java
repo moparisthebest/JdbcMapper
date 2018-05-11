@@ -216,18 +216,7 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 	}
 
 	@Override
-	public List<CaseInsensitiveHashMap<String, String>> getBobTomMapCaseInsensitiveType() throws SQLException {
-		return qm.toType(bobTomMap, new TypeReference<List<CaseInsensitiveHashMap<String, String>>>() {});
-	}
-
-	@Override
 	public List<FieldPerson> getThreePeople(final long personNo1, final long personNo2, final long personNo3) throws SQLException {
-		return  qm.toType(selectThreePeople,
-				new TypeReference<List<FieldPerson>>() {}, personNo1, personNo2, personNo3);
-	}
-
-	@Override
-	public List<FieldPerson> getThreePeopleType(final long personNo1, final long personNo2, final long personNo3) throws SQLException {
 		return  qm.toType(selectThreePeople,
 				new TypeReference<List<FieldPerson>>() {}, personNo1, personNo2, personNo3);
 	}
