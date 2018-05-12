@@ -226,7 +226,16 @@ public interface PersonDAO extends JdbcMapper {
 	@JdbcMapper.SQL("SELECT str_val FROM val WHERE val_no = 4")
 	SameClassPathEnumPerson.FirstName getSameClassPathEnumNull() throws SQLException;
 
+	@SQL("SELECT first_name, last_name FROM person WHERE {person_no IN personNos}")
+	List<FieldPerson> getPeopleInListArray(Long[] personNos);
+
+	@SQL("SELECT first_name, last_name FROM person WHERE {person_no IN personNos}")
+	List<FieldPerson> getPeopleInListCollection(Collection<Long> personNos);
+
 	//IFJAVA8_START
+
+	@SQL("SELECT first_name, last_name FROM person WHERE {person_no IN personNos} OR {first_name IN names} OR {last_name IN names}")
+	Stream<FieldPerson> getPeopleInListStream(Stream<Long> personNos, Stream<String> names);
 
 	@JdbcMapper.SQL("SELECT birth_date FROM person WHERE person_no = {personNo}")
 	Instant getBirthDateInstant(long personNo);

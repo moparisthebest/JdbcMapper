@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 //IFJAVA8_START
 import java.time.*;
+import java.util.stream.Stream;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
@@ -69,7 +70,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	static TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, connectionType, jdbcMapperType,
 			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType, enumType;
 	//IFJAVA8_START
-	static TypeMirror instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
+	static TypeMirror streamType, instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
 	//IFJAVA8_END
 	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
@@ -105,6 +106,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		blobType = elements.getTypeElement(Blob.class.getCanonicalName()).asType();
 		calendarType = elements.getTypeElement(Calendar.class.getCanonicalName()).asType();
 		//IFJAVA8_START
+		streamType = types.getDeclaredType(elements.getTypeElement(Stream.class.getCanonicalName()), types.getWildcardType(null, null));
 		instantType = elements.getTypeElement(Instant.class.getCanonicalName()).asType();
 		localDateTimeType = elements.getTypeElement(LocalDateTime.class.getCanonicalName()).asType();
 		localDateType = elements.getTypeElement(LocalDate.class.getCanonicalName()).asType();
@@ -308,6 +310,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 							// build query and bind param order
 							final List<VariableElement> bindParams = new ArrayList<VariableElement>();
+							final Map<String, SpecialVariableElement> inListBindParams = new LinkedHashMap<>();
 							final String sqlStatement;
 							String calendarName = null, cleanerName = null;
 							CompileTimeResultSetMapper.MaxRows maxRows = CompileTimeResultSetMapper.MaxRows.getMaxRows(sql.maxRows());
@@ -349,6 +352,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 								final Matcher bindParamMatcher = paramPattern.matcher(sql.value());
 								final StringBuffer sb = new StringBuffer();
+								int inListBindParamsIdx = -1;
 								while (bindParamMatcher.find()) {
 									final String paramName = bindParamMatcher.group(7);
 									final VariableElement bindParam = paramMap.get(paramName);
@@ -380,7 +384,12 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									} else {
 										if(clobBlob != null)
 											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob", bindParam);
-										bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.IN_LIST));
+										SpecialVariableElement inListBindParam = inListBindParams.get(paramName);
+										if(inListBindParam == null) {
+											inListBindParam = new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.IN_LIST, ++inListBindParamsIdx);
+											inListBindParams.put(paramName, inListBindParam);
+										}
+										bindParams.add(inListBindParam);
 										final boolean not = bindParamMatcher.group(4) != null;
 										final String replacement;
 										switch (databaseType) {
@@ -433,7 +442,12 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write("\t\tPreparedStatement ps = null;\n");
 							if (parsedSQl.isSelect())
 								w.write("\t\tResultSet rs = null;\n");
-							w.write("\t\ttry {\n\t\t\tps = ");
+							if(!inListBindParams.isEmpty())
+								w.append("\t\tfinal Array[] _bindArrays = new Array[").append(Integer.toString(inListBindParams.size())).append("];\n");
+							w.write("\t\ttry {\n");
+							for (final SpecialVariableElement param : inListBindParams.values())
+								setArray(w, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
+							w.write("\t\t\tps = ");
 							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements);
 							if (cachePreparedStatements) {
 								w.write("this.prepareStatement(");
@@ -450,7 +464,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							// now bind parameters
 							int count = 0;
 							for (final VariableElement param : bindParams)
-								setObject(w, ++count, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
+								setObject(w, ++count, param);
 
 							boolean closeRs = true;
 							if (!parsedSQl.isSelect()) {
@@ -484,6 +498,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								if (!sqlExceptionThrown)
 									w.write("\t\t} catch(SQLException e) {\n\t\t\tthrow new RuntimeException(e);\n");
 								w.write("\t\t} finally {\n");
+								if(!inListBindParams.isEmpty())
+									w.append("\t\t\tfor(final Array _bindArray : _bindArrays)\n\t\t\t\ttryClose(_bindArray);\n");
 								if (parsedSQl.isSelect())
 									w.write("\t\t\ttryClose(rs);\n");
 								if (!cachePreparedStatements)
@@ -499,6 +515,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									w.write("\t\t\tif(e instanceof SQLException)\n\t\t\t\tthrow (SQLException)e;\n");
 								w.write("\t\t\tif(e instanceof RuntimeException)\n\t\t\t\tthrow (RuntimeException)e;\n");
 								w.write("\t\t\tthrow new RuntimeException(e);\n");
+								if(!inListBindParams.isEmpty()) {
+									w.write("\t\t} finally {\n");
+									w.append("\t\t\tfor(final Array _bindArray : _bindArrays)\n\t\t\t\ttryClose(_bindArray);\n");
+								}
 							}
 							w.write("\t\t}\n");
 
@@ -658,44 +678,57 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		w.write("\t}\n");
 	}
 
-	private void setObject(final Writer w, final int index, final JdbcMapper.DatabaseType databaseType, final String arrayNumberTypeName, final String arrayStringTypeName, final VariableElement param) throws SQLException, IOException {
-		String variableName = param.getSimpleName().toString();
-		final TypeMirror o = param.asType();
-		w.write("\t\t\t");
-		String method = null;
+	private enum InListArgType {
+		ARRAY,
+		COLLECTION,
+		STREAM,
+	}
 
-		// special behavior
-		if (param instanceof SpecialVariableElement) {
-			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
-			switch (specialParam.specialType) {
-				case IN_LIST: {
-					final boolean collection;
-					final TypeMirror componentType;
-					if (o.getKind() == TypeKind.ARRAY) {
-						collection = false;
-						componentType = ((ArrayType) o).getComponentType();
-					} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
-						collection = true;
-						final DeclaredType dt = (DeclaredType) o;
-						if (dt.getTypeArguments().isEmpty()) {
-							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" + o.toString(), specialParam.delegate);
-							return;
-						}
-						componentType = dt.getTypeArguments().get(0);
-					} else {
-						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" + o.toString(), specialParam.delegate);
-						return;
-					}
-					w.write("ps.setArray(");
-					w.write(Integer.toString(index));
-					w.write(", ");
-					final String type = types.isAssignable(componentType, numberType) ? arrayNumberTypeName : arrayStringTypeName;
-					switch (databaseType) {
-						case ORACLE:
-							w.write("conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(\"");
+	private void setArray(final Writer w, final JdbcMapper.DatabaseType databaseType, final String arrayNumberTypeName, final String arrayStringTypeName, final SpecialVariableElement specialParam) throws IOException {
+		final String variableName = specialParam.getSimpleName().toString();
+		final TypeMirror o = specialParam.asType();
 
-							// todo: if oracle driver is not on compile-time classpath, would need to do:
-							// we could also create a fake-oracle module that just had a oracle.jdbc.OracleConnection class implementing createOracleArray()...
+		final InListArgType inListArgType;
+		final TypeMirror componentType;
+		if (o.getKind() == TypeKind.ARRAY) {
+			inListArgType = InListArgType.ARRAY;
+			componentType = ((ArrayType) o).getComponentType();
+		} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
+			inListArgType = InListArgType.COLLECTION;
+			final DeclaredType dt = (DeclaredType) o;
+			if (dt.getTypeArguments().isEmpty()) {
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Collection with a generic type parameter" + o.toString(), specialParam.delegate);
+				return;
+			}
+			componentType = dt.getTypeArguments().get(0);
+			//IFJAVA8_START
+		} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, streamType)) {
+			inListArgType = InListArgType.STREAM;
+			final DeclaredType dt = (DeclaredType) o;
+			if (dt.getTypeArguments().isEmpty()) {
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax requires a Stream with a generic type parameter" + o.toString(), specialParam.delegate);
+				return;
+			}
+			componentType = dt.getTypeArguments().get(0);
+		} else {
+			processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" + o.toString(), specialParam.delegate);
+			return;
+		}
+		//IFJAVA8_END
+		/*IFJAVA6_START
+		} else {
+			processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL in list syntax only valid on Collections or arrays" + o.toString(), specialParam.delegate);
+			return;
+		}
+		IFJAVA6_END*/
+		w.append("\t\t\t_bindArrays[").append(Integer.toString(specialParam.index)).append("] = ");
+		final String type = types.isAssignable(componentType, numberType) ? arrayNumberTypeName : arrayStringTypeName;
+		switch (databaseType) {
+			case ORACLE:
+				w.write("conn.unwrap(oracle.jdbc.OracleConnection.class).createOracleArray(\"");
+
+				// todo: if oracle driver is not on compile-time classpath, would need to do:
+				// we could also create a fake-oracle module that just had a oracle.jdbc.OracleConnection class implementing createOracleArray()...
 					/*
 					private static final Class<?> oracleConnection;
 					private static final Method createArray;
@@ -713,20 +746,42 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						createArray = ca;
 					}
 					 */
-							//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
-							break;
-						case STANDARD:
-							w.write("conn.createArrayOf(\"");
-							break;
-						default:
-							processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", specialParam.delegate);
-					}
-					w.write(type);
-					w.write("\", ");
-					w.write(variableName);
-					if (collection)
-						w.write(".toArray()");
-					w.write("));\n");
+				//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
+				break;
+			case STANDARD:
+				w.write("conn.createArrayOf(\"");
+				break;
+			default:
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", specialParam.delegate);
+		}
+		w.write(type);
+		w.write("\", ");
+		w.write(variableName);
+		switch (inListArgType) {
+			case COLLECTION:
+				w.append(".toArray(new ").append(componentType.toString()).append("[").append(variableName).append(".size()])");
+				break;
+			case STREAM:
+				w.append(".toArray(").append(componentType.toString()).append("[]::new)");
+				break;
+		}
+		w.write(");\n");
+	}
+
+	private void setObject(final Writer w, final int index, final VariableElement param) throws IOException {
+		String variableName = param.getSimpleName().toString();
+		final TypeMirror o = param.asType();
+		w.write("\t\t\t");
+		String method = null;
+
+		// special behavior
+		if (param instanceof SpecialVariableElement) {
+			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
+			switch (specialParam.specialType) {
+				case IN_LIST: {
+					w.write("ps.setArray(");
+					w.write(Integer.toString(index));
+					w.append(", _bindArrays[").append(Integer.toString(specialParam.index)).append("]);\n");
 					return;
 				}
 				case BLOB: {

@@ -20,15 +20,25 @@ class SpecialVariableElement implements VariableElement {
 	final VariableElement delegate;
 	final SpecialType specialType;
 	final String blobStringCharset;
+	final int index;
 
 	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType) {
-		this(delegate, specialType, null);
+		this(delegate, specialType, null, 0);
+	}
+
+	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType, final int index) {
+		this(delegate, specialType, null, index);
 	}
 
 	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType, final String blobStringCharset) {
+		this(delegate, specialType, blobStringCharset, 0);
+	}
+
+	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType, final String blobStringCharset, final int index) {
 		this.delegate = delegate;
 		this.specialType = specialType;
 		this.blobStringCharset = blobStringCharset;
+		this.index = index;
 	}
 
 	@Override

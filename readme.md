@@ -121,3 +121,4 @@ TODO
  * DOCUMENTATION!!!!!
  * sql other than select return boolean, int > 0 ?
  * @RunInTransaction void support
+ * QueryMapper mapping errors should be clearer, especially if a .finish(ResultSet) throws an error
