@@ -310,7 +310,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 							// build query and bind param order
 							final List<VariableElement> bindParams = new ArrayList<VariableElement>();
-							final Map<String, SpecialVariableElement> inListBindParams = new LinkedHashMap<>();
+							final Map<String, SpecialVariableElement> inListBindParams = new LinkedHashMap<String, SpecialVariableElement>();
 							final String sqlStatement;
 							String calendarName = null, cleanerName = null;
 							CompileTimeResultSetMapper.MaxRows maxRows = CompileTimeResultSetMapper.MaxRows.getMaxRows(sql.maxRows());
