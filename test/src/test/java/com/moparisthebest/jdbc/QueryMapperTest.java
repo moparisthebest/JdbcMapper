@@ -31,8 +31,6 @@ import static org.junit.Assert.assertNull;
 @RunWith(Parameterized.class)
 public class QueryMapperTest {
 
-	private static Connection conn;
-
 	public static final Person fieldPerson1 = new FieldPerson(1, new Date(0), "First", "Person");
 	public static final Boss fieldBoss1 = new FieldBoss(2, new Date(0), "Second", "Person", "Finance", "Second");
 	public static final Boss fieldBoss2 = new FieldBoss(3, new Date(0), "Third", "Person", "Finance", null);
@@ -67,36 +65,30 @@ public class QueryMapperTest {
 	public static final Boss reverseSetBoss2 = new ReverseSetBoss(fieldBoss2);
 	public static final Boss reverseSetBoss3 = new ReverseSetBoss(fieldBoss3);
 
-
+	public static final Collection<String> jdbcUrls;
 
 	static {
-		// load db once
-		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
-			Connection conn = null;
-			QueryMapper qm = null;
-			try {
-				conn = getConnection();
-				qm = new QueryMapper(conn);
-				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
-				qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
-				qm.executeUpdate("CREATE TABLE val (val_no NUMERIC, num_val NUMERIC, str_val VARCHAR(40))");
-				for (final Person person : people)
-					insertPerson(qm, person);
-				for (final Boss boss : bosses) {
-					qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
-					qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
-				}
-				for (final Val val : vals)
-					qm.executeUpdate("INSERT INTO val (val_no, num_val, str_val) VALUES (?, ?, ?)", val.valNo, val.numVal, val.strVal);
-
-			} finally {
-				tryClose(qm);
-				tryClose(conn);
-			}
-		} catch (Throwable e) {
-			throw new RuntimeException(e);
+		final Collection<String> jUrls = new ArrayList<String>();
+		final String jdbcUrl = System.getProperty("jdbcUrl", "all");
+		if(jdbcUrl.equals("all")) {
+			jUrls.add("jdbc:hsqldb:mem:testDB");
+			jUrls.add("jdbc:derby:memory:testDB;create=true");
+			jUrls.add("jdbc:h2:mem:testDB");
+		} else if(jdbcUrl.equals("hsql") || jdbcUrl.equals("hsqldb")) {
+			jUrls.add("jdbc:hsqldb:mem:testDB");
+		} else if(jdbcUrl.equals("derby")) {
+			jUrls.add("jdbc:derby:memory:testDB;create=true");
+		} else if(jdbcUrl.equals("h2")) {
+			jUrls.add("jdbc:h2:mem:testDB");
+		} else {
+			jUrls.add(jdbcUrl);
 		}
+		for(final String extraJdbcUrlProp : new String[]{"postgresqlJdbcUrl", "mariadbJdbcUrl", "mysqlJdbcUrl"}) {
+			final String extrajdbcUrl = System.getProperty(extraJdbcUrlProp);
+			if(extrajdbcUrl != null)
+				jUrls.add(extrajdbcUrl);
+		}
+		jdbcUrls = Collections.unmodifiableCollection(jUrls);
 	}
 
 	public static void insertPerson(final QueryMapper qm, final Person person) throws SQLException {
@@ -104,30 +96,54 @@ public class QueryMapperTest {
 	}
 
 	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:derby:memory:derbyDB;create=true");
+		return getConnection(jdbcUrls.iterator().next());
 	}
 
-	@BeforeClass
-	public static void setUp() throws Throwable {
-		conn = getConnection();
+	public static Connection getConnection(final String url) throws SQLException {
+		// don't need Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance(); anymore?
+		final Connection conn = DriverManager.getConnection(url);
+		QueryMapper qm = null;
+		try {
+			qm = new QueryMapper(conn);
+			try {
+				if (fieldPerson1.getPersonNo() == qm.toObject("SELECT person_no FROM person WHERE person_no = ?", Long.class, fieldPerson1.getPersonNo()))
+					return conn;
+			} catch(Exception e) {
+				// ignore, means the database hasn't been set up yet
+			}
+			qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
+			qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
+			qm.executeUpdate("CREATE TABLE val (val_no NUMERIC, num_val NUMERIC, str_val VARCHAR(40))");
+			for (final Person person : people)
+				insertPerson(qm, person);
+			for (final Boss boss : bosses) {
+				qm.executeUpdate("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)", boss.getPersonNo(), boss.getBirthDate(), boss.getLastName(), boss.getFirstName() == null ? boss.getFirst_name() : boss.getFirstName());
+				qm.executeUpdate("INSERT INTO boss (person_no, department) VALUES (?, ?)", boss.getPersonNo(), boss.getDepartment());
+			}
+			for (final Val val : vals)
+				qm.executeUpdate("INSERT INTO val (val_no, num_val, str_val) VALUES (?, ?, ?)", val.valNo, val.numVal, val.strVal);
+
+		} finally {
+			tryClose(qm);
+		}
+		return conn;
 	}
 
-	@AfterClass
-	public static void tearDown() throws Throwable {
-		tryClose(conn);
-	}
-
+	protected Connection conn;
 	protected QmDao qm;
-    protected final int qmDaoType;
+	protected final String jdbcUrl;
+	protected final int qmDaoType;
 	protected final ResultSetMapper rsm;
 
-	public QueryMapperTest(final int qmDaoType, final ResultSetMapper rsm) {
+	public QueryMapperTest(final String jdbcUrl, final int qmDaoType, final ResultSetMapper rsm) {
+		this.jdbcUrl = jdbcUrl;
         this.qmDaoType = qmDaoType;
 		this.rsm = rsm;
 	}
 
 	@Before
-	public void open() {
+	public void open() throws SQLException {
+		this.conn = getConnection(jdbcUrl);
 	    switch (qmDaoType) {
             case 0:
                 this.qm = new QueryMapperQmDao(conn, rsm);
@@ -145,24 +161,28 @@ public class QueryMapperTest {
 	@After
 	public void close() {
 		tryClose(qm);
+		tryClose(conn);
 	}
 
 	@Parameterized.Parameters(name="{0}")
 	public static Collection<Object[]> getParameters()
 	{
-		return Arrays.asList(new Object[][] {
-				{ 0, new ResultSetMapper() },
-				{ 0, new CachingResultSetMapper() },
-				{ 0, new CaseInsensitiveMapResultSetMapper() },
-				{ 0, new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
+		final Collection<Object[]> params = new ArrayList<Object[]>();
+		for(final String jdbcUrl : jdbcUrls)
+			params.addAll(Arrays.asList(new Object[][] {
+					{ jdbcUrl, 0, new ResultSetMapper() },
+					{ jdbcUrl, 0, new CachingResultSetMapper() },
+					{ jdbcUrl, 0, new CaseInsensitiveMapResultSetMapper() },
+					{ jdbcUrl, 0, new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
 
-                { 1, new ResultSetMapper() },
-                { 1, new CachingResultSetMapper() },
-                { 1, new CaseInsensitiveMapResultSetMapper() },
-                { 1, new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
+					{ jdbcUrl, 1, new ResultSetMapper() },
+					{ jdbcUrl, 1, new CachingResultSetMapper() },
+					{ jdbcUrl, 1, new CaseInsensitiveMapResultSetMapper() },
+					{ jdbcUrl, 1, new CompilingResultSetMapper(new CompilingRowToObjectMapper.Cache(true)) },
 
-				{ 2, null /* means QmDao.class is used */ },
-		});
+					{ jdbcUrl, 2, null /* means QmDao.class is used */ },
+			}));
+		return params;
 	}
 
 	// fields

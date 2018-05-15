@@ -79,8 +79,37 @@
             <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
-                <version>10.10.2.0</version>
+                <version>${derby.version}</version>
                 <scope>test</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>2.4.0</version>
+                <scope>test</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+                <scope>test</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+                <scope>test</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb.version}</version>
+                <scope>test</scope>
+                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -188,6 +217,10 @@
                 <source.classifier>jdk16-sources</source.classifier>
                 <maven.javadoc.skip>true</maven.javadoc.skip>
                 <jar.classifier>jdk16</jar.classifier>
+                <derby.version>10.12.1.1</derby.version>
+                <h2.version>1.4.191</h2.version>
+                <postgresql.version>42.2.2.jre6</postgresql.version>
+                <mariadb.version>1.7.3</mariadb.version>
             </properties>
             <modules>
                 <module>common</module>
@@ -291,7 +324,12 @@
             <activation>
                 <jdk>[1.8,)</jdk>
             </activation>
-
+            <properties>
+                <derby.version>10.14.2.0</derby.version>
+                <h2.version>1.4.197</h2.version>
+                <postgresql.version>42.2.2</postgresql.version>
+                <mariadb.version>2.2.4</mariadb.version>
+            </properties>
             <modules>
                 <module>common</module>
                 <module>runtime-compiler</module>
