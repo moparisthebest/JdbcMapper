@@ -83,12 +83,23 @@ public class QueryMapperTest {
 		} else {
 			jUrls.add(jdbcUrl);
 		}
-		for(final String extraJdbcUrlProp : new String[]{"postgresqlJdbcUrl", "mariadbJdbcUrl", "mysqlJdbcUrl"}) {
-			final String extrajdbcUrl = System.getProperty(extraJdbcUrlProp);
+		for(int x = 1; ; ++x) {
+			final String extrajdbcUrl = System.getProperty("jdbcUrl" + x);
 			if(extrajdbcUrl != null)
 				jUrls.add(extrajdbcUrl);
+			else
+				break;
 		}
 		jdbcUrls = Collections.unmodifiableCollection(jUrls);
+		/*IFJAVA6_START
+		// this seems to only be needed for java <8
+		for(final String driverClass : new String[]{"org.hsqldb.jdbc.JDBCDriver", "org.h2.Driver"})
+			try {
+				Class.forName(driverClass);
+			} catch(Exception e) {
+				// ignore, any real errors will be caught during test running
+			}
+		IFJAVA6_END*/
 	}
 
 	public static void insertPerson(final QueryMapper qm, final Person person) throws SQLException {
@@ -100,7 +111,6 @@ public class QueryMapperTest {
 	}
 
 	public static Connection getConnection(final String url) throws SQLException {
-		// don't need Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance(); anymore?
 		final Connection conn = DriverManager.getConnection(url);
 		QueryMapper qm = null;
 		try {
