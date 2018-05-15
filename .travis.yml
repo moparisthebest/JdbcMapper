@@ -46,3 +46,7 @@ after_success:
   - if [ "${JDK}" == 'OpenJDK 8' ] || [ "${JDK}" == 'OpenJDK 6' ]; then
       mvn deploy --settings .travis-settings.xml -DskipTests=true -B || travis_terminate 1;
     fi
+
+cache:
+  directories:
+    - $HOME/.m2
