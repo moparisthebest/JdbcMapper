@@ -1,5 +1,6 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.ListQueryMapper;
 import com.moparisthebest.jdbc.ResultSetMapper;
 import com.moparisthebest.jdbc.TypeReference;
 import com.moparisthebest.jdbc.dto.*;
@@ -330,4 +331,9 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 	}
 
 	//IFJAVA8_END
+
+	@Override
+	public List<FieldPerson> getFieldPeople(final List<Long> personNos) throws SQLException {
+		return lqm.toType("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.inList("person_no", personNos));
+	}
 }

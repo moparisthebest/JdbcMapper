@@ -1,15 +1,13 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.jdbc.QueryMapper;
-import com.moparisthebest.jdbc.ResultSetMapper;
+import com.moparisthebest.jdbc.*;
 import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.CaseInsensitiveHashMap;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //IFJAVA8_START
 import java.util.stream.Stream;
@@ -55,10 +53,48 @@ public class QueryMapperQmDao implements QmDao {
 	public static final String selectNumVal = "SELECT num_val FROM val WHERE val_no = ?";
 	public static final String selectStrVal = "SELECT str_val FROM val WHERE val_no = ?";
 
+	private static final Collection<Class<?>> noArrayInListSupport;
+
+	static {
+		Collection<Class<?>> no = new ArrayList<Class<?>>();
+		for(final String connectionClassName : new String[]{
+				"org.hsqldb.jdbc.JDBCConnection", "org.apache.derby.impl.jdbc.EmbedConnection"
+				// h2 doesn't support this with java6 either...
+				/*IFJAVA6_START
+				, "org.h2.jdbc.JdbcConnection"
+				IFJAVA6_END*/
+		})
+			try {
+				no.add(Class.forName(connectionClassName));
+			} catch(Exception e) {
+				// ignore
+			}
+		noArrayInListSupport = Collections.unmodifiableCollection(no);
+	}
+
+	public static boolean supportsArrayInList(final Connection conn) {
+		for(final Class<?> connectionClass : noArrayInListSupport) {
+			try {
+				if(conn.isWrapperFor(connectionClass))
+					return false;
+			} catch (SQLException e) {
+				// ignore... how could this happen?
+			}
+		}
+		// assume Connections DO support this unless we KNOW otherwise
+		return true;
+	}
+
+	public static InList getBestInList(final Connection conn) {
+		return supportsArrayInList(conn) ? ArrayInList.instance() : BindInList.instance();
+	}
+
 	protected final QueryMapper qm;
+	protected final ListQueryMapper lqm;
 
 	public QueryMapperQmDao(final Connection conn, final ResultSetMapper rsm) {
 		this.qm = new QueryMapper(conn, rsm);
+		this.lqm = new ListQueryMapper(qm, getBestInList(qm.getConnection()));
 	}
 
 	@Override
@@ -70,8 +106,13 @@ public class QueryMapperQmDao implements QmDao {
 		return qm;
 	}
 
+	public ListQueryMapper getLqm() {
+		return lqm;
+	}
+
 	@Override
 	public void close() {
+		tryClose(lqm);
 		tryClose(qm);
 	}
 
@@ -378,4 +419,9 @@ public class QueryMapperQmDao implements QmDao {
 	}
 
 	//IFJAVA8_END
+
+	@Override
+	public List<FieldPerson> getFieldPeople(final List<Long> personNos) throws SQLException {
+		return lqm.toList("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.inList("person_no", personNos));
+	}
 }

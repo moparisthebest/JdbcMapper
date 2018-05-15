@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
+import static com.moparisthebest.jdbc.codegen.QueryMapperQmDao.supportsArrayInList;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -493,13 +494,10 @@ public class QueryMapperTest {
 
 	@Test
 	public void testListQueryMapperList() throws SQLException {
-		if(!(qm instanceof QueryMapperQmDao))
-			return; // todo: port this when JdbcMapper supports in-lists on generic SQL backends
-		final ListQueryMapper lqm = new ListQueryMapper(((QueryMapperQmDao)qm).getQm());
-		final List<FieldPerson> fromDb = lqm.toList("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no",
-				FieldPerson.class, lqm.inList("person_no", Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo())));
+		if(!(qm instanceof QueryMapperQmDao) && !supportsArrayInList(conn))
+			return;
+		final List<FieldPerson> fromDb = qm.getFieldPeople(Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()));
 		assertArrayEquals(people, fromDb.toArray());
-		lqm.close();
 	}
 
 	@Test
