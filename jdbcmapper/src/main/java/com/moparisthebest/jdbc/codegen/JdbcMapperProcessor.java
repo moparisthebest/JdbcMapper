@@ -1,9 +1,6 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.jdbc.ArrayInList;
-import com.moparisthebest.jdbc.Cleaner;
-import com.moparisthebest.jdbc.MapperException;
-import com.moparisthebest.jdbc.OracleArrayInList;
+import com.moparisthebest.jdbc.*;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -193,6 +190,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								break;
 							case STANDARD:
 								arrayInList = new ArrayInList(arrayNumberTypeName, arrayStringTypeName);
+								break;
+							case UNNEST:
+								arrayInList = new UnNestArrayInList(arrayNumberTypeName, arrayStringTypeName);
 								break;
 							default:
 								// no support
@@ -402,6 +402,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 												replacement = not ?
 														"(" + inColumnName + " != ANY(?))" :
 														"(" + inColumnName + " = ANY(?))";
+												break;
+											case UNNEST:
+												replacement = not ?
+														"(" + inColumnName + " NOT IN(UNNEST(?)))" :
+														"(" + inColumnName + " IN(UNNEST(?)))";
 												break;
 											default:
 												processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", bindParam);
@@ -749,6 +754,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
 				break;
 			case STANDARD:
+			case UNNEST:
 				w.write("conn.createArrayOf(\"");
 				break;
 			default:

@@ -54,12 +54,13 @@ public class QueryMapperQmDao implements QmDao {
 	public static final String selectStrVal = "SELECT str_val FROM val WHERE val_no = ?";
 
 	private static final Collection<Class<?>> noArrayInListSupport;
+	private static final Class<?> hsqlConnection;
 
 	static {
 		Collection<Class<?>> no = new ArrayList<Class<?>>();
 		for(final String connectionClassName : new String[]{
 				"org.apache.derby.impl.jdbc.EmbedConnection"
-				, "org.hsqldb.jdbc.JDBCConnection"
+				, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
 				, "org.sqlite.jdbc3.JDBC3Connection"
 				, "org.mariadb.jdbc.MariaDbConnection"
 				// h2 doesn't support this with java6 either...
@@ -73,6 +74,13 @@ public class QueryMapperQmDao implements QmDao {
 				// ignore
 			}
 		noArrayInListSupport = Collections.unmodifiableCollection(no);
+		Class<?> hsql = null;
+		try {
+			hsql = Class.forName("org.hsqldb.jdbc.JDBCConnection");
+		} catch(Exception e) {
+			// ignore
+		}
+		hsqlConnection = hsql;
 	}
 
 	public static boolean supportsArrayInList(final Connection conn) {
@@ -89,7 +97,17 @@ public class QueryMapperQmDao implements QmDao {
 	}
 
 	public static InList getBestInList(final Connection conn) {
-		return supportsArrayInList(conn) ? ArrayInList.instance() : BindInList.instance();
+		if(supportsArrayInList(conn))
+			return ArrayInList.instance();
+		if(hsqlConnection != null)
+			try {
+				if(conn.isWrapperFor(hsqlConnection))
+					return UnNestArrayInList.instance();
+			} catch (SQLException e) {
+				// ignore
+			}
+		// works for everything
+		return BindInList.instance();
 	}
 
 	protected final QueryMapper qm;
