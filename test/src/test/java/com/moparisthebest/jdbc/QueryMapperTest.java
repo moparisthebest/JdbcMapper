@@ -32,14 +32,15 @@ import static org.junit.Assert.assertNull;
 @RunWith(Parameterized.class)
 public class QueryMapperTest {
 
-	public static final Person fieldPerson1 = new FieldPerson(1, new Date(0), "First", "Person");
-	public static final Boss fieldBoss1 = new FieldBoss(2, new Date(0), "Second", "Person", "Finance", "Second");
-	public static final Boss fieldBoss2 = new FieldBoss(3, new Date(0), "Third", "Person", "Finance", null);
-	public static final Boss fieldBoss3 = new FieldBoss(4, new Date(0), null, "Person", "Finance", "Fourth");
-	public static final Person fieldPerson2 = new FieldPerson(5, new Date(0), "Second", "Person");
-	public static final Person fieldPerson3 = new FieldPerson(6, new Date(0), "Third", "Person");
+	private static final long birthDateMillis = 1000; // this used to be 0 but mysql TIMESTAMP can only represent '1970-01-01 00:00:01' not '1970-01-01 00:00:00', nice! o_O
+	public static final Person fieldPerson1 = new FieldPerson(1, new Date(birthDateMillis), "First", "Person");
+	public static final Boss fieldBoss1 = new FieldBoss(2, new Date(birthDateMillis), "Second", "Person", "Finance", "Second");
+	public static final Boss fieldBoss2 = new FieldBoss(3, new Date(birthDateMillis), "Third", "Person", "Finance", null);
+	public static final Boss fieldBoss3 = new FieldBoss(4, new Date(birthDateMillis), null, "Person", "Finance", "Fourth");
+	public static final Person fieldPerson2 = new FieldPerson(5, new Date(birthDateMillis), "Second", "Person");
+	public static final Person fieldPerson3 = new FieldPerson(6, new Date(birthDateMillis), "Third", "Person");
 
-	public static final Person fieldPerson1NullName = new FieldPerson(1, new Date(0), null, null);
+	public static final Person fieldPerson1NullName = new FieldPerson(1, new Date(birthDateMillis), null, null);
 
 	public static final Person[] people = new Person[]{fieldPerson1, fieldPerson2, fieldPerson3};
 	public static final Boss[] bosses = new Boss[]{fieldBoss1, fieldBoss2, fieldBoss3};

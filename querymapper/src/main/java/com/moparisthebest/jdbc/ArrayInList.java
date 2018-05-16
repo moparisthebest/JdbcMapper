@@ -24,7 +24,7 @@ public class ArrayInList implements InList {
 	}
 
 	public ArrayInList() {
-		this("number", "text");
+		this("numeric", "text");
 	}
 
 	protected String columnAppend(final String columnName) {
