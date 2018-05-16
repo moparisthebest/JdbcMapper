@@ -75,12 +75,15 @@ public class QueryMapperTest {
 			jUrls.add("jdbc:hsqldb:mem:testDB");
 			jUrls.add("jdbc:derby:memory:testDB;create=true");
 			jUrls.add("jdbc:h2:mem:testDB");
+			jUrls.add("jdbc:sqlite::memory:");
 		} else if(jdbcUrl.equals("hsql") || jdbcUrl.equals("hsqldb")) {
 			jUrls.add("jdbc:hsqldb:mem:testDB");
 		} else if(jdbcUrl.equals("derby")) {
 			jUrls.add("jdbc:derby:memory:testDB;create=true");
 		} else if(jdbcUrl.equals("h2")) {
 			jUrls.add("jdbc:h2:mem:testDB");
+		} else if(jdbcUrl.equals("sqlite")) {
+			jUrls.add("jdbc:sqlite::memory:");
 		} else {
 			jUrls.add(jdbcUrl);
 		}

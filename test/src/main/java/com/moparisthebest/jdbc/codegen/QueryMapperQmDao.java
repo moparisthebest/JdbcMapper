@@ -58,7 +58,7 @@ public class QueryMapperQmDao implements QmDao {
 	static {
 		Collection<Class<?>> no = new ArrayList<Class<?>>();
 		for(final String connectionClassName : new String[]{
-				"org.hsqldb.jdbc.JDBCConnection", "org.apache.derby.impl.jdbc.EmbedConnection"
+				"org.hsqldb.jdbc.JDBCConnection", "org.apache.derby.impl.jdbc.EmbedConnection", "org.sqlite.jdbc3.JDBC3Connection"
 				// h2 doesn't support this with java6 either...
 				/*IFJAVA6_START
 				, "org.h2.jdbc.JdbcConnection"
