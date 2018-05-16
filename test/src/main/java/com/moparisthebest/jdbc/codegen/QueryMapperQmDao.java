@@ -63,6 +63,7 @@ public class QueryMapperQmDao implements QmDao {
 				, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
 				, "org.sqlite.jdbc3.JDBC3Connection"
 				, "org.mariadb.jdbc.MariaDbConnection"
+				, "com.microsoft.sqlserver.jdbc.SQLServerConnection"
 				// h2 doesn't support this with java6 either...
 				/*IFJAVA6_START
 				, "org.h2.jdbc.JdbcConnection"

@@ -115,6 +115,14 @@ public class QueryMapperTest {
 		return getConnection(jdbcUrls.iterator().next());
 	}
 
+	public static boolean isWrapperFor(final Connection conn, final String className) {
+		try {
+			return conn.isWrapperFor(Class.forName(className));
+		} catch(Exception e) {
+			return false;
+		}
+	}
+
 	public static Connection getConnection(final String url) throws SQLException {
 		final Connection conn = DriverManager.getConnection(url);
 		QueryMapper qm = null;
@@ -126,7 +134,13 @@ public class QueryMapperTest {
 			} catch(Exception e) {
 				// ignore, means the database hasn't been set up yet
 			}
-			qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
+			if(isWrapperFor(conn, "org.apache.derby.impl.jdbc.EmbedConnection")) {
+				// derby doesn't support DATETIME
+				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
+			} else {
+				// mssql doesn't support inserting into TIMESTAMP
+				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date DATETIME)");
+			}
 			qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
 			qm.executeUpdate("CREATE TABLE val (val_no NUMERIC, num_val NUMERIC, str_val VARCHAR(40))");
 			for (final Person person : people)

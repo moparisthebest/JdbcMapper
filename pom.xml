@@ -118,6 +118,13 @@
                 <scope>test</scope>
                 <optional>true</optional>
             </dependency>
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>mssql-jdbc</artifactId>
+                <version>${mssql.version}</version>
+                <scope>test</scope>
+                <optional>true</optional>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
@@ -229,6 +236,7 @@
                 <h2.version>1.4.191</h2.version>
                 <postgresql.version>42.2.2.jre6</postgresql.version>
                 <mariadb.version>1.7.3</mariadb.version>
+                <mssql.version>6.4.0.jre7</mssql.version>
             </properties>
             <modules>
                 <module>common</module>
@@ -338,6 +346,7 @@
                 <h2.version>1.4.197</h2.version>
                 <postgresql.version>42.2.2</postgresql.version>
                 <mariadb.version>2.2.4</mariadb.version>
+                <mssql.version>6.4.0.jre8</mssql.version>
             </properties>
             <modules>
                 <module>common</module>
