@@ -8,6 +8,7 @@ env:
     - ORACLE_FILE=oracle11g/xe/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
     - ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
     - ORACLE_SID=XE
+    - ORACLE_DOWNLOAD_DIR=$HOME/.traviscache
 
 services:
   - postgresql
@@ -59,19 +60,23 @@ matrix:
 
 before_install:
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
-#  - wget 'https://github.com/cbandy/travis-oracle/archive/v2.0.3.tar.gz'
-#  - mkdir -p .travis/oracle
-#  - tar x -C .travis/oracle --strip-components=1 -f v2.0.3.tar.gz
-#  - .travis/oracle/download.sh
-#  - .travis/oracle/install.sh
+  - wget 'https://github.com/cbandy/travis-oracle/archive/v2.0.3.tar.gz'
+  - mkdir -p $HOME/.traviscache
+  - mkdir -p .travis/oracle
+  - tar x -C .travis/oracle --strip-components=1 -f v2.0.3.tar.gz
+  - if [[ ! -f $HOME/.traviscache/oracle-xe-11.2.0-1.0.x86_64.rpm.zip ]]; then
+      .travis/oracle/download.sh;
+    fi
+  - .travis/oracle/install.sh
 
 install:
   - if [[ "${JDK}" == 'OpenJDK 6' ]]; then
       export CUSTOM_MVN_VERION="3.2.5";
       echo "Download Maven ${CUSTOM_MVN_VERION}....";
-      wget https://archive.apache.org/dist/maven/maven-3/${CUSTOM_MVN_VERION}/binaries/apache-maven-${CUSTOM_MVN_VERION}-bin.zip || travis_terminate 1;
-      unzip -qq apache-maven-${CUSTOM_MVN_VERION}-bin.zip || travis_terminate 1;
-      export M2_HOME=$PWD/apache-maven-${CUSTOM_MVN_VERION};
+      export M2_HOME=$HOME/.traviscache/apache-maven-${CUSTOM_MVN_VERION};
+      [ -d $M2_HOME ] || wget https://archive.apache.org/dist/maven/maven-3/${CUSTOM_MVN_VERION}/binaries/apache-maven-${CUSTOM_MVN_VERION}-bin.zip;
+      [ -d $M2_HOME ] || unzip -qq apache-maven-${CUSTOM_MVN_VERION}-bin.zip;
+      [ -d $M2_HOME ] || mv apache-maven-${CUSTOM_MVN_VERION} $M2_HOME;
       export PATH=$M2_HOME/bin:$PATH;
       mvn -version;
     fi
@@ -84,3 +89,4 @@ after_success:
 cache:
   directories:
     - $HOME/.m2
+    - $HOME/.traviscache
