@@ -134,12 +134,12 @@ public class QueryMapperTest {
 			} catch(Exception e) {
 				// ignore, means the database hasn't been set up yet
 			}
-			if(isWrapperFor(conn, "org.apache.derby.impl.jdbc.EmbedConnection")) {
-				// derby doesn't support DATETIME
-				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
-			} else {
+			if(isWrapperFor(conn, "com.microsoft.sqlserver.jdbc.SQLServerConnection")) {
 				// mssql doesn't support inserting into TIMESTAMP
 				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date DATETIME)");
+			} else {
+				// derby doesn't support DATETIME
+				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date TIMESTAMP)");
 			}
 			qm.executeUpdate("CREATE TABLE boss (person_no NUMERIC, department VARCHAR(40))");
 			qm.executeUpdate("CREATE TABLE val (val_no NUMERIC, num_val NUMERIC, str_val VARCHAR(40))");
