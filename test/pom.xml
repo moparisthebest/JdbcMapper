@@ -66,14 +66,23 @@
             <scope>test</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>jdk7</id>
+            <activation>
+                <jdk>[1.7,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.microsoft.sqlserver</groupId>
+                    <artifactId>mssql-jdbc</artifactId>
+                    <version>${mssql.version}</version>
+                    <scope>test</scope>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
+        </profile>
         <profile>
             <id>jdk16</id>
             <activation>

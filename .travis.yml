@@ -2,6 +2,13 @@ language: java
 sudo: required
 dist: trusty
 
+env:
+  global:
+    - ORACLE_COOKIE=sqldev
+    - ORACLE_FILE=oracle11g/xe/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+    - ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+    - ORACLE_SID=XE
+
 services:
   - postgresql
   - docker
@@ -12,8 +19,10 @@ addons:
 before_script:
   - psql -c 'create database test_db;' -U postgres || travis_terminate 1;
   - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test_db;' || travis_terminate 1;
-  - docker pull microsoft/mssql-server-linux:2017-latest
-  - docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<YourStrong!Passw0rd>' -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest
+  - if [[ "${JDK}" != 'OpenJDK 6' ]]; then
+      docker pull microsoft/mssql-server-linux:2017-latest;
+      docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<YourStrong!Passw0rd>' -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest;
+    fi
       
 script:
   - docker ps -a
@@ -26,6 +35,8 @@ matrix:
         apt:
           packages:
             - openjdk-6-jdk
+      script:
+        - mvn test -B '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root'
       jdk: openjdk6
     - env: JDK='OpenJDK 7'
       jdk: openjdk7
@@ -48,10 +59,15 @@ matrix:
 
 before_install:
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
+#  - wget 'https://github.com/cbandy/travis-oracle/archive/v2.0.3.tar.gz'
+#  - mkdir -p .travis/oracle
+#  - tar x -C .travis/oracle --strip-components=1 -f v2.0.3.tar.gz
+#  - .travis/oracle/download.sh
+#  - .travis/oracle/install.sh
 
 install:
   - if [[ "${JDK}" == 'OpenJDK 6' ]]; then
-      export CUSTOM_MVN_VERION="3.2.5"
+      export CUSTOM_MVN_VERION="3.2.5";
       echo "Download Maven ${CUSTOM_MVN_VERION}....";
       wget https://archive.apache.org/dist/maven/maven-3/${CUSTOM_MVN_VERION}/binaries/apache-maven-${CUSTOM_MVN_VERION}-bin.zip || travis_terminate 1;
       unzip -qq apache-maven-${CUSTOM_MVN_VERION}-bin.zip || travis_terminate 1;
