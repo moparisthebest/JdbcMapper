@@ -29,7 +29,7 @@ script:
   - docker ps -a
   - mvn -B -pl '!test' clean install || travis_terminate 1;
   - mvn -B -pl test clean test '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
-  - mvn -B -pl test clean test -P oracle '-DjdbcUrl=derby' || travis_terminate 1; # todo: change jdbcUrl to actual oracle datasource
+  - mvn -B -pl test clean test --settings .travis-settings.xml -P oracle '-DjdbcUrl=derby' || travis_terminate 1; # todo: change jdbcUrl to actual oracle datasource
   - mvn -B -pl test clean test -P unnest '-DjdbcUrl=hsqldb' || travis_terminate 1;
 
 matrix:
