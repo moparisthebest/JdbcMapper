@@ -20,7 +20,7 @@ import java.time.*;
  */
 @JdbcMapper.Mapper(
 		jndiName = "bob",
-//		databaseType = JdbcMapper.DatabaseType.ORACLE
+		databaseType = JdbcMapper.DatabaseType.STANDARD, // PrestoPersonDao breaks with ORACLE or UNNEST
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 		, sqlParser = PrestoSQLParser.class
 		, allowReflection = JdbcMapper.OptionalBool.TRUE

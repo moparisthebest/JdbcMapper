@@ -126,7 +126,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		enumType = types.getDeclaredType(elements.getTypeElement(Enum.class.getCanonicalName()), types.getWildcardType(null, null));
 
 		final String databaseType = processingEnv.getOptions().get("jdbcMapper.databaseType");
-		defaultDatabaseType = databaseType == null ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
+		defaultDatabaseType = databaseType == null || databaseType.isEmpty() ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
 		defaultArrayNumberTypeName = processingEnv.getOptions().get("jdbcMapper.arrayNumberTypeName");
 		if (defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
 			defaultArrayNumberTypeName = defaultDatabaseType.arrayNumberTypeName;
