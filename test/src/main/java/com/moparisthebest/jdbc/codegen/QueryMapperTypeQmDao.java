@@ -15,9 +15,9 @@ import java.util.Map;
 //IFJAVA8_START
 import java.util.stream.Stream;
 import java.time.*;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.ListQueryMapper.inListReplace;
-//IFJAVA8_END
 
 public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 
