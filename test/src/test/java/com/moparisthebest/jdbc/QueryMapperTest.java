@@ -76,7 +76,7 @@ public class QueryMapperTest {
 		final Collection<String> jUrls = new ArrayList<String>();
 		final String jdbcUrl = System.getProperty("jdbcUrl", "all");
 		if(jdbcUrl.equals("all")) {
-			jUrls.add("jdbc:hsqldb:mem:testDB");
+			//jUrls.add("jdbc:hsqldb:mem:testDB"); // remove this from all since it supports custom InList, until generic inlist supported in JdbcMapper
 			jUrls.add("jdbc:derby:memory:testDB;create=true");
 			jUrls.add("jdbc:h2:mem:testDB");
 			jUrls.add("jdbc:sqlite::memory:");
@@ -521,9 +521,13 @@ public class QueryMapperTest {
 		assertArrayEquals(people, fromDb.toArray());
 	}
 
+	private static boolean supportsInList(final QmDao qm) {
+		return qm instanceof QueryMapperQmDao || supportsArrayInList(qm.getConnection());
+	}
+
 	@Test
 	public void testListQueryMapperList() throws SQLException {
-		if(!(qm instanceof QueryMapperQmDao) && !supportsArrayInList(conn))
+		if(!supportsInList(qm))
 			return;
 		final List<FieldPerson> fromDb = qm.getFieldPeople(Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()));
 		assertArrayEquals(people, fromDb.toArray());

@@ -60,11 +60,11 @@ public class QueryMapperQmDao implements QmDao {
 		Collection<Class<?>> no = new ArrayList<Class<?>>();
 		for(final String connectionClassName : new String[]{
 				"org.apache.derby.impl.jdbc.EmbedConnection"
-				, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
+				//, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
 				, "org.sqlite.jdbc3.JDBC3Connection"
 				, "org.mariadb.jdbc.MariaDbConnection"
 				, "com.microsoft.sqlserver.jdbc.SQLServerConnection"
-				, "oracle.jdbc.driver.PhysicalConnection" // does not support ArrayInList but *does* support OracleArrayInList
+				//, "oracle.jdbc.OracleConnection" // does not support ArrayInList but *does* support OracleArrayInList
 				// h2 doesn't support this with java6 either...
 				/*IFJAVA6_START
 				, "org.h2.jdbc.JdbcConnection"
@@ -77,7 +77,7 @@ public class QueryMapperQmDao implements QmDao {
 			}
 		noArrayInListSupport = Collections.unmodifiableCollection(no);
 		hsqlConnection = classForName("org.hsqldb.jdbc.JDBCConnection");
-		oracleConnection = classForName("oracle.jdbc.driver.PhysicalConnection");
+		oracleConnection = classForName("oracle.jdbc.OracleConnection");
         mssqlConnection = classForName("com.microsoft.sqlserver.jdbc.SQLServerConnection");
 	}
 
@@ -113,12 +113,12 @@ public class QueryMapperQmDao implements QmDao {
 	}
 
 	public static InList getBestInList(final Connection conn) {
+		if(isWrapperFor(conn, oracleConnection))
+			return OracleArrayInList.instance();
+		if(isWrapperFor(conn, hsqlConnection))
+			return UnNestArrayInList.instance();
 		if(supportsArrayInList(conn))
 			return ArrayInList.instance();
-        if(isWrapperFor(conn, hsqlConnection))
-            return UnNestArrayInList.instance();
-        if(isWrapperFor(conn, oracleConnection))
-            return OracleArrayInList.instance();
 		// works for everything
 		return BindInList.instance();
 	}
