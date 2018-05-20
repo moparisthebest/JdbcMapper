@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.JdbcMapper;
+
 /**
  * HSQLDB requires array in lists to be implemented this way:
  * https://stackoverflow.com/questions/35939489/createarrayof-string-in-hsqldb-jdbc-returns-abstractmethoderror/35964424#35964424
@@ -17,7 +19,7 @@ public class UnNestArrayInList extends ArrayInList {
 	}
 
 	public UnNestArrayInList() {
-		super();
+		this(JdbcMapper.DatabaseType.UNNEST.arrayNumberTypeName, JdbcMapper.DatabaseType.UNNEST.arrayStringTypeName);
 	}
 
 	protected String columnAppend(final String columnName) {

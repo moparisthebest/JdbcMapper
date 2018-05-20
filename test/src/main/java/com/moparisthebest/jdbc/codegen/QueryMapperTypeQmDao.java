@@ -15,6 +15,8 @@ import java.util.Map;
 //IFJAVA8_START
 import java.util.stream.Stream;
 import java.time.*;
+
+import static com.moparisthebest.jdbc.ListQueryMapper.inListReplace;
 //IFJAVA8_END
 
 public class QueryMapperTypeQmDao extends QueryMapperQmDao {
@@ -335,5 +337,15 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 	@Override
 	public List<FieldPerson> getFieldPeople(final List<Long> personNos) throws SQLException {
 		return lqm.toType("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.inList("person_no", personNos));
+	}
+
+	@Override
+	public List<FieldPerson> getFieldPeopleByName(final List<Long> personNos, final List<String> names) throws SQLException {
+		return lqm.toType("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
+				new TypeReference<List<FieldPerson>>() {},
+				lqm.inList("person_no", personNos),
+				lqm.inList("first_name", names),
+				lqm.inList("last_name", names)
+		);
 	}
 }

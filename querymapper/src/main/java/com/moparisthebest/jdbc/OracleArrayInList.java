@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.JdbcMapper;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Array;
@@ -39,7 +41,7 @@ public class OracleArrayInList extends ArrayInList {
 	}
 
 	public OracleArrayInList() {
-		this("ARRAY_NUM_TYPE", "ARRAY_STR_TYPE");
+		this(JdbcMapper.DatabaseType.ORACLE.arrayNumberTypeName, JdbcMapper.DatabaseType.ORACLE.arrayStringTypeName);
 	}
 
 	protected String columnAppend(final String columnName) {

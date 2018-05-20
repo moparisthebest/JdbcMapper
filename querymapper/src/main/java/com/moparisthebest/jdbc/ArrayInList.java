@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.JdbcMapper;
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,7 +26,7 @@ public class ArrayInList implements InList {
 	}
 
 	public ArrayInList() {
-		this("numeric", "text");
+		this(JdbcMapper.DatabaseType.STANDARD.arrayNumberTypeName, JdbcMapper.DatabaseType.STANDARD.arrayStringTypeName);
 	}
 
 	protected String columnAppend(final String columnName) {

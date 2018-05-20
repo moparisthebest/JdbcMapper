@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import java.time.*;
 //IFJAVA8_END
 
+import static com.moparisthebest.jdbc.ListQueryMapper.inListReplace;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
 public class QueryMapperQmDao implements QmDao {
@@ -456,6 +457,16 @@ public class QueryMapperQmDao implements QmDao {
 
 	@Override
 	public List<FieldPerson> getFieldPeople(final List<Long> personNos) throws SQLException {
-		return lqm.toList("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.inList("person_no", personNos));
+		return lqm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.inList("person_no", personNos));
+	}
+
+	@Override
+	public List<FieldPerson> getFieldPeopleByName(final List<Long> personNos, final List<String> names) throws SQLException {
+		return lqm.toList("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
+				FieldPerson.class,
+				lqm.inList("person_no", personNos),
+				lqm.inList("first_name", names),
+				lqm.inList("last_name", names)
+				);
 	}
 }

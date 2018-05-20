@@ -534,6 +534,16 @@ public class QueryMapperTest {
 	}
 
 	@Test
+	public void testListQueryMapperListMultiple() throws SQLException {
+		if(!supportsInList(qm))
+			return;
+		final List<FieldPerson> fromDb = qm.getFieldPeopleByName(
+				Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()),
+				Arrays.asList(people[0].getFirstName(), people[1].getFirstName(), people[2].getFirstName()));
+		assertArrayEquals(people, fromDb.toArray());
+	}
+
+	@Test
 	public void testResultSetIterable() throws SQLException {
 		final ResultSetIterable<FieldPerson> rsi = qm.getThreePeopleResultSetIterable(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
 		final List<FieldPerson> fromDb = new ArrayList<FieldPerson>();
