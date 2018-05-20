@@ -9,6 +9,7 @@ env:
     - ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
     - ORACLE_SID=XE
     - ORACLE_DOWNLOAD_DIR=$HOME/.traviscache
+    - DATABASE_NAME=XE
 
 services:
   - postgresql
@@ -24,12 +25,15 @@ before_script:
       docker pull microsoft/mssql-server-linux:2017-latest;
       docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=<YourStrong!Passw0rd>' -p 1433:1433 -d microsoft/mssql-server-linux:2017-latest;
     fi
+  - echo "CREATE USER travis_test IDENTIFIED BY travis_test;" | "$ORACLE_HOME/bin/sqlplus" -L -S / AS SYSDBA || travis_terminate 1;
+  - echo "grant CREATE SESSION, ALTER SESSION, CREATE DATABASE LINK, CREATE MATERIALIZED VIEW, CREATE PROCEDURE, CREATE PUBLIC SYNONYM, CREATE ROLE, CREATE SEQUENCE, CREATE SYNONYM, CREATE TABLE, CREATE TRIGGER, CREATE TYPE, CREATE VIEW, UNLIMITED TABLESPACE to travis_test;" | "$ORACLE_HOME/bin/sqlplus" -L -S / AS SYSDBA || travis_terminate 1;
+
       
 script:
   - docker ps -a
   - mvn -B -pl '!test' clean install || travis_terminate 1;
   - mvn -B -pl test clean test '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
-  - mvn -B -pl test clean test --settings .travis-settings.xml -P oracle '-DjdbcUrl=derby' || travis_terminate 1; # todo: change jdbcUrl to actual oracle datasource
+  - mvn -B -pl test clean test --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
   - mvn -B -pl test clean test -P unnest '-DjdbcUrl=hsqldb' || travis_terminate 1;
 
 matrix:
@@ -42,7 +46,7 @@ matrix:
       script:
         - mvn -B -pl '!test' clean install || travis_terminate 1;
         - mvn -B -pl test clean test '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' || travis_terminate 1;
-        - mvn -B -pl test clean test --settings .travis-settings.xml -P oracle '-DjdbcUrl=derby' || travis_terminate 1; # todo: change jdbcUrl to actual oracle datasource
+        - mvn -B -pl test clean test --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn -B -pl test clean test -P unnest '-DjdbcUrl=hsqldb' || travis_terminate 1;
       jdk: openjdk6
     - env: JDK='OpenJDK 7'

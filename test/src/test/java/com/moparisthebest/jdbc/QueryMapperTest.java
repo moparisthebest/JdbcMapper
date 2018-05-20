@@ -1,5 +1,6 @@
 package com.moparisthebest.jdbc;
 
+import com.mchange.v2.c3p0.DataSources;
 import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.codegen.QmDao;
 import com.moparisthebest.jdbc.codegen.QueryMapperQmDao;
@@ -10,6 +11,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,7 +23,7 @@ import java.util.stream.Stream;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
-import static com.moparisthebest.jdbc.codegen.QueryMapperQmDao.supportsArrayInList;
+import static com.moparisthebest.jdbc.codegen.QueryMapperQmDao.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -68,6 +70,7 @@ public class QueryMapperTest {
 	public static final Boss reverseSetBoss3 = new ReverseSetBoss(fieldBoss3);
 
 	public static final Collection<String> jdbcUrls;
+	public static final Map<String, DataSource> dataSources = new HashMap<String, DataSource>();
 
 	static {
 		final Collection<String> jUrls = new ArrayList<String>();
@@ -105,6 +108,16 @@ public class QueryMapperTest {
 				// ignore, any real errors will be caught during test running
 			}
 		IFJAVA6_END*/
+		for(final String jUrl : jdbcUrls) {
+		    // oracle randomly fails without using a datasource...
+            // https://dba.stackexchange.com/questions/110819/oracle-intermittently-throws-ora-12516-tnslistener-could-not-find-available-h
+		    if(jUrl.startsWith("jdbc:oracle"))
+                try {
+                    dataSources.put(jUrl, DataSources.pooledDataSource(DataSources.unpooledDataSource(jUrl)));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+		}
 	}
 
 	public static void insertPerson(final QueryMapper qm, final Person person) throws SQLException {
@@ -115,16 +128,9 @@ public class QueryMapperTest {
 		return getConnection(jdbcUrls.iterator().next());
 	}
 
-	public static boolean isWrapperFor(final Connection conn, final String className) {
-		try {
-			return conn.isWrapperFor(Class.forName(className));
-		} catch(Exception e) {
-			return false;
-		}
-	}
-
 	public static Connection getConnection(final String url) throws SQLException {
-		final Connection conn = DriverManager.getConnection(url);
+        final DataSource ds = dataSources.get(url);
+		final Connection conn = ds != null ? ds.getConnection() : DriverManager.getConnection(url);
 		QueryMapper qm = null;
 		try {
 			qm = new QueryMapper(conn);
@@ -134,7 +140,12 @@ public class QueryMapperTest {
 			} catch(Exception e) {
 				// ignore, means the database hasn't been set up yet
 			}
-			if(isWrapperFor(conn, "com.microsoft.sqlserver.jdbc.SQLServerConnection")) {
+			if(isWrapperFor(conn, oracleConnection)) {
+			    // OracleArrayInList support requires types created
+                qm.executeUpdate("create or replace TYPE \"ARRAY_NUM_TYPE\" is table of number");
+                qm.executeUpdate("create or replace TYPE \"ARRAY_STR_TYPE\" is table of varchar2(32767)");
+            }
+			if(isWrapperFor(conn, mssqlConnection)) {
 				// mssql doesn't support inserting into TIMESTAMP
 				qm.executeUpdate("CREATE TABLE person (person_no NUMERIC, first_name VARCHAR(40), last_name VARCHAR(40), birth_date DATETIME)");
 			} else {
