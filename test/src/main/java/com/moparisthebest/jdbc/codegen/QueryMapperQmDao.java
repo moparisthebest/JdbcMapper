@@ -61,11 +61,11 @@ public class QueryMapperQmDao implements QmDao {
 	static {
 		Collection<Class<?>> no = new ArrayList<Class<?>>();
 		for(final String connectionClassName : new String[]{
-				"org.apache.derby.impl.jdbc.EmbedConnection"
+				"org.apache.derby.iapi.jdbc.EngineConnection"
 				//, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
 				, "org.sqlite.jdbc3.JDBC3Connection"
 				, "org.mariadb.jdbc.MariaDbConnection"
-				, "com.microsoft.sqlserver.jdbc.SQLServerConnection"
+				, "com.microsoft.sqlserver.jdbc.ISQLServerConnection"
 				//, "oracle.jdbc.OracleConnection" // does not support ArrayInList but *does* support OracleArrayInList
 				// h2 doesn't support this with java6 either...
 				/*IFJAVA6_START
