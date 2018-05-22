@@ -129,7 +129,7 @@ public interface JdbcMapper extends Closeable {
 	public enum DatabaseType {
 		DEFAULT(null, null),
 		BIND(null, null),
-		STANDARD("numeric", "text"),
+		ANY("NUMERIC", "TEXT"),
 		UNNEST("NUMERIC", "VARCHAR"),
 		ORACLE("ARRAY_NUM_TYPE", "ARRAY_STR_TYPE"),
 		;

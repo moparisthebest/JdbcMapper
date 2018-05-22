@@ -71,7 +71,7 @@ public class SimpleSQLChecker implements SQLChecker {
 				if (sqlStatement.trim().substring(0, 5).toUpperCase().equals("MERGE"))
 					return sqlStatement;
 				return "EXPLAIN PLAN FOR " + sqlStatement;
-			case STANDARD:
+			case ANY:
 				return "EXPLAIN " + sqlStatement;
 		}
 		return sqlStatement;

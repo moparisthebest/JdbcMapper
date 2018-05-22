@@ -4,7 +4,6 @@ import com.moparisthebest.jdbc.Cleaner;
 import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
-import java.io.Closeable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -20,7 +19,7 @@ import java.time.*;
  */
 @JdbcMapper.Mapper(
 		jndiName = "bob",
-		databaseType = JdbcMapper.DatabaseType.STANDARD, // PrestoPersonDao breaks with ORACLE or UNNEST
+		databaseType = JdbcMapper.DatabaseType.ANY, // PrestoPersonDao breaks with ORACLE or UNNEST
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 		, sqlParser = PrestoSQLParser.class
 		, allowReflection = JdbcMapper.OptionalBool.TRUE

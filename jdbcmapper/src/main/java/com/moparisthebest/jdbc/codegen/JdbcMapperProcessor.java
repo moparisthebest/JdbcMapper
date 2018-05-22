@@ -126,7 +126,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		enumType = types.getDeclaredType(elements.getTypeElement(Enum.class.getCanonicalName()), types.getWildcardType(null, null));
 
 		final String databaseType = processingEnv.getOptions().get("jdbcMapper.databaseType");
-		defaultDatabaseType = databaseType == null || databaseType.isEmpty() ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType.toUpperCase());
+		defaultDatabaseType = databaseType == null || databaseType.isEmpty() ? JdbcMapper.DatabaseType.ANY : JdbcMapper.DatabaseType.valueOf(databaseType.toUpperCase());
 		defaultArrayNumberTypeName = processingEnv.getOptions().get("jdbcMapper.arrayNumberTypeName");
 		if (defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
 			defaultArrayNumberTypeName = defaultDatabaseType.arrayNumberTypeName;
@@ -188,7 +188,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							case ORACLE:
 								arrayInList = new OracleArrayInList(arrayNumberTypeName, arrayStringTypeName);
 								break;
-							case STANDARD:
+							case ANY:
 								arrayInList = new ArrayInList(arrayNumberTypeName, arrayStringTypeName);
 								break;
 							case UNNEST:
@@ -411,7 +411,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 														"(" + inColumnName + " NOT IN(select column_value from table(?)))" :
 														"(" + inColumnName + " IN(select column_value from table(?)))";
 												break;
-											case STANDARD:
+											case ANY:
 												replacement = not ?
 														"(" + inColumnName + " != ANY(?))" :
 														"(" + inColumnName + " = ANY(?))";
@@ -790,7 +790,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					 */
 				//w.write("(Array) createArray.invoke(conn.unwrap(oracleConnection), \"");
 				break;
-			case STANDARD:
+			case ANY:
 			case UNNEST:
 				w.write("conn.createArrayOf(\"");
 				break;

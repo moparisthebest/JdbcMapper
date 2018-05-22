@@ -26,7 +26,7 @@ public class ArrayInList implements InList {
 	}
 
 	public ArrayInList() {
-		this(JdbcMapper.DatabaseType.STANDARD.arrayNumberTypeName, JdbcMapper.DatabaseType.STANDARD.arrayStringTypeName);
+		this(JdbcMapper.DatabaseType.ANY.arrayNumberTypeName, JdbcMapper.DatabaseType.ANY.arrayStringTypeName);
 	}
 
 	protected String columnAppend(final String columnName) {
