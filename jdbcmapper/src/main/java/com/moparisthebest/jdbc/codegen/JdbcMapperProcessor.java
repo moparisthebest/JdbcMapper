@@ -393,6 +393,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 											inListBindParam = new SpecialVariableElement(bindParam,
                                                     databaseType == JdbcMapper.DatabaseType.BIND ? SpecialVariableElement.SpecialType.BIND_IN_LIST : SpecialVariableElement.SpecialType.IN_LIST,
                                                     ++inListBindParamsIdx);
+											//IFJAVA8_START
 											if(databaseType == JdbcMapper.DatabaseType.BIND) {
 												final TypeMirror o = bindParam.asType();
 												if(o.getKind() == TypeKind.DECLARED && types.isAssignable(o, streamType)) {
@@ -400,6 +401,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 													inListBindParam.setName("_" + inListBindParam.getSimpleName() + "StreamAsBindArray");
 												}
 											}
+											//IFJAVA8_END
 											inListBindParams.put(paramName, inListBindParam);
 										}
 										bindParams.add(inListBindParam);
