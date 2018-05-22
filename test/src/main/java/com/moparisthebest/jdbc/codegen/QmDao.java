@@ -245,6 +245,9 @@ public interface QmDao extends JdbcMapper {
 	@SQL(selectStrVal)
 	ZoneOffset getZoneOffsetString(long valNo) throws SQLException;
 
+	@SQL("SELECT person_no, first_name, last_name, birth_date from person WHERE {person_no IN personNos} ORDER BY person_no")
+	List<FieldPerson> getFieldPeopleStream(Stream<Long> personNos) throws SQLException;
+
 	//IFJAVA8_END
 
 	@SQL("SELECT person_no, first_name, last_name, birth_date from person WHERE {person_no IN personNos} ORDER BY person_no")

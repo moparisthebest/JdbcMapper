@@ -126,7 +126,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		enumType = types.getDeclaredType(elements.getTypeElement(Enum.class.getCanonicalName()), types.getWildcardType(null, null));
 
 		final String databaseType = processingEnv.getOptions().get("jdbcMapper.databaseType");
-		defaultDatabaseType = databaseType == null || databaseType.isEmpty() ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType);
+		defaultDatabaseType = databaseType == null || databaseType.isEmpty() ? JdbcMapper.DatabaseType.STANDARD : JdbcMapper.DatabaseType.valueOf(databaseType.toUpperCase());
 		defaultArrayNumberTypeName = processingEnv.getOptions().get("jdbcMapper.arrayNumberTypeName");
 		if (defaultArrayNumberTypeName == null || defaultArrayNumberTypeName.isEmpty())
 			defaultArrayNumberTypeName = defaultDatabaseType.arrayNumberTypeName;
@@ -194,9 +194,13 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							case UNNEST:
 								arrayInList = new UnNestArrayInList(arrayNumberTypeName, arrayStringTypeName);
 								break;
+							case BIND:
+								//arrayInList = BindInList.instance();
+								arrayInList = null; // todo: do something here
+								break;
 							default:
-								// no support
-								arrayInList = null;
+								processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Mapper.databaseType unsupported", element);
+								continue;
 						}
 					} else {
 						arrayInList = null;
@@ -386,7 +390,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob", bindParam);
 										SpecialVariableElement inListBindParam = inListBindParams.get(paramName);
 										if(inListBindParam == null) {
-											inListBindParam = new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.IN_LIST, ++inListBindParamsIdx);
+											inListBindParam = new SpecialVariableElement(bindParam,
+                                                    databaseType == JdbcMapper.DatabaseType.BIND ? SpecialVariableElement.SpecialType.BIND_IN_LIST : SpecialVariableElement.SpecialType.IN_LIST,
+                                                    ++inListBindParamsIdx);
+											if(databaseType == JdbcMapper.DatabaseType.BIND) {
+												final TypeMirror o = bindParam.asType();
+												if(o.getKind() == TypeKind.DECLARED && types.isAssignable(o, streamType)) {
+													// todo: this allows them to name underscore names and create collisions, I'm ok with it
+													inListBindParam.setName("_" + inListBindParam.getSimpleName() + "StreamAsBindArray");
+												}
+											}
 											inListBindParams.put(paramName, inListBindParam);
 										}
 										bindParams.add(inListBindParam);
@@ -407,6 +420,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 												replacement = not ?
 														"(" + inColumnName + " NOT IN(UNNEST(?)))" :
 														"(" + inColumnName + " IN(UNNEST(?)))";
+												break;
+											case BIND:
+												replacement = "REPLACEMEWITHUNQUOTEDQUOTEPLZ + com.moparisthebest.jdbc.util.InListUtil.to" +
+														(not ? "Not" : "") + "InList(REPLACEMEWITHUNQUOTEDQUOTEPLZ"
+														+ inColumnName + "REPLACEMEWITHUNQUOTEDQUOTEPLZ, " + inListBindParam.getName() + ") + REPLACEMEWITHUNQUOTEDQUOTEPLZ";
 												break;
 											default:
 												processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "default DatabaseType? should never happen!!", bindParam);
@@ -441,13 +459,14 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										processingEnv.getMessager().printMessage(warnOnUnusedParams != null ? Diagnostic.Kind.MANDATORY_WARNING : Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL method has unused parameter '%s'", unusedParam.getKey()), unusedParam.getValue());
 								}
 							}
+							final boolean notBindInList = !inListBindParams.isEmpty() && databaseType != JdbcMapper.DatabaseType.BIND;
 
 							final SQLParser parsedSQl = ManualSQLParser.getSQLParser(sql, parser, sqlStatement);
 							// now implementation
 							w.write("\t\tPreparedStatement ps = null;\n");
 							if (parsedSQl.isSelect())
 								w.write("\t\tResultSet rs = null;\n");
-							if(!inListBindParams.isEmpty())
+							if(notBindInList)
 								w.append("\t\tfinal Array[] _bindArrays = new Array[").append(Integer.toString(inListBindParams.size())).append("];\n");
 							w.write("\t\ttry {\n");
 							for (final SpecialVariableElement param : inListBindParams.values())
@@ -463,13 +482,21 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								w.write("conn.prepareStatement(");
 							}
 							w.write('"');
-							w.write(sqlStatement.replace("\"", "\\\"").replace("\n", "\\n\" +\n\t\t\t                                      \""));
+							w.write(sqlStatement.replace("\"", "\\\"")
+									.replace("\n", "\\n\" +\n\t\t\t                                      \"")
+									.replace("REPLACEMEWITHUNQUOTEDQUOTEPLZ", "\""));
 							w.write("\");\n");
 
 							// now bind parameters
-							int count = 0;
-							for (final VariableElement param : bindParams)
-								setObject(w, ++count, param);
+							if(!inListBindParams.isEmpty() && databaseType == JdbcMapper.DatabaseType.BIND) {
+								w.write("\t\t\tint psParamCount = 0;\n");
+								for (final VariableElement param : bindParams)
+									setObject(w, "++psParamCount", param);
+							} else {
+								int count = 0;
+								for (final VariableElement param : bindParams)
+									setObject(w, Integer.toString(++count), param);
+							}
 
 							boolean closeRs = true;
 							if (!parsedSQl.isSelect()) {
@@ -503,7 +530,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								if (!sqlExceptionThrown)
 									w.write("\t\t} catch(SQLException e) {\n\t\t\tthrow new RuntimeException(e);\n");
 								w.write("\t\t} finally {\n");
-								if(!inListBindParams.isEmpty())
+								if(notBindInList)
 									w.append("\t\t\tfor(final Array _bindArray : _bindArrays)\n\t\t\t\ttryClose(_bindArray);\n");
 								if (parsedSQl.isSelect())
 									w.write("\t\t\ttryClose(rs);\n");
@@ -520,7 +547,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									w.write("\t\t\tif(e instanceof SQLException)\n\t\t\t\tthrow (SQLException)e;\n");
 								w.write("\t\t\tif(e instanceof RuntimeException)\n\t\t\t\tthrow (RuntimeException)e;\n");
 								w.write("\t\t\tthrow new RuntimeException(e);\n");
-								if(!inListBindParams.isEmpty()) {
+								if(notBindInList) {
 									w.write("\t\t} finally {\n");
 									w.append("\t\t\tfor(final Array _bindArray : _bindArrays)\n\t\t\t\ttryClose(_bindArray);\n");
 								}
@@ -690,7 +717,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	}
 
 	private void setArray(final Writer w, final JdbcMapper.DatabaseType databaseType, final String arrayNumberTypeName, final String arrayStringTypeName, final SpecialVariableElement specialParam) throws IOException {
-		final String variableName = specialParam.getSimpleName().toString();
+		final String variableName = specialParam.getName();
 		final TypeMirror o = specialParam.asType();
 
 		final InListArgType inListArgType;
@@ -726,6 +753,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			return;
 		}
 		IFJAVA6_END*/
+		if(databaseType == JdbcMapper.DatabaseType.BIND) {
+            specialParam.setComponentTypeString(componentType.toString());
+			// only need to do something special for streams here...
+			if(inListArgType == InListArgType.STREAM) {
+				// todo: is array or collection better here, doesn't matter to us...
+				w.append("\t\t\tfinal ").append(specialParam.getComponentTypeString()).append("[] ").append(specialParam.getName()).append(" = ");
+				w.append(specialParam.getSimpleName()).append(".toArray(").append(specialParam.getComponentTypeString()).append("[]::new);\n");
+			}
+			return; // we don't want any of the following
+		}
 		w.append("\t\t\t_bindArrays[").append(Integer.toString(specialParam.index)).append("] = ");
 		final String type = types.isAssignable(componentType, numberType) ? arrayNumberTypeName : arrayStringTypeName;
 		switch (databaseType) {
@@ -774,7 +811,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		w.write(");\n");
 	}
 
-	private void setObject(final Writer w, final int index, final VariableElement param) throws IOException {
+	private void setObject(final Writer w, final String index, final VariableElement param) throws IOException {
 		String variableName = param.getSimpleName().toString();
 		final TypeMirror o = param.asType();
 		w.write("\t\t\t");
@@ -784,16 +821,21 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		if (param instanceof SpecialVariableElement) {
 			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
 			switch (specialParam.specialType) {
+                case BIND_IN_LIST: {
+                    w.append("for(final ").append(specialParam.getComponentTypeString()).append(" _bindInListParam : ").append(specialParam.getName()).append(")\n");
+                    w.append("\t\t\t\tps.setObject(").append(index).append(", _bindInListParam);\n");
+                    return;
+                }
 				case IN_LIST: {
 					w.write("ps.setArray(");
-					w.write(Integer.toString(index));
+					w.write(index);
 					w.append(", _bindArrays[").append(Integer.toString(specialParam.index)).append("]);\n");
 					return;
 				}
 				case BLOB: {
 					if (types.isAssignable(o, stringType)) {
 						w.write("try {\n\t\t\t\tps.setBlob(");
-						w.write(Integer.toString(index));
+						w.write(index);
 						w.write(", ");
 						w.write(variableName);
 						w.write(" == null ? null : new java.io.ByteArrayInputStream(");
@@ -884,7 +926,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		w.write("ps.set");
 		w.write(method);
 		w.write('(');
-		w.write(Integer.toString(index));
+		w.write(index);
 		w.write(", ");
 		w.write(variableName);
 		w.write(");\n");

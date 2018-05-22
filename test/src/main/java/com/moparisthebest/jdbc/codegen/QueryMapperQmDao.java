@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 //IFJAVA8_START
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.time.*;
 //IFJAVA8_END
@@ -451,6 +452,11 @@ public class QueryMapperQmDao implements QmDao {
 	@Override
 	public ZoneOffset getZoneOffsetString(long valNo) throws SQLException {
 		return qm.toObject(selectStrVal, ZoneOffset.class, valNo);
+	}
+
+	@Override
+	public List<FieldPerson> getFieldPeopleStream(final Stream<Long> personNos) throws SQLException {
+		return lqm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.inList("person_no", personNos.collect(Collectors.toList())));
 	}
 
 	//IFJAVA8_END

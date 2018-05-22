@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 //IFJAVA8_START
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.time.*;
 //IFJAVA8_END
@@ -330,6 +331,11 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 	@Override
 	public ZoneOffset getZoneOffsetString(long valNo) throws SQLException {
 		return qm.toType(selectStrVal, new TypeReference<ZoneOffset>() {}, valNo);
+	}
+
+	@Override
+	public List<FieldPerson> getFieldPeopleStream(final Stream<Long> personNos) throws SQLException {
+		return lqm.toType("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.inList("person_no", personNos.collect(Collectors.toList())));
 	}
 
 	//IFJAVA8_END

@@ -12,6 +12,7 @@ import java.util.Set;
 class SpecialVariableElement implements VariableElement {
 
 	enum SpecialType {
+		BIND_IN_LIST,
 		IN_LIST,
 		CLOB,
 		BLOB,
@@ -21,6 +22,8 @@ class SpecialVariableElement implements VariableElement {
 	final SpecialType specialType;
 	final String blobStringCharset;
 	final int index;
+
+	String name, componentTypeString;
 
 	SpecialVariableElement(final VariableElement delegate, final SpecialType specialType) {
 		this(delegate, specialType, null, 0);
@@ -39,6 +42,23 @@ class SpecialVariableElement implements VariableElement {
 		this.specialType = specialType;
 		this.blobStringCharset = blobStringCharset;
 		this.index = index;
+		this.name = getSimpleName().toString();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getComponentTypeString() {
+		return componentTypeString;
+	}
+
+	public void setComponentTypeString(String componentTypeString) {
+		this.componentTypeString = componentTypeString;
 	}
 
 	@Override

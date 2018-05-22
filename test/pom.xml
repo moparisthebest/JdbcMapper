@@ -194,5 +194,21 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>bind</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <compilerArgs>
+                                <compilerArg>-AjdbcMapper.databaseType=BIND</compilerArg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>

@@ -75,16 +75,16 @@ public class QueryMapperTest {
 	static {
 		final Collection<String> jUrls = new ArrayList<String>();
 		final String jdbcUrl = System.getProperty("jdbcUrl", "all");
-		if(jdbcUrl.equals("all")) {
-			//jUrls.add("jdbc:hsqldb:mem:testDB"); // remove this from all since it supports custom InList, until generic inlist supported in JdbcMapper
+		if(jdbcUrl.equals("all") || jdbcUrl.equals("bind")) {
+			jUrls.add("jdbc:hsqldb:mem:testDB");
 			jUrls.add("jdbc:derby:memory:testDB;create=true");
 			jUrls.add("jdbc:h2:mem:testDB");
 			jUrls.add("jdbc:sqlite::memory:");
-		} else if(jdbcUrl.equals("hsql") || jdbcUrl.equals("hsqldb")) {
+		} else if(jdbcUrl.equals("hsql") || jdbcUrl.equals("hsqldb") || jdbcUrl.equals("unnest")) {
 			jUrls.add("jdbc:hsqldb:mem:testDB");
 		} else if(jdbcUrl.equals("derby")) {
 			jUrls.add("jdbc:derby:memory:testDB;create=true");
-		} else if(jdbcUrl.equals("h2")) {
+		} else if(jdbcUrl.equals("h2") || jdbcUrl.equals("any")) {
 			jUrls.add("jdbc:h2:mem:testDB");
 		} else if(jdbcUrl.equals("sqlite")) {
 			jUrls.add("jdbc:sqlite::memory:");
@@ -521,28 +521,6 @@ public class QueryMapperTest {
 		assertArrayEquals(people, fromDb.toArray());
 	}
 
-	private static boolean supportsInList(final QmDao qm) {
-		return qm instanceof QueryMapperQmDao || supportsArrayInList(qm.getConnection());
-	}
-
-	@Test
-	public void testListQueryMapperList() throws SQLException {
-		if(!supportsInList(qm))
-			return;
-		final List<FieldPerson> fromDb = qm.getFieldPeople(Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()));
-		assertArrayEquals(people, fromDb.toArray());
-	}
-
-	@Test
-	public void testListQueryMapperListMultiple() throws SQLException {
-		if(!supportsInList(qm))
-			return;
-		final List<FieldPerson> fromDb = qm.getFieldPeopleByName(
-				Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()),
-				Arrays.asList(people[0].getFirstName(), people[1].getFirstName(), people[2].getFirstName()));
-		assertArrayEquals(people, fromDb.toArray());
-	}
-
 	@Test
 	public void testResultSetIterable() throws SQLException {
 		final ResultSetIterable<FieldPerson> rsi = qm.getThreePeopleResultSetIterable(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo());
@@ -683,5 +661,25 @@ public class QueryMapperTest {
 		);
 	}
 
+    @Test
+    public void testListQueryMapperStream() throws SQLException {
+        final List<FieldPerson> fromDb = qm.getFieldPeopleStream(Stream.of(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()));
+        assertArrayEquals(people, fromDb.toArray());
+    }
+
 	//IFJAVA8_END
+
+    @Test
+    public void testListQueryMapperList() throws SQLException {
+        final List<FieldPerson> fromDb = qm.getFieldPeople(Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()));
+        assertArrayEquals(people, fromDb.toArray());
+    }
+
+    @Test
+    public void testListQueryMapperListMultiple() throws SQLException {
+        final List<FieldPerson> fromDb = qm.getFieldPeopleByName(
+                Arrays.asList(people[0].getPersonNo(), people[1].getPersonNo(), people[2].getPersonNo()),
+                Arrays.asList(people[0].getFirstName(), people[1].getFirstName(), people[2].getFirstName()));
+        assertArrayEquals(people, fromDb.toArray());
+    }
 }

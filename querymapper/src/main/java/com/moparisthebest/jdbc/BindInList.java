@@ -3,14 +3,13 @@ package com.moparisthebest.jdbc;
 import java.sql.Connection;
 import java.util.*;
 
+import static com.moparisthebest.jdbc.util.InListUtil.defaultMaxSize;
 import static com.moparisthebest.jdbc.util.InListUtil.toInList;
 
 /**
  * Created by mopar on 4/29/15.
  */
 public class BindInList implements InList {
-
-	private static final int defaultMaxSize = Integer.parseInt(System.getProperty("QueryMapper.BindInList.defaultMaxSize", "999"));
 
 	private static final InList instance = new BindInList();
 

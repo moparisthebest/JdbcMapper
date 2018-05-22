@@ -1,10 +1,13 @@
 package com.moparisthebest.jdbc.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public class InListUtil {
+
+    public static final int defaultMaxSize = Integer.parseInt(System.getProperty("QueryMapper.BindInList.defaultMaxSize", "999"));
 
     private static <T> List<List<T>> split(final List<T> list, final int maxLength) {
         final int listSize = list.size();
@@ -49,11 +52,35 @@ public class InListUtil {
         return sb.append(")").toString();
     }
 
-    public static <T> String toInList(final String fieldName, final Collection<T> items, final int maxSize) {
+    private static <T> String toInListNonEmpty(final String fieldName, final Collection<T> items, final int maxSize) {
         return toInList(fieldName, items, maxSize, " IN (", " OR ");
     }
 
-    public static <T> String toNotInList(final String fieldName, final Collection<T> items, final int maxSize) {
+    private static <T> String toNotInListNonEmpty(final String fieldName, final Collection<T> items, final int maxSize) {
         return toInList(fieldName, items, maxSize, " NOT IN (", " AND ");
+    }
+
+    public static <T> String toInList(final String fieldName, final Collection<T> items, final int maxSize) {
+        return items == null || items.isEmpty() ? "(0=1)" : toInListNonEmpty(fieldName, items, maxSize);
+    }
+
+    public static <T> String toNotInList(final String fieldName, final Collection<T> items, final int maxSize) {
+        return items == null || items.isEmpty() ? "(1=1)" : toNotInListNonEmpty(fieldName, items, maxSize);
+    }
+
+    public static <T> String toInList(final String fieldName, final Collection<T> items) {
+        return toInList(fieldName, items, defaultMaxSize);
+    }
+
+    public static <T> String toNotInList(final String fieldName, final Collection<T> items) {
+        return toInList(fieldName, items, defaultMaxSize);
+    }
+
+    public static <T> String toInList(final String fieldName, final T[] items) {
+        return toInList(fieldName, Arrays.asList(items), defaultMaxSize);
+    }
+
+    public static <T> String toNotInList(final String fieldName, final T[] items) {
+        return toInList(fieldName, Arrays.asList(items), defaultMaxSize);
     }
 }
