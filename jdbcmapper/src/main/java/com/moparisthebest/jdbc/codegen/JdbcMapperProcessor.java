@@ -462,6 +462,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								}
 							}
 							final boolean notBindInList = !inListBindParams.isEmpty() && databaseType != JdbcMapper.DatabaseType.BIND;
+							final boolean bindInList = !inListBindParams.isEmpty() && databaseType == JdbcMapper.DatabaseType.BIND;
 
 							final SQLParser parsedSQl = ManualSQLParser.getSQLParser(sql, parser, sqlStatement);
 							// now implementation
@@ -474,7 +475,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							for (final SpecialVariableElement param : inListBindParams.values())
 								setArray(w, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
 							w.write("\t\t\tps = ");
-							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements);
+							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements) && !bindInList;
 							if (cachePreparedStatements) {
 								w.write("this.prepareStatement(");
 								w.write(Integer.toString(cachedPreparedStatements));
@@ -490,7 +491,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write("\");\n");
 
 							// now bind parameters
-							if(!inListBindParams.isEmpty() && databaseType == JdbcMapper.DatabaseType.BIND) {
+							if(bindInList) {
 								w.write("\t\t\tint psParamCount = 0;\n");
 								for (final VariableElement param : bindParams)
 									setObject(w, "++psParamCount", param);
