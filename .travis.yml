@@ -31,6 +31,7 @@ before_script:
       
 script:
   - docker ps -a
+  # java8+ supports everything
   - mvn -B -pl '!test' clean install || travis_terminate 1;
   - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
   - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=h2' '-DjdbcUrl1=jdbc:postgresql:test_db' || travis_terminate 1;
@@ -45,6 +46,7 @@ matrix:
           packages:
             - openjdk-6-jdk
       script:
+        # java6 doesn't support ms-sql at all, and doesn't support h2 with ANY
         - mvn -B -pl '!test' clean install || travis_terminate 1;
         - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
@@ -53,6 +55,13 @@ matrix:
       jdk: openjdk6
     - env: JDK='OpenJDK 7'
       jdk: openjdk7
+      script:
+        # java7 doesn't support h2 with ANY
+        - mvn -B -pl '!test' clean install || travis_terminate 1;
+        - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
+        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
+        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+        - mvn -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
     - env: JDK='OpenJDK 8'
       jdk: openjdk8
     - env: JDK='OracleJDK 8'
