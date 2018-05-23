@@ -415,7 +415,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 												break;
 											case ANY:
 												replacement = not ?
-														"(" + inColumnName + " != ANY(?))" :
+														"(NOT(" + inColumnName + " = ANY(?)))" :
 														"(" + inColumnName + " = ANY(?))";
 												break;
 											case UNNEST:

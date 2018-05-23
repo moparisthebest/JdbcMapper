@@ -34,7 +34,7 @@ public class ArrayInList implements InList {
 	}
 
 	protected String columnAppendNotIn(final String columnName) {
-		return "(" + columnName + " != ANY(?))";
+		return "(NOT(" + columnName + " = ANY(?)))";
 	}
 
 	public Array toArray(final Connection conn, final String typeName, final Object[] elements) throws SQLException {
