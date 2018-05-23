@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.InListUtil;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -27,8 +29,8 @@ public interface InList {
 	public <T> InListObject notInList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException;
 
 	class InListObject {
-		static final InListObject inEmpty = new InListObject("(0=1)");
-		static final InListObject notInEmpty = new InListObject("(1=1)");
+		static final InListObject inEmpty = new InListObject(InListUtil.inEmpty);
+		static final InListObject notInEmpty = new InListObject(InListUtil.notInEmpty);
 
 		private final String sql;
 
