@@ -109,6 +109,10 @@ public class ListQueryMapper extends QueryMapper {
 		return this.inList.inList(delegate.conn, columnName, values);
 	}
 
+	public <T> InList.InListObject notInList(final String columnName, final Collection<T> values) throws SQLException {
+		return this.inList.notInList(delegate.conn, columnName, values);
+	}
+
 	// these update the database
 
 	@Override

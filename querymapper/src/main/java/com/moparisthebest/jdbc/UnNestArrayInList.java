@@ -22,7 +22,11 @@ public class UnNestArrayInList extends ArrayInList {
 		this(JdbcMapper.DatabaseType.UNNEST.arrayNumberTypeName, JdbcMapper.DatabaseType.UNNEST.arrayStringTypeName);
 	}
 
-	protected String columnAppend(final String columnName) {
+	protected String columnAppendIn(final String columnName) {
 		return "(" + columnName + " IN(UNNEST(?)))";
+	}
+
+	protected String columnAppendNotIn(final String columnName) {
+		return "(" + columnName + " NOT IN(UNNEST(?)))";
 	}
 }

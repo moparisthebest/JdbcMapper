@@ -238,7 +238,7 @@ public class QueryMapper implements JdbcMapper {
 		if (bindObjects != null && bindObjects.length > 0) {
 			for (Object o : bindObjects) {
 				if (o != null) {
-					if (o == InList.InListObject.empty || o == noBind) {
+					if (o == InList.InListObject.inEmpty || o == InList.InListObject.notInEmpty || o == noBind) {
 						continue; // ignore
 					} else if (o instanceof BindInList.BindInListObject) {
 						if (((BindInList.BindInListObject) o).getBindObjects() != null)

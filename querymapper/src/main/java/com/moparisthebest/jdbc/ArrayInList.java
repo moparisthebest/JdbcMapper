@@ -29,8 +29,12 @@ public class ArrayInList implements InList {
 		this(JdbcMapper.DatabaseType.ANY.arrayNumberTypeName, JdbcMapper.DatabaseType.ANY.arrayStringTypeName);
 	}
 
-	protected String columnAppend(final String columnName) {
+	protected String columnAppendIn(final String columnName) {
 		return "(" + columnName + " = ANY(?))";
+	}
+
+	protected String columnAppendNotIn(final String columnName) {
+		return "(" + columnName + " != ANY(?))";
 	}
 
 	public Array toArray(final Connection conn, final String typeName, final Object[] elements) throws SQLException {
@@ -46,8 +50,15 @@ public class ArrayInList implements InList {
 	}
 
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException {
-		return values == null || values.isEmpty() ? InListObject.empty : new ArrayListObject(
-				columnAppend(columnName),
+		return values == null || values.isEmpty() ? InListObject.inEmpty : new ArrayListObject(
+				columnAppendIn(columnName),
+				toArray(conn, values)
+		);
+	}
+
+	public <T> InListObject notInList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException {
+		return values == null || values.isEmpty() ? InListObject.notInEmpty : new ArrayListObject(
+				columnAppendNotIn(columnName),
 				toArray(conn, values)
 		);
 	}

@@ -62,11 +62,11 @@ public class QueryMapperQmDao implements QmDao {
 		Collection<Class<?>> no = new ArrayList<Class<?>>();
 		for(final String connectionClassName : new String[]{
 				"org.apache.derby.iapi.jdbc.EngineConnection"
-				//, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
+				, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
 				, "org.sqlite.jdbc3.JDBC3Connection"
 				, "org.mariadb.jdbc.MariaDbConnection"
 				, "com.microsoft.sqlserver.jdbc.ISQLServerConnection"
-				//, "oracle.jdbc.OracleConnection" // does not support ArrayInList but *does* support OracleArrayInList
+				, "oracle.jdbc.OracleConnection" // does not support ArrayInList but *does* support OracleArrayInList
 				// h2 doesn't support this with java6 either...
 				/*IFJAVA6_START
 				, "org.h2.jdbc.JdbcConnection"
@@ -474,5 +474,10 @@ public class QueryMapperQmDao implements QmDao {
 				lqm.inList("first_name", names),
 				lqm.inList("last_name", names)
 				);
+	}
+
+	@Override
+	public List<FieldPerson> getFieldPeopleNotIn(final List<Long> personNos) throws SQLException {
+		return lqm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.notInList("person_no", personNos));
 	}
 }

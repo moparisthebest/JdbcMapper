@@ -5,6 +5,7 @@ import java.util.*;
 
 import static com.moparisthebest.jdbc.util.InListUtil.defaultMaxSize;
 import static com.moparisthebest.jdbc.util.InListUtil.toInList;
+import static com.moparisthebest.jdbc.util.InListUtil.toNotInList;
 
 /**
  * Created by mopar on 4/29/15.
@@ -28,8 +29,15 @@ public class BindInList implements InList {
 	}
 
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) {
-		return values == null || values.isEmpty() ? InListObject.empty : new BindInListObject(
+		return values == null || values.isEmpty() ? InListObject.inEmpty : new BindInListObject(
 				toInList(columnName, values, this.maxSize),
+				values.toArray()
+		);
+	}
+
+	public <T> InListObject notInList(final Connection conn, final String columnName, final Collection<T> values) {
+		return values == null || values.isEmpty() ? InListObject.notInEmpty : new BindInListObject(
+				toNotInList(columnName, values, this.maxSize),
 				values.toArray()
 		);
 	}

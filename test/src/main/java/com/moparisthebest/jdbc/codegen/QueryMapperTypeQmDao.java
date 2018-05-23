@@ -354,4 +354,9 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 				lqm.inList("last_name", names)
 		);
 	}
+
+	@Override
+	public List<FieldPerson> getFieldPeopleNotIn(final List<Long> personNos) throws SQLException {
+		return lqm.toType("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.notInList("person_no", personNos));
+	}
 }

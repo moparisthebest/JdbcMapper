@@ -255,4 +255,7 @@ public interface QmDao extends JdbcMapper {
 
 	@SQL("SELECT person_no, first_name, last_name, birth_date from person WHERE {person_no IN personNos} AND ({first_name IN names} OR {last_name IN names}) ORDER BY person_no")
 	List<FieldPerson> getFieldPeopleByName(List<Long> personNos, List<String> names) throws SQLException;
+
+	@SQL("SELECT person_no, first_name, last_name, birth_date from person WHERE {person_no NOT IN personNos} ORDER BY person_no")
+	List<FieldPerson> getFieldPeopleNotIn(List<Long> personNos) throws SQLException;
 }

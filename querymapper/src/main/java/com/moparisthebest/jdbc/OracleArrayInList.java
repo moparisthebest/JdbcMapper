@@ -44,8 +44,12 @@ public class OracleArrayInList extends ArrayInList {
 		this(JdbcMapper.DatabaseType.ORACLE.arrayNumberTypeName, JdbcMapper.DatabaseType.ORACLE.arrayStringTypeName);
 	}
 
-	protected String columnAppend(final String columnName) {
+	protected String columnAppendIn(final String columnName) {
 		return "(" + columnName + " IN(select column_value from table(?)))";
+	}
+
+	protected String columnAppendNotIn(final String columnName) {
+		return "(" + columnName + " NOT IN(select column_value from table(?)))";
 	}
 
 	public Array toArray(final Connection conn, final String typeName, final Object[] elements) throws SQLException {

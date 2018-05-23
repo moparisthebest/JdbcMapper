@@ -73,7 +73,7 @@ public class InListUtil {
     }
 
     public static <T> String toNotInList(final String fieldName, final Collection<T> items) {
-        return toInList(fieldName, items, defaultMaxSize);
+        return toNotInList(fieldName, items, defaultMaxSize);
     }
 
     public static <T> String toInList(final String fieldName, final T[] items) {
@@ -81,6 +81,6 @@ public class InListUtil {
     }
 
     public static <T> String toNotInList(final String fieldName, final T[] items) {
-        return toInList(fieldName, Arrays.asList(items), defaultMaxSize);
+        return toNotInList(fieldName, Arrays.asList(items), defaultMaxSize);
     }
 }

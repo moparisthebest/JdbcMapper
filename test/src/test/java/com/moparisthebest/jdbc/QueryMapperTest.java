@@ -682,4 +682,10 @@ public class QueryMapperTest {
                 Arrays.asList(people[0].getFirstName(), people[1].getFirstName(), people[2].getFirstName()));
         assertArrayEquals(people, fromDb.toArray());
     }
+
+	@Test
+	public void testListQueryMapperListNotIn() throws SQLException {
+		final List<FieldPerson> fromDb = qm.getFieldPeopleNotIn(Arrays.asList(bosses[0].getPersonNo(), bosses[1].getPersonNo(), bosses[2].getPersonNo()));
+		assertArrayEquals(people, fromDb.toArray());
+	}
 }
