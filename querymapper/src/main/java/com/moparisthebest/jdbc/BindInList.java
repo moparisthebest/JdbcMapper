@@ -28,6 +28,11 @@ public class BindInList implements InList {
 		this(defaultMaxSize);
 	}
 
+	@Override
+	public InList instance(Connection conn) {
+		return this;
+	}
+
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) {
 		return values == null || values.isEmpty() ? InListObject.inEmpty : new BindInListObject(
 				toInList(columnName, values, this.maxSize),

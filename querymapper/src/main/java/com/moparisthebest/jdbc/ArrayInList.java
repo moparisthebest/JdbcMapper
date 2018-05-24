@@ -29,6 +29,11 @@ public class ArrayInList implements InList {
 		this(JdbcMapper.DatabaseType.ANY.arrayNumberTypeName, JdbcMapper.DatabaseType.ANY.arrayStringTypeName);
 	}
 
+	@Override
+	public InList instance(Connection conn) {
+		return this;
+	}
+
 	protected String columnAppendIn(final String columnName) {
 		return "(" + columnName + " = ANY(?))";
 	}

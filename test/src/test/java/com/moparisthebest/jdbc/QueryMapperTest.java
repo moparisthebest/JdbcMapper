@@ -22,8 +22,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 //IFJAVA8_END
 
+import static com.moparisthebest.jdbc.OptimalInList.classForName;
+import static com.moparisthebest.jdbc.OptimalInList.isWrapperFor;
+import static com.moparisthebest.jdbc.OptimalInList.oracleConnection;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
-import static com.moparisthebest.jdbc.codegen.QueryMapperQmDao.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -71,6 +73,8 @@ public class QueryMapperTest {
 
 	public static final Collection<String> jdbcUrls;
 	public static final Map<String, DataSource> dataSources = new HashMap<String, DataSource>();
+
+	public static final Class<?> mssqlConnection = classForName("com.microsoft.sqlserver.jdbc.ISQLServerConnection");
 
 	static {
 		final Collection<String> jUrls = new ArrayList<String>();

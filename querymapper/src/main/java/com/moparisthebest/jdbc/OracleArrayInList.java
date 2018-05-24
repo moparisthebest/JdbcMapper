@@ -2,12 +2,12 @@ package com.moparisthebest.jdbc;
 
 import com.moparisthebest.jdbc.codegen.JdbcMapper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collection;
+
+import static com.moparisthebest.jdbc.OptimalInList.oracleConnection;
 
 /**
  * Created by mopar on 4/29/15.
@@ -20,19 +20,16 @@ public class OracleArrayInList extends ArrayInList {
 		return instance;
 	}
 
-	private static final Class<?> oracleConnection;
 	private static final Method createArray;
 
 	static {
-		Class<?> oc;
-		Method ca;
-		try {
-			oc = Class.forName("oracle.jdbc.OracleConnection");
-			ca = oc.getDeclaredMethod("createOracleArray", String.class, Object.class);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		oracleConnection = oc;
+		Method ca = null;
+		if(oracleConnection != null)
+			try {
+				ca = oracleConnection.getDeclaredMethod("createOracleArray", String.class, Object.class);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		createArray = ca;
 	}
 

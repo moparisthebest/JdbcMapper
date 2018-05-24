@@ -13,6 +13,13 @@ import java.util.Collection;
 public interface InList {
 
 	/**
+	 * Returns an InList instance for use with this connection
+	 * @param conn connection which may be inspected to determine best InList to use
+	 * @return InList instance
+	 */
+	public InList instance(final Connection conn);
+
+	/**
 	 * Returns an Object who's .toString returns a String for a query, and QueryMapper knows how to bind to a PreparedStatement
 	 * @param columnName Column name for query
 	 * @param values values for in list

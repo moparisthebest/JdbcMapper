@@ -55,82 +55,12 @@ public class QueryMapperQmDao implements QmDao {
 	public static final String selectNumVal = "SELECT num_val FROM val WHERE val_no = ?";
 	public static final String selectStrVal = "SELECT str_val FROM val WHERE val_no = ?";
 
-	private static final Collection<Class<?>> noArrayInListSupport;
-	public static final Class<?> hsqlConnection, oracleConnection, mssqlConnection;
-
-	static {
-		Collection<Class<?>> no = new ArrayList<Class<?>>();
-		for(final String connectionClassName : new String[]{
-				"org.apache.derby.iapi.jdbc.EngineConnection"
-				, "org.hsqldb.jdbc.JDBCConnection" // does not support ArrayInList but *does* support UnNestArrayInList
-				, "org.sqlite.jdbc3.JDBC3Connection"
-				, "org.mariadb.jdbc.MariaDbConnection"
-				, "com.microsoft.sqlserver.jdbc.ISQLServerConnection"
-				, "oracle.jdbc.OracleConnection" // does not support ArrayInList but *does* support OracleArrayInList
-				// h2 doesn't support this with java6 either...
-				/*IFJAVA6_START
-				, "org.h2.jdbc.JdbcConnection"
-				IFJAVA6_END*/
-		})
-			try {
-				no.add(Class.forName(connectionClassName));
-			} catch(Exception e) {
-				// ignore
-			}
-		noArrayInListSupport = Collections.unmodifiableCollection(no);
-		hsqlConnection = classForName("org.hsqldb.jdbc.JDBCConnection");
-		oracleConnection = classForName("oracle.jdbc.OracleConnection");
-        mssqlConnection = classForName("com.microsoft.sqlserver.jdbc.SQLServerConnection");
-	}
-
-	private static Class<?> classForName(final String className) {
-		try {
-			return Class.forName(className);
-		} catch(Exception e) {
-			return null;
-		}
-	}
-
-    public static boolean isWrapperFor(final Connection conn, final Class<?> connectionClass) {
-        if(connectionClass == null)
-            return false;
-        try {
-            return conn.isWrapperFor(connectionClass);
-        } catch(Exception e) {
-            return false;
-        }
-    }
-
-	public static boolean supportsArrayInList(final Connection conn) {
-		for(final Class<?> connectionClass : noArrayInListSupport) {
-			try {
-				if(conn.isWrapperFor(connectionClass))
-					return false;
-			} catch (SQLException e) {
-				// ignore... how could this happen?
-			}
-		}
-		// assume Connections DO support this unless we KNOW otherwise
-		return true;
-	}
-
-	public static InList getBestInList(final Connection conn) {
-		if(isWrapperFor(conn, oracleConnection))
-			return OracleArrayInList.instance();
-		if(isWrapperFor(conn, hsqlConnection))
-			return UnNestArrayInList.instance();
-		if(supportsArrayInList(conn))
-			return ArrayInList.instance();
-		// works for everything
-		return BindInList.instance();
-	}
-
 	protected final QueryMapper qm;
 	protected final ListQueryMapper lqm;
 
 	public QueryMapperQmDao(final Connection conn, final ResultSetMapper rsm) {
 		this.qm = new QueryMapper(conn, rsm);
-		this.lqm = new ListQueryMapper(qm, getBestInList(qm.getConnection()));
+		this.lqm = new ListQueryMapper(qm);
 	}
 
 	@Override

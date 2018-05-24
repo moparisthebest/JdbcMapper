@@ -1,5 +1,6 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.codegen.JdbcMapper;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
 
 import java.lang.reflect.Method;
@@ -17,11 +18,38 @@ public class ListQueryMapper extends QueryMapper {
 	private static final InList defaultInList;
 
 	static {
-		InList def = null;
+		InList def;
 		try {
-			final Class<?> ensureContext = Class.forName(System.getProperty("QueryMapper.defaultInList.class", "com.moparisthebest.jdbc.BindInList"));
-			final Method method = ensureContext.getMethod(System.getProperty("QueryMapper.defaultInList.method", "instance"));
-			def = (InList) method.invoke(null);
+			final String inListClassName = System.getProperty("QueryMapper.defaultInList.class");
+			if(inListClassName != null) {
+				final Class<?> inListClass = Class.forName(inListClassName);
+				final Method method = inListClass.getMethod(System.getProperty("QueryMapper.defaultInList.method", "instance"));
+				def = (InList) method.invoke(null);
+			} else {
+				// todo: change default to OPTIMAL ?
+				final String type = System.getProperty("queryMapper.databaseType", System.getProperty("jdbcMapper.databaseType", "BIND"));
+				if(type.equals("OPTIMAL")) {
+					def = OptimalInList.instance();
+				} else {
+					switch (JdbcMapper.DatabaseType.valueOf(type)) {
+						case DEFAULT:
+						case BIND:
+							def = BindInList.instance();
+							break;
+						case ANY:
+							def = ArrayInList.instance();
+							break;
+						case ORACLE:
+							def = OracleArrayInList.instance();
+							break;
+						case UNNEST:
+							def = UnNestArrayInList.instance();
+							break;
+						default:
+							throw new RuntimeException("Invalid queryMapper.databaseType: " + type);
+					}
+				}
+			}
 		} catch (Throwable e) {
 			// NEVER ignore
 			throw new RuntimeException(e);
@@ -35,7 +63,7 @@ public class ListQueryMapper extends QueryMapper {
 	public static final String inListReplace = "{inList}";
 
 	private ListQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, InList inList) {
-		this.inList = inList;
+		this.inList = inList.instance(conn);
 		this.delegate = delegate == null ? new QueryMapper(conn, jndiName, factory, cm) :
 				(delegate instanceof ListQueryMapper ? ((ListQueryMapper)delegate).delegate : delegate);
 	}
