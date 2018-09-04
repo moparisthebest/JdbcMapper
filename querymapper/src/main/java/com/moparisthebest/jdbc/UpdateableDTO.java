@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc;
 
+import com.moparisthebest.jdbc.util.ResultSetUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +18,8 @@ public abstract class UpdateableDTO implements Finishable {
 	private String tableName;
 	private String whereClause;
 
-	public static final String YES = System.getProperty("UpdateableDTO.YES", "Y");
-	public static final String NO = System.getProperty("UpdateableDTO.NO", "N");
+	public static final String YES = ResultSetUtil.TRUE;
+	public static final String NO = ResultSetUtil.FALSE;
 
 	/**
 	 * Will always return YES or NO from this class, so they CAN be compared with object equality '==' instead of '.equals()'

@@ -12,8 +12,9 @@ import java.time.*;
  */
 public class ResultSetUtil {
 
-	public static final String YES = System.getProperty("UpdateableDTO.YES", "Y");
-	public static final String NO = System.getProperty("UpdateableDTO.NO", "N");
+	// the UpdateableDTO.YES/NO constants are for legacy reasons and should be considered deprecated
+	public static final String TRUE = System.getProperty("ResultSetUtil.TRUE", System.getProperty("UpdateableDTO.YES", "Y"));
+	public static final String FALSE = System.getProperty("ResultSetUtil.FALSE", System.getProperty("UpdateableDTO.NO", "N"));
 
 	public static Integer getObjectInt(final ResultSet rs, final int index) throws SQLException {
 		final int ret = rs.getInt(index);
@@ -56,9 +57,9 @@ public class ResultSetUtil {
 		} catch (SQLException e) {
 			// if we are here, it wasn't a boolean or null, so try to grab a string instead
 			final String bool = rs.getString(index);//.toUpperCase(); // do we want it case-insensitive?
-			final boolean ret = YES.equals(bool);
-			if (!ret && !NO.equals(bool))
-				throw new SQLException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be '%s' or '%s' and was instead '%s'.", index, YES, NO, bool));
+			final boolean ret = TRUE.equals(bool);
+			if (!ret && !FALSE.equals(bool))
+				throw new SQLException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be '%s' or '%s' and was instead '%s'.", index, TRUE, FALSE, bool));
 			return ret;
 		}
 	}
@@ -66,7 +67,7 @@ public class ResultSetUtil {
 	public static boolean getBooleanYN(final ResultSet rs, final int index) throws SQLException {
 		final Boolean ret = getObjectBooleanYN(rs, index);
 		if(ret == null)
-			throw new SQLException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be '%s' or '%s' and was instead 'null'. If you want to accept null values, make it an object Boolean instead of primitive boolean.", index, YES, NO));
+			throw new SQLException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be '%s' or '%s' and was instead 'null'. If you want to accept null values, make it an object Boolean instead of primitive boolean.", index, TRUE, FALSE));
 		return ret;
 	}
 

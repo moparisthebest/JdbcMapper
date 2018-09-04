@@ -670,7 +670,7 @@ public class RowToObjectMapper<K, T> extends AbstractRowMapper<K, T> {
 					} catch (SQLException e) {
 						// if we are here, it wasn't a boolean or null, so try to grab a string instead
 						String bool = _resultSet.getString(index);//.toUpperCase(); // do we want it case-insensitive?
-						ret = YES.equals(bool);
+						ret = YES.equals(bool); // todo: how do we handle null here? looks to be different than ResultSetUtil.java
 						if (!ret && !NO.equals(bool))
 							throw new MapperException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be 'Y' or 'N' and was instead '%s'.", index, bool));
 						//throw e;
