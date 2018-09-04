@@ -3,12 +3,14 @@ POJOs (Plain Old Java Objects) from the database in different types of collectio
 enforced throughout so neither casting nor ignoring warnings is required.
 
 There are 2 different approaches to accomplish this.  JdbcMapper generates code at compile time, QueryMapper does
-everything at runtime.
+everything at runtime.  Currently there are different packages for java6 and java8+, these are built from the same
+source with a bit of sed-like magic, when the documentation refers to classes only available in java8+ just know these
+are obviously unavailable if you use the java6 version.
 
 Why
 ---
 
-The java.sql API is horrible, ResultSet.wasNull() ?, enough said.  Hibernate is black magic that generates some truly
+The [java.sql](https://docs.oracle.com/javase/8/docs/api/java/sql/package-summary.html) API is horrible, [ResultSet.wasNull()](https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html#wasNull--) ?, enough said.  Hibernate is black magic that generates some truly
 awful SQL queries.  Everything in between insists on writing your queries and/or forcing you to fully annotate all your
 POJOs with information on how to map them from SQL, making them some combination of too verbose, too slow, or too much
 unknown magic.
@@ -25,7 +27,116 @@ Goals
 Column to Object Mapping
 ------------------------
 
-todo: explain how individual columns are mapped to simple objects
+All decisions as to which ResultSet method(s) to call are based on the Java type being mapped to, because we have no 
+knowledge of any database schema.  These mappings rarely if ever need changed, they can be overridden with QueryMapper
+but not currently at compile-time with JdbcMapper.
+
+If you are thinking 'shut up and show me the code already' refer to [ResultSetUtil.java](https://github.com/moparisthebest/JdbcMapper/blob/master/common/src/main/java/com/moparisthebest/jdbc/util/ResultSetUtil.java)
+which contains the implementations actually called.
+
+For the purposes of this mapping, consider 'rs' an instance of ResultSet, and 'index' an int index of a ResultSet column.
+
+### numeric primitives
+if the SQL value is NULL, 0 is returned for these, and no exception is thrown
+##### byte
+```java
+return rs.getByte(index);
+```
+##### short
+```java
+return rs.getShort(index);
+```
+##### int
+```java
+return rs.getInt(index);
+```
+##### long
+```java
+return rs.getLong(index);
+```
+##### float
+```java
+return rs.getFloat(index);
+```
+##### double
+```java
+return rs.getDouble(index);
+```
+### numeric objects
+these wrapper types are retrieved using the same function returning their primitives above, except null is returned
+if the SQL value is NULL instead of 0
+```java
+x ret = rs.getX(index);
+return rs.wasNull() ? null : ret;
+```
+##### java.math.BigDecimal
+```java
+return rs.getBigDecimal(index);
+```
+### boolean
+in all cases of SQL NULL being returned, if primitive boolean is requested an SQLException is thrown, if Object Boolean
+is requested then null is returned.
+
+boolean has special handling due to many popular databases not actually having a boolean type (hi Oracle!),
+forcing application level workarounds.
+
+0/1 numeric types convert to boolean using the standard ResultSet API, but many systems use char/varchar of Y/N or T/F,
+which we default to Y/N but can be set via system properties:
+
+ResultSetUtil.TRUE=Y
+ResultSetUtil.FALSE=N
+
+First the standard ResultSet API is attempted:
+```java
+return rs.getBoolean(index);
+```
+If this does not throw an SQLException, it is returned directly
+If SQLException is thrown, then we try to compare as a String:
+```java
+String bool = rs.getString(index);
+boolean ret = ResultSetUtil.TRUE.equals(bool);
+if (!ret && !ResultSetUtil.FALSE.equals(bool))
+    throw new SQLException(String.format("Implicit conversion of database string to boolean failed on column '%d'. Returned string needs to be '%s' or '%s' and was instead '%s'.", index, ResultSetUtil.TRUE, ResultSetUtil.FALSE, bool));
+return ret;
+```
+The returned string MUST be either TRUE or FALSE (or null, for Object Boolean) or an exception will be thrown
+### Misc Objects
+For all of these, when SQL NULL is returned, it maps to null
+##### String
+```java
+return rs.getString(index);
+```
+##### byte[]
+```java
+return rs.getBytes(index);
+```
+##### java.sql.Ref
+```java
+return rs.getRef(index);
+```
+##### java.sql.Blob
+```java
+return rs.getBlob(index);
+```
+##### java.sql.Clob
+```java
+return rs.getClob(index);
+```
+##### java.sql.Array
+```java
+return rs.getArray(index);
+```
+##### java.sql.Struct
+```java
+return rs.getObject(index);
+```
+##### *
+If nothing else fits, we call getObject and cross our fingers with QueryMapper at runtime, this is a compile-time error
+with JdbcMapper. todo: is this actually a compile-time error? it *should* be, check...
+```java
+return rs.getObject(index);
+```
+todo: finish documenting this
 
 Row to Object Mapping
 ---------------------
