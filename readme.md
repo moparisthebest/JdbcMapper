@@ -232,7 +232,34 @@ return s == null ? null : ZoneOffset.of(s);
 Row to Object Mapping
 ---------------------
 
+In cases of only one column being returned from the query (or two in the case of Map<K,V>), the same simple
+column -> Object mapping described above will take place.  If a more complex object is requested, column names or
+indices are used to decide how to construct/map the object.
+
+A single row can be represented by 3 main Objects:
+
+  1. Array, where each column is mapped by index, starting at 0, array type of course determines the type returned
+  2. Map<String, ?>, where each column is mapped by name as key, and column value as value, mapped according to type
+    a. consider using the supplied com.moparisthebest.jdbc.util.CaseInsensitiveHashMap where case is ignored for keys
+  3. Custom class Object, which attempts many different ways to map all returned columns to the class, if one of these
+  is not a perfect match, an exception is thrown at runtime with QueryMapper, and a compile-time error happens with
+  JdbcMapper.  This is an ordered list of how rows are mapped to class objects:
+    1. If the class has a public constructor that takes a single java.sql.ResultSet parameter and nothing else, each row
+    is sent in to create a new object, nothing else is done.
+    2. If the class has a public constructor that takes the same number of arguments as columns returned, and all names
+    match (order does not matter), this constructor is used.  This method has some requirements though:
+      a. Java 8+ only
+      b. requires -parameters argument to javac for runtime with QueryMapper, or compiling against classes without 
+      source with JdbcMapper
+      c. Beware Java 8 only Bug ID [JDK-8191074](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8191074),
+      fixed in Java 9+ but will not be backported to 8
+
 todo: explain how rows are mapped to POJOs
+
+ResultSet (multiple rows) to Object/Collection Mapping
+--------------------------------------
+
+todo: document
 
 JdbcMapper
 ----------
