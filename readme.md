@@ -62,11 +62,12 @@ return rs.getFloat(index);
 ```java
 return rs.getDouble(index);
 ```
-### numeric objects
+### numeric wrapper objects
+##### Byte/Short/Integer/Long/Float/Double
 these wrapper types are retrieved using the same function returning their primitives above, except null is returned
-if the SQL value is NULL instead of 0
+if the SQL value is NULL instead of 0, this example is for Long, but the same applies for all of these types
 ```java
-x ret = rs.getX(index);
+long ret = rs.getLong(index);
 return rs.wasNull() ? null : ret;
 ```
 ##### java.math.BigDecimal
@@ -83,7 +84,7 @@ forcing application level workarounds.
 0/1 numeric types convert to boolean using the standard ResultSet API, but many systems use char/varchar of Y/N or T/F,
 which we default to Y/N but can be set via system properties:
 
-ResultSetUtil.TRUE=Y
+ResultSetUtil.TRUE=Y  
 ResultSetUtil.FALSE=N
 
 First the standard ResultSet API is attempted:
@@ -105,6 +106,11 @@ For all of these, when SQL NULL is returned, it maps to null
 ##### String
 ```java
 return rs.getString(index);
+```
+##### java.lang.Enum (any enum)
+```java
+String name = rs.getString(index);
+return name == null ? null : YourEnumType.valueOf(name);
 ```
 ##### byte[]
 ```java
@@ -136,7 +142,92 @@ with JdbcMapper. todo: is this actually a compile-time error? it *should* be, ch
 ```java
 return rs.getObject(index);
 ```
-todo: finish documenting this
+### Date/Time Objects
+For all of these, when SQL NULL is returned, it maps to null.  All of the [ResultSet.getDate/Timestamp/etc](https://docs.oracle.com/javase/8/docs/api/java/sql/ResultSet.html#getTimestamp-int-java.util.Calendar-)
+functions optionally take a Calendar object which is used to construct a time value if the database doesn't store
+timezone information.  I am not going to show the variants that take Calendar here.  For QueryMapper, methods are
+overloaded to take the Calendar values, for JdbcMapper, if the abstract method takes a Calendar object that is not mapped
+in the query, that is used.
+
+In the Java 8 java.time code below that uses `ZoneId.systemDefault()`, where a Calendar object is sent in, 
+`calendar.getTimeZone().toZoneId()` is used instead.
+##### java.sql.Date
+```java
+return rs.getDate(index);
+```
+##### java.sql.Time
+```java
+return rs.getTime(index);
+```
+##### java.sql.Timestamp
+```java
+return rs.getTimestamp(index);
+```
+##### java.util.Date
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+return ts == null ? null : new java.util.Date(ts.getTime());
+```
+##### java.util.Calendar
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+if (null == ts)
+    return null;
+Calendar c = Calendar.getInstance();
+c.setTimeInMillis(ts.getTime());
+return c;
+```
+##### java.time.Instant
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+return ts == null ? null : ts.toInstant();
+```
+##### java.time.LocalDateTime
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+return ts == null ? null : ts.toLocalDateTime();
+```
+##### java.time.LocalDate
+```java
+java.sql.Date ts =  rs.getDate(index);
+return ts == null ? null : ts.toLocalDate();
+```
+##### java.time.LocalTime
+```java
+java.sql.Time ts = rs.getTime(index);
+return ts == null ? null : ts.toLocalTime();
+```
+##### java.time.ZonedDateTime
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+return ts == null ? null : ZonedDateTime.ofInstant(ts.toInstant(), ZoneId.systemDefault());
+```
+##### java.time.OffsetDateTime
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+return ts == null ? null : OffsetDateTime.ofInstant(ts.toInstant(), ZoneId.systemDefault());
+```
+##### java.time.OffsetTime
+```java
+java.sql.Timestamp ts = rs.getTimestamp(index);
+return ts == null ? null : OffsetTime.ofInstant(ts.toInstant(), ZoneId.systemDefault());
+```
+##### java.time.Year
+done this way instead of Year.of(int) because usually int->string database coercion is allowed and the other way is not
+```java
+String s = rs.getString(index);
+return s == null ? null : Year.parse(s);
+```
+##### java.time.ZoneId
+```java
+String s = rs.getString(index);
+return s == null ? null : ZoneId.of(s);
+```
+##### java.time.ZoneOffset
+```java
+String s = rs.getString(index);
+return s == null ? null : ZoneOffset.of(s);
+```
 
 Row to Object Mapping
 ---------------------
