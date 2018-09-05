@@ -71,13 +71,16 @@ public class ResultSetUtil {
 		return ret;
 	}
 
+	public static <T extends Enum<T>> T getEnum(final ResultSet _resultSet, final int index, final Class<T> enumType) throws SQLException {
+		final String name = _resultSet.getString(index);
+		return name == null ? null : Enum.valueOf(enumType, name);
+	}
+
 	public static java.util.Date getUtilDate(final ResultSet _resultSet, final int index) throws SQLException {
 		// convert explicity to java.util.Date
 		// 12918 |  knex does not return java.sql.Date properly from web service
-		java.sql.Timestamp ts = _resultSet.getTimestamp(index);
-		if (null == ts)
-			return null;
-		return new java.util.Date(ts.getTime());
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		return ts == null ? null : new java.util.Date(ts.getTime());
 	}
 
 	public static java.util.Date getUtilDate(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
@@ -85,17 +88,15 @@ public class ResultSetUtil {
 			return getUtilDate(_resultSet, index);
 		// convert explicity to java.util.Date
 		// 12918 |  knex does not return java.sql.Date properly from web service
-		java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
-		if (null == ts)
-			return null;
-		return new java.util.Date(ts.getTime());
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		return ts == null ? null : new java.util.Date(ts.getTime());
 	}
 
 	public static Calendar getCalendar(final ResultSet _resultSet, final int index) throws SQLException {
-		java.sql.Timestamp ts = _resultSet.getTimestamp(index);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index);
 		if (null == ts)
 			return null;
-		Calendar c = Calendar.getInstance();
+		final Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(ts.getTime());
 		return c;
 	}
@@ -103,17 +104,12 @@ public class ResultSetUtil {
 	public static Calendar getCalendar(final ResultSet _resultSet, final int index, final Calendar _cal) throws SQLException {
 		if(_cal == null)
 			return getCalendar(_resultSet, index);
-		java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
+		final java.sql.Timestamp ts = _resultSet.getTimestamp(index, _cal);
 		if (null == ts)
 			return null;
-		Calendar c = (Calendar) _cal.clone();
+		final Calendar c = (Calendar) _cal.clone();
 		c.setTimeInMillis(ts.getTime());
 		return c;
-	}
-
-	public static <T extends Enum<T>> T getEnum(final ResultSet _resultSet, final int index, final Class<T> enumType) throws SQLException {
-		final String name = _resultSet.getString(index);
-		return name == null ? null : Enum.valueOf(enumType, name);
 	}
 
 	//IFJAVA8_START
