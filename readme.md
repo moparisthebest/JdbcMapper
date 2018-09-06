@@ -110,34 +110,101 @@ try(QueryMapper qm = new QueryMapper("java:/comp/env/jdbc/testPool", new ResultS
 ResultSet (multiple rows) to Object/Collection Mapping
 --------------------------------------
 
-todo: document
+An entire ResultSet (query) can be returned in any number of useful data structures, for the purposes of this list,
+E will represent a simple object as listed in [Column to Object Mapping](#column-to-object-mapping), and
+T will represent a possibly more complex object as listed in [Row to Object Mapping](#row-to-object-mapping), unless
+otherwise noted the ResultSet is closed before these methods return:
+
+  1. `T`
+      * this simply returns the first row as an object
+      * to return E[] or Map<String, E> as a single row, annotate JdbcMapper method with @JdbcMapper.SingleRow for
+        compile-time, or for runtime QueryMapper/ResultSetMapper call .toObject or .toSingleMap
+  2. `T[]`
+  3. `java.util.Collection<T>`
+      * any class implementing java.util.Collection can be used, java.util.List is popular
+  4. `java.util.Iterator<T>`
+      * an Iterator from a Collection
+  5. `java.util.ListIterator<T>`
+      * a ListIterator from a List
+  6. `java.util.Map<E, T>`
+      * any class implementing java.util.Map can be used, java.util.HashMap is popular, java.util.LinkedHashMap to
+        retain order
+      * The first column in the ResultSet will be the Map's key
+      * If there are only two columns, the second will be the Map's value
+      * If there are more than two columns, the value will be mapped to an object with the entire ResultSet in it,
+        including the key, just like returning a Single complex object or a Collection would do
+  7. `java.util.Map<E, java.util.Collection<T>>`
+      * for the map, any class implementing java.util.Map can be used, java.util.HashMap is popular,
+        java.util.LinkedHashMap to retain order
+      * for the collection, any class implementing java.util.Collection can be used, java.util.List is popular
+      * All mapping behavior is the same as `java.util.Map<E, T>`, except the value is used to aggregate all values with
+        the same key
+        * Example: you want to look up all firstNames for a given lastName, return type is Map<String, List<String>>,
+          query might be `SELECT last_name, first_name FROM person`, returned value might be something like
+          `{Monroe=[Marilyn, James], Washington=[George]}`
+        * Example: you want to look up all People with a given lastName, return type is Map<String, List<Person>>,
+          query might be `SELECT last_name, first_name, person_no FROM person`, returned value might be something like
+          `{Monroe=[Person{firstName=Marilyn,lastName=Monroe,personNo=1}, Person{firstName=James,lastName=Monroe,personNo=2}], Washington=[Person{firstName=George,lastName=Washington,personNo=3}]}`
+  8. `java.sql.ResultSet`
+      * WARNING: you MUST ensure this is closed in finally or try-with-resources
+      * no mapping happens here of course
+  9. `com.moparisthebest.jdbc.util.ResultSetIterable<T>`
+      * WARNING: you MUST ensure this is closed in finally or try-with-resources
+      * this holds the ResultSet and lazily maps one row as needed until none remain
+      * The .iterator() implementation just returns `this`, meaning you can only loop over it once, if you need to loop
+         multiple times get a `Collection<T>` or something
+  10. `java.util.stream.Stream<T>`
+      * WARNING: you MUST ensure this is closed in finally or try-with-resources
+      * WARNING: see above again, it's not common to try-with-resources a Stream, but it is the ONLY SAFE WAY to use this
+      * this holds the ResultSet and lazily maps one row as needed until none remain
 
 Row to Object Mapping
 ---------------------
 
-In cases of only one column being returned from the query (or two in the case of Map<K,V>), the same simple
-column -> Object mapping described below will take place.  If a more complex object is requested, column names or
-indices are used to decide how to construct/map the object.
+In cases of only one column being returned from the query (or two in the case of Map<K,V>), the [simple
+Column to Object Mapping](#column-to-object-mapping) will take place.  If a more complex object is 
+requested, column names or indices are used to decide how to construct/map the object.
 
-A single row can be represented by 3 main Objects:
+A single row can be represented in one of these ways:
 
-  1. Array, where each column is mapped by index, starting at 0, array type of course determines the type returned
-  2. Map<String, ?>, where each column is mapped by name as key, and column value as value, mapped according to type
+  1. A simple object, where a single column is mapped as described in [Column to Object Mapping](#column-to-object-mapping)
+  2. A single map entry, where there are exactly 2 columns, return-type is a Map<K,V>, where K and V are both simple
+      objects, each row is mapped to a single map entry and both columns mapped as described in [Column to Object Mapping](#column-to-object-mapping).
+  3. Array, where each column is mapped by index, starting at 0, array type of course determines the type returned
+  4. Map<String, E>, where each column is mapped by name as key, and column value as value, mapped according to type
       * consider using the supplied com.moparisthebest.jdbc.util.CaseInsensitiveHashMap where case is ignored for keys
-  3. Custom class Object, which attempts many different ways to map all returned columns to the class, if one of these
+  5. Custom class Object, which attempts many different ways to map all returned columns to the class, if one of these
      is not a perfect match, an exception is thrown at runtime with QueryMapper, and a compile-time error happens with
      JdbcMapper.  This is an ordered list of how rows are mapped to class objects:
      1. If the class has a public constructor that takes a single java.sql.ResultSet parameter and nothing else, each
         row is sent in to create a new object, nothing else is done.
      2. If the class has a public constructor that takes the same number of arguments as columns returned, and all names
-        match (order does not matter), this constructor is used.  This method has some requirements though:
+        match (order does not matter, case-insensitive, underscores ignored), this constructor is used.  This method has
+        some requirements though:
         * Java 8+ only
         * requires -parameters argument to javac for runtime with QueryMapper, or compiling against classes without 
         source with JdbcMapper
         * Beware Java 8 only Bug ID [JDK-8191074](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8191074),
         fixed in Java 9+ but will not be backported to 8
-
-todo: explain how rows are mapped to POJOs
+     3. Otherwise the class must have a public no-arg constructor which will be used to instantiate the class.
+     4. All 'set' methods for the class are searched for matches to the column name, the most specific match is chosen
+        * a 'set' method is public, returns void or the class type (builder pattern), begins with the string 'set', and
+          takes 1 argument which supports [Column to Object Mapping](#column-to-object-mapping)
+        * 'set' is removed from the method name and all column names are searched (case-insensitive) for an exact match,
+           if no match is found, all column names stripped of underscore '_' are searched (case-insensitive).
+     5. For columns that have no matching 'set' methods, fields are searched following the same algorithm
+        * using the field name, all column names are searched (case-insensitive) for an exact match,
+          if no match is found, all column names stripped of underscore '_' are searched (case-insensitive).
+        * Note: QueryMapper at runtime uses reflection by default and can set 'private final' (or any combination)
+          fields directly without problem, this incurs overhead with pure java code though, so JdbcMapper will refuse to
+          do this unless explicitly allowed with @JdbcMapper.Mapper(allowReflection = JdbcMapper.OptionalBool.TRUE)
+     6. Examples:
+        * USERID would prefer method setUserId(long/String/etc), then fall back to field 'userId' if the method doesn't 
+          exist
+        * USER_ID would prefer method setUser_Id(long/String/etc), then setUserId(long/String/etc), then field 'user_id',
+          then field 'userId'
+     7. If any columns cannot be mapped to fields/methods, this throws a MapperException at runtime with QueryMapper,
+        and is a compile-time error with JdbcMapper.
 
 Column to Object Mapping
 ------------------------
@@ -351,3 +418,4 @@ TODO
  * sql other than select return boolean, int > 0 ?
  * @RunInTransaction void support
  * QueryMapper mapping errors should be clearer, especially if a .finish(ResultSet) throws an error
+ * check QueryMapper/ResultSetMapper closing of ResultSets, it doesn't look guaranteed
