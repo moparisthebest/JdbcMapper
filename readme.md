@@ -139,10 +139,10 @@ otherwise noted the ResultSet is closed before these methods return:
       * for the collection, any class implementing java.util.Collection can be used, java.util.List is popular
       * All mapping behavior is the same as `java.util.Map<E, T>`, except the value is used to aggregate all values with
         the same key
-        * Example: you want to look up all firstNames for a given lastName, return type is Map<String, List<String>>,
+        * Example: you want to look up all firstNames for a given lastName, return type is `Map<String, List<String>>`,
           query might be `SELECT last_name, first_name FROM person`, returned value might be something like
           `{Monroe=[Marilyn, James], Washington=[George]}`
-        * Example: you want to look up all People with a given lastName, return type is Map<String, List<Person>>,
+        * Example: you want to look up all People with a given lastName, return type is `Map<String, List<Person>>`,
           query might be `SELECT last_name, first_name, person_no FROM person`, returned value might be something like
           `{Monroe=[Person{firstName=Marilyn,lastName=Monroe,personNo=1}, Person{firstName=James,lastName=Monroe,personNo=2}], Washington=[Person{firstName=George,lastName=Washington,personNo=3}]}`
   8. `java.sql.ResultSet`
