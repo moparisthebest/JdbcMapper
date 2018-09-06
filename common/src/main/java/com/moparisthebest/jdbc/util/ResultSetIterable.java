@@ -21,7 +21,7 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
  * This has some special semantics the caller must be aware of though:
  * <p>
  * 1. It has to be closed in a finally just like a ResultSet so it can close it's underlying ResultSet
- * 2. Call to .iterator() just returns this, meaning you can only loop over it once, if you need to loop multiple times get a List or something
+ * 2. The .iterator() implementation just returns this, meaning you can only loop over it once, if you need to loop multiple times get a List or something
  * 3. This guarantees that the ResultSet/Calendar you send into this class with the ResultSetToObject will be the only
  * instances sent into the ResultSetToObject.toObject() method, so if you do fancy initialization of some sort you can
  * do it in the constructor based on those instances, or once on the first call to .toObject() and cache it forever.
@@ -79,7 +79,8 @@ public class ResultSetIterable<T> implements Iterable<T>, Iterator<T>, Closeable
 	public static <T> Stream<T> getStream(final ResultSet rs, final ResultSetToObject<T> rsto, final Calendar cal) {
 		final Stream<T> ret;
 		if (rsto == null) {
-			// todo: static object for this? don't forget to close resultset if so
+			tryClose(rs); // have to do this here...
+			// todo: static object for this?
 			return (Stream<T>) StreamSupport.stream(Spliterators.emptySpliterator(), false);
 		} else {
 			final ResultSetIterable<T> rsi = new ResultSetIterable<T>(rs, rsto, cal);
