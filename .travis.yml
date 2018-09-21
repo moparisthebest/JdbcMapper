@@ -89,13 +89,8 @@ matrix:
 
 before_install:
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
-  - wget 'https://github.com/cbandy/travis-oracle/archive/v2.0.3.tar.gz'
   - mkdir -p $HOME/.traviscache
-  - mkdir -p .travis/oracle
-  - tar x -C .travis/oracle --strip-components=1 -f v2.0.3.tar.gz
-  - if [[ ! -f $HOME/.traviscache/oracle-xe-11.2.0-1.0.x86_64.rpm.zip ]]; then
-      .travis/oracle/download.sh;
-    fi
+  - .travis/oracle/download.sh
   - .travis/oracle/install.sh
 
 install:
