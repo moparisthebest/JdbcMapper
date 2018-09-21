@@ -3,6 +3,7 @@ package com.moparisthebest.jdbc;
 import com.moparisthebest.jdbc.codegen.JdbcMapper;
 import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
+import com.moparisthebest.jdbc.util.ResultSetUtil;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -265,11 +266,11 @@ public class QueryMapper implements JdbcMapper {
 		return ps;
 	}
 
-	protected PreparedStatement bind(final PreparedStatement ps, final Object... bindObjects) throws SQLException {
+	protected static PreparedStatement bind(final PreparedStatement ps, final Object... bindObjects) throws SQLException {
 		return bindStatement(ps, bindObjects);
 	}
 
-	protected ResultSet bindExecute(final PreparedStatement ps, final Object... bindObjects) throws SQLException {
+	protected static ResultSet bindExecute(final PreparedStatement ps, final Object... bindObjects) throws SQLException {
 		return bind(ps, bindObjects).executeQuery();
 	}
 
@@ -281,6 +282,32 @@ public class QueryMapper implements JdbcMapper {
 
 	public boolean executeUpdateSuccess(PreparedStatement ps, final Object... bindObjects) throws SQLException {
 		return this.executeUpdate(ps, bindObjects) >= 0;
+	}
+
+	public Long insertGetGeneratedKey(final PreparedStatement ps, final Object... bindObjects) throws SQLException {
+		this.executeUpdate(ps, bindObjects);
+		ResultSet rs = null;
+		try {
+			rs = ps.getGeneratedKeys();
+			if(rs.next())
+				return ResultSetUtil.getObjectLong(rs, 1);
+		} finally {
+			tryClose(rs);
+		}
+		return null;
+	}
+
+	public <T> T insertGetGeneratedKeyType(final PreparedStatement ps, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		this.executeUpdate(ps, bindObjects);
+		ResultSet rs = null;
+		try {
+			rs = ps.getGeneratedKeys();
+			if(rs.next())
+				return cm.toType(rs, typeReference);
+		} finally {
+			tryClose(rs);
+		}
+		return null;
 	}
 
 	public int executeUpdate(String sql, final Object... bindObjects) throws SQLException {
@@ -298,6 +325,26 @@ public class QueryMapper implements JdbcMapper {
 		try {
 			ps = conn.prepareStatement(sql);
 			return this.executeUpdateSuccess(ps, bindObjects);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			return this.insertGetGeneratedKey(ps, bindObjects);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	public <T> T insertGetGeneratedKeyType(final String sql, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
 		} finally {
 			tryClose(ps);
 		}
