@@ -470,38 +470,38 @@ public class QueryMapperTest {
 
 		// auto increment stuff for getGeneratedKeys, how obnoxious are these subtle differences...
 		if(isWrapperFor(qm.getConnection(), classForName("org.sqlite.SQLiteConnection"))) {
-			qm.executeUpdate("CREATE TABLE auto_table(\n" +
-					"   auto_table_no INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-					"   auto_table_val NUMERIC\n" +
+			qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
+					"   a_thaoeu_table_no INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+					"   a_thaoeu_table_val NUMERIC\n" +
 					")");
 		} else if(isWrapperFor(qm.getConnection(), classForName("org.mariadb.jdbc.MariaDbPooledConnection"))) {
-			qm.executeUpdate("CREATE TABLE auto_table(\n" +
-					"   auto_table_no INTEGER PRIMARY KEY AUTO_INCREMENT,\n" +
-					"   auto_table_val NUMERIC\n" +
+			qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
+					"   a_thaoeu_table_no INTEGER PRIMARY KEY AUTO_INCREMENT,\n" +
+					"   a_thaoeu_table_val NUMERIC\n" +
 					")");
 		} else if(isWrapperFor(qm.getConnection(), postgreConnection)) {
-			qm.executeUpdate("CREATE TABLE auto_table(\n" +
-					"   auto_table_no SERIAL PRIMARY KEY,\n" +
-					"   auto_table_val NUMERIC\n" +
+			qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
+					"   a_thaoeu_table_no SERIAL PRIMARY KEY,\n" +
+					"   a_thaoeu_table_val NUMERIC\n" +
 					")");
 		} else if(isWrapperFor(qm.getConnection(), mssqlConnection)) {
-			qm.executeUpdate("CREATE TABLE auto_table(\n" +
-					"   auto_table_no INTEGER IDENTITY(1,1) PRIMARY KEY,\n" +
-					"   auto_table_val NUMERIC\n" +
+			qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
+					"   a_thaoeu_table_no INTEGER IDENTITY(1,1) PRIMARY KEY,\n" +
+					"   a_thaoeu_table_val NUMERIC\n" +
 					")");
 		} else if(isWrapperFor(qm.getConnection(), oracleConnection)) {
-			qm.executeUpdate("CREATE TABLE auto_table(\n" +
-					"   auto_table_no INTEGER PRIMARY KEY,\n" +
-					"   auto_table_val NUMERIC\n" +
+			qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
+					"   a_thaoeu_table_no INTEGER PRIMARY KEY,\n" +
+					"   a_thaoeu_table_val NUMERIC\n" +
 					")");
-			qm.executeUpdate("CREATE SEQUENCE auto_table_seq\n" +
+			qm.executeUpdate("CREATE SEQUENCE a_thaoeu_table_seq\n" +
 					"MINVALUE 1\n" +
 					"START WITH 1\n" +
 					"INCREMENT BY 1\n" +
 					"CACHE 10");
 			// so different we have to do test here
 			for(long expected = 1; expected < 5; ++expected) {
-				final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO auto_table (auto_table_no, auto_table_val) VALUES (auto_table_seq.nextval, ?)", expected * 2);
+				final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_no, a_thaoeu_table_val) VALUES (a_thaoeu_table_seq.nextval, ?)", expected * 2);
 				assertEquals(expected, autoTableNo);
 			}
 			return;
@@ -510,7 +510,7 @@ public class QueryMapperTest {
 		}
 
 		for(long expected = 1; expected < 5; ++expected) {
-			final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO auto_table (auto_table_val) VALUES (?)", expected * 2);
+			final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_val) VALUES (?)", expected * 2);
 			assertEquals(expected, autoTableNo);
 		}
 	}
