@@ -46,20 +46,20 @@ script:
 
 matrix:
   include:
-    - env: JDK='OpenJDK 6'
-      addons:
-        apt:
-          packages:
-            - openjdk-6-jdk
-      script:
-        # java6 doesn't support ms-sql at all, and doesn't support h2 with ANY
-        - mvn -Dhttps.protocols=TLSv1.2 -B -pl '!test' clean install || travis_terminate 1;
-        - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
-        - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND -DqueryMapper.databaseType=OPTIMAL --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
-        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
-        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
-        - mvn -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
-      jdk: openjdk6
+#    - env: JDK='OpenJDK 6'
+#      addons:
+#        apt:
+#          packages:
+#            - openjdk-6-jdk
+#      script:
+#        # java6 doesn't support ms-sql at all, and doesn't support h2 with ANY
+#        - mvn -Dhttps.protocols=TLSv1.2 -B -pl '!test' clean install || travis_terminate 1;
+#        - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+#        - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND -DqueryMapper.databaseType=OPTIMAL --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+#        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
+#        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+#        - mvn -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
+#      jdk: openjdk6
     - env: JDK='OpenJDK 7'
       jdk: openjdk7
       script:
