@@ -22,9 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 //IFJAVA8_END
 
-import static com.moparisthebest.jdbc.OptimalInList.classForName;
-import static com.moparisthebest.jdbc.OptimalInList.isWrapperFor;
-import static com.moparisthebest.jdbc.OptimalInList.oracleConnection;
+import static com.moparisthebest.jdbc.OptimalInList.*;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -166,7 +164,6 @@ public class QueryMapperTest {
 			}
 			for (final Val val : vals)
 				qm.executeUpdate("INSERT INTO val (val_no, num_val, str_val) VALUES (?, ?, ?)", val.valNo, val.numVal, val.strVal);
-
 		} finally {
 			tryClose(qm);
 		}
@@ -463,6 +460,59 @@ public class QueryMapperTest {
 			((QueryMapperQmDao)qm).getQm().toObject("SELECT 1, 2, 3 FROM person WHERE person_no = ?", Long.class, fieldPerson1.getPersonNo());
 		else
 			throw new MapperException("JdbcMapper wouldn't compile so skipping this...");
+	}
+
+	@Test
+	public void testGetGeneratedKeysSingleLong() throws SQLException {
+		if(!(qm instanceof QueryMapperQmDao))
+			return;
+		final QueryMapper qm = ((QueryMapperQmDao)this.qm).getQm();
+
+		// auto increment stuff for getGeneratedKeys, how obnoxious are these subtle differences...
+		if(isWrapperFor(qm.getConnection(), classForName("org.sqlite.SQLiteConnection"))) {
+			qm.executeUpdate("CREATE TABLE auto_table(\n" +
+					"   auto_table_no INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+					"   auto_table_val NUMERIC\n" +
+					")");
+		} else if(isWrapperFor(qm.getConnection(), classForName("org.mariadb.jdbc.MariaDbPooledConnection"))) {
+			qm.executeUpdate("CREATE TABLE auto_table(\n" +
+					"   auto_table_no INTEGER PRIMARY KEY AUTO_INCREMENT,\n" +
+					"   auto_table_val NUMERIC\n" +
+					")");
+		} else if(isWrapperFor(qm.getConnection(), postgreConnection)) {
+			qm.executeUpdate("CREATE TABLE auto_table(\n" +
+					"   auto_table_no SERIAL PRIMARY KEY,\n" +
+					"   auto_table_val NUMERIC\n" +
+					")");
+		} else if(isWrapperFor(qm.getConnection(), mssqlConnection)) {
+			qm.executeUpdate("CREATE TABLE auto_table(\n" +
+					"   auto_table_no INTEGER IDENTITY(1,1) PRIMARY KEY,\n" +
+					"   auto_table_val NUMERIC\n" +
+					")");
+		} else if(isWrapperFor(qm.getConnection(), oracleConnection)) {
+			qm.executeUpdate("CREATE TABLE auto_table(\n" +
+					"   auto_table_no INTEGER PRIMARY KEY,\n" +
+					"   auto_table_val NUMERIC\n" +
+					")");
+			qm.executeUpdate("CREATE SEQUENCE auto_table_seq\n" +
+					"MINVALUE 1\n" +
+					"START WITH 1\n" +
+					"INCREMENT BY 1\n" +
+					"CACHE 10");
+			// so different we have to do test here
+			for(long expected = 1; expected < 5; ++expected) {
+				final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO auto_table (auto_table_no, auto_table_val) VALUES (auto_table_seq.nextval, ?)", expected * 2);
+				assertEquals(expected, autoTableNo);
+			}
+			return;
+		} else {
+			return; // can't do test...
+		}
+
+		for(long expected = 1; expected < 5; ++expected) {
+			final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO auto_table (auto_table_val) VALUES (?)", expected * 2);
+			assertEquals(expected, autoTableNo);
+		}
 	}
 
 	private List<Map<String, String>> getListMap() {
