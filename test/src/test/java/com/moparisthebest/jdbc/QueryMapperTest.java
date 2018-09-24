@@ -492,7 +492,7 @@ public class QueryMapperTest {
 						")");
 			} else if (isWrapperFor(qm.getConnection(), oracleConnection)) {
 				qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
-						"   a_thaoeu_table_no INTEGER PRIMARY KEY,\n" +
+						"   a_thaoeu_table_no NUMBER PRIMARY KEY,\n" +
 						"   a_thaoeu_table_val NUMERIC\n" +
 						")");
 				qm.executeUpdate("CREATE SEQUENCE a_thaoeu_table_seq\n" +

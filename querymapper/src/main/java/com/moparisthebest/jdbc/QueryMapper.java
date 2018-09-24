@@ -333,7 +333,7 @@ public class QueryMapper implements JdbcMapper {
 	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps = conn.prepareStatement(sql, new int[]{1}); // todo: create this array private static final
 			return this.insertGetGeneratedKey(ps, bindObjects);
 		} finally {
 			tryClose(ps);
