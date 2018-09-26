@@ -19,7 +19,7 @@ import java.time.*;
  */
 @JdbcMapper.Mapper(
 		jndiName = "bob",
-		databaseType = JdbcMapper.DatabaseType.ANY, // PrestoPersonDao breaks with ORACLE or UNNEST
+		databaseType = JdbcMapper.DatabaseType.ANY, // todo: PrestoPersonDao breaks with ORACLE or UNNEST
 		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
 		, sqlParser = PrestoSQLParser.class
 		, allowReflection = JdbcMapper.OptionalBool.TRUE
@@ -31,6 +31,12 @@ public interface PrestoPersonDAO extends PersonDAO {
 
 	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({personNo}, {birthDate}, {firstName}, {lastName})")
 	int insertPerson(long personNo, Date birthDate, String firstName, String lastName);
+
+	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({personNo}, {birthDate}, {firstName}, {lastName})")
+	long insertPersonGeneratedKey(long personNo, Date birthDate, String firstName, String lastName);
+
+	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({personNo}, {birthDate}, {firstName}, {lastName})")
+	Long insertPersonGeneratedKeyLong(long personNo, Date birthDate, String firstName, String lastName);
 
 	@JdbcMapper.SQL("UPDATE person SET first_name = {firstName} WHERE last_name = {lastName}")
 	int setFirstName(String firstName, String lastName);

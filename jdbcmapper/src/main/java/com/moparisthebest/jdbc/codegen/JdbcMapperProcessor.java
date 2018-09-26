@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
+import static com.moparisthebest.jdbc.codegen.JdbcMapper.DatabaseType.ORACLE;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
 
 /**
@@ -474,8 +475,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							for (final SpecialVariableElement param : inListBindParams.values())
 								setArray(w, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
 							w.write("\t\t\tps = ");
+							final boolean isGeneratedKeyLong = !parsedSQl.isSelect() && (returnType.equals("long") || returnType.equals("java.lang.Long"));
 							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements) && !bindInList;
-							if (cachePreparedStatements) {
+							if (cachePreparedStatements && !isGeneratedKeyLong) { // make isGeneratedKeyLong work with cachePreparedStatements
 								w.write("this.prepareStatement(");
 								w.write(Integer.toString(cachedPreparedStatements));
 								w.write(", ");
@@ -487,7 +489,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(sqlStatement.replace("\"", "\\\"")
 									.replace("\n", "\\n\" +\n\t\t\t                                      \"")
 									.replace("REPLACEMEWITHUNQUOTEDQUOTEPLZ", "\""));
-							w.write("\");\n");
+							w.write("\"");
+							if(isGeneratedKeyLong) {
+								if(databaseType == ORACLE) {
+									// todo: cache this
+									w.write(", new int[]{1}");
+								} else {
+									w.write(", java.sql.Statement.RETURN_GENERATED_KEYS");
+								}
+							}
+							w.write(");\n");
 
 							// now bind parameters
 							if(bindInList) {
@@ -506,8 +517,25 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									w.write("\t\t\tps.executeUpdate();\n");
 								} else if (returnType.equals("int") || returnType.equals("java.lang.Integer")) {
 									w.write("\t\t\treturn ps.executeUpdate();\n");
+								} else if (returnType.equals("boolean") || returnType.equals("java.lang.Boolean")) {
+									w.write("\t\t\treturn ps.executeUpdate() > 0;\n");
+								} else if (isGeneratedKeyLong) {
+									w.write("\t\t\tps.executeUpdate();\n"); // todo: what about java8+ ps.executeLargeUpdate()?
+									w.write("\t\t\tResultSet rs = null;\n" +
+											"\t\t\ttry {\n" +
+											"\t\t\t\trs = ps.getGeneratedKeys();\n" +
+											"\t\t\t\treturn rs.next() ? ");
+									if(returnType.equals("long")) {
+										w.write("rs.getLong(1) : 0");
+									} else {
+										w.write("com.moparisthebest.jdbc.util.ResultSetUtil.getObjectLong(rs, 1) : null");
+									}
+									w.write(";\n" +
+											"\t\t\t} finally {\n" +
+											"\t\t\t\ttryClose(rs);\n" +
+											"\t\t\t}\n");
 								} else {
-									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql other than SELECT must return either void, int, or Integer", methodElement);
+									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql other than SELECT must return either void, int, Integer, boolean, Boolean, long, or Long", methodElement);
 									continue;
 								}
 							} else {
