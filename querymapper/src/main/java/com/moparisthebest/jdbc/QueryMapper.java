@@ -23,7 +23,7 @@ public class QueryMapper implements JdbcMapper {
 	public static final Object noBind = new Object();
 	public static final ResultSetMapper defaultRsm = new ResultSetMapper();
 
-	protected static final int[] SINGLE_COLUMN_INDEX = new int[]{1};
+	protected static final int[] ORACLE_SINGLE_COLUMN_INDEX = new int[]{1};
 
 	/*IFJAVA6_START
 	private static final Charset UTF_8 = Charset.forName("UTF-8");
@@ -332,10 +332,20 @@ public class QueryMapper implements JdbcMapper {
 		}
 	}
 
+	private Boolean oracleDatabase = null;
 	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
+		// this single function is somewhat database specific
+		// sqlite/ms-sql/mysql works with either Statement.RETURN_GENERATED_KEYS or int[]{1}
+		// oracle requires int[]{1} instead, failing on Statement.RETURN_GENERATED_KEYS
+		// postgre requires Statement.RETURN_GENERATED_KEYS instead, failing on int[]{1}
+
+		// so we lazily cache oracleDatabase just in this one function
+		if(oracleDatabase == null)
+			oracleDatabase = conn.isWrapperFor(OptimalInList.oracleConnection);
+
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql, SINGLE_COLUMN_INDEX);
+			ps = oracleDatabase ? conn.prepareStatement(sql, ORACLE_SINGLE_COLUMN_INDEX) : conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			return this.insertGetGeneratedKey(ps, bindObjects);
 		} finally {
 			tryClose(ps);
