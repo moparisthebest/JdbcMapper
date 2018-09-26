@@ -23,6 +23,8 @@ public class QueryMapper implements JdbcMapper {
 	public static final Object noBind = new Object();
 	public static final ResultSetMapper defaultRsm = new ResultSetMapper();
 
+	protected static final int[] SINGLE_COLUMN_INDEX = new int[]{1};
+
 	/*IFJAVA6_START
 	private static final Charset UTF_8 = Charset.forName("UTF-8");
 	IFJAVA6_END*/
@@ -333,7 +335,7 @@ public class QueryMapper implements JdbcMapper {
 	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql, new int[]{1}); // todo: create this array private static final
+			ps = conn.prepareStatement(sql, SINGLE_COLUMN_INDEX);
 			return this.insertGetGeneratedKey(ps, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -387,10 +389,6 @@ public class QueryMapper implements JdbcMapper {
 	// these grab ResultSets from the database
 
 	public ResultSet toResultSet(PreparedStatement ps, final Object... bindObjects) throws SQLException {
-		return toResultSet(ps, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, bindObjects);
-	}
-	
-	public ResultSet toResultSet(PreparedStatement ps, int rsType, int rsConcurrency, final Object... bindObjects) throws SQLException {
 		return bindExecute(ps, bindObjects);
 	}
 
@@ -398,14 +396,13 @@ public class QueryMapper implements JdbcMapper {
 		return toResultSet(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, bindObjects);
 	}
 	
-	public ResultSet toResultSet(String sql, Integer rsType, Integer rsConcurrency, final Object... bindObjects) throws SQLException {
-		//throw new UnsupportedOperationException("Can't return ResultSet from String because the PreparedStatement can't be closed before the ResultSet is, so CachingQueryMapper will work.");
+	public ResultSet toResultSet(String sql, int rsType, int rsConcurrency, final Object... bindObjects) throws SQLException {
 		// works with StatementClosingResultSet
 		boolean error = true;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(sql, rsType.intValue(), rsConcurrency.intValue());
+			ps = conn.prepareStatement(sql, rsType, rsConcurrency);
 			rs = this.toResultSet(ps, bindObjects);
 			error = false;
 			return new StatementClosingResultSet(rs, ps);

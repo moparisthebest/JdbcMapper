@@ -165,7 +165,7 @@ public class CachingQueryMapper extends QueryMapper {
 	}
 	
 	@Override
-	public ResultSet toResultSet(String sql, Integer rsType, Integer rsConcurrency, Object... bindObjects) throws SQLException {
+	public ResultSet toResultSet(String sql, int rsType, int rsConcurrency, Object... bindObjects) throws SQLException {
 		return super.toResultSet(getPreparedStatement(sql,rsType,rsConcurrency), bindObjects);
 	}
 	
