@@ -118,6 +118,28 @@ public class CachingQueryMapper extends QueryMapper {
 		return ps;
 	}
 
+	protected PreparedStatement getInsertPreparedStatement(final String sql, final int[] columnIndexes) throws SQLException {
+		PreparedStatement ps = cache.get(sql);
+		if (ps == null) {
+			//System.out.println("cache miss");
+			ps = conn.prepareStatement(sql, columnIndexes);
+			cache.put(sql, ps);
+		}
+		//else System.out.println("cache hit");
+		return ps;
+	}
+
+	protected PreparedStatement getInsertPreparedStatement(final String sql, final String[] columnNames) throws SQLException {
+		PreparedStatement ps = cache.get(sql);
+		if (ps == null) {
+			//System.out.println("cache miss");
+			ps = conn.prepareStatement(sql, columnNames);
+			cache.put(sql, ps);
+		}
+		//else System.out.println("cache hit");
+		return ps;
+	}
+
 	public void clearCache(boolean close) {
 		//System.out.println("cache size: "+cache.size());
 		for (PreparedStatement ps : cache.values())
@@ -155,6 +177,16 @@ public class CachingQueryMapper extends QueryMapper {
 	@Override
 	public <T> T insertGetGeneratedKeyType(String sql, TypeReference<T> typeReference, Object... bindObjects) throws SQLException {
 		return super.insertGetGeneratedKeyType(getInsertPreparedStatement(sql, Statement.RETURN_GENERATED_KEYS), typeReference, bindObjects);
+	}
+
+	@Override
+	public <T> T insertGetGeneratedKeyType(String sql, int[] columnIndexes, TypeReference<T> typeReference, Object... bindObjects) throws SQLException {
+		return super.insertGetGeneratedKeyType(getInsertPreparedStatement(sql, columnIndexes), typeReference, bindObjects);
+	}
+
+	@Override
+	public <T> T insertGetGeneratedKeyType(String sql, String[] columnNames, TypeReference<T> typeReference, Object... bindObjects) throws SQLException {
+		return super.insertGetGeneratedKeyType(getInsertPreparedStatement(sql, columnNames), typeReference, bindObjects);
 	}
 
 // these grab ResultSets from the database

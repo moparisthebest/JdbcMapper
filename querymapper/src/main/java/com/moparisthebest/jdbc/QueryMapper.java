@@ -341,7 +341,7 @@ public class QueryMapper implements JdbcMapper {
 
 		// so we lazily cache oracleDatabase just in this one function
 		if(oracleDatabase == null)
-			oracleDatabase = conn.isWrapperFor(OptimalInList.oracleConnection);
+			oracleDatabase = OptimalInList.isWrapperFor(conn, OptimalInList.oracleConnection);
 
 		PreparedStatement ps = null;
 		try {
@@ -356,6 +356,26 @@ public class QueryMapper implements JdbcMapper {
 		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	public <T> T insertGetGeneratedKeyType(final String sql, final int[] columnIndexes, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql, columnIndexes);
+			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	public <T> T insertGetGeneratedKeyType(final String sql, final String[] columnNames, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql, columnNames);
 			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
 		} finally {
 			tryClose(ps);

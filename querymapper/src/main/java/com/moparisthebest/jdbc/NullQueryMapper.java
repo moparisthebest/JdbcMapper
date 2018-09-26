@@ -105,7 +105,7 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public Long insertGetGeneratedKey(PreparedStatement ps, Object... bindObjects) throws SQLException {
+	public Long insertGetGeneratedKey(PreparedStatement ps, Object... bindObjects) {
 		try {
 			return delegate.insertGetGeneratedKey(ps, bindObjects);
 		} catch (Throwable e) {
@@ -115,7 +115,7 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T> T insertGetGeneratedKeyType(PreparedStatement ps, TypeReference<T> typeReference, Object... bindObjects) throws SQLException {
+	public <T> T insertGetGeneratedKeyType(PreparedStatement ps, TypeReference<T> typeReference, Object... bindObjects) {
 		try {
 			return delegate.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
 		} catch (Throwable e) {
@@ -145,7 +145,7 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public Long insertGetGeneratedKey(String sql, Object... bindObjects) throws SQLException {
+	public Long insertGetGeneratedKey(String sql, Object... bindObjects) {
 		try {
 			return delegate.insertGetGeneratedKey(sql, bindObjects);
 		} catch (Throwable e) {
@@ -155,9 +155,29 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T> T insertGetGeneratedKeyType(String sql, TypeReference<T> typeReference, Object... bindObjects) throws SQLException {
+	public <T> T insertGetGeneratedKeyType(String sql, TypeReference<T> typeReference, Object... bindObjects) {
 		try {
 			return delegate.insertGetGeneratedKeyType(sql, typeReference, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T> T insertGetGeneratedKeyType(String sql, int[] columnIndexes, TypeReference<T> typeReference, Object... bindObjects) {
+		try {
+			return delegate.insertGetGeneratedKeyType(sql, columnIndexes, typeReference, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public <T> T insertGetGeneratedKeyType(String sql, String[] columnNames, TypeReference<T> typeReference, Object... bindObjects) {
+		try {
+			return delegate.insertGetGeneratedKeyType(sql, columnNames, typeReference, bindObjects);
 		} catch (Throwable e) {
 			if (verbose) e.printStackTrace();
 		}
