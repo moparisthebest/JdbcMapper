@@ -292,7 +292,12 @@ public class ListQueryMapper extends QueryMapper {
 		return delegate.toResultSet(prepareSql(sql, bindObjects), bindObjects);
 	}
 
-	@Override
+    @Override
+    public ResultSet toResultSet(String sql, int rsType, int rsConcurrency, Object... bindObjects) throws SQLException {
+        return delegate.toResultSet(prepareSql(sql, bindObjects), rsType, rsConcurrency, bindObjects);
+    }
+
+    @Override
 	public Long insertGetGeneratedKey(String sql, Object... bindObjects) throws SQLException {
 		return delegate.insertGetGeneratedKey(prepareSql(sql, bindObjects), bindObjects);
 	}

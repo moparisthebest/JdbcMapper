@@ -268,7 +268,17 @@ public class NullQueryMapper extends QueryMapper {
 		return null;
 	}
 
-	// these are standard getters
+	@Override
+	public ResultSet toResultSet(String sql, int rsType, int rsConcurrency, Object... bindObjects) throws SQLException {
+		try {
+			return delegate.toResultSet(sql, rsType, rsConcurrency, bindObjects);
+		} catch (Throwable e) {
+			if (verbose) e.printStackTrace();
+		}
+		return null;
+	}
+
+// these are standard getters
 
 	@Override
 	public ResultSetMapper getCustomResultSetMapper() {
