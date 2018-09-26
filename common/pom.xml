@@ -20,7 +20,7 @@
     </build>
     <profiles>
         <profile>
-            <id>jdk16</id>
+            <id>jdk6</id>
             <activation>
                 <jdk>[1.6,1.8)</jdk>
             </activation>
