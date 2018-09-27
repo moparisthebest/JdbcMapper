@@ -1114,13 +1114,5 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		}
 		return false;
 	}
-
-	private final boolean isSpringRepositoryStereotypeRequired(final String stereoType) {
-
-		if (Boolean.parseBoolean(processingEnv.getOptions().get("jdbcMapper.generateAsSpringBean"))) {
-			return processingEnv.getOptions().get("jdbcMapper.springBeanStereotype").equalsIgnoreCase(stereoType);
-		}
-
-		return false;
-	}
+	
 }
