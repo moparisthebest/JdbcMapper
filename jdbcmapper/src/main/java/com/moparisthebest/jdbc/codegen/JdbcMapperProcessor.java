@@ -10,6 +10,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.*;
+import java.net.URL;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -30,7 +31,7 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
  * Created by mopar on 5/24/17.
  */
 @SupportedAnnotationTypes("com.moparisthebest.jdbc.codegen.JdbcMapper.Mapper")
-@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "jdbcMapper.allowedMaxRowParamNames", "jdbcMapper.sqlCheckerClass"})
+@SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "jdbcMapper.allowedMaxRowParamNames", "jdbcMapper.sqlCheckerClass", "jdbcMapper.generateAsSpringBean"})
 public class JdbcMapperProcessor extends AbstractProcessor {
 
 	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCc][Ll][Oo][Bb]\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");
@@ -171,6 +172,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					final JdbcMapper.Mapper mapper = genClass.getAnnotation(JdbcMapper.Mapper.class);
 					final JdbcMapper.DatabaseType databaseType;
 					final String arrayNumberTypeName, arrayStringTypeName;
+					final boolean generateAsSpringBean = mapper.generateAsSpringBean().combine(false);
+
 					if (mapper.databaseType() == JdbcMapper.DatabaseType.DEFAULT) {
 						databaseType = defaultDatabaseType;
 						arrayNumberTypeName = !mapper.arrayNumberTypeName().isEmpty() ? mapper.arrayNumberTypeName() : defaultArrayNumberTypeName;
@@ -223,10 +226,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(packageName);
 							w.write(";\n\n");
 						}
+						if (generateAsSpringBean) {
+							w.write("import org.springframework.stereotype.Repository;\n\n");
+						}
 						w.write("import com.moparisthebest.jdbc.Factory;\n\n");
 						w.write("import java.sql.*;\n\n");
 						w.write("import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n");
 						w.write("import static com.moparisthebest.jdbc.TryClose.tryClose;\n\n");
+						if (generateAsSpringBean) {
+							w.write("@Repository\n");
+						}
 						w.write("public class ");
 						w.write(className);
 						if (isInterface) {
@@ -1103,6 +1112,15 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					return true;
 			}
 		}
+		return false;
+	}
+
+	private final boolean isSpringRepositoryStereotypeRequired(final String stereoType) {
+
+		if (Boolean.parseBoolean(processingEnv.getOptions().get("jdbcMapper.generateAsSpringBean"))) {
+			return processingEnv.getOptions().get("jdbcMapper.springBeanStereotype").equalsIgnoreCase(stereoType);
+		}
+
 		return false;
 	}
 }

@@ -411,6 +411,49 @@ String s = rs.getString(index);
 return s == null ? null : ZoneOffset.of(s);
 ```
 
+Spring Boot Support
+----
+Configuring your `JdbcMapperProcessor` generated `DAOBean` to be compatible with Spring's [ComponentScan](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/ComponentScan.html) can be
+accomplished by simply setting the `JdbcMapper.Mapper.generateAsSpringBean` value to
+`JdbcMapper.OptionalBool.TRUE`.  This value is set to `JdbcMapper.OptionalBool.FALSE` by default.
+```java
+@JdbcMapper.Mapper(generateAsSpringBean = JdbcMapper.OptionalBool.TRUE)
+public interface MyDAO extends JdbcMapper {
+    // Your method signatures and queries here
+}
+```
+
+This configuration will generate a DAOBean looking something like this:
+```java
+package com.yourpackage;
+
+import org.springframework.stereotype.Repository;
+
+import com.moparisthebest.jdbc.Factory;
+
+import java.sql.*;
+
+import static com.moparisthebest.jdbc.util.ResultSetUtil.*;
+import static com.moparisthebest.jdbc.TryClose.tryClose;
+
+@Repository
+public class MyDAOBean implements MyDAO {
+    // Generated code here
+}
+```
+
+Your DAOBean can now be [Autowired](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html)
+in a Spring Boot application:
+```java
+private final MyDAO myDAO;
+
+@Autowired
+public MyController(MyDAO myDAO) {
+    this.myDAO = myDAO;
+}
+
+```
+
 TODO
 ----
 

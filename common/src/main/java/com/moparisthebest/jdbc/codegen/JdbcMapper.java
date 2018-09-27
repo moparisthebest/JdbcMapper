@@ -48,6 +48,13 @@ public interface JdbcMapper extends Closeable {
 		DatabaseType databaseType() default DatabaseType.DEFAULT;
 		String arrayNumberTypeName() default "";
 		String arrayStringTypeName() default "";
+
+		/**
+		 * Allows consumer of JdbcMapper.Mapper to generate DaoBean with Spring Boot Stereotype @Repository
+		 * Defaults to false
+		 * @return
+		 */
+		OptionalBool generateAsSpringBean() default OptionalBool.FALSE;
 	}
 
 	@Retention(RetentionPolicy.SOURCE)
