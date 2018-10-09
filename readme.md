@@ -415,7 +415,10 @@ TODO
 ----
 
  * DOCUMENTATION!!!!!
- * sql other than select return boolean, int > 0 ?
  * @RunInTransaction void support
  * QueryMapper mapping errors should be clearer, especially if a .finish(ResultSet) throws an error
  * check QueryMapper/ResultSetMapper closing of ResultSets, it doesn't look guaranteed
+ * CompilingResultSetMapper fails on inner class like 'public static class Bla {'
+ * Support Optional<T> for all T instead of null
+ * change boolean to be consistent with other primitives?
+ * make sure 'fallback to resultSet.toObject()' never happens at compile-time with JdbcMapper

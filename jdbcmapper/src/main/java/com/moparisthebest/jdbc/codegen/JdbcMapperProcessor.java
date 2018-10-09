@@ -877,18 +877,24 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								"\t\t\t}\n");
 						return;
 					} else if (!(types.isAssignable(o, inputStreamType) || types.isAssignable(o, blobType) || types.isAssignable(o, fileType) || types.isAssignable(o, byteArrayType))) {
-						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Blob only valid for String, byte[], Blob, InputStream, and File", specialParam.delegate);
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "JdbcMapper {blob:paramName} only valid for String, byte[], Blob, InputStream, and File", specialParam.delegate);
 						return;
 					}
+					// also if we have a blobStringCharset here it's only valid for String so error out
+					if(specialParam.blobStringCharset != null) {
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "JdbcMapper {blob:charset:paramName} charset can only be specified for String", specialParam.delegate);
+					}
+					break;
 				}
 				case CLOB: {
 					if (types.isAssignable(o, stringType)) {
 						method = "Clob";
 						variableName = variableName + " == null ? null : new java.io.StringReader(" + variableName + ")";
 					} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
-						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Clob only valid for String, Clob, Reader", specialParam.delegate);
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "JdbcMapper {clob:paramName} only valid for String, Clob, Reader", specialParam.delegate);
 						return;
 					}
+					break;
 				}
 			}
 		}
