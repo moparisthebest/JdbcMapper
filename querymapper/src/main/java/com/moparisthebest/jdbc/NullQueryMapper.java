@@ -13,12 +13,55 @@ import java.util.stream.Stream;
 
 public class NullQueryMapper extends QueryMapper {
 
-	protected final boolean verbose;
+	public static interface ThrowableHandler {
+		void handle(Throwable e);
+	}
+
+	//IFJAVA8_START
+	public static final ThrowableHandler safeHandler = e -> {throw new RuntimeException(e);}; // this is good, exceptions are propagated up stacks
+	public static final ThrowableHandler verboseHandler = Throwable::printStackTrace; // this is bad, don't swallow exceptions!
+	public static final ThrowableHandler quietHandler = e -> {}; // this is super bad
+	//IFJAVA8_END
+
+	/*IFJAVA6_START
+	public static final ThrowableHandler safeHandler = new ThrowableHandler() {
+		@Override
+		public void handle(Throwable e) {
+			throw new RuntimeException(e);
+		}
+	};
+	public static final ThrowableHandler verboseHandler = new ThrowableHandler() {
+		@Override
+		public void handle(Throwable e) {
+			e.printStackTrace();
+		}
+	};
+	public static final ThrowableHandler quietHandler = new ThrowableHandler() {
+		@Override
+		public void handle(Throwable e) {
+
+		}
+	};
+	IFJAVA6_END*/
+
+	protected final ThrowableHandler handler;
 	protected final QueryMapper delegate;
+	protected final boolean closeDelegate;
+
+	private NullQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, ThrowableHandler handler) {
+		this.handler = handler == null ? safeHandler : handler;
+		this.closeDelegate = delegate == null;
+		this.delegate = this.closeDelegate ? new QueryMapper(conn, jndiName, factory, cm) : delegate;
+	}
 
 	private NullQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, boolean verbose) {
-		this.verbose = verbose;
-		this.delegate = delegate == null ? new QueryMapper(conn, jndiName, factory, cm) : delegate;
+		this(conn, jndiName, factory, delegate, cm, verbose ? verboseHandler : quietHandler);
+	}
+
+	private NullQueryMapper(ThrowableHandler handler, QueryMapper delegate, boolean closeDelegate) {
+		this.handler = handler;
+		this.delegate = delegate;
+		this.closeDelegate = closeDelegate;
 	}
 
 	public NullQueryMapper(QueryMapper delegate, boolean verbose) {
@@ -77,9 +120,30 @@ public class NullQueryMapper extends QueryMapper {
 		this(factory, cm, true);
 	}
 
-	// todo: remove this refer to ListQueryMapper for why
-	public static NullQueryMapper wrap(final QueryMapper qm){
-		return qm instanceof NullQueryMapper ? (NullQueryMapper)qm : new NullQueryMapper(qm);
+	public static NullQueryMapper of(final Factory<QueryMapper> qmFactory, final ThrowableHandler handler) {
+		try {
+			return new NullQueryMapper(handler, qmFactory.create(), true);
+		} catch (Throwable e) {
+			handler.handle(e);
+		}
+		return null;
+	}
+
+	public static NullQueryMapper safe(final Factory<QueryMapper> qmFactory) {
+		return of(qmFactory, safeHandler);
+	}
+
+	public static NullQueryMapper of(final QueryMapper qm, final ThrowableHandler handler) {
+		try {
+			return new NullQueryMapper(handler, qm, false);
+		} catch (Throwable e) {
+			handler.handle(e);
+		}
+		return null;
+	}
+
+	public static NullQueryMapper safe(final QueryMapper qm) {
+		return of(qm, safeHandler);
 	}
 
 	// these update the database
@@ -89,7 +153,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.executeUpdate(ps, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -99,7 +163,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.executeUpdateSuccess(ps, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return false;
 	}
@@ -109,7 +173,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertGetGeneratedKey(ps, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -119,7 +183,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -129,7 +193,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.executeUpdate(sql, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -139,7 +203,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.executeUpdateSuccess(sql, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return false;
 	}
@@ -149,7 +213,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertGetGeneratedKey(sql, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -159,7 +223,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertGetGeneratedKeyType(sql, typeReference, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -169,7 +233,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertGetGeneratedKeyType(sql, psf, typeReference, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -181,7 +245,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.updateRows(dto);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -191,7 +255,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.updateRows(dtos);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -201,7 +265,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.updateRows(dtos);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -211,7 +275,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertRows(dto);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -221,7 +285,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertRows(dtos);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -231,7 +295,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.insertRows(dtos);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return -1;
 	}
@@ -243,7 +307,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSet(ps, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -253,7 +317,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSet(sql, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -263,7 +327,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSet(sql, psf, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -284,7 +348,8 @@ public class NullQueryMapper extends QueryMapper {
 
 	@Override
 	public void close() {
-		delegate.close();
+		if(closeDelegate)
+			delegate.close();
 	}
 
 	// and these are standard
@@ -296,15 +361,13 @@ public class NullQueryMapper extends QueryMapper {
 
 		NullQueryMapper that = (NullQueryMapper) o;
 
-		if (verbose != that.verbose) return false;
-		if (delegate != null ? !delegate.equals(that.delegate) : that.delegate != null) return false;
-
-		return true;
+		if (handler != null ? !handler.equals(that.handler) : that.handler != null) return false;
+		return delegate != null ? delegate.equals(that.delegate) : that.delegate == null;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (verbose ? 1 : 0);
+		int result = handler != null ? handler.hashCode() : 0;
 		result = 31 * result + (delegate != null ? delegate.hashCode() : 0);
 		return result;
 	}
@@ -312,7 +375,7 @@ public class NullQueryMapper extends QueryMapper {
 	@Override
 	public String toString() {
 		return "NullQueryMapper{" +
-				"verbose=" + verbose +
+				"handler=" + handler +
 				", delegate=" + delegate +
 				"}";
 	}
@@ -324,7 +387,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toObject(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -334,7 +397,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toObject(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -344,7 +407,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSetIterable(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -354,7 +417,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSetIterable(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -364,7 +427,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSetIterable(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -374,7 +437,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toResultSetIterable(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -386,7 +449,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toStream(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -396,7 +459,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toStream(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -410,7 +473,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toStream(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -420,7 +483,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toStream(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -432,7 +495,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toSingleMap(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -442,7 +505,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toSingleMap(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -452,7 +515,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toSingleMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -462,7 +525,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toSingleMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -472,7 +535,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toType(query, typeReference, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -482,7 +545,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toType(query, typeReference, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -492,7 +555,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollection(query, collectionType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -502,7 +565,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollection(query, collectionType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -512,7 +575,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollection(query, list, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -522,7 +585,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollection(query, list, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -532,7 +595,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMap(query, map, mapKeyType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -542,7 +605,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMap(query, map, mapKeyType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -552,7 +615,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollection(query, returnType, mapKeyType, collectionType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -562,7 +625,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollection(query, returnType, mapKeyType, collectionType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -572,7 +635,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollection(query, map, mapKeyType, collectionType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -582,7 +645,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollection(query, map, mapKeyType, collectionType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -592,7 +655,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListIterator(query, type, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -602,7 +665,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListIterator(query, type, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -612,7 +675,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toIterator(query, type, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -622,7 +685,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toIterator(query, type, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -632,7 +695,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toArray(query, type, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -642,7 +705,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toArray(query, type, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -652,7 +715,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toList(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -662,7 +725,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toList(query, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -672,7 +735,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMap(query, mapKeyType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -682,7 +745,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMap(query, mapKeyType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -692,7 +755,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapList(query, mapKeyType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -702,7 +765,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapList(query, mapKeyType, componentType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -712,7 +775,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollectionMap(query, collectionType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -722,7 +785,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollectionMap(query, collectionType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -732,7 +795,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollectionMap(query, list, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -742,7 +805,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toCollectionMap(query, list, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -752,7 +815,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, returnType, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -762,7 +825,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, returnType, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -772,7 +835,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, map, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -782,7 +845,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, map, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -792,7 +855,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollectionMap(query, returnType, mapKeyType, collectionType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -802,7 +865,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollectionMap(query, returnType, mapKeyType, collectionType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -812,7 +875,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollectionMap(query, map, mapKeyType, collectionType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -822,7 +885,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapCollectionMap(query, map, mapKeyType, collectionType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -832,7 +895,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListIteratorMap(query, type, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -842,7 +905,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListIteratorMap(query, type, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -852,7 +915,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toIteratorMap(query, type, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -862,7 +925,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toIteratorMap(query, type, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -872,7 +935,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toArrayMap(query, type, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -882,7 +945,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toArrayMap(query, type, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -892,7 +955,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListMap(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -902,7 +965,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListMap(query, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -912,7 +975,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -922,7 +985,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -932,7 +995,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapListMap(query, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -942,7 +1005,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapListMap(query, mapKeyType, componentType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -952,7 +1015,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListIteratorMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -962,7 +1025,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListIteratorMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -972,7 +1035,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toIteratorMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -982,7 +1045,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toIteratorMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -992,7 +1055,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -1002,7 +1065,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toListMap(query, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -1012,7 +1075,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, mapKeyType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -1022,7 +1085,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapMap(query, mapKeyType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -1032,7 +1095,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapListMap(query, mapKeyType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
@@ -1042,7 +1105,7 @@ public class NullQueryMapper extends QueryMapper {
 		try {
 			return delegate.toMapListMap(query, mapKeyType, mapValType, bindObjects);
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}

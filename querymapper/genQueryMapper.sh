@@ -118,7 +118,7 @@ EOF
 		try {
 			return delegate.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/query/' -e 's/) {/, bindObjects);/')
 		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
+			handler.handle(e);
 		}
 		return null;
 	}
