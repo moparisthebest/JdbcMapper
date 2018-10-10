@@ -165,19 +165,9 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public <T> T insertGetGeneratedKeyType(String sql, int[] columnIndexes, TypeReference<T> typeReference, Object... bindObjects) {
+	public <T> T insertGetGeneratedKeyType(String sql, PreparedStatementFactory psf, TypeReference<T> typeReference, Object... bindObjects) {
 		try {
-			return delegate.insertGetGeneratedKeyType(sql, columnIndexes, typeReference, bindObjects);
-		} catch (Throwable e) {
-			if (verbose) e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public <T> T insertGetGeneratedKeyType(String sql, String[] columnNames, TypeReference<T> typeReference, Object... bindObjects) {
-		try {
-			return delegate.insertGetGeneratedKeyType(sql, columnNames, typeReference, bindObjects);
+			return delegate.insertGetGeneratedKeyType(sql, psf, typeReference, bindObjects);
 		} catch (Throwable e) {
 			if (verbose) e.printStackTrace();
 		}
@@ -269,9 +259,9 @@ public class NullQueryMapper extends QueryMapper {
 	}
 
 	@Override
-	public ResultSet toResultSet(String sql, int rsType, int rsConcurrency, Object... bindObjects) throws SQLException {
+	public ResultSet toResultSet(String sql, PreparedStatementFactory psf, Object... bindObjects) {
 		try {
-			return delegate.toResultSet(sql, rsType, rsConcurrency, bindObjects);
+			return delegate.toResultSet(sql, psf, bindObjects);
 		} catch (Throwable e) {
 			if (verbose) e.printStackTrace();
 		}

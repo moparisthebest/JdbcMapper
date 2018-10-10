@@ -25,7 +25,32 @@ public class QueryMapper implements JdbcMapper {
 
 	protected static final int[] ORACLE_SINGLE_COLUMN_INDEX = new int[]{1};
 
+	//IFJAVA8_START
+	public static final PreparedStatementFactory oracleSingleColumnPsf = (conn, sql) -> conn.prepareStatement(sql, ORACLE_SINGLE_COLUMN_INDEX);
+	public static final PreparedStatementFactory standardReturnGeneratedKeysPsf = (conn, sql) -> conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	public static final PreparedStatementFactory defaultPsf = Connection::prepareStatement;
+	//IFJAVA8_END
+
 	/*IFJAVA6_START
+	public static final PreparedStatementFactory oracleSingleColumnPsf = new PreparedStatementFactory() {
+		@Override
+		public PreparedStatement prepareStatement(Connection conn, String sql) throws SQLException {
+			return conn.prepareStatement(sql, ORACLE_SINGLE_COLUMN_INDEX);
+		}
+	};
+	public static final PreparedStatementFactory standardReturnGeneratedKeysPsf = new PreparedStatementFactory() {
+		@Override
+		public PreparedStatement prepareStatement(Connection conn, String sql) throws SQLException {
+			return conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		}
+	};
+	public static final PreparedStatementFactory defaultPsf = new PreparedStatementFactory() {
+		@Override
+		public PreparedStatement prepareStatement(Connection conn, String sql) throws SQLException {
+			return conn.prepareStatement(sql);
+		}
+	};
+
 	private static final Charset UTF_8 = Charset.forName("UTF-8");
 	IFJAVA6_END*/
 
@@ -332,20 +357,27 @@ public class QueryMapper implements JdbcMapper {
 		}
 	}
 
-	private Boolean oracleDatabase = null;
-	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
+	private PreparedStatementFactory singleColumnPsf = null;
+	protected PreparedStatementFactory getSingleColumnPreparedStatementFactory() {
 		// this single function is somewhat database specific
 		// sqlite/ms-sql/mysql works with either Statement.RETURN_GENERATED_KEYS or int[]{1}
 		// oracle requires int[]{1} instead, failing on Statement.RETURN_GENERATED_KEYS
 		// postgre requires Statement.RETURN_GENERATED_KEYS instead, failing on int[]{1}
 
 		// so we lazily cache oracleDatabase just in this one function
-		if(oracleDatabase == null)
-			oracleDatabase = OptimalInList.isWrapperFor(conn, OptimalInList.oracleConnection);
+		if(singleColumnPsf == null) {
+			if(OptimalInList.isWrapperFor(conn, OptimalInList.oracleConnection))
+				singleColumnPsf = oracleSingleColumnPsf;
+			else
+				singleColumnPsf = standardReturnGeneratedKeysPsf;
+		}
+		return singleColumnPsf;
+	}
 
+	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = oracleDatabase ? conn.prepareStatement(sql, ORACLE_SINGLE_COLUMN_INDEX) : conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps = getSingleColumnPreparedStatementFactory().prepareStatement(conn, sql);
 			return this.insertGetGeneratedKey(ps, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -353,29 +385,13 @@ public class QueryMapper implements JdbcMapper {
 	}
 
 	public <T> T insertGetGeneratedKeyType(final String sql, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
-		PreparedStatement ps = null;
-		try {
-			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
-		} finally {
-			tryClose(ps);
-		}
+		return insertGetGeneratedKeyType(sql, standardReturnGeneratedKeysPsf, typeReference, bindObjects);
 	}
 
-	public <T> T insertGetGeneratedKeyType(final String sql, final int[] columnIndexes, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
+	public <T> T insertGetGeneratedKeyType(final String sql, final PreparedStatementFactory psf, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql, columnIndexes);
-			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
-		} finally {
-			tryClose(ps);
-		}
-	}
-
-	public <T> T insertGetGeneratedKeyType(final String sql, final String[] columnNames, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
-		PreparedStatement ps = null;
-		try {
-			ps = conn.prepareStatement(sql, columnNames);
+			ps = psf.prepareStatement(conn, sql);
 			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -422,17 +438,17 @@ public class QueryMapper implements JdbcMapper {
 		return bindExecute(ps, bindObjects);
 	}
 
-	public ResultSet toResultSet(String sql, final Object... bindObjects) throws SQLException {
-		return toResultSet(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, bindObjects);
+	public ResultSet toResultSet(final String sql, final Object... bindObjects) throws SQLException {
+		return toResultSet(sql, defaultPsf, bindObjects);
 	}
 	
-	public ResultSet toResultSet(String sql, int rsType, int rsConcurrency, final Object... bindObjects) throws SQLException {
+	public ResultSet toResultSet(final String sql, final PreparedStatementFactory psf, final Object... bindObjects) throws SQLException {
 		// works with StatementClosingResultSet
 		boolean error = true;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(sql, rsType, rsConcurrency);
+			ps = psf.prepareStatement(conn, sql);
 			rs = this.toResultSet(ps, bindObjects);
 			error = false;
 			return new StatementClosingResultSet(rs, ps);
