@@ -63,17 +63,30 @@ public class ListQueryMapper extends QueryMapper {
 
 	public static final String inListReplace = "{inList}";
 
-	private ListQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, InList inList) {
+	protected ListQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm, InList inList) {
 		this.inList = inList.instance(conn);
 		this.closeDelegate = delegate == null;
 		this.delegate = this.closeDelegate ? new QueryMapper(conn, jndiName, factory, cm) :
 				(delegate instanceof ListQueryMapper ? ((ListQueryMapper)delegate).delegate : delegate);
 	}
 
+	protected ListQueryMapper(Connection conn, String jndiName, Factory<Connection> factory, QueryMapper delegate, ResultSetMapper cm) {
+		this(conn, jndiName, factory, delegate, cm, defaultInList);
+	}
+
 	public ListQueryMapper(InList inList, QueryMapper delegate, boolean closeDelegate) {
 		this.delegate = delegate;
 		this.closeDelegate = closeDelegate;
 		this.inList = inList;
+	}
+
+	/**
+	 * Only meant to be called by implementing classes
+	 */
+	protected ListQueryMapper() {
+		this.delegate = null;
+		this.closeDelegate = false;
+		this.inList = null;
 	}
 
 	public ListQueryMapper(QueryMapper delegate, InList inList) {

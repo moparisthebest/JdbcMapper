@@ -64,6 +64,7 @@ query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java")"
 caching_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/CachingQueryMapper.java")"
 null_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/NullQueryMapper.java")"
 list_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/ListQueryMapper.java")"
+null_list_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/NullListQueryMapper.java")"
 
 cat src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java | grep public | grep '(ResultSet rs' | egrep -v '(int arrayMaxLength|Calendar cal)' | while read method
 do
@@ -71,7 +72,7 @@ do
     method_name=$(echo $method | egrep -o '[^ ]+\(')
     echo "QueryMapper.$method_name)"
 
-    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_START\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" >/dev/null
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_START\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" "$null_list_query" >/dev/null
 
     # QueryMapper.java
     cat >> "$query" <<EOF
@@ -124,7 +125,7 @@ EOF
 	}
 
 EOF
-    done >> "$null_query"
+    done | tee -a "$null_query" >> "$null_list_query"
 
     # ListQueryMapper.java
     cat >> "$list_query" <<EOF
@@ -140,7 +141,7 @@ EOF
 
 EOF
 
-    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_END\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" >/dev/null
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_END\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" "$null_list_query" >/dev/null
 
 done
 
@@ -148,3 +149,4 @@ finishFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/CachingQueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/NullQueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/ListQueryMapper.java"
+finishFile "src/main/java/com/moparisthebest/jdbc/NullListQueryMapper.java"
