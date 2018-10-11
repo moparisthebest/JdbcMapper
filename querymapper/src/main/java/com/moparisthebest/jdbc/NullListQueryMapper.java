@@ -5,14 +5,12 @@ import com.moparisthebest.jdbc.util.ResultSetIterable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
+//IFJAVA8_START
 import java.util.stream.Stream;
+//IFJAVA8_END
 
 import static com.moparisthebest.jdbc.NullQueryMapper.safeHandler;
-
-//IFJAVA8_START
-//IFJAVA8_END
 
 public class NullListQueryMapper extends ListQueryMapper {
 
@@ -90,7 +88,7 @@ public class NullListQueryMapper extends ListQueryMapper {
 	public <T> InList.InListObject inList(String columnName, Collection<T> values) {
 		try {
 			return delegate.inList(columnName, values);
-		} catch (SQLException e) {
+		} catch (Throwable e) {
 			handler.handle(e);
 		}
 		return null;
@@ -100,7 +98,7 @@ public class NullListQueryMapper extends ListQueryMapper {
 	public <T> InList.InListObject notInList(String columnName, Collection<T> values) {
 		try {
 			return delegate.notInList(columnName, values);
-		} catch (SQLException e) {
+		} catch (Throwable e) {
 			handler.handle(e);
 		}
 		return null;

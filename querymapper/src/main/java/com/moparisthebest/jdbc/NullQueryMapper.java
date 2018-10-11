@@ -5,7 +5,6 @@ import com.moparisthebest.jdbc.util.ResultSetIterable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 //IFJAVA8_START
 import java.util.stream.Stream;
