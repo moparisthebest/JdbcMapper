@@ -1,6 +1,8 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.*;
+import com.moparisthebest.jdbc.codegen.spring.SpringRepository;
+import com.moparisthebest.jdbc.codegen.spring.SpringScope;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -10,6 +12,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.*;
+import java.lang.annotation.Annotation;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -49,6 +52,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	}
 
 	static Types types;
+	static Elements elements;
 	static Messager messager;
 
 	public static Types getTypes() {
@@ -88,6 +92,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		java8 = RELEASE_8 != null && processingEnv.getSourceVersion().ordinal() >= RELEASE_8.ordinal();
 
 		types = processingEnv.getTypeUtils();
+		elements = processingEnv.getElementUtils();
 		messager = processingEnv.getMessager();
 		final Elements elements = processingEnv.getElementUtils();
 		sqlExceptionType = elements.getTypeElement(SQLException.class.getCanonicalName()).asType();
@@ -227,6 +232,26 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						w.write("import java.sql.*;\n\n");
 						w.write("import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n");
 						w.write("import static com.moparisthebest.jdbc.TryClose.tryClose;\n\n");
+
+						final SpringRepository springRepository = getLowestClassOrPackageAnnotation(genClass, SpringRepository.class);
+						if(springRepository != null) {
+							w.write("@org.springframework.stereotype.Repository");
+							if(!springRepository.value().isEmpty())
+								w.append("(\"").append(escapeJavaString(springRepository.value())).append("\")");
+							w.write("\n");
+						}
+
+						final SpringScope springScope = getLowestClassOrPackageAnnotation(genClass, SpringScope.class);
+						if(springScope != null) {
+							w.write("@org.springframework.context.annotation.Scope(");
+							if(!springScope.scopeName().isEmpty())
+								w.append("\n\tscopeName = \"").append(escapeJavaString(springScope.scopeName())).append("\",");
+							String proxyMode = springScope.proxyMode();
+							if(proxyMode.isEmpty())
+								proxyMode = isInterface ? "INTERFACES" : "TARGET_CLASS";
+							w.append("\n\tproxyMode = org.springframework.context.annotation.ScopedProxyMode.").append(proxyMode).append(")\n");
+						}
+
 						w.write("public class ");
 						w.write(className);
 						if (isInterface) {
@@ -1082,6 +1107,28 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			default:
 				return false;
 		}
+	}
+
+	private static final Pattern lastPackage = Pattern.compile("\\.?[^.]+$");
+	private static <A extends Annotation> A getLowestClassOrPackageAnnotation(final Element typeElement, final Class<A> annotationType) {
+		A ret = typeElement.getAnnotation(annotationType);
+		if(ret != null)
+			return ret;
+		PackageElement packageElement = elements.getPackageOf(typeElement);
+		while(packageElement != null) {
+			ret = packageElement.getAnnotation(annotationType);
+			if(ret != null)
+				return ret;
+			if(packageElement.isUnnamed())
+				break;
+			packageElement = elements.getPackageElement(lastPackage.matcher(packageElement.getQualifiedName()).replaceFirst(""));
+		}
+		return null;
+	}
+
+	private static String escapeJavaString(final String s) {
+		return s.replace("\"", "\\\"")
+				 .replace("\n", "\\n");
 	}
 
 	public static String toString(final Throwable e) {
