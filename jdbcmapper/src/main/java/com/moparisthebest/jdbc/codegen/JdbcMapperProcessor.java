@@ -611,7 +611,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 							w.write("\t}\n");
 
-							if(sqlChecker != null)
+							if(sqlChecker != null && eeMethod.getAnnotation(JdbcMapper.SkipSQLCheck.class) == null)
 								sqlChecker.checkSql(processingEnv, genClass, mapper, databaseType, eeMethod, sqlStatement, bindParams, arrayInList);
 						}
 

@@ -36,8 +36,11 @@ public class SimpleSQLChecker implements SQLChecker {
 				return;
 			}
 			conn.setAutoCommit(false);
+			final String sql = getSqlToExecute(classElement, conn, databaseType, sqlStatement);
+			if(sql == null)
+				return; // skip this test
 			qm = new QueryMapper(conn);
-			qm.executeUpdate(getSqlToExecute(classElement, conn, databaseType, sqlStatement), getFakeBindParams(bindParams, conn, arrayInList));
+			qm.executeUpdate(sql, getFakeBindParams(bindParams, conn, arrayInList));
 		} catch (Exception e) {
 			handleException(getMessager(), e, classElement, method);
 		} finally {
@@ -67,8 +70,10 @@ public class SimpleSQLChecker implements SQLChecker {
 				// oracle, being terrible, gives this error message for explain plans on MERGES
 				// so we will just execute those directly instead...
 				// ORA-00600: internal error code, arguments: [qctfrc : bfc], [22], [0], [5], [1], [1], [2], [371], [], [], [], []
+				// EXPLAIN PLAN FOR also does not work for BEGIN...
 				// we are assuming length is at least 5 after being trimmed, if anyone can come up with a valid SQL statement that is shorter let me know...
-				if (sqlStatement.trim().substring(0, 5).toUpperCase().equals("MERGE"))
+				final String firstWord = sqlStatement.trim().substring(0, 5).toUpperCase();
+				if (firstWord.equals("MERGE") || firstWord.equals("BEGIN"))
 					return sqlStatement;
 				return "EXPLAIN PLAN FOR " + sqlStatement;
 			case ANY:

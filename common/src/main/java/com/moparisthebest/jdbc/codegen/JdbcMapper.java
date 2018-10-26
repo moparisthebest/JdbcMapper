@@ -42,7 +42,7 @@ public interface JdbcMapper extends Closeable {
 		OptionalBool allowReflection() default OptionalBool.DEFAULT;
 
 		/**
-		 * This defaults to SimpleSQLParser, PrestoSQLParser is another option for Java 8, or implement your own
+		 * This is the database type, used for in lists and SQL checking
 		 * @return
 		 */
 		DatabaseType databaseType() default DatabaseType.DEFAULT;
@@ -63,6 +63,13 @@ public interface JdbcMapper extends Closeable {
 	 * Run this method in a transaction, useless on @SQL methods because they only run single statements, helpful on default or abstract methods that chain calls
 	 */
 	public @interface RunInTransaction {}
+
+	@Retention(RetentionPolicy.SOURCE)
+	@Target({ElementType.METHOD})
+	/**
+	 * This avoids calling sqlChecker on this method
+	 */
+	public @interface SkipSQLCheck {}
 
 	@Retention(RetentionPolicy.SOURCE)
 	@Target({ElementType.METHOD})
