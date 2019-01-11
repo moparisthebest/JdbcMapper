@@ -298,7 +298,7 @@ public class CompileTimeRowToObjectMapper {
 			if (modifiers.contains(Modifier.STATIC)) return false;
 			if (!modifiers.contains(Modifier.PUBLIC)) return false;
 			final TypeMirror methodReturnType = method.getReturnType();
-			if (TypeKind.VOID != method.getReturnType().getKind() && !rsm.types.isSameType(enclosingClass, methodReturnType)) return false;
+			if (TypeKind.VOID != methodReturnType.getKind() && !rsm.types.isSameType(enclosingClass, methodReturnType)) return false;
 
 			// method parameter checks
 			final List<? extends VariableElement> params = method.getParameters();
