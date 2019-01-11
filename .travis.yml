@@ -50,7 +50,6 @@ matrix:
       addons:
         apt:
           packages:
-            - openjdk-6-jdk
             - ca-certificates-java
             - openjdk-7-jre-headless
       script:
@@ -62,7 +61,6 @@ matrix:
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
-      jdk: openjdk6
     - env: JDK='OpenJDK 7'
       jdk: openjdk7
       script:
@@ -83,8 +81,6 @@ matrix:
       jdk: oraclejdk9
     - env: JDK='OpenJDK 10'
       install: . ./install-jdk.sh -F 10 -L GPL
-    - env: JDK='OracleJDK 10'
-      install: . ./install-jdk.sh -F 10 -L BCL
     - env: JDK='OpenJDK 11'
       install: . ./install-jdk.sh -F 11 -L GPL
     - env: JDK='OracleJDK 11'
@@ -93,6 +89,11 @@ matrix:
 before_install:
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
   - mkdir -p $HOME/.traviscache
+  - if [[ "${JDK}" == 'OpenJDK 6' ]]; then
+      [ -f $HOME/.traviscache/jdk6-6u45-6-x86_64.pkg.tar.xz ] || wget -q -O$HOME/.traviscache/jdk6-6u45-6-x86_64.pkg.tar.xz https://www.moparisthebest.com/jdk6-6u45-6-x86_64.pkg.tar.xz;
+      sudo tar xJvf $HOME/.traviscache/jdk6-6u45-6-x86_64.pkg.tar.xz -C /;
+      export JAVA_HOME=/usr/lib/jvm/java-6-jdk;
+    fi
   - .travis/oracle/download.sh
   - .travis/oracle/install.sh
 
