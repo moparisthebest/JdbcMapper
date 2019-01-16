@@ -24,6 +24,24 @@ Goals
 4. Be runnable and testable inside or outside of containers easily
 5. No surprises, as little magic as possible
 
+Non-Goals
+---------
+
+1. Generating your SQL
+2. Generating your Java POJOs
+
+Builds/tests
+------------
+
+[![Travis-CI Build Status](https://api.travis-ci.org/moparisthebest/JdbcMapper.svg?branch=master)](https://travis-ci.org/moparisthebest/JdbcMapper)
+
+JdbcMapper is currently built and tested using travis-ci on every version of Java 6 to 13, and against all 
+databases/drivers that could be found, currently [MariaDB](https://mariadb.org) ([MySQL](https://www.mysql.com/)), 
+[PostgreSQL](https://www.postgresql.org/), [Oracle](https://www.oracle.com/database/technologies/appdev/xe.html), 
+[MS-SQL](https://www.microsoft.com/en-us/sql-server), [SQLite](https://sqlite.org), [H2](https://www.h2database.com/), 
+[hsqldb](http://hsqldb.org/), and [derby](https://db.apache.org/derby/).  It *should* work on any database with a JDBC 
+compliant API, or even only partially JDBC compliant, like Oracle...
+
 JdbcMapper
 ----------
 
