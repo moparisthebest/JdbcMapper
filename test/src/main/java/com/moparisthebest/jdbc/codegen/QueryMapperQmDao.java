@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import java.time.*;
 //IFJAVA8_END
 
-import static com.moparisthebest.jdbc.ListQueryMapper.inListReplace;
+import static com.moparisthebest.jdbc.QueryMapper.inListReplace;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 
 public class QueryMapperQmDao implements QmDao {
@@ -56,11 +56,9 @@ public class QueryMapperQmDao implements QmDao {
 	public static final String selectStrVal = "SELECT str_val FROM val WHERE val_no = ?";
 
 	protected final QueryMapper qm;
-	protected final ListQueryMapper lqm;
 
 	public QueryMapperQmDao(final Connection conn, final ResultSetMapper rsm) {
 		this.qm = new QueryMapper(conn, rsm);
-		this.lqm = new ListQueryMapper(qm);
 	}
 
 	@Override
@@ -72,13 +70,8 @@ public class QueryMapperQmDao implements QmDao {
 		return qm;
 	}
 
-	public ListQueryMapper getLqm() {
-		return lqm;
-	}
-
 	@Override
 	public void close() {
-		tryClose(lqm);
 		tryClose(qm);
 	}
 
@@ -386,28 +379,28 @@ public class QueryMapperQmDao implements QmDao {
 
 	@Override
 	public List<FieldPerson> getFieldPeopleStream(final Stream<Long> personNos) throws SQLException {
-		return lqm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.inList("person_no", personNos.collect(Collectors.toList())));
+		return qm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, qm.inList("person_no", personNos.collect(Collectors.toList())));
 	}
 
 	//IFJAVA8_END
 
 	@Override
 	public List<FieldPerson> getFieldPeople(final List<Long> personNos) throws SQLException {
-		return lqm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.inList("person_no", personNos));
+		return qm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, qm.inList("person_no", personNos));
 	}
 
 	@Override
 	public List<FieldPerson> getFieldPeopleByName(final List<Long> personNos, final List<String> names) throws SQLException {
-		return lqm.toList("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
+		return qm.toList("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
 				FieldPerson.class,
-				lqm.inList("person_no", personNos),
-				lqm.inList("first_name", names),
-				lqm.inList("last_name", names)
+				qm.inList("person_no", personNos),
+				qm.inList("first_name", names),
+				qm.inList("last_name", names)
 				);
 	}
 
 	@Override
 	public List<FieldPerson> getFieldPeopleNotIn(final List<Long> personNos) throws SQLException {
-		return lqm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, lqm.notInList("person_no", personNos));
+		return qm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, qm.notInList("person_no", personNos));
 	}
 }

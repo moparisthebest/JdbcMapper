@@ -1,6 +1,5 @@
 package com.moparisthebest.jdbc.codegen;
 
-import com.moparisthebest.jdbc.ListQueryMapper;
 import com.moparisthebest.jdbc.ResultSetMapper;
 import com.moparisthebest.jdbc.TypeReference;
 import com.moparisthebest.jdbc.dto.*;
@@ -18,7 +17,7 @@ import java.util.stream.Stream;
 import java.time.*;
 //IFJAVA8_END
 
-import static com.moparisthebest.jdbc.ListQueryMapper.inListReplace;
+import static com.moparisthebest.jdbc.QueryMapper.inListReplace;
 
 public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 
@@ -335,28 +334,28 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 
 	@Override
 	public List<FieldPerson> getFieldPeopleStream(final Stream<Long> personNos) throws SQLException {
-		return lqm.toType("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.inList("person_no", personNos.collect(Collectors.toList())));
+		return qm.toType("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, qm.inList("person_no", personNos.collect(Collectors.toList())));
 	}
 
 	//IFJAVA8_END
 
 	@Override
 	public List<FieldPerson> getFieldPeople(final List<Long> personNos) throws SQLException {
-		return lqm.toType("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.inList("person_no", personNos));
+		return qm.toType("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, qm.inList("person_no", personNos));
 	}
 
 	@Override
 	public List<FieldPerson> getFieldPeopleByName(final List<Long> personNos, final List<String> names) throws SQLException {
-		return lqm.toType("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
+		return qm.toType("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
 				new TypeReference<List<FieldPerson>>() {},
-				lqm.inList("person_no", personNos),
-				lqm.inList("first_name", names),
-				lqm.inList("last_name", names)
+				qm.inList("person_no", personNos),
+				qm.inList("first_name", names),
+				qm.inList("last_name", names)
 		);
 	}
 
 	@Override
 	public List<FieldPerson> getFieldPeopleNotIn(final List<Long> personNos) throws SQLException {
-		return lqm.toType("SELECT * from person WHERE " + ListQueryMapper.inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, lqm.notInList("person_no", personNos));
+		return qm.toType("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, qm.notInList("person_no", personNos));
 	}
 }
