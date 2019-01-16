@@ -6,6 +6,7 @@ import com.moparisthebest.jdbc.util.ResultSetIterable;
 import com.moparisthebest.jdbc.util.ResultSetUtil;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.sql.*;
 import java.util.*;
@@ -54,11 +55,51 @@ public class QueryMapper implements JdbcMapper {
 	private static final Charset UTF_8 = Charset.forName("UTF-8");
 	IFJAVA6_END*/
 
+	protected static final InList defaultInList = getDefaultInList();
+
+	private static InList getDefaultInList() {
+		try {
+			final String inListClassName = System.getProperty("QueryMapper.defaultInList.class");
+			if(inListClassName != null) {
+				final Class<?> inListClass = Class.forName(inListClassName);
+				final Method method = inListClass.getMethod(System.getProperty("QueryMapper.defaultInList.method", "instance"));
+				return (InList) method.invoke(null);
+			} else {
+				// todo: change default to OPTIMAL ?
+				final String type = System.getProperty("queryMapper.databaseType", System.getProperty("jdbcMapper.databaseType", "BIND"));
+				if(type.equals("OPTIMAL")) {
+					return OptimalInList.instance();
+				} else {
+					switch (JdbcMapper.DatabaseType.valueOf(type)) {
+						case DEFAULT:
+						case BIND:
+							return BindInList.instance();
+						case ANY:
+							return ArrayInList.instance();
+						case ORACLE:
+							return OracleArrayInList.instance();
+						case UNNEST:
+							return UnNestArrayInList.instance();
+						default:
+							throw new RuntimeException("Invalid queryMapper.databaseType: " + type);
+					}
+				}
+			}
+		} catch (Throwable e) {
+			// NEVER ignore
+			throw new RuntimeException(e);
+		}
+	}
+
 	protected final ResultSetMapper cm;
 	protected final Connection conn;
 	protected final boolean closeConn;
 
-	protected QueryMapper(Connection conn, final String jndiName, Factory<Connection> factory, final ResultSetMapper cm) {
+	protected boolean inListEnabled = false;
+	protected final InList inList;
+	public static final String inListReplace = "{inList}";
+
+	protected QueryMapper(Connection conn, final String jndiName, Factory<Connection> factory, final ResultSetMapper cm, final InList inList) {
 		this.cm = cm == null ? defaultRsm : cm;
 		boolean closeConn = false;
 		if(conn == null) {
@@ -76,7 +117,13 @@ public class QueryMapper implements JdbcMapper {
 		if (conn == null)
 			throw new NullPointerException("Connection needs to be non-null for QueryMapper...");
 		this.conn = conn;
+		this.inList = inList.instance(conn);
 		this.closeConn = closeConn;
+	}
+
+
+	protected QueryMapper(Connection conn, final String jndiName, Factory<Connection> factory, final ResultSetMapper cm) {
+		this(conn, jndiName, factory, cm, defaultInList);
 	}
 
 	public QueryMapper(Connection conn, ResultSetMapper cm) {
@@ -110,6 +157,7 @@ public class QueryMapper implements JdbcMapper {
 		this.cm = null;
 		this.conn = null;
 		this.closeConn = false;
+		this.inList = defaultInList;
 	}
 
 	@Override
@@ -167,6 +215,51 @@ public class QueryMapper implements JdbcMapper {
 	public static Object wrapBlob(final String s, final Charset charset) {
 		return new BlobString(s, charset == null ? UTF_8 : charset);
 	}
+
+	// start in list specific code
+	protected PreparedStatement getPreparedStatement(final String sql, final Object... bindObjects) throws SQLException {
+		return getPreparedStatement(sql, defaultPsf, bindObjects);
+	}
+
+	protected PreparedStatement getPreparedStatement(final String sql, final PreparedStatementFactory psf, final Object... bindObjects) throws SQLException {
+		return psf.prepareStatement(conn, prepareInListSql(sql, bindObjects));
+	}
+
+	private static StringBuilder recursiveReplace(final StringBuilder sb, final Object... bindObjects) {
+		if (bindObjects != null && bindObjects.length > 0) {
+			for (Object o : bindObjects) {
+				if (o != null && o != QueryMapper.noBind) {
+					if (o instanceof InList.InListObject) {
+						final int startIndex = sb.indexOf(inListReplace);
+						if (startIndex < -1)
+							return sb; // we've replaced all, maybe an error? meh
+						sb.replace(startIndex, startIndex + inListReplace.length(), o.toString());
+					} else if (o instanceof Object[]) {
+						recursiveReplace(sb, (Object[]) o);
+					} else if (o instanceof Collection) {
+						recursiveReplace(sb, ((Collection) o).toArray());
+					}
+				}
+			}
+		}
+		return sb;
+	}
+
+	protected String prepareInListSql(final String sql, final Object... bindObjects) {
+		return inListEnabled && sql.contains(inListReplace) ? recursiveReplace(new StringBuilder(sql), bindObjects).toString() : sql;
+	}
+
+	public <T> InList.InListObject inList(final String columnName, final Collection<T> values) throws SQLException {
+		this.inListEnabled = true; // worth checking if it's already this or not?
+		return this.inList.inList(conn, columnName, values);
+	}
+
+	public <T> InList.InListObject notInList(final String columnName, final Collection<T> values) throws SQLException {
+		this.inListEnabled = true; // worth checking if it's already this or not?
+		return this.inList.notInList(conn, columnName, values);
+	}
+
+	// end in list specific code
 
 	public static void setObject(final PreparedStatement ps, final int index, final Object o) throws SQLException {
 		// we are going to put most common ones up top so it should execute faster normally
@@ -340,7 +433,7 @@ public class QueryMapper implements JdbcMapper {
 	public int executeUpdate(String sql, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.executeUpdate(ps, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -350,7 +443,7 @@ public class QueryMapper implements JdbcMapper {
 	public boolean executeUpdateSuccess(String sql, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.executeUpdateSuccess(ps, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -469,7 +562,7 @@ public class QueryMapper implements JdbcMapper {
 		ResultSet rs = null;
 		T ret = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			rs = this.toResultSet(ps, bindObjects);
 			ret = cm.toType(rs, typeReference);
 			if(ret instanceof ResultSetIterable) {
@@ -514,7 +607,7 @@ public class QueryMapper implements JdbcMapper {
 		ResultSet rs = null;
 		ResultSetIterable<T> ret = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			rs = this.toResultSet(ps, bindObjects);
 			ret = cm.toResultSetIterable(rs, componentType).setPreparedStatementToClose(ps);
 			error = false;
@@ -534,7 +627,7 @@ public class QueryMapper implements JdbcMapper {
 		ResultSet rs = null;
 		ResultSetIterable<Map<String, V>> ret = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			rs = this.toResultSet(ps, bindObjects);
 			ret = cm.toResultSetIterable(rs, componentType, mapValType).setPreparedStatementToClose(ps);
 			error = false;
@@ -555,7 +648,7 @@ public class QueryMapper implements JdbcMapper {
 		ResultSet rs = null;
 		Stream<T> ret = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			rs = this.toResultSet(ps, bindObjects);
 			final PreparedStatement finalPs = ps;
 			ret = cm.toStream(rs, componentType).onClose(() -> tryClose(finalPs));
@@ -576,7 +669,7 @@ public class QueryMapper implements JdbcMapper {
 		ResultSet rs = null;
 		Stream<Map<String, V>> ret = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			rs = this.toResultSet(ps, bindObjects);
 			final PreparedStatement finalPs = ps;
 			ret = cm.toStream(rs, componentType, mapValType).onClose(() -> tryClose(finalPs));
@@ -611,7 +704,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T> T toObject(String sql, Class<T> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toObject(ps, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -649,7 +742,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<String, V>, V> Map<String, V> toSingleMap(String sql, Class<T> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toSingleMap(ps, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -663,7 +756,7 @@ public class QueryMapper implements JdbcMapper {
 	public <V> Map<String, V> toSingleMap(String sql, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toSingleMap(ps, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -681,7 +774,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Collection<E>, E> T toCollection(String sql, final Class<T> collectionType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toCollection(ps, collectionType, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -695,7 +788,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Collection<E>, E> T toCollection(String sql, T list, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toCollection(ps, list, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -709,7 +802,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, E>, K, E> T toMap(String sql, T map, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMap(ps, map, mapKeyType, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -723,7 +816,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, E>, K, E extends Collection<C>, C> T toMapCollection(String sql, final Class<T> returnType, Class<K> mapKeyType, Class<E> collectionType, Class<C> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapCollection(ps, returnType, mapKeyType, collectionType, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -737,7 +830,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, E>, K, E extends Collection<C>, C> T toMapCollection(String sql, T map, Class<K> mapKeyType, Class<E> collectionType, Class<C> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapCollection(ps, map, mapKeyType, collectionType, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -751,7 +844,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T> ListIterator<T> toListIterator(String sql, final Class<T> type, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toListIterator(ps, type, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -765,7 +858,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T> Iterator<T> toIterator(String sql, final Class<T> type, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toIterator(ps, type, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -779,7 +872,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T> T[] toArray(String sql, final Class<T> type, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toArray(ps, type, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -793,7 +886,7 @@ public class QueryMapper implements JdbcMapper {
 	public <E> List<E> toList(String sql, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toList(ps, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -807,7 +900,7 @@ public class QueryMapper implements JdbcMapper {
 	public <K, E> Map<K, E> toMap(String sql, Class<K> mapKeyType, Class<E> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMap(ps, mapKeyType, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -821,7 +914,7 @@ public class QueryMapper implements JdbcMapper {
 	public <K, E extends List<C>, C> Map<K, E> toMapList(String sql, Class<K> mapKeyType, Class<C> componentType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapList(ps, mapKeyType, componentType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -835,7 +928,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Collection<E>, E extends Map<String, V>, V> T toCollectionMap(String sql, final Class<T> collectionType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toCollectionMap(ps, collectionType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -849,7 +942,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Collection<E>, E extends Map<String, V>, V> T toCollectionMap(String sql, T list, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toCollectionMap(ps, list, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -863,7 +956,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, E>, K, E extends Map<String, V>, V> T toMapMap(String sql, final Class<T> returnType, Class<K> mapKeyType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapMap(ps, returnType, mapKeyType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -877,7 +970,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, E>, K, E extends Map<String, V>, V> T toMapMap(String sql, T map, Class<K> mapKeyType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapMap(ps, map, mapKeyType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -891,7 +984,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, C>, K, C extends Collection<E>, E extends Map<String, V>, V> T toMapCollectionMap(String sql, final Class<T> returnType, Class<K> mapKeyType, Class<C> collectionType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapCollectionMap(ps, returnType, mapKeyType, collectionType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -905,7 +998,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<K, C>, K, C extends Collection<E>, E extends Map<String, V>, V> T toMapCollectionMap(String sql, T map, Class<K> mapKeyType, Class<C> collectionType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapCollectionMap(ps, map, mapKeyType, collectionType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -919,7 +1012,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<String, V>, V> ListIterator<Map<String, V>> toListIteratorMap(String sql, final Class<T> type, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toListIteratorMap(ps, type, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -933,7 +1026,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<String, V>, V> Iterator<Map<String, V>> toIteratorMap(String sql, final Class<T> type, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toIteratorMap(ps, type, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -947,7 +1040,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T extends Map<String, V>, V> Map<String, V>[] toArrayMap(String sql, final Class<T> type, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toArrayMap(ps, type, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -961,7 +1054,7 @@ public class QueryMapper implements JdbcMapper {
 	public <E extends Map<String, V>, V> List<Map<String, V>> toListMap(String sql, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toListMap(ps, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -975,7 +1068,7 @@ public class QueryMapper implements JdbcMapper {
 	public <K, E extends Map<String, V>, V> Map<K, Map<String, V>> toMapMap(String sql, Class<K> mapKeyType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapMap(ps, mapKeyType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -989,7 +1082,7 @@ public class QueryMapper implements JdbcMapper {
 	public <K, E extends Map<String, V>, V> Map<K, List<Map<String, V>>> toMapListMap(String sql, Class<K> mapKeyType, Class<E> componentType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapListMap(ps, mapKeyType, componentType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -1003,7 +1096,7 @@ public class QueryMapper implements JdbcMapper {
 	public <V> ListIterator<Map<String, V>> toListIteratorMap(String sql, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toListIteratorMap(ps, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -1017,7 +1110,7 @@ public class QueryMapper implements JdbcMapper {
 	public <V> Iterator<Map<String, V>> toIteratorMap(String sql, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toIteratorMap(ps, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -1031,7 +1124,7 @@ public class QueryMapper implements JdbcMapper {
 	public <V> List<Map<String, V>> toListMap(String sql, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toListMap(ps, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -1045,7 +1138,7 @@ public class QueryMapper implements JdbcMapper {
 	public <K, V> Map<K, Map<String, V>> toMapMap(String sql, Class<K> mapKeyType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapMap(ps, mapKeyType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -1059,7 +1152,7 @@ public class QueryMapper implements JdbcMapper {
 	public <K, V> Map<K, List<Map<String, V>>> toMapListMap(String sql, Class<K> mapKeyType, Class<V> mapValType, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.toMapListMap(ps, mapKeyType, mapValType, bindObjects);
 		} finally {
 			tryClose(ps);

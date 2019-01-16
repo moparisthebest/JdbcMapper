@@ -63,8 +63,6 @@ finishFile "src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java"
 query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java")"
 caching_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/CachingQueryMapper.java")"
 null_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/NullQueryMapper.java")"
-list_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/ListQueryMapper.java")"
-null_list_query="$(prepareFile "src/main/java/com/moparisthebest/jdbc/NullListQueryMapper.java")"
 
 cat src/main/java/com/moparisthebest/jdbc/ResultSetMapper.java | grep public | grep '(ResultSet rs' | egrep -v '(int arrayMaxLength|Calendar cal)' | while read method
 do
@@ -72,7 +70,7 @@ do
     method_name=$(echo $method | egrep -o '[^ ]+\(')
     echo "QueryMapper.$method_name)"
 
-    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_START\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" "$null_list_query" >/dev/null
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_START\n' | tee -a "$query" "$caching_query" "$null_query" >/dev/null
 
     # QueryMapper.java
     cat >> "$query" <<EOF
@@ -89,7 +87,7 @@ EOF
 	$(echo $method | sed -e 's/ResultSet rs/String sql/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement(sql);
+			ps = getPreparedStatement(sql, bindObjects);
 			return this.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/ps/' -e 's/) {/, bindObjects);/')
 		} finally {
 			tryClose(ps);
@@ -104,7 +102,7 @@ EOF
     cat >> "$caching_query" <<EOF
 	@Override
 	$(echo $method | sed -e 's/ResultSet rs/String sql/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
-		return super.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/getPreparedStatement(sql)/' -e 's/) {/, bindObjects);/')
+		return super.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/getPreparedStatement(sql, bindObjects)/' -e 's/) {/, bindObjects);/')
 	}
 
 EOF
@@ -125,28 +123,12 @@ EOF
 	}
 
 EOF
-    done | tee -a "$null_query" >> "$null_list_query"
+    done >> "$null_query"
 
-    # ListQueryMapper.java
-    cat >> "$list_query" <<EOF
-	@Override
-	$(echo $method | sed -e 's/ResultSet rs/PreparedStatement ps/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
-		return delegate.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/ps/' -e 's/) {/, bindObjects);/')
-	}
-
-	@Override
-	$(echo $method | sed -e 's/ResultSet rs/String sql/' -e 's/) {/, final Object... bindObjects) throws SQLException {/')
-		return delegate.$method_name$(echo $method | sed -e 's/^.*(//' -e 's/final //g' -e 's/, [^ ]* /, /g' -e 's/ResultSet rs/prepareSql(sql, bindObjects)/' -e 's/) {/, bindObjects);/')
-	}
-
-EOF
-
-    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_END\n' | tee -a "$query" "$caching_query" "$null_query" "$list_query" "$null_list_query" >/dev/null
+    [ "$method_name" == 'toStream(' ] && echo -e '\t//IFJAVA8_END\n' | tee -a "$query" "$caching_query" "$null_query" >/dev/null
 
 done
 
 finishFile "src/main/java/com/moparisthebest/jdbc/QueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/CachingQueryMapper.java"
 finishFile "src/main/java/com/moparisthebest/jdbc/NullQueryMapper.java"
-finishFile "src/main/java/com/moparisthebest/jdbc/ListQueryMapper.java"
-finishFile "src/main/java/com/moparisthebest/jdbc/NullListQueryMapper.java"

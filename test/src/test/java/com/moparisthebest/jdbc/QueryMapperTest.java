@@ -467,7 +467,6 @@ public class QueryMapperTest {
 		if(!(qm instanceof QueryMapperQmDao))
 			return;
 		final QueryMapper qm = ((QueryMapperQmDao)this.qm).getQm();
-
 		try {
 			// auto increment stuff for getGeneratedKeys, how obnoxious are these subtle differences...
 			if (isWrapperFor(qm.getConnection(), classForName("org.sqlite.SQLiteConnection"))) {

@@ -145,6 +145,26 @@ public class NullQueryMapper extends QueryMapper {
 		return of(qm, safeHandler);
 	}
 
+	@Override
+	public <T> InList.InListObject inList(String columnName, Collection<T> values) {
+		try {
+			return delegate.inList(columnName, values);
+		} catch (Throwable e) {
+			handler.handle(e);
+		}
+		return null;
+	}
+
+	@Override
+	public <T> InList.InListObject notInList(String columnName, Collection<T> values) {
+		try {
+			return delegate.notInList(columnName, values);
+		} catch (Throwable e) {
+			handler.handle(e);
+		}
+		return null;
+	}
+
 	// these update the database
 
 	@Override
