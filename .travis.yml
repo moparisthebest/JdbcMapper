@@ -83,8 +83,10 @@ matrix:
       install: . ./install-jdk.sh -F 10 -L GPL
     - env: JDK='OpenJDK 11'
       install: . ./install-jdk.sh -F 11 -L GPL
-    - env: JDK='OracleJDK 11'
-      install: . ./install-jdk.sh -F 11 -L BCL
+    - env: JDK='OpenJDK 12'
+      install: . ./install-jdk.sh -F 12 -L GPL
+    - env: JDK='OpenJDK 13'
+      install: . ./install-jdk.sh -F 13 -L GPL
 
 before_install:
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
