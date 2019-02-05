@@ -403,4 +403,14 @@ public class QueryMapperQmDao implements QmDao {
 	public List<FieldPerson> getFieldPeopleNotIn(final List<Long> personNos) throws SQLException {
 		return qm.toList("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", FieldPerson.class, qm.notInList("person_no", personNos));
 	}
+
+	@Override
+	public long insertGetGeneratedKeyOracle(final long value) throws SQLException {
+		return qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_no, a_thaoeu_table_val) VALUES (a_thaoeu_table_seq.nextval, ?)", value);
+	}
+
+	@Override
+	public long insertGetGeneratedKey(long value) throws SQLException {
+		return qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_val) VALUES (?)", value);
+	}
 }

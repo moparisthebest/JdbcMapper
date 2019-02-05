@@ -14,7 +14,7 @@ import java.time.*;
 //IFJAVA8_END
 
 @JdbcMapper.Mapper(
-		cachePreparedStatements = JdbcMapper.OptionalBool.FALSE
+		cachePreparedStatements = JdbcMapper.OptionalBool.TRUE
 		, allowReflection = JdbcMapper.OptionalBool.TRUE
 )
 public interface QmDao extends JdbcMapper {
@@ -258,4 +258,10 @@ public interface QmDao extends JdbcMapper {
 
 	@SQL("SELECT person_no, first_name, last_name, birth_date from person WHERE {person_no NOT IN personNos} ORDER BY person_no")
 	List<FieldPerson> getFieldPeopleNotIn(List<Long> personNos) throws SQLException;
+
+	@SQL("INSERT INTO a_thaoeu_table (a_thaoeu_table_no, a_thaoeu_table_val) VALUES (a_thaoeu_table_seq.nextval, {value})")
+	long insertGetGeneratedKeyOracle(long value) throws SQLException;
+
+	@SQL("INSERT INTO a_thaoeu_table (a_thaoeu_table_val) VALUES ({value})")
+	long insertGetGeneratedKey(long value) throws SQLException;
 }

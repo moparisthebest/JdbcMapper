@@ -501,8 +501,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								setArray(w, databaseType, arrayNumberTypeName, arrayStringTypeName, param);
 							w.write("\t\t\tps = ");
 							final boolean isGeneratedKeyLong = !parsedSQl.isSelect() && (returnType.equals("long") || returnType.equals("java.lang.Long"));
-							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements) && !bindInList;
-							if (cachePreparedStatements && !isGeneratedKeyLong) { // make isGeneratedKeyLong work with cachePreparedStatements
+							// todo: make isGeneratedKeyLong work with cachePreparedStatements
+							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements) && !bindInList && !isGeneratedKeyLong;
+							if (cachePreparedStatements) {
 								w.write("this.prepareStatement(");
 								w.write(Integer.toString(cachedPreparedStatements));
 								w.write(", ");

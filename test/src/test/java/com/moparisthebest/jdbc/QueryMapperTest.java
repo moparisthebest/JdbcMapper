@@ -464,10 +464,9 @@ public class QueryMapperTest {
 
 	@Test
 	public void testGetGeneratedKeysSingleLong() throws SQLException {
-		if(!(qm instanceof QueryMapperQmDao))
-			return;
-		final QueryMapper qm = ((QueryMapperQmDao)this.qm).getQm();
+		QueryMapper qm = null;
 		try {
+			qm = new QueryMapper(this.qm.getConnection());
 			// auto increment stuff for getGeneratedKeys, how obnoxious are these subtle differences...
 			if (isWrapperFor(qm.getConnection(), classForName("org.sqlite.SQLiteConnection"))) {
 				qm.executeUpdate("CREATE TABLE a_thaoeu_table(\n" +
@@ -501,7 +500,7 @@ public class QueryMapperTest {
 						"CACHE 10");
 				// so different we have to do test here
 				for (long expected = 1; expected < 5; ++expected) {
-					final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_no, a_thaoeu_table_val) VALUES (a_thaoeu_table_seq.nextval, ?)", expected * 2);
+					final long autoTableNo = this.qm.insertGetGeneratedKeyOracle(expected * 2);
 					assertEquals(expected, autoTableNo);
 				}
 				return;
@@ -510,16 +509,18 @@ public class QueryMapperTest {
 			}
 
 			for (long expected = 1; expected < 5; ++expected) {
-				final long autoTableNo = qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_val) VALUES (?)", expected * 2);
+				final long autoTableNo = this.qm.insertGetGeneratedKey(expected * 2);
 				assertEquals(expected, autoTableNo);
 			}
 		} finally {
-			try {
-				qm.executeUpdate("DROP TABLE a_thaoeu_table");
-				qm.executeUpdate("DROP SEQUENCE  a_thaoeu_table_seq");
-			} catch(Exception e) {
-				// ignore
-			}
+			if(qm != null)
+				try {
+					qm.executeUpdate("DROP TABLE a_thaoeu_table");
+					qm.executeUpdate("DROP SEQUENCE  a_thaoeu_table_seq");
+				} catch(Exception e) {
+					// ignore
+				}
+			tryClose(qm);
 		}
 	}
 
