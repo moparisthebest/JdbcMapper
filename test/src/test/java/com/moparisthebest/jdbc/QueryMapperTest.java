@@ -498,6 +498,11 @@ public class QueryMapperTest {
 						"START WITH 1\n" +
 						"INCREMENT BY 1\n" +
 						"CACHE 10");
+
+				// if this is JdbcMapper, not QueryMapper, this will fail unless compiled for ORACLE, so just exit early unless that's the case
+				if(!(this.qm instanceof QueryMapperQmDao) && !"ORACLE".equals(System.getProperty("jdbcMapper.databaseType")))
+					return;
+
 				// so different we have to do test here
 				for (long expected = 1; expected < 5; ++expected) {
 					final long autoTableNo = this.qm.insertGetGeneratedKeyOracle(expected * 2);
