@@ -2,8 +2,7 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.*;
 import com.moparisthebest.jdbc.dto.*;
-import com.moparisthebest.jdbc.util.CaseInsensitiveHashMap;
-import com.moparisthebest.jdbc.util.ResultSetIterable;
+import com.moparisthebest.jdbc.util.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -392,11 +391,11 @@ public class QueryMapperQmDao implements QmDao {
 	@Override
 	public List<FieldPerson> getFieldPeopleByName(final List<Long> personNos, final List<String> names) throws SQLException {
 		return qm.toList("SELECT * from person WHERE " + inListReplace + " AND (" + inListReplace + " OR " + inListReplace + ") ORDER BY person_no",
-				FieldPerson.class,
-				qm.inList("person_no", personNos),
-				qm.inList("first_name", names),
-				qm.inList("last_name", names)
-				);
+					FieldPerson.class,
+					qm.inList("person_no", personNos),
+					qm.inList("first_name", names),
+					qm.inList("last_name", names)
+			);
 	}
 
 	@Override
@@ -412,5 +411,35 @@ public class QueryMapperQmDao implements QmDao {
 	@Override
 	public long insertGetGeneratedKey(long value) throws SQLException {
 		return qm.insertGetGeneratedKey("INSERT INTO a_thaoeu_table (a_thaoeu_table_val) VALUES (?)", value);
+	}
+
+	@Override
+	public List<Long> selectRandomSql(final String sql) throws SQLException {
+		return qm.toList("SELECT person_no FROM person WHERE " + sql, Long.class);
+	}
+
+	@Override
+	public List<Long> selectRandomSqlBuilder(final SqlBuilder sql) throws SQLException {
+		return qm.toList("SELECT person_no FROM person WHERE " + sql, Long.class, sql);
+	}
+
+	@Override
+	public List<Long> selectRandomSql(final long personNo1, final String sql, final String firstName) throws SQLException {
+		return qm.toList("SELECT person_no FROM person WHERE person_no = ? " + sql + " OR first_name = ?", Long.class, personNo1, firstName);
+	}
+
+	@Override
+	public List<Long> selectRandomSqlBuilder(final long personNo1, final Bindable sql, final String firstName) throws SQLException {
+		return qm.toList("SELECT person_no FROM person WHERE person_no = ? " + sql + " OR first_name = ?", Long.class, personNo1, sql, firstName);
+	}
+
+	@Override
+	public void insertRandomSqlCollection(final Collection<Long> sql) throws SQLException {
+		qm.executeUpdate("INSERT " + sql, sql);
+	}
+
+	@Override
+	public void insertRandomSqlIterable(final Iterable<Long> sql) throws SQLException {
+		qm.executeUpdate("INSERT " + sql, sql);
 	}
 }

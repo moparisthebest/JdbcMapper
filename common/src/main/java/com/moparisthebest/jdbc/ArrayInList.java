@@ -55,29 +55,16 @@ public class ArrayInList implements InList {
 	}
 
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException {
-		return values == null || values.isEmpty() ? InListObject.inEmpty : new ArrayListObject(
+		return values == null || values.isEmpty() ? InListObject.inEmpty : new InListObject(
 				columnAppendIn(columnName),
 				toArray(conn, values)
 		);
 	}
 
 	public <T> InListObject notInList(final Connection conn, final String columnName, final Collection<T> values) throws SQLException {
-		return values == null || values.isEmpty() ? InListObject.notInEmpty : new ArrayListObject(
+		return values == null || values.isEmpty() ? InListObject.notInEmpty : new InListObject(
 				columnAppendNotIn(columnName),
 				toArray(conn, values)
 		);
-	}
-
-	class ArrayListObject extends InListObject {
-		private final Array array;
-
-		public ArrayListObject(final String sql, final Array array) {
-			super(sql);
-			this.array = array;
-		}
-
-		public Array getArray() {
-			return array;
-		}
 	}
 }

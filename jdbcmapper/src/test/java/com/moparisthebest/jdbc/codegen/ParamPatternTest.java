@@ -30,6 +30,14 @@ public class ParamPatternTest {
 		assertEquals("utf-16", blobCharset.substring(0, blobCharset.indexOf(':')).trim());
 		blobCharset = "utf-16  : ";
 		assertEquals("utf-16", blobCharset.substring(0, blobCharset.indexOf(':')).trim());
+
+		testMatch("{sql:sqlStatement}", s(null, null, null, null, "sql:", null, "sqlStatement"));
+		testMatch("{sql: sqlStatement}", s(null, null, null, null, "sql: ", null, "sqlStatement"));
+		testMatch("{SQL: sqlStatement}", s(null, null, null, null, "SQL: ", null, "sqlStatement"));
+		testMatch("{Sql: sqlStatement}", s(null, null, null, null, "Sql: ", null, "sqlStatement"));
+        testMatch("{Sql : sqlStatement}", s(null, null, null, null, "Sql : ", null, "sqlStatement"));
+		testMatch("{sql:person:sqlStatement}", s(null, null, null, null, "sql:person:", "person:", "sqlStatement"));
+		testMatch("{sql:JOIN person ON p.person_no = b.person_no:sqlStatement}", s(null, null, null, null, "sql:JOIN person ON p.person_no = b.person_no:", "JOIN person ON p.person_no = b.person_no:", "sqlStatement"));
 	}
 
 	private static void testMatch(final String sql, final Collection<String[]> expected) {

@@ -3,8 +3,7 @@ package com.moparisthebest.jdbc.codegen;
 import com.moparisthebest.jdbc.ResultSetMapper;
 import com.moparisthebest.jdbc.TypeReference;
 import com.moparisthebest.jdbc.dto.*;
-import com.moparisthebest.jdbc.util.CaseInsensitiveHashMap;
-import com.moparisthebest.jdbc.util.ResultSetIterable;
+import com.moparisthebest.jdbc.util.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -357,5 +356,25 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 	@Override
 	public List<FieldPerson> getFieldPeopleNotIn(final List<Long> personNos) throws SQLException {
 		return qm.toType("SELECT * from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<List<FieldPerson>>() {}, qm.notInList("person_no", personNos));
+	}
+
+	@Override
+	public List<Long> selectRandomSql(final String sql) throws SQLException {
+		return qm.toType("SELECT person_no FROM person WHERE " + sql, new TypeReference<List<Long>>() {});
+	}
+
+	@Override
+	public List<Long> selectRandomSqlBuilder(final SqlBuilder sql) throws SQLException {
+		return qm.toType("SELECT person_no FROM person WHERE " + sql, new TypeReference<List<Long>>() {}, sql);
+	}
+
+	@Override
+	public List<Long> selectRandomSql(final long personNo1, final String sql, final String firstName) throws SQLException {
+		return qm.toType("SELECT person_no FROM person WHERE person_no = ? " + sql + " OR first_name = ?", new TypeReference<List<Long>>() {}, personNo1, firstName);
+	}
+
+	@Override
+	public List<Long> selectRandomSqlBuilder(final long personNo1, final Bindable sql, final String firstName) throws SQLException {
+		return qm.toType("SELECT person_no FROM person WHERE person_no = ? " + sql + " OR first_name = ?", new TypeReference<List<Long>>() {}, personNo1, sql, firstName);
 	}
 }

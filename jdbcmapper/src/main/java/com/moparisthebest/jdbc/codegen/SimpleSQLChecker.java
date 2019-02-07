@@ -128,6 +128,8 @@ public class SimpleSQLChecker implements SQLChecker {
 					return new ByteArrayInputStream(new byte[1]);
 				case CLOB:
 					return new StringReader(defaultString);
+				case SQL:
+					return specialParam.blobStringCharset == null ? "" : specialParam.blobStringCharset;
 			}
 		}
 		// end special behavior

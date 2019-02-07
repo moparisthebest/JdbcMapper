@@ -1,17 +1,9 @@
 package com.moparisthebest.jdbc;
 
-import com.moparisthebest.jdbc.codegen.JdbcMapper;
-import com.moparisthebest.jdbc.util.ResultSetIterable;
-
-import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-//IFJAVA8_START
-import java.util.stream.Stream;
-//IFJAVA8_END
+
+import static com.moparisthebest.jdbc.InList.defaultInList;
 
 public class ListQueryMapper extends QueryMapper {
 

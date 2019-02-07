@@ -1,10 +1,10 @@
 package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.dto.*;
-import com.moparisthebest.jdbc.util.CaseInsensitiveHashMap;
-import com.moparisthebest.jdbc.util.ResultSetIterable;
+import com.moparisthebest.jdbc.util.*;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -264,4 +264,23 @@ public interface QmDao extends JdbcMapper {
 
 	@SQL("INSERT INTO a_thaoeu_table (a_thaoeu_table_val) VALUES ({value})")
 	long insertGetGeneratedKey(long value) throws SQLException;
+
+	@SQL("SELECT person_no FROM person WHERE {sql:sql}")
+	List<Long> selectRandomSql(String sql) throws SQLException;
+
+	@SQL("SELECT person_no FROM person WHERE {sql:sql}")
+	List<Long> selectRandomSqlBuilder(SqlBuilder sql) throws SQLException;
+
+	@SQL("SELECT person_no FROM person WHERE person_no = {personNo1} {sql:sql} OR first_name = {firstName}")
+	List<Long> selectRandomSql(long personNo1, String sql, String firstName) throws SQLException;
+
+	@SQL("SELECT person_no FROM person WHERE person_no = {personNo1} {sql:sql} OR first_name = {firstName}")
+	List<Long> selectRandomSqlBuilder(long personNo1, Bindable sql, String firstName) throws SQLException;
+
+	// these we just check if they generated
+	@SQL("INSERT {sql:sql}")
+	void insertRandomSqlCollection(Collection<Long> sql) throws SQLException;
+
+	@SQL("INSERT {sql:sql}")
+	void insertRandomSqlIterable(Iterable<Long> sql) throws SQLException;
 }

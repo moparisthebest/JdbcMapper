@@ -16,12 +16,14 @@ class SpecialVariableElement implements VariableElement {
 		IN_LIST,
 		CLOB,
 		BLOB,
+		SQL,
 	}
 
 	final VariableElement delegate;
 	final SpecialType specialType;
 	final String blobStringCharset;
 	final int index;
+	final boolean iterable, bindable;
 
 	String name, componentTypeString;
 
@@ -43,6 +45,8 @@ class SpecialVariableElement implements VariableElement {
 		this.blobStringCharset = blobStringCharset;
 		this.index = index;
 		this.name = getSimpleName().toString();
+		this.iterable = specialType == SpecialType.SQL && JdbcMapperProcessor.types.isAssignable(delegate.asType(), JdbcMapperProcessor.iterableType);
+		this.bindable = !this.iterable && specialType == SpecialType.SQL && JdbcMapperProcessor.types.isAssignable(delegate.asType(), JdbcMapperProcessor.bindableType);
 	}
 
 	public String getName() {

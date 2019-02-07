@@ -1,5 +1,7 @@
 package com.moparisthebest.jdbc.codegen;
 
+import com.moparisthebest.jdbc.util.SqlBuilder;
+
 import java.io.Closeable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,6 +15,14 @@ import java.sql.Connection;
 public interface JdbcMapper extends Closeable {
 
 	Connection getConnection();
+
+	//IFJAVA8_START
+
+	default SqlBuilder sqlBuilder() {
+		return SqlBuilder.of(getConnection()); // todo: should this use the current inList ?
+	}
+
+	//IFJAVA8_END
 
 	@Override
 	void close();

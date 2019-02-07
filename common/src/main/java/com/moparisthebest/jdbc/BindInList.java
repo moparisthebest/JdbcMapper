@@ -34,29 +34,16 @@ public class BindInList implements InList {
 	}
 
 	public <T> InListObject inList(final Connection conn, final String columnName, final Collection<T> values) {
-		return values == null || values.isEmpty() ? InListObject.inEmpty : new BindInListObject(
+		return values == null || values.isEmpty() ? InListObject.inEmpty : new InListObject(
 				toInList(columnName, values, this.maxSize),
-				values.toArray()
+				values
 		);
 	}
 
 	public <T> InListObject notInList(final Connection conn, final String columnName, final Collection<T> values) {
-		return values == null || values.isEmpty() ? InListObject.notInEmpty : new BindInListObject(
+		return values == null || values.isEmpty() ? InListObject.notInEmpty : new InListObject(
 				toNotInList(columnName, values, this.maxSize),
-				values.toArray()
+				values
 		);
-	}
-
-	class BindInListObject extends InListObject {
-		private final Object[] bindObjects;
-
-		public BindInListObject(final String sql, final Object[] bindObjects) {
-			super(sql);
-			this.bindObjects = bindObjects;
-		}
-
-		public Object[] getBindObjects() {
-			return bindObjects;
-		}
 	}
 }

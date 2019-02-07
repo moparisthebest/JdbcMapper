@@ -3,6 +3,7 @@ package com.moparisthebest.jdbc.codegen;
 import com.moparisthebest.jdbc.*;
 import com.moparisthebest.jdbc.codegen.spring.SpringRepository;
 import com.moparisthebest.jdbc.codegen.spring.SpringScope;
+import com.moparisthebest.jdbc.util.Bindable;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -28,6 +29,7 @@ import java.util.stream.Stream;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 import static com.moparisthebest.jdbc.codegen.JdbcMapper.DatabaseType.ORACLE;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
+import static com.moparisthebest.jdbc.codegen.SpecialVariableElement.SpecialType.SQL;
 
 /**
  * Created by mopar on 5/24/17.
@@ -36,7 +38,7 @@ import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
 @SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "jdbcMapper.allowedMaxRowParamNames", "jdbcMapper.sqlCheckerClass"})
 public class JdbcMapperProcessor extends AbstractProcessor {
 
-	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCc][Ll][Oo][Bb]\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");
+	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCcSs][LlQq][OoLl][Bb]?\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");
 
 	public static final SourceVersion RELEASE_8;
 	public static boolean java8;
@@ -64,11 +66,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	}
 
 	static TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, connectionType, jdbcMapperType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, calendarType, cleanerType, enumType;
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, iterableType, bindableType, calendarType, cleanerType, enumType;
 	//IFJAVA8_START
 	static TypeMirror streamType, instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
 	//IFJAVA8_END
-	private TypeElement cleanerElement;
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
 	private SQLChecker sqlChecker;
@@ -124,9 +125,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
 		sqlArrayType = elements.getTypeElement(java.sql.Array.class.getCanonicalName()).asType();
 		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
+		iterableType = types.getDeclaredType(elements.getTypeElement(Iterable.class.getCanonicalName()), types.getWildcardType(null, null));
 
-		cleanerElement = elements.getTypeElement(Cleaner.class.getCanonicalName());
-		cleanerType = types.getDeclaredType(cleanerElement, types.getWildcardType(null, null));
+		bindableType = elements.getTypeElement(Bindable.class.getCanonicalName()).asType();
+		cleanerType = types.getDeclaredType(elements.getTypeElement(Cleaner.class.getCanonicalName()), types.getWildcardType(null, null));
 
 		enumType = types.getDeclaredType(elements.getTypeElement(Enum.class.getCanonicalName()), types.getWildcardType(null, null));
 
@@ -344,6 +346,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							String calendarName = null, cleanerName = null;
 							CompileTimeResultSetMapper.MaxRows maxRows = CompileTimeResultSetMapper.MaxRows.getMaxRows(sql.maxRows());
 							boolean sqlExceptionThrown = false;
+							boolean sqlParam = false;
+							boolean sqlIterableParam = false;
 							{
 								// now parameters
 								final List<? extends VariableElement> params = eeMethod.getParameters();
@@ -390,29 +394,40 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										continue;
 									}
 									unusedParams.remove(paramName);
-									final String clobBlob = bindParamMatcher.group(5);
+									final String clobBlobSql = bindParamMatcher.group(5);
 									final String inColumnName = bindParamMatcher.group(2);
 									if (inColumnName == null) {
-										bindParamMatcher.appendReplacement(sb, "?");
-										if(clobBlob == null){
+										if(clobBlobSql == null){
+											bindParamMatcher.appendReplacement(sb, "?");
 											bindParams.add(bindParam);
 										} else {
-											// regex ensures this can only be C for clob or B for blob
-											final boolean clobNotBlob = 'C' == Character.toUpperCase(clobBlob.charAt(0));
-											final String blobCharset = bindParamMatcher.group(6);
-											if(clobNotBlob) {
-												if(blobCharset != null)
-													processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with clob", bindParam);
-												bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.CLOB));
+											final String upperClobBlobSql = clobBlobSql.toUpperCase();
+											String blobCharset = bindParamMatcher.group(6);
+											if(blobCharset != null)
+												blobCharset = blobCharset.substring(0, blobCharset.indexOf(':')).trim();
+											if(upperClobBlobSql.startsWith("SQL")) {
+												bindParamMatcher.appendReplacement(sb, "REPLACEMEWITHUNQUOTEDQUOTEPLZ + " + paramName + " + REPLACEMEWITHUNQUOTEDQUOTEPLZ");
+												final SpecialVariableElement sve = new SpecialVariableElement(bindParam, SQL, blobCharset);
+												bindParams.add(sve);
+												sqlParam = true;
+												sqlIterableParam |= sve.iterable || sve.bindable;
+											} else if(upperClobBlobSql.startsWith("CLOB") || upperClobBlobSql.startsWith("BLOB")) {
+												bindParamMatcher.appendReplacement(sb, "?");
+												final boolean clobNotBlob = 'C' == upperClobBlobSql.charAt(0);
+												if (clobNotBlob) {
+													if (blobCharset != null)
+														processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with clob", bindParam);
+													bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.CLOB));
+												} else {
+													bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.BLOB, blobCharset));
+												}
 											} else {
-												bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.BLOB, blobCharset == null ? null :
-														blobCharset.substring(0, blobCharset.indexOf(':')).trim()
-												));
+												processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "special variable type can only be clob/blob/sql, not " + clobBlobSql, bindParam);
 											}
 										}
 									} else {
-										if(clobBlob != null)
-											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob", bindParam);
+										if(clobBlobSql != null)
+											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob/sql", bindParam);
 										SpecialVariableElement inListBindParam = inListBindParams.get(paramName);
 										if(inListBindParam == null) {
 											inListBindParam = new SpecialVariableElement(bindParam,
@@ -502,7 +517,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write("\t\t\tps = ");
 							final boolean isGeneratedKeyLong = !parsedSQl.isSelect() && (returnType.equals("long") || returnType.equals("java.lang.Long"));
 							// todo: make isGeneratedKeyLong work with cachePreparedStatements
-							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements) && !bindInList && !isGeneratedKeyLong;
+							final boolean cachePreparedStatements = sql.cachePreparedStatement().combine(defaultCachePreparedStatements) && !bindInList && !isGeneratedKeyLong && !sqlParam;
 							if (cachePreparedStatements) {
 								w.write("this.prepareStatement(");
 								w.write(Integer.toString(cachedPreparedStatements));
@@ -527,14 +542,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(");\n");
 
 							// now bind parameters
-							if(bindInList) {
+							if(bindInList || sqlIterableParam) {
 								w.write("\t\t\tint psParamCount = 0;\n");
 								for (final VariableElement param : bindParams)
 									setObject(w, "++psParamCount", param);
 							} else {
 								int count = 0;
-								for (final VariableElement param : bindParams)
-									setObject(w, Integer.toString(++count), param);
+								for (final VariableElement param : bindParams) {
+									// better place/way to do this?
+									if(!(param instanceof SpecialVariableElement && ((SpecialVariableElement)param).specialType == SQL))
+										setObject(w, Integer.toString(++count), param);
+								}
 							}
 
 							boolean closeRs = true;
@@ -921,6 +939,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						return;
 					}
 					break;
+				}
+				case SQL: {
+					if(specialParam.iterable || specialParam.bindable) {
+						w.append("psParamCount = com.moparisthebest.jdbc.util.PreparedStatementUtil.recursiveBindIndex(ps, psParamCount, ").append(specialParam.name);
+						if(specialParam.bindable)
+							w.append(".getBindObject()"); // handle null? I think no... because then the SQL query get's "null" put in it and meh... can return noBind or an empty array...
+						w.append(");");
+					}
+					w.append('\n');
+					return;
 				}
 			}
 		}

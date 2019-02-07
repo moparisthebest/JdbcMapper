@@ -6,7 +6,9 @@ import com.moparisthebest.jdbc.codegen.QmDao;
 import com.moparisthebest.jdbc.codegen.QueryMapperQmDao;
 import com.moparisthebest.jdbc.codegen.QueryMapperTypeQmDao;
 import com.moparisthebest.jdbc.dto.*;
+import com.moparisthebest.jdbc.util.Bindable;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
+import com.moparisthebest.jdbc.util.SqlBuilder;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -755,5 +757,25 @@ public class QueryMapperTest {
 	public void testListQueryMapperListNotIn() throws SQLException {
 		final List<FieldPerson> fromDb = qm.getFieldPeopleNotIn(Arrays.asList(bosses[0].getPersonNo(), bosses[1].getPersonNo(), bosses[2].getPersonNo()));
 		assertArrayEquals(people, fromDb.toArray());
+	}
+
+	@Test
+	public void testSelectRandomSql() throws Throwable {
+		final List<Long> arr = Arrays.asList(1L, 2L, 3L);
+		assertEquals(arr, qm.selectRandomSql("person_no in (1,2,3)"));
+		assertEquals(arr, qm.selectRandomSql(1L, " OR person_no in (2,3)", "NoNameMatch"));
+		assertEquals(Collections.singletonList(2L), qm.selectRandomSql(2L, "", "NoNameMatch"));
+	}
+
+	@Test
+	public void testSelectRandomSqlBuilder() throws Throwable {
+		final List<Long> arr = Arrays.asList(1L, 2L, 3L);
+		assertEquals(arr, qm.selectRandomSqlBuilder(SqlBuilder.of(qm.getConnection()).appendInList("person_no", arr)));
+		assertEquals(arr, qm.selectRandomSqlBuilder(SqlBuilder.of(qm.getConnection()).append("person_no = ? OR ", 1L).appendInList("person_no", Arrays.asList(2L, 3L))));
+		assertEquals(arr, qm.selectRandomSqlBuilder(SqlBuilder.of(qm.getConnection()).append("person_no = 1 OR ").appendInList("person_no", Arrays.asList(2L, 3L))));
+		assertEquals(arr, qm.selectRandomSqlBuilder(1L, SqlBuilder.of(qm.getConnection()).append(" OR person_no in (2,3)"), "NoNameMatch"));
+		assertEquals(Collections.singletonList(2L), qm.selectRandomSqlBuilder(2L, SqlBuilder.of(qm.getConnection()), "NoNameMatch"));
+		assertEquals(Collections.singletonList(3L), qm.selectRandomSqlBuilder(3L, Bindable.empty, "NoNameMatch"));
+		assertEquals(arr, qm.selectRandomSqlBuilder(2L, SqlBuilder.of(qm.getConnection()).append("OR person_no = ? OR ", 1L).appendInList("person_no", Collections.singletonList(3L)), "NoNameMatch"));
 	}
 }
