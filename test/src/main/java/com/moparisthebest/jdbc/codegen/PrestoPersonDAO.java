@@ -53,9 +53,8 @@ public interface PrestoPersonDAO extends PersonDAO {
 	@JdbcMapper.SQL("SELECT person_no FROM person WHERE last_name = {lastName}")
 	long getPersonNo(String lastName) throws SQLException;
 
-	@JdbcMapper.WarnOnUnusedParams
 	@JdbcMapper.SQL("SELECT person_no FROM person WHERE last_name = {lastName}")
-	long getPersonNoUnusedParam(String lastName, String unused) throws SQLException;
+	long getPersonNoUnusedParam(String lastName, String _bla) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT first_name, last_name FROM person WHERE last_name = {lastName}")
 	ResultSet getPeopleResultSet(String lastName) throws SQLException;
