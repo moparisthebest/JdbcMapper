@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 import static com.moparisthebest.jdbc.codegen.JdbcMapper.DatabaseType.ORACLE;
-import static com.moparisthebest.jdbc.codegen.JdbcMapperFactory.SUFFIX;
+import static com.moparisthebest.jdbc.codegen.JdbcMapper.beanSuffix;
 import static com.moparisthebest.jdbc.codegen.SpecialVariableElement.SpecialType.SQL;
 
 /**
@@ -222,9 +222,9 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					final boolean doJndi = !mapper.jndiName().isEmpty();
 					Writer w = null;
 					try {
-						w = processingEnv.getFiler().createSourceFile(qualifiedName + SUFFIX).openWriter();
+						w = processingEnv.getFiler().createSourceFile(qualifiedName + beanSuffix).openWriter();
 						final String packageName = ((PackageElement) genClass.getEnclosingElement()).getQualifiedName().toString();
-						final String className = genClass.getSimpleName() + SUFFIX;
+						final String className = genClass.getSimpleName() + beanSuffix;
 						if (!packageName.isEmpty()) {
 							w.write("package ");
 							w.write(packageName);
@@ -786,7 +786,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			w.append("new com.moparisthebest.jdbc.QueryRunner.Runner<").append(tType).append(", ").append(returnType).append(">() {\n" +
 					"\t\t\t@Override\n" +
 					"\t\t\tpublic ").append(returnType).append(" run(").append(tType).append(" dao) throws SQLException {\n" +
-					"\t\t\t\treturn ").append(thisDaoName).append(SUFFIX).append(".super");
+					"\t\t\t\treturn ").append(thisDaoName).append(beanSuffix).append(".super");
 		} else {
 
 			w.append("dao -> ");

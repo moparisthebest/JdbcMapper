@@ -17,10 +17,10 @@ public class PrestoPersonDAOTest {
 	@Test
 	public void testGeneratedFilesAreTheSame() throws IOException {
 		final String personDaoBean = new String(
-				Files.readAllBytes(Paths.get("target/generated-sources/annotations/com/moparisthebest/jdbc/codegen/PersonDAOBean.java"))
+				Files.readAllBytes(Paths.get("target/generated-sources/annotations/com/moparisthebest/jdbc/codegen/PersonDAO" + JdbcMapper.beanSuffix + ".java"))
 				, StandardCharsets.UTF_8);
 		final String prestoPersonDaoBean = new String(
-				Files.readAllBytes(Paths.get("target/generated-sources/annotations/com/moparisthebest/jdbc/codegen/PrestoPersonDAOBean.java"))
+				Files.readAllBytes(Paths.get("target/generated-sources/annotations/com/moparisthebest/jdbc/codegen/PrestoPersonDAO" + JdbcMapper.beanSuffix + ".java"))
 				, StandardCharsets.UTF_8).replace("Presto", "");
 		assertEquals(personDaoBean, prestoPersonDaoBean);
 	}

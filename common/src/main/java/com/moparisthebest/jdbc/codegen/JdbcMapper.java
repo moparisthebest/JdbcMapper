@@ -14,6 +14,8 @@ import java.sql.Connection;
  */
 public interface JdbcMapper extends Closeable {
 
+	String beanSuffix = System.getProperty("JdbcMapper.beanSuffix", "Bean");
+
 	Connection getConnection();
 
 	/*IFJAVA6_START

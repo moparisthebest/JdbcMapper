@@ -20,8 +20,6 @@ import static com.moparisthebest.jdbc.TryClose.tryClose;
  */
 public class JdbcMapperFactory<T> implements Factory<T> {
 
-	static final String SUFFIX = "Bean";
-
 	static {
 		try{
 			final Class<?> ensureContext = Class.forName(System.getProperty("QueryMapper.ensureContext.class", System.getProperty("JdbcMapper.ensureContext.class", "com.gcl.containerless.EnsureContext")));
@@ -36,7 +34,7 @@ public class JdbcMapperFactory<T> implements Factory<T> {
 	@SuppressWarnings("unchecked")
 	public static <T> Class<? extends T> getImplementationClass(final Class<T> jdbcMapper) throws ClassNotFoundException {
 		if(jdbcMapper.isInterface() || Modifier.isAbstract(jdbcMapper.getModifiers()))
-			return (Class<? extends T>) Class.forName(jdbcMapper.getName() + SUFFIX);
+			return (Class<? extends T>) Class.forName(jdbcMapper.getName() + JdbcMapper.beanSuffix);
 		else
 			return jdbcMapper;
 	}
