@@ -179,6 +179,11 @@ public class QueryMapper implements JdbcMapper {
 		return inListEnabled && sql.contains(inListReplace) ? recursiveReplace(new StringBuilder(sql), bindObjects).toString() : sql;
 	}
 
+	@Override
+	public SqlBuilder sqlBuilder() {
+		return SqlBuilder.of(conn, inList);
+	}
+
 	public <T> InList.InListObject inList(final String columnName, final Collection<T> values) throws SQLException {
 		this.inListEnabled = true; // worth checking if it's already this or not?
 		return this.inList.inList(conn, columnName, values);

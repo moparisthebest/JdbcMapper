@@ -75,6 +75,11 @@ public class QueryMapperQmDao implements QmDao {
 	}
 
 	@Override
+	public SqlBuilder sqlBuilder() {
+		return qm.sqlBuilder();
+	}
+
+	@Override
 	public FieldPerson getFieldRegularPerson(final long personNo) throws SQLException {
 		return qm.toObject(personRegular, FieldPerson.class, personNo);
 	}

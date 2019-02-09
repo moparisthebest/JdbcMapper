@@ -770,12 +770,12 @@ public class QueryMapperTest {
 	@Test
 	public void testSelectRandomSqlBuilder() throws Throwable {
 		final List<Long> arr = Arrays.asList(1L, 2L, 3L);
-		assertEquals(arr, qm.selectRandomSqlBuilder(SqlBuilder.of(qm.getConnection()).appendInList("person_no", arr)));
-		assertEquals(arr, qm.selectRandomSqlBuilder(SqlBuilder.of(qm.getConnection()).append("person_no = ? OR ", 1L).appendInList("person_no", Arrays.asList(2L, 3L))));
-		assertEquals(arr, qm.selectRandomSqlBuilder(SqlBuilder.of(qm.getConnection()).append("person_no = 1 OR ").appendInList("person_no", Arrays.asList(2L, 3L))));
-		assertEquals(arr, qm.selectRandomSqlBuilder(1L, SqlBuilder.of(qm.getConnection()).append(" OR person_no in (2,3)"), "NoNameMatch"));
-		assertEquals(Collections.singletonList(2L), qm.selectRandomSqlBuilder(2L, SqlBuilder.of(qm.getConnection()), "NoNameMatch"));
+		assertEquals(arr, qm.selectRandomSqlBuilder(qm.sqlBuilder().appendInList("person_no", arr)));
+		assertEquals(arr, qm.selectRandomSqlBuilder(qm.sqlBuilder().append("person_no = ? OR ", 1L).appendInList("person_no", Arrays.asList(2L, 3L))));
+		assertEquals(arr, qm.selectRandomSqlBuilder(qm.sqlBuilder().append("person_no = 1 OR ").appendInList("person_no", Arrays.asList(2L, 3L))));
+		assertEquals(arr, qm.selectRandomSqlBuilder(1L, qm.sqlBuilder().append(" OR person_no in (2,3)"), "NoNameMatch"));
+		assertEquals(Collections.singletonList(2L), qm.selectRandomSqlBuilder(2L, qm.sqlBuilder(), "NoNameMatch"));
 		assertEquals(Collections.singletonList(3L), qm.selectRandomSqlBuilder(3L, Bindable.empty, "NoNameMatch"));
-		assertEquals(arr, qm.selectRandomSqlBuilder(2L, SqlBuilder.of(qm.getConnection()).append("OR person_no = ? OR ", 1L).appendInList("person_no", Collections.singletonList(3L)), "NoNameMatch"));
+		assertEquals(arr, qm.selectRandomSqlBuilder(2L, qm.sqlBuilder().append("OR person_no = ? OR ", 1L).appendInList("person_no", Collections.singletonList(3L)), "NoNameMatch"));
 	}
 }

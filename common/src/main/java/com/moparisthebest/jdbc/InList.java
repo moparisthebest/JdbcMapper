@@ -3,7 +3,6 @@ package com.moparisthebest.jdbc;
 import com.moparisthebest.jdbc.codegen.JdbcMapper;
 import com.moparisthebest.jdbc.util.Bindable;
 import com.moparisthebest.jdbc.util.InListUtil;
-import com.moparisthebest.jdbc.util.PreparedStatementUtil;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;

@@ -230,6 +230,12 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 							w.write(packageName);
 							w.write(";\n\n");
 						}
+
+						final ExecutableElement sqlBuilderMethod = getSqlBuilderMethod(genClass);
+						if(sqlBuilderMethod != null) {
+							w.write("import com.moparisthebest.jdbc.util.SqlBuilder;\n");
+						}
+
 						w.write("import com.moparisthebest.jdbc.Factory;\n\n");
 						w.write("import java.sql.*;\n\n");
 						w.write("import static com.moparisthebest.jdbc.util.ResultSetUtil.*;\n");
@@ -688,6 +694,30 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						}
 						// end close method
 
+
+						if(sqlBuilderMethod != null) {
+							// we want to generate this method returning proper InList
+							w.append("\n\t@Override\n\tpublic SqlBuilder sqlBuilder() {\n\t\treturn SqlBuilder.of(conn, com.moparisthebest.jdbc.");
+							switch(databaseType) {
+								case ORACLE:
+									w.append("OracleArrayInList");
+									break;
+								case ANY:
+									w.append("ArrayInList");
+									break;
+								case UNNEST:
+									w.append("UnNestArrayInList");
+									break;
+								case BIND:
+									w.append("BindInList");
+									break;
+								default:
+									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.Mapper.databaseType unsupported", element);
+									continue;
+							}
+							w.append(".instance());\n\t}\n");
+						}
+
 						w.write("}\n");
 					} finally {
 						tryClose(w);
@@ -1123,6 +1153,34 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	public static ExecutableElement getCloseMethod(final ExecutableElement methodElement) {
 		return methodElement.getReturnType().getKind() == TypeKind.VOID &&
 				methodElement.getSimpleName().toString().equals("close") &&
+				methodElement.getParameters().isEmpty() ? methodElement : null;
+	}
+
+	public ExecutableElement getSqlBuilderMethod(final TypeElement genClass) {
+		ExecutableElement ret = null;
+		for (final Element methodElement : genClass.getEnclosedElements()) {
+			if ((ret = getSqlBuilderMethod(methodElement)) != null)
+				return ret;
+		}
+		// superclasses
+		final TypeMirror superclass = genClass.getSuperclass();
+		if (superclass.getKind() == TypeKind.DECLARED && (ret = getSqlBuilderMethod((TypeElement) types.asElement(superclass))) != null)
+			return ret;
+		// interfaces
+		for (final TypeMirror iface : genClass.getInterfaces()) {
+			if (iface.getKind() == TypeKind.DECLARED && (ret = getSqlBuilderMethod((TypeElement) types.asElement(iface))) != null)
+				return ret;
+		}
+		return ret;
+	}
+
+	public static ExecutableElement getSqlBuilderMethod(final Element element) {
+		return element.getKind() != ElementKind.METHOD ? null : getSqlBuilderMethod((ExecutableElement) element);
+	}
+
+	public static ExecutableElement getSqlBuilderMethod(final ExecutableElement methodElement) {
+		return methodElement.getReturnType().getKind() == TypeKind.DECLARED &&
+				methodElement.getSimpleName().toString().equals("sqlBuilder") &&
 				methodElement.getParameters().isEmpty() ? methodElement : null;
 	}
 

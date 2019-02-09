@@ -16,10 +16,16 @@ public interface JdbcMapper extends Closeable {
 
 	Connection getConnection();
 
+	/*IFJAVA6_START
+
+	SqlBuilder sqlBuilder();
+
+	IFJAVA6_END*/
+
 	//IFJAVA8_START
 
 	default SqlBuilder sqlBuilder() {
-		return SqlBuilder.of(getConnection()); // todo: should this use the current inList ?
+		return SqlBuilder.of(getConnection());
 	}
 
 	//IFJAVA8_END
