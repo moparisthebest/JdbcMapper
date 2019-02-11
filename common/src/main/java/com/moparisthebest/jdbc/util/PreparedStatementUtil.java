@@ -25,12 +25,12 @@ public class PreparedStatementUtil {
 
     public static void setObject(final PreparedStatement ps, final int index, final Object o) throws SQLException {
         // we are going to put most common ones up top so it should execute faster normally
-        if (o == null || o instanceof String || o instanceof Number)
+        if (o == null || o instanceof String || o instanceof Number || o instanceof Boolean)
             ps.setObject(index, o);
             // java.util.Date support, put it in a Timestamp
         else if (o instanceof java.util.Date)
             ps.setObject(index, o.getClass().equals(java.util.Date.class) ? new java.sql.Timestamp(((java.util.Date)o).getTime()) : o);
-            //IFJAVA8_START// todo: other java.time types
+            //IFJAVA8_START// todo: other java.time types, Year, ZoneId, ZoneOffset
         else if (o instanceof Instant)
             ps.setObject(index, java.sql.Timestamp.from((Instant)o));
         else if (o instanceof LocalDateTime)
@@ -73,6 +73,8 @@ public class PreparedStatementUtil {
             ps.setArray(index, (java.sql.Array) o);
         else if (o instanceof Enum)
             ps.setObject(index, ((Enum)o).name());
+        else if (o instanceof java.sql.Ref)
+            ps.setRef(index, (java.sql.Ref) o);
         else
             ps.setObject(index, o); // probably won't get here ever, but just in case...
 		/*

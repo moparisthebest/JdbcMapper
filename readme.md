@@ -429,6 +429,143 @@ String s = rs.getString(index);
 return s == null ? null : ZoneOffset.of(s);
 ```
 
+Object to Column (PreparedStatement) Mapping 
+------------------------
+
+This explains how specific java types map to specific PreparedStatement calls, this can be different between JdbcMapper and QueryMapper because of the
+different information available.  With JdbcMapper we have type information regardless of the value, so a String is a String even if you send in null.  With
+QueryMapper if the value is null, we have no idea if that was supposed to be a Date or a String or what.
+
+If you are thinking 'shut up and show me the code already' refer to [PreparedStatementUtil.java](https://github.com/moparisthebest/JdbcMapper/blob/master/common/src/main/java/com/moparisthebest/jdbc/util/PreparedStatementUtil.java#L26) for the runtime mapping, and [JdbcMapperProcessor.java](https://github.com/moparisthebest/JdbcMapper/blob/master/jdbcmapper/src/main/java/com/moparisthebest/jdbc/codegen/JdbcMapperProcessor.java#L918) for the compile-time mapping, which should end up being identical where possible.
+
+For the purposes of this mapping, consider 'ps' an instance of PreparedStatement, 'index' an int index of a PreparedStatement column, and 'o' as the Object being mapped to the PreparedStatement column.
+
+### Misc Objects
+##### String / Number / Boolean / primitives
+```java
+ps.setObject(index, o);
+```
+##### null
+This only applies at runtime, in which case we don't have a type, we always have a type at compile-time.
+```java
+ps.setObject(index, o);
+```
+##### java.lang.Enum (any enum)
+```java
+ps.setObject(index, o.name());
+```
+##### byte[]
+```java
+ps.setBlob(index, new ByteArrayInputStream(o));
+```
+##### java.sql.Ref
+```java
+ps.setRef(index, o);
+```
+##### java.sql.Blob / java.io.InputStream
+```java
+ps.setBlob(index, o);
+```
+##### String as Blob
+Where `s` is the String, and `charset` is the character set to convert the String to bytes with,
+if not provided, charset defaults to UTF-8:
+```java
+ps.setBlob(index, s == null ? null : new ByteArrayInputStream(s.getBytes(charset)));
+```
+At runtime using QueryMapper, you signal you want this by wrapping s with `PreparedStatementUtil.wrapBlob(s)` or `PreparedStatementUtil.wrapBlob(s, charset)`
+At compile-time using JdbcMapper, you signal you want this in the SQL like `{blob:s}` or `{blob:utf-8:s}` any charset supported by your java works
+##### java.io.File
+```java
+try {
+    ps.setBlob(index, new FileInputStream(o)); // todo: does this close this or leak a file descriptor?
+} catch (FileNotFoundException e) {
+    throw new SQLException("File to Blob FileNotFoundException", e);
+}
+```
+This will likely change in the near future to read file to byte[] and behave like byte[] from above, since we probably
+can't count on the FileInputStream being properly closed...
+##### java.sql.Clob / java.io.Reader
+```java
+ps.setClob(index, o);
+```
+##### String as Clob
+Where `s` is the String:
+```java
+ps.setClob(index, s == null ? null : new StringReader(s));
+```
+At runtime using QueryMapper, you signal you want this by wrapping s with `PreparedStatementUtil.wrapClob(s)`
+At compile-time using JdbcMapper, you signal you want this in the SQL like `{clob:s}`
+##### java.sql.Array
+```java
+ps.setRef(index, o);
+```
+##### *
+If nothing else fits, we call setObject and cross our fingers with QueryMapper at runtime, this is a compile-time error
+with JdbcMapper.
+```java
+ps.setObject(index, o);
+```
+### Date/Time Objects
+##### exactly java.util.Date
+```java
+ps.setObject(index, new java.sql.Timestamp(o.getTime());
+```
+##### instanceof java.util.Date, but not exactly java.util.Date
+so from stdlib this includes java.sql.Date, java.sql.Timestamp, and java.sql.Time
+```java
+ps.setObject(index, o);
+```
+##### java.time.Instant
+```java
+ps.setObject(index, java.sql.Timestamp.from(o);
+```
+##### java.time.LocalDateTime
+```java
+ps.setObject(index, java.sql.Timestamp.valueOf(o));
+```
+##### java.time.LocalDate
+```java
+ps.setObject(index, java.sql.Date.valueOf(o));
+```
+##### java.time.LocalTime
+```java
+ps.setObject(index, java.sql.Time.valueOf(o));
+```
+##### java.time.ZonedDateTime
+```java
+ps.setObject(index, java.sql.Timestamp.from(o.toInstant()));
+```
+##### java.time.OffsetDateTime
+```java
+ps.setObject(index, java.sql.Timestamp.from(o.toInstant()));
+```
+##### java.time.OffsetTime
+```java
+ps.setObject(index, java.sql.Time.valueOf(o.toLocalTime()));
+```
+##### java.time.Year
+done this way instead of Year.of(int) because usually int->string database coercion is allowed and the other way is not
+```java
+// todo
+```
+##### java.time.ZoneId
+```java
+// todo
+```
+##### java.time.ZoneOffset
+```java
+// todo
+```
+### Special objects
+##### InLists
+```java
+// todo
+```
+##### Bindable / SqlBuilder
+```java
+// todo
+```
+
 TODO
 ----
 

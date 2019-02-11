@@ -65,8 +65,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		return messager;
 	}
 
-	static TypeMirror sqlExceptionType, stringType, numberType, utilDateType, readerType, clobType, connectionType, jdbcMapperType,
-			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, collectionType, iterableType, bindableType, calendarType, cleanerType, enumType;
+	static TypeMirror sqlExceptionType, stringType, numberType, booleanType, utilDateType, readerType, clobType, connectionType, jdbcMapperType,
+			byteArrayType, inputStreamType, fileType, blobType, sqlArrayType, refType, collectionType, iterableType, bindableType, calendarType, cleanerType, enumType;
 	//IFJAVA8_START
 	static TypeMirror streamType, instantType, localDateTimeType, localDateType, localTimeType, zonedDateTimeType, offsetDateTimeType, offsetTimeType;
 	//IFJAVA8_END
@@ -99,6 +99,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		sqlExceptionType = elements.getTypeElement(SQLException.class.getCanonicalName()).asType();
 		stringType = elements.getTypeElement(String.class.getCanonicalName()).asType();
 		numberType = elements.getTypeElement(Number.class.getCanonicalName()).asType();
+		booleanType = elements.getTypeElement(Boolean.class.getCanonicalName()).asType();
 		utilDateType = elements.getTypeElement(java.util.Date.class.getCanonicalName()).asType();
 		readerType = elements.getTypeElement(Reader.class.getCanonicalName()).asType();
 		clobType = elements.getTypeElement(Clob.class.getCanonicalName()).asType();
@@ -124,6 +125,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		//byteArrayType = elements.getTypeElement(byte.class.getCanonicalName()).asType();
 		byteArrayType = types.getArrayType(types.getPrimitiveType(TypeKind.BYTE));
 		sqlArrayType = elements.getTypeElement(java.sql.Array.class.getCanonicalName()).asType();
+		refType = elements.getTypeElement(java.sql.Ref.class.getCanonicalName()).asType();
 		collectionType = types.getDeclaredType(elements.getTypeElement(Collection.class.getCanonicalName()), types.getWildcardType(null, null));
 		iterableType = types.getDeclaredType(elements.getTypeElement(Iterable.class.getCanonicalName()), types.getWildcardType(null, null));
 
@@ -987,7 +989,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		// we are going to put most common ones up top so it should execute faster normally
 		// todo: avoid string concat here
 		if (method == null)
-			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType)) {
+			if (o.getKind().isPrimitive() || types.isAssignable(o, stringType) || types.isAssignable(o, numberType) || types.isAssignable(o, booleanType)) {
 				method = "Object";
 				// java.util.Date support, put it in a Timestamp
 			} else if (types.isAssignable(o, utilDateType)) {
@@ -1038,6 +1040,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 			} else if (types.isAssignable(o, enumType)) {
 				method = "Object";
 				variableName = variableName + " == null ? null : " + variableName + ".name()";
+			} else if (types.isAssignable(o, refType)) {
+				method = "Ref";
 			} else {
 				// shouldn't get here ever, if we do the types should be more specific
 				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param", param);
