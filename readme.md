@@ -497,7 +497,7 @@ At runtime using QueryMapper, you signal you want this by wrapping s with `Prepa
 At compile-time using JdbcMapper, you signal you want this in the SQL like `{clob:s}`
 ##### java.sql.Array
 ```java
-ps.setRef(index, o);
+ps.setArray(index, o);
 ```
 ##### *
 If nothing else fits, we call setObject and cross our fingers with QueryMapper at runtime, this is a compile-time error
