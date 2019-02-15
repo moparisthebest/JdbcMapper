@@ -72,9 +72,11 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	//IFJAVA8_END
 	private JdbcMapper.DatabaseType defaultDatabaseType;
 	private String defaultArrayNumberTypeName, defaultArrayStringTypeName;
-	private SQLChecker sqlChecker;
 	private Set<String> allowedMaxRowParamNames;
 	private CompileTimeResultSetMapper rsm;
+
+	private String sqlCheckerClass;
+	private SQLChecker sqlChecker;
 
 	public JdbcMapperProcessor() {
 		//out.println("JdbcMapperProcessor running!");
@@ -142,15 +144,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		defaultArrayStringTypeName = processingEnv.getOptions().get("jdbcMapper.arrayStringTypeName");
 		if (defaultArrayStringTypeName == null || defaultArrayStringTypeName.isEmpty())
 			defaultArrayStringTypeName = defaultDatabaseType.arrayStringTypeName;
-		final String sqlCheckerClass = processingEnv.getOptions().get("jdbcMapper.sqlCheckerClass");
-		if(sqlCheckerClass != null) {
-			try {
-				sqlChecker = (SQLChecker) Class.forName(sqlCheckerClass).newInstance();
-			} catch (Throwable e) {
-				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
-						"Error instantiating class specified by jdbcMapper.sqlCheckerClass, needs to implement SQLChecker and have a public no-arg constructor:" + toString(e));
-			}
-		}
+
+		sqlCheckerClass = processingEnv.getOptions().get("jdbcMapper.sqlCheckerClass");
 
 		String allowedMaxRowParamNames = processingEnv.getOptions().get("JdbcMapper.allowedMaxRowParamNames");
 		if (allowedMaxRowParamNames == null || allowedMaxRowParamNames.isEmpty())
@@ -638,8 +633,20 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 
 							w.write("\t}\n");
 
-							if(sqlChecker != null && eeMethod.getAnnotation(JdbcMapper.SkipSQLCheck.class) == null)
+							if(sqlCheckerClass != null && eeMethod.getAnnotation(JdbcMapper.SkipSQLCheck.class) == null) {
+								if(sqlChecker == null) {
+									// *can* this run in parallel? unsure, probably doesn't hurt though
+									synchronized (this) {
+										try {
+											sqlChecker = (SQLChecker) Class.forName(sqlCheckerClass).newInstance();
+										} catch (Throwable e) {
+											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
+													"Error instantiating class specified by jdbcMapper.sqlCheckerClass, needs to implement SQLChecker and have a public no-arg constructor:" + toString(e), eeMethod);
+										}
+									}
+								}
 								sqlChecker.checkSql(processingEnv, genClass, mapper, databaseType, eeMethod, sqlStatement, bindParams, arrayInList);
+							}
 						}
 
 						// look on super classes and interfaces recursively
