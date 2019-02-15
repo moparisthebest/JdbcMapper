@@ -187,7 +187,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								(mapper.databaseType() == defaultDatabaseType ? defaultArrayStringTypeName : mapper.databaseType().arrayStringTypeName);
 					}
 					final ArrayInList arrayInList;
-					if(sqlChecker != null) {
+					if(sqlCheckerClass != null) {
 						switch(databaseType) {
 							case ORACLE:
 								arrayInList = new OracleArrayInList(arrayNumberTypeName, arrayStringTypeName);
@@ -1230,6 +1230,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	}
 
 	public static String toString(final Throwable e) {
+		if (e == null)
+			return "exception object was null";
 		StringWriter sw = null;
 		PrintWriter pw = null;
 		try {

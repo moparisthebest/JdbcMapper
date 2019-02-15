@@ -83,9 +83,9 @@ public class SimpleSQLChecker implements SQLChecker {
 	}
 
 	public void handleException(final Messager messager, final Exception e, final TypeElement classElement, final ExecutableElement method) {
-		if (e.getMessage().startsWith("ORA-02291: integrity constraint"))
+		if (e != null && e.getMessage() != null && e.getMessage().startsWith("ORA-02291: integrity constraint"))
 			return; // since we make up values and rollback we can ignore this, it means SQL is correct at least
-		getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage(), method);
+		messager.printMessage(Diagnostic.Kind.ERROR, e == null || e.getMessage() == null ? JdbcMapperProcessor.toString(e) : e.getMessage(), method);
 	}
 
 	public Collection<Object> getFakeBindParams(final List<VariableElement> bindParams, final Connection conn, final ArrayInList arrayInList) throws SQLException {
