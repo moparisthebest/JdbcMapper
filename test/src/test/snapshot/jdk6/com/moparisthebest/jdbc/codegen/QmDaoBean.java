@@ -1276,6 +1276,28 @@ final java.lang.Long ret = com.moparisthebest.jdbc.util.ResultSetUtil.getObjectL
 		}
 	}
 
+	@Override
+	public java.sql.ResultSet getFieldPeopleResultSet(final java.util.List<java.lang.Long> personNos) throws java.sql.SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement("SELECT person_no, first_name, last_name, birth_date from person WHERE " + com.moparisthebest.jdbc.util.InListUtil.toInList("person_no", personNos) + " ORDER BY person_no");
+			int psParamCount = 0;
+			for(final java.lang.Long _bindInListParam : personNos)
+				ps.setObject(++psParamCount, _bindInListParam);
+			rs = ps.executeQuery();
+			return new com.moparisthebest.jdbc.StatementClosingResultSet(rs, ps);
+		} catch(Throwable e) {
+			tryClose(rs);
+			tryClose(ps);
+			if(e instanceof SQLException)
+				throw (SQLException)e;
+			if(e instanceof RuntimeException)
+				throw (RuntimeException)e;
+			throw new RuntimeException(e);
+		}
+	}
+
 	private static final java.lang.reflect.Field[] _fields = new java.lang.reflect.Field[] {
 		com.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(com.moparisthebest.jdbc.dto.FieldPerson.class, "personNo"),
 		com.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(com.moparisthebest.jdbc.dto.FieldPerson.class, "firstName"),

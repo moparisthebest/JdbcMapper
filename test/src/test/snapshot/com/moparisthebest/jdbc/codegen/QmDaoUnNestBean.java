@@ -1561,6 +1561,30 @@ final java.lang.Long ret = com.moparisthebest.jdbc.util.ResultSetUtil.getObjectL
 		}
 	}
 
+	@Override
+	public java.sql.ResultSet getFieldPeopleResultSet(final java.util.List<java.lang.Long> personNos) throws java.sql.SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		final Array[] _bindArrays = new Array[1];
+		try {
+			_bindArrays[0] = conn.createArrayOf("NUMERIC", personNos.toArray(new java.lang.Long[personNos.size()]));
+			ps = this.prepareStatement(62, "SELECT person_no, first_name, last_name, birth_date from person WHERE (person_no IN(UNNEST(?))) ORDER BY person_no");
+			ps.setArray(1, _bindArrays[0]);
+			rs = ps.executeQuery();
+			return rs;
+		} catch(Throwable e) {
+			tryClose(rs);
+			if(e instanceof SQLException)
+				throw (SQLException)e;
+			if(e instanceof RuntimeException)
+				throw (RuntimeException)e;
+			throw new RuntimeException(e);
+		} finally {
+			for(final Array _bindArray : _bindArrays)
+				tryClose(_bindArray);
+		}
+	}
+
 	private static final java.lang.reflect.Field[] _fields = new java.lang.reflect.Field[] {
 		com.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(com.moparisthebest.jdbc.dto.FieldPerson.class, "personNo"),
 		com.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(com.moparisthebest.jdbc.dto.FieldPerson.class, "firstName"),
@@ -1576,7 +1600,7 @@ final java.lang.Long ret = com.moparisthebest.jdbc.util.ResultSetUtil.getObjectL
 		com.moparisthebest.jdbc.util.ReflectionUtil.getAccessibleField(com.moparisthebest.jdbc.dto.ReverseFieldPerson.class, "first_name"),
 	};
 
-	private final PreparedStatement[] psCache = new PreparedStatement[62];
+	private final PreparedStatement[] psCache = new PreparedStatement[63];
 
 	private PreparedStatement prepareStatement(final int index, final String sql) throws SQLException {
 		final PreparedStatement ps = psCache[index];
