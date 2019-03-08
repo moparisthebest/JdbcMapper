@@ -8,7 +8,6 @@ import com.moparisthebest.jdbc.codegen.QueryMapperTypeQmDao;
 import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.Bindable;
 import com.moparisthebest.jdbc.util.ResultSetIterable;
-import com.moparisthebest.jdbc.util.SqlBuilder;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -16,6 +15,7 @@ import org.junit.runners.Parameterized;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 //IFJAVA8_START
@@ -26,9 +26,7 @@ import java.util.stream.Stream;
 
 import static com.moparisthebest.jdbc.OptimalInList.*;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by mopar on 6/10/14.
@@ -777,5 +775,21 @@ public class QueryMapperTest {
 		assertEquals(Collections.singletonList(2L), qm.selectRandomSqlBuilder(2L, qm.sqlBuilder(), "NoNameMatch"));
 		assertEquals(Collections.singletonList(3L), qm.selectRandomSqlBuilder(3L, Bindable.empty, "NoNameMatch"));
 		assertEquals(arr, qm.selectRandomSqlBuilder(2L, qm.sqlBuilder().append("OR person_no = ? OR ", 1L).appendInList("person_no", Collections.singletonList(3L)), "NoNameMatch"));
+	}
+
+	@Test
+	public void testSelectResultSet() throws Throwable {
+		final List<Long> arr = Arrays.asList(1L, 2L, 3L);
+		ResultSet rs = null;
+		try {
+			rs = qm.getFieldPeopleResultSet(arr);
+			// looking for 3 rows in order here
+			for (final long personNo : arr) {
+				assertTrue(rs.next());
+				assertEquals(rs.getLong("person_no"), personNo);
+			}
+		} finally {
+			tryClose(rs);
+		}
 	}
 }

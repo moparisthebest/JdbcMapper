@@ -6,6 +6,7 @@ import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.*;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -376,5 +377,10 @@ public class QueryMapperTypeQmDao extends QueryMapperQmDao {
 	@Override
 	public List<Long> selectRandomSqlBuilder(final long personNo1, final Bindable sql, final String firstName) throws SQLException {
 		return qm.toType("SELECT person_no FROM person WHERE person_no = ? " + sql + " OR first_name = ?", new TypeReference<List<Long>>() {}, personNo1, sql, firstName);
+	}
+
+	@Override
+	public ResultSet getFieldPeopleResultSet(final List<Long> personNos) throws SQLException {
+		return qm.toType("SELECT person_no, first_name, last_name, birth_date from person WHERE " + inListReplace + " ORDER BY person_no", new TypeReference<ResultSet>() {}, qm.inList("person_no", personNos));
 	}
 }

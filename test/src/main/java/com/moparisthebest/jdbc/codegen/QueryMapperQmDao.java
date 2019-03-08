@@ -5,6 +5,7 @@ import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.*;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -446,5 +447,10 @@ public class QueryMapperQmDao implements QmDao {
 	@Override
 	public void insertRandomSqlIterable(final Iterable<Long> sql) throws SQLException {
 		qm.executeUpdate("INSERT " + sql, sql);
+	}
+
+	@Override
+	public ResultSet getFieldPeopleResultSet(final List<Long> personNos) throws SQLException {
+		return qm.toResultSet("SELECT person_no, first_name, last_name, birth_date from person WHERE " + inListReplace + " ORDER BY person_no", qm.inList("person_no", personNos));
 	}
 }

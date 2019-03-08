@@ -3,6 +3,7 @@ package com.moparisthebest.jdbc.codegen;
 import com.moparisthebest.jdbc.dto.*;
 import com.moparisthebest.jdbc.util.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -283,4 +284,7 @@ public interface QmDao extends JdbcMapper {
 
 	@SQL("INSERT {sql:sql}")
 	void insertRandomSqlIterable(Iterable<Long> sql) throws SQLException;
+
+	@SQL("SELECT person_no, first_name, last_name, birth_date from person WHERE {person_no IN personNos} ORDER BY person_no")
+	ResultSet getFieldPeopleResultSet(List<Long> personNos) throws SQLException;
 }

@@ -288,7 +288,7 @@ public class QueryMapper implements JdbcMapper {
 	public Long insertGetGeneratedKey(final String sql, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = getSingleColumnPreparedStatementFactory().prepareStatement(conn, sql);
+			ps = getPreparedStatement(sql, getSingleColumnPreparedStatementFactory(), bindObjects);
 			return this.insertGetGeneratedKey(ps, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -302,7 +302,7 @@ public class QueryMapper implements JdbcMapper {
 	public <T> T insertGetGeneratedKeyType(final String sql, final PreparedStatementFactory psf, final TypeReference<T> typeReference, final Object... bindObjects) throws SQLException {
 		PreparedStatement ps = null;
 		try {
-			ps = psf.prepareStatement(conn, sql);
+			ps = getPreparedStatement(sql, psf, bindObjects);
 			return this.insertGetGeneratedKeyType(ps, typeReference, bindObjects);
 		} finally {
 			tryClose(ps);
@@ -359,7 +359,7 @@ public class QueryMapper implements JdbcMapper {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = psf.prepareStatement(conn, sql);
+			ps = getPreparedStatement(sql, psf, bindObjects);
 			rs = this.toResultSet(ps, bindObjects);
 			error = false;
 			return new StatementClosingResultSet(rs, ps);
