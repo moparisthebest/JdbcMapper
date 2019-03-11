@@ -400,8 +400,17 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									final String inColumnName = bindParamMatcher.group(2);
 									if (inColumnName == null) {
 										if(clobBlobSql == null){
-											bindParamMatcher.appendReplacement(sb, "?");
-											bindParams.add(bindParam);
+											// shortcut for Bindable without sql:
+											if (types.isAssignable(bindParam.asType(), bindableType)) {
+												bindParamMatcher.appendReplacement(sb, "REPLACEMEWITHUNQUOTEDQUOTEPLZ + " + paramName + " + REPLACEMEWITHUNQUOTEDQUOTEPLZ");
+												final SpecialVariableElement sve = new SpecialVariableElement(bindParam, SQL, null);
+												bindParams.add(sve);
+												sqlParam = true;
+												sqlIterableParam |= sve.iterable || sve.bindable;
+											} else {
+												bindParamMatcher.appendReplacement(sb, "?");
+												bindParams.add(bindParam);
+											}
 										} else {
 											final String upperClobBlobSql = clobBlobSql.toUpperCase();
 											String blobCharset = bindParamMatcher.group(6);
@@ -1051,7 +1060,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				method = "Ref";
 			} else {
 				// shouldn't get here ever, if we do the types should be more specific
-				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param", param);
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param: " + variableName, param);
 				return;
 			}
 		w.write("ps.set");

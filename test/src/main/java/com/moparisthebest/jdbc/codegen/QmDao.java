@@ -275,7 +275,8 @@ public interface QmDao extends JdbcMapper {
 	@SQL("SELECT person_no FROM person WHERE person_no = {personNo1} {sql:sql} OR first_name = {firstName}")
 	List<Long> selectRandomSql(long personNo1, String sql, String firstName) throws SQLException;
 
-	@SQL("SELECT person_no FROM person WHERE person_no = {personNo1} {sql:sql} OR first_name = {firstName}")
+	// do not need sql: for anything extending Bindable
+	@SQL("SELECT person_no FROM person WHERE person_no = {personNo1} {sql} OR first_name = {firstName}")
 	List<Long> selectRandomSqlBuilder(long personNo1, Bindable sql, String firstName) throws SQLException;
 
 	// these we just check if they generated
