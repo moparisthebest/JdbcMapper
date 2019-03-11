@@ -54,24 +54,40 @@ public class SqlBuilder implements Appendable, CharSequence, Collection<Object>,
 
     // start custom SqlBuilder methods
 
-    public SqlBuilder append(final String sql, final Object bindObject) {
-        sb.append(sql);
+    public SqlBuilder bind(final Object bindObject) {
         this.bindObjects.add(bindObject);
         return this;
     }
 
-    public SqlBuilder append(final String sql, final Object... bindObjects) {
-        return this.append(sql, (Object) bindObjects);
+    public SqlBuilder bind(final Object... bindObjects) {
+        return this.bind((Object) bindObjects);
+    }
+
+    public SqlBuilder appendBind(final String sql, final Object bindObject) {
+        sb.append(sql);
+        return bind(bindObject);
+    }
+
+    public SqlBuilder appendBind(final String sql, final Object... bindObjects) {
+        return this.appendBind(sql, (Object) bindObjects);
     }
 
     public <T> SqlBuilder appendInList(final String columnName, final Collection<T> values) throws SQLException {
         final InList.InListObject inListObject = inList.inList(conn, columnName, values);
-        return this.append(inListObject.toString(), inListObject.getBindObject());
+        return this.appendBind(inListObject.toString(), inListObject.getBindObject());
     }
 
     public <T> SqlBuilder appendNotInList(final String columnName, final Collection<T> values) throws SQLException {
         final InList.InListObject inListObject = inList.notInList(conn, columnName, values);
-        return this.append(inListObject.toString(), inListObject.getBindObject());
+        return this.appendBind(inListObject.toString(), inListObject.getBindObject());
+    }
+
+    public SqlBuilder and() {
+        return append(" AND ");
+    }
+
+    public SqlBuilder or() {
+        return append(" OR ");
     }
 
     public StringBuilder getStringBuilder() {
