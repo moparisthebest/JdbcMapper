@@ -654,7 +654,20 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 										}
 									}
 								}
-								sqlChecker.checkSql(processingEnv, genClass, mapper, databaseType, eeMethod, sqlStatement, bindParams, arrayInList);
+								// todo: fix these awful hacks...
+								String sqlStatementToCheck = sqlStatement;
+								if (bindInList) {
+									// remove this bit entirely
+									sqlStatementToCheck = sqlStatementToCheck.replace("REPLACEMEWITHUNQUOTEDQUOTEPLZ + com.moparisthebest.jdbc.util.InListUtil.toInList(REPLACEMEWITHUNQUOTEDQUOTEPLZ", "");
+									// replace this with a bind in list that expects 1 param...
+									sqlStatementToCheck = sqlStatementToCheck.replaceAll("REPLACEMEWITHUNQUOTEDQUOTEPLZ, [^)]+\\) \\+ REPLACEMEWITHUNQUOTEDQUOTEPLZ", " IN (?) ");
+								}
+								if (sqlParam) {
+									// remove this entirely, like a blank string being sent in
+									sqlStatementToCheck = sqlStatementToCheck.replaceAll("REPLACEMEWITHUNQUOTEDQUOTEPLZ \\+ [^ ]+ \\+ REPLACEMEWITHUNQUOTEDQUOTEPLZ", "");
+								}
+								// end awful hacks
+								sqlChecker.checkSql(processingEnv, genClass, mapper, databaseType, eeMethod, sqlStatementToCheck, bindParams, arrayInList);
 							}
 						}
 

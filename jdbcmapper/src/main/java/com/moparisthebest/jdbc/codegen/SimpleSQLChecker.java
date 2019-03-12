@@ -2,6 +2,7 @@ package com.moparisthebest.jdbc.codegen;
 
 import com.moparisthebest.jdbc.ArrayInList;
 import com.moparisthebest.jdbc.QueryMapper;
+import com.moparisthebest.jdbc.util.Bindable;
 
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -104,6 +105,7 @@ public class SimpleSQLChecker implements SQLChecker {
 		if (param instanceof SpecialVariableElement) {
 			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
 			switch (specialParam.specialType) {
+				case BIND_IN_LIST:
 				case IN_LIST: {
 					final TypeMirror componentType;
 					if (o.getKind() == TypeKind.ARRAY) {
@@ -115,10 +117,11 @@ public class SimpleSQLChecker implements SQLChecker {
 						getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING, "invalid in-list-variable type, returning null", ((SpecialVariableElement) param).delegate);
 						return null;
 					}
+					// if arrayInList is null here, it's a BindInList, in which case we need to return 1 object to bind...
 					if (types.isAssignable(componentType, numberType)) {
-						return arrayInList.toArray(conn, true, new Long[]{0L}); // todo: not quite right, oh well for now
+						return arrayInList == null ? 0L : arrayInList.toArray(conn, true, new Long[]{0L}); // todo: not quite right, oh well for now
 					} else if (types.isAssignable(componentType, stringType) || types.isAssignable(componentType, enumType)) {
-						return arrayInList.toArray(conn, false, new String[]{defaultString});
+						return arrayInList == null ? defaultString : arrayInList.toArray(conn, false, new String[]{defaultString});
 					} else {
 						getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING, "invalid in-list-variable type, returning null", ((SpecialVariableElement) param).delegate);
 						return null;
@@ -129,7 +132,7 @@ public class SimpleSQLChecker implements SQLChecker {
 				case CLOB:
 					return new StringReader(defaultString);
 				case SQL:
-					return specialParam.blobStringCharset == null ? "" : specialParam.blobStringCharset;
+					return Bindable.empty;
 			}
 		}
 		// end special behavior

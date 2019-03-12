@@ -136,7 +136,7 @@ class SpecialVariableElement implements VariableElement {
 
 	@Override
 	public String toString() {
-		return "InListVariableElement{" +
+		return "SpecialVariableElement{" +
 				"delegate=" + delegate +
 				'}';
 	}
