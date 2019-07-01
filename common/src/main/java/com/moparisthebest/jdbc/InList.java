@@ -1,6 +1,7 @@
 package com.moparisthebest.jdbc;
 
 import com.moparisthebest.jdbc.codegen.JdbcMapper;
+import com.moparisthebest.jdbc.codegen.JdbcMapperFactory;
 import com.moparisthebest.jdbc.util.Bindable;
 import com.moparisthebest.jdbc.util.InListUtil;
 
@@ -72,6 +73,7 @@ public interface InList {
 
 		private static InList getDefaultInListInstance() {
 			try {
+				JdbcMapperFactory.connectionFactory(""); // need this so QueryMapper.ensureContext.class is called first in case it sets System properties used below
 				final String inListClassName = System.getProperty("QueryMapper.defaultInList.class");
 				if(inListClassName != null) {
 					final Class<?> inListClass = Class.forName(inListClassName);
