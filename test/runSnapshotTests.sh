@@ -15,4 +15,4 @@ $mvn "$@" -DJdbcMapper.beanSuffix=Bean
 $mvn "$@" -DjdbcMapper.databaseType=BIND -DJdbcMapper.beanSuffix=BindBean
 $mvn "$@" -DjdbcMapper.databaseType=ANY -DJdbcMapper.beanSuffix=AnyBean
 $mvn "$@" -DjdbcMapper.databaseType=UNNEST -DJdbcMapper.beanSuffix=UnNestBean
-$mvn "$@" -DjdbcMapper.databaseType=ORACLE -P oracle -DJdbcMapper.beanSuffix=OracleBean
+#$mvn "$@" -DjdbcMapper.databaseType=ORACLE -P oracle -DJdbcMapper.beanSuffix=OracleBean

@@ -40,7 +40,7 @@ script:
   # h2 and postgre against ANY
   - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=h2' '-DjdbcUrl1=jdbc:postgresql:test_db' || travis_terminate 1;
   # oracle against ORACLE
-  - mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+  #- mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
   # hsql against UNNEST
   - mvn -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
 
@@ -59,7 +59,7 @@ matrix:
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND -DqueryMapper.databaseType=OPTIMAL --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
-        - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+        #- mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
     - env: JDK='OpenJDK 7'
       jdk: openjdk7
@@ -69,7 +69,7 @@ matrix:
         - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
         - mvn -B -pl test clean test -DjdbcMapper.databaseType=BIND -DqueryMapper.databaseType=OPTIMAL --settings .travis-settings.xml -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
         - mvn -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
-        - mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
+        #- mvn -B -pl test clean test -DjdbcMapper.databaseType=ORACLE --settings .travis-settings.xml -P oracle '-DjdbcUrl=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn -B -pl test clean test -DjdbcMapper.databaseType=UNNEST '-DjdbcUrl=hsqldb' || travis_terminate 1;
     - env: JDK='OpenJDK 8'
       jdk: openjdk8
@@ -87,6 +87,8 @@ matrix:
       install: . ./install-jdk.sh -F 12 -L GPL
     - env: JDK='OpenJDK 13'
       install: . ./install-jdk.sh -F 13 -L GPL
+    - env: JDK='OpenJDK 14'
+      install: . ./install-jdk.sh -F 14 -L GPL
 
 before_install:
   - wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
