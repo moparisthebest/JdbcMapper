@@ -110,7 +110,11 @@ public class SimpleSQLChecker implements SQLChecker {
 					final TypeMirror componentType;
 					if (o.getKind() == TypeKind.ARRAY) {
 						componentType = ((ArrayType) o).getComponentType();
-					} else if (o.getKind() == TypeKind.DECLARED && types.isAssignable(o, collectionType)) {
+					} else if (o.getKind() == TypeKind.DECLARED && (types.isAssignable(o, collectionType)
+							//IFJAVA8_START
+							|| types.isAssignable(o, streamType)
+							//IFJAVA8_END
+					)) {
 						final DeclaredType dt = (DeclaredType) o;
 						componentType = dt.getTypeArguments().get(0);
 					} else {
