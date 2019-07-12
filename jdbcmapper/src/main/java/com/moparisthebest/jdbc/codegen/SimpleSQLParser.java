@@ -25,7 +25,12 @@ public class SimpleSQLParser extends AbstractSQLParser {
 		final boolean isSelect = sql.startsWith("SELECT");
 		String[] columnNames = null;
 		if (isSelect) {
-			final String columns = parenPattern.matcher(sql.substring(sql.indexOf("SELECT") + 6, sql.indexOf("FROM"))).replaceAll("").trim();
+			// remove anything in parens, examples:
+			// COALESCE(some_tom, 'UNKNOWN') as tom -> COALESCE() as tom
+			// (SELECT some_column from some_table where other_column = 'YAY') as tom -> () as tom
+			sql = parenPattern.matcher(sql).replaceAll("()").trim();
+			// 6 is length of "SELECT" which we already verified it starts with...
+			final String columns = sql.substring(6, sql.indexOf("FROM"));
 			final String[] splitColumns = columns.split(",");
 			columnNames = new String[splitColumns.length + 1];
 			int index = 0;

@@ -30,6 +30,7 @@ public class SimpleSQLParserTest {
 				, "select some_bob bob, some_tom as tom from tom"
 				, "select tom.bob, some_tom as tom from tom"
 				, "select tom.bob, COALESCE(some_tom, 'UNKNOWN') as tom from tom"
+				, "select tom.bob, (SELECT some_column from some_table where other_column = 'YAY') as tom from tom"
 		}) {
 			final SQLParser ret = getFactory().parse(sql);
 			assertTrue(ret.isSelect());
