@@ -601,11 +601,14 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 									processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed no column names, proper SQL? Wildcard? or bad parser?", methodElement);
 									continue;
 								}
-								for (final String key : keys)
-									if ("*".equals(key)) {
-										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
-										return false;
-									}
+								// wildcards are fine for java.sql.ResultSet and nothing else
+								if (!"java.sql.ResultSet".equals(returnType)) {
+									for (final String key : keys)
+										if ("*".equals(key)) {
+											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL sql parsed a wildcard column name which is not supported", methodElement);
+											return false;
+										}
+								}
 								closeRs = rsm.mapToResultType(w, keys, eeMethod, maxRows, calendarName, cleanerName, !cachePreparedStatements, allowReflection ? reflectionFields : null);
 							}
 
