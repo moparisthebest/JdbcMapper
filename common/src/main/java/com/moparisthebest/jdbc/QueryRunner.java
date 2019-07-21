@@ -252,6 +252,28 @@ public class QueryRunner<T extends JdbcMapper> {
 		E run(T dao) throws SQLException;
 	}
 
+	public static <T> Runner<T, Void> voidToRunner(final VoidRunner<T> query) {
+		//IFJAVA8_START
+		return dao -> {
+			query.run(dao);
+			return null;
+		};
+		//IFJAVA8_END
+		/*IFJAVA6_START
+		return new Runner<T, Void>() {
+			@Override
+			public Void run(final T dao) throws SQLException {
+				query.run(dao);
+				return null;
+			}
+		};
+		IFJAVA6_END*/
+	}
+
+	public static interface VoidRunner<T> {
+		void run(T dao) throws SQLException;
+	}
+
 	public static interface DelayStrategy {
 		long getDelay(int attempt);
 

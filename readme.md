@@ -570,7 +570,6 @@ TODO
 ----
 
  * DOCUMENTATION!!!!!
- * @RunInTransaction void support
  * QueryMapper mapping errors should be clearer, especially if a .finish(ResultSet) throws an error
  * check QueryMapper/ResultSetMapper closing of ResultSets, it doesn't look guaranteed
  * CompilingResultSetMapper fails on inner class like 'public static class Bla {'

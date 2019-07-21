@@ -282,6 +282,11 @@ public interface PersonDAO extends JdbcMapper {
 		return getPerson(getPersonNo(lastName));
 	}
 
+	@JdbcMapper.RunInTransaction
+	default void update(final String lastName) throws SQLException {
+		// actually do nothing, this is for testing @RunInTransaction void support
+	}
+
 	//IFJAVA8_END
 
 	// test blob

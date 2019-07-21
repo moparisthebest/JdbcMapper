@@ -766,6 +766,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 	private void outputRunInTransaction(final ExecutableElement eeMethod, final Writer w) throws IOException {
 		w.write("\n\t@Override\n\tpublic ");
 		final String returnType = eeMethod.getReturnType().toString();
+		final boolean isVoid = returnType.equals("void");
 		w.write(returnType);
 		w.write(" ");
 		w.write(eeMethod.getSimpleName().toString());
@@ -809,11 +810,19 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		final boolean thisDaoImplementsJdbcMapper = types.isAssignable(thisDao.asType(), jdbcMapperType);
 		final String thisDaoName = thisDao.getSimpleName().toString();
 
-		w.write("\t\treturn com.moparisthebest.jdbc.QueryRunner.run");
+		w.write("\t\t");
+		if(!isVoid) {
+			w.write("return ");
+		}
+		w.write("com.moparisthebest.jdbc.QueryRunner.run");
 		if(thisDaoImplementsJdbcMapper)
 			w.write("InTransaction(this, ");
 		else
 			w.write("ConnectionInTransaction(this.conn, ");
+
+		if(isVoid) {
+			w.append("com.moparisthebest.jdbc.QueryRunner.voidToRunner(");
+		}
 
 		if(!java8) {
 			final String tType = thisDaoImplementsJdbcMapper ? thisDaoName : "Connection";
@@ -843,6 +852,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		if(!java8)
 			w.append(";\n\t\t\t}\n" +
 				"\t\t}");
+
+		if(isVoid) {
+			w.append(")");
+		}
 
 		w.write(");\n");
 		w.write("\t}\n");
