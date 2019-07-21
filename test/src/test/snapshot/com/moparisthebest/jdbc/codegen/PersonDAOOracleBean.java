@@ -1911,6 +1911,11 @@ final java.time.ZoneOffset ret = com.moparisthebest.jdbc.util.ResultSetUtil.getZ
 	}
 
 	@Override
+	public void update(final java.lang.String lastName) throws java.sql.SQLException {
+		com.moparisthebest.jdbc.QueryRunner.runInTransaction(this, com.moparisthebest.jdbc.QueryRunner.voidToRunner(dao -> PersonDAO.super.update(lastName)));
+	}
+
+	@Override
 	public byte[] getBlob(final long valNo) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
