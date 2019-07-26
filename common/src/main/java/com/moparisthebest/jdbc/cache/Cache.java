@@ -1,7 +1,6 @@
 package com.moparisthebest.jdbc.cache;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -19,8 +18,8 @@ public class Cache<T> implements Supplier<T> {
         return new Cache<>(refreshInterval, supplier);
     }
 
-    private final Duration refreshInterval;
-    private Instant lastRefresh;
+    private final long refreshInterval;
+    private long nextRefresh;
 
     protected final Supplier<T> supplier;
 
@@ -29,18 +28,18 @@ public class Cache<T> implements Supplier<T> {
     protected Cache(final Duration refreshInterval, final Supplier<T> supplier) {
         Objects.requireNonNull(refreshInterval);
         // we are explicitly allowing supplier to be null, in which case get() will fail
-        this.refreshInterval = refreshInterval;
+        this.refreshInterval = refreshInterval.toMillis();
         this.supplier = supplier;
         // so refresh will be called immediately
-        this.lastRefresh = Instant.MIN;
+        this.nextRefresh = Long.MIN_VALUE;
     }
 
     protected boolean shouldRefresh() {
-        return Instant.now().isAfter(lastRefresh.plus(refreshInterval));
+        return System.currentTimeMillis() > nextRefresh;
     }
 
     protected void markRefreshed() {
-        this.lastRefresh = Instant.now();
+        this.nextRefresh = System.currentTimeMillis() + refreshInterval;
     }
 
     @Override
