@@ -397,6 +397,30 @@ com.moparisthebest.jdbc.util.ReflectionUtil.setValue(_fields[2], ret, com.mopari
 	}
 
 	@Override
+	public com.moparisthebest.jdbc.dto.TypeUsePerson getTypeUsePerson(final long personNo, final java.util.Calendar cal) throws java.sql.SQLException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement("SELECT person_no, first_name, last_name, birth_date FROM person WHERE person_no = ?");
+			ps.setObject(1, personNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+final com.moparisthebest.jdbc.dto.TypeUsePerson ret = new com.moparisthebest.jdbc.dto.TypeUsePerson();
+ret.personNo = rs.getLong(1);
+ret.firstName = rs.getString(2);
+ret.lastName = rs.getString(3);
+ret.birthDate = com.moparisthebest.jdbc.util.ResultSetUtil.getUtilDate(rs, 4, cal);
+				return ret;
+			} else {
+				return null;
+			}
+		} finally {
+			tryClose(rs);
+			tryClose(ps);
+		}
+	}
+
+	@Override
 	public java.util.List<com.moparisthebest.jdbc.dto.FieldPerson> getPeople(final java.lang.String lastName) throws java.sql.SQLException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;

@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 //IFJAVA8_END
 
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.java8;
-import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorStringNoGenerics;
+import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.baseTypeMirrorString;
 import static com.moparisthebest.jdbc.codegen.JdbcMapperProcessor.typeMirrorToClass;
 
 /**
@@ -75,7 +75,7 @@ public class CompileTimeResultSetMapper {
 				// ignore?
 			}
 		}
-		return typeMirrorStringNoGenerics(returnType);
+		return baseTypeMirrorString(returnType.toString());
 	}
 
 	/**

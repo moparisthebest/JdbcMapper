@@ -14,6 +14,7 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.*;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -1162,20 +1163,53 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 					default:
 						return Class.forName("[L" + arrayComponentType.toString() + ";");
 				}
-			case DECLARED:
-				if (!((DeclaredType) tm).getTypeArguments().isEmpty()) {
-					return Class.forName(typeMirrorStringNoGenerics(tm));
-				}
-				// fallthrough otherwise...
-			default:
-				return Class.forName(tm.toString());
-		}
-	}
+            case DECLARED:
+                final DeclaredType dt = (DeclaredType) tm;
+				if (!dt.getTypeArguments().isEmpty()
+						//IFJAVA8_START
+						|| !dt.getAnnotationMirrors().isEmpty()
+						//IFJAVA8_END
+				) {
+                    //messager.printMessage(Diagnostic.Kind.MANDATORY_WARNING, "dt.toString(): " + dt.toString() + " dt.getClass(): " + dt.getClass(), types.asElement(dt));
+                    //return dt.getClass().getDeclaredMethod("unannotatedType").invoke(dt).toString(); // this is java 8 only
+                    //return dt.getClass().getDeclaredMethod("getEnclosingType").invoke(dt); // modules prevent this 9+
 
-	public static String typeMirrorStringNoGenerics(final TypeMirror tm) {
-		final String classWithGenerics = tm.toString();
-		return classWithGenerics.substring(0, classWithGenerics.indexOf('<'));
-	}
+                    return Class.forName(baseTypeMirrorString(tm.toString()));
+                }
+                // fallthrough otherwise...
+            default:
+                return Class.forName(tm.toString());
+        }
+    }
+
+    /**
+     * This is a terrible hack because I don't think a proper solution exists, the TypeUseAnnotation.java in the test module
+     * tests this functionality by being similar to real-world NotNull:
+     * <p>
+     * https://github.com/eclipse-ee4j/beanvalidation-api/blob/master/src/main/java/javax/validation/constraints/NotNull.java
+     * <p>
+     * The problem is they added TYPE_USE to the list of targets in this commit:
+     * <p>
+     * https://github.com/eclipse-ee4j/beanvalidation-api/commit/87ea7911ffc8578807ab78886e9483e87bcc7acd#diff-8aebda554210427d515ad1c7b1274d60
+     * <p>
+     * Which was well-known as a bad thing to do that cannot be handled all the way back in 2013 before Java 8 was even released:
+     * <p>
+     * https://mail.openjdk.java.net/pipermail/type-annotations-spec-comments/2013-October/000049.html
+     * <p>
+     * In practice, a type that used to be `java.lang.String` now reads as `(@javax.validation.constraints.NotNull :: java.lang.String)`
+     * with absolutely no documented way I can find to get the original type back out, the below way seems to work with
+     * the openjdk compilers 8-15 which was latest at the time of this writing, but I will continue to investigate a better
+     * way to do it.
+     *
+     * @param tm a DeclaredType that is an AnnotatedType underneath
+     * @return the DeclaredType as a String without generics or type annotations
+     */
+    public static String baseTypeMirrorString(final String rawTypeString) {
+        return baseTypeBegin.matcher(baseTypeEnd.matcher(rawTypeString).replaceAll("")).replaceAll("");
+    }
+
+    private static final Pattern baseTypeEnd = Pattern.compile("(<.*|[)])$");
+    private static final Pattern baseTypeBegin = Pattern.compile("^.*\\s");
 
 	public ExecutableElement getCloseMethod(final TypeElement genClass) {
 		ExecutableElement ret = null;
