@@ -10,7 +10,7 @@ public class SimpleSQLParser extends AbstractSQLParser {
 
 	private static final Pattern aliasPattern = Pattern.compile("^.*\\.");
 	private static final Pattern parenPattern = Pattern.compile("\\([^)]+\\)");
-	private static final Pattern fromPattern = Pattern.compile("\\s+FROM\\s+");
+	private static final Pattern fromPattern = Pattern.compile("[\\s)]+FROM[\\s(]+");
 
 	public SimpleSQLParser() {
 		super(null, false);
