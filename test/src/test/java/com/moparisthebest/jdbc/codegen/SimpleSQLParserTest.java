@@ -17,9 +17,26 @@ public class SimpleSQLParserTest {
 
 	@Test
 	public void testSingleSelect() {
-		final SQLParser ret = getFactory().parse("select bob from tom");
-		assertTrue(ret.isSelect());
-		assertArrayEquals(new String[]{null, "BOB"}, ret.columnNames());
+		{
+			final SQLParser ret = getFactory().parse("select bob from tom");
+			assertTrue(ret.isSelect());
+			assertArrayEquals(new String[]{null, "BOB"}, ret.columnNames());
+		}
+		{
+			final SQLParser ret = getFactory().parse("select bob_from from tom");
+			assertTrue(ret.isSelect());
+			assertArrayEquals(new String[]{null, "BOB_FROM"}, ret.columnNames());
+		}
+		{
+			final SQLParser ret = getFactory().parse("select from_bob from tom");
+			assertTrue(ret.isSelect());
+			assertArrayEquals(new String[]{null, "FROM_BOB"}, ret.columnNames());
+		}
+		{
+			final SQLParser ret = getFactory().parse("select something_from_bob from tom");
+			assertTrue(ret.isSelect());
+			assertArrayEquals(new String[]{null, "SOMETHING_FROM_BOB"}, ret.columnNames());
+		}
 	}
 
 	@Test
