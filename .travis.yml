@@ -92,6 +92,8 @@ matrix:
       install: . ./install-jdk.sh -F 14 -L GPL
     - env: JDK='OpenJDK 15'
       install: . ./install-jdk.sh -F 15 -L GPL
+    - env: JDK='OpenJDK 16'
+      install: . ./install-jdk.sh -F 16 -L GPL
 
 before_install:
   - mv .travis/settings.xml $HOME/.m2/settings.xml
