@@ -21,6 +21,7 @@ public class ParamPatternTest {
 		testMatch("{last_name IN lastNames}", s("last_name IN ", "last_name", "IN ", null, null, null, "lastNames"));
 		testMatch("{last_name not in lastNames}", s("last_name not in ", "last_name", "not in ", "not ", null, null, "lastNames"));
 		testMatch("{clob:comment}", s(null, null, null, null, "clob:", null, "comment"));
+		testMatch("{clob : comment}", s(null, null, null, null, "clob : ", null, "comment"));
 		testMatch("{clob: comment}", s(null, null, null, null, "clob: ", null, "comment"));
 		testMatch("{blob: comment}", s(null, null, null, null, "blob: ", null, "comment"));
 		testMatch("{Blob: comment}", s(null, null, null, null, "Blob: ", null, "comment"));
@@ -38,6 +39,10 @@ public class ParamPatternTest {
         testMatch("{Sql : sqlStatement}", s(null, null, null, null, "Sql : ", null, "sqlStatement"));
 		testMatch("{sql:person:sqlStatement}", s(null, null, null, null, "sql:person:", "person:", "sqlStatement"));
 		testMatch("{sql:JOIN person ON p.person_no = b.person_no:sqlStatement}", s(null, null, null, null, "sql:JOIN person ON p.person_no = b.person_no:", "JOIN person ON p.person_no = b.person_no:", "sqlStatement"));
+		
+		testMatch("{str:comment}", s(null, null, null, null, "str:", null, "comment"));
+		testMatch("{str: comment}", s(null, null, null, null, "str: ", null, "comment"));
+		testMatch("{str : comment}", s(null, null, null, null, "str : ", null, "comment"));
 	}
 
 	private static void testMatch(final String sql, final Collection<String[]> expected) {

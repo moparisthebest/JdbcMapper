@@ -39,7 +39,7 @@ import static com.moparisthebest.jdbc.codegen.SpecialVariableElement.SpecialType
 @SupportedOptions({"jdbcMapper.databaseType", "jdbcMapper.arrayNumberTypeName", "jdbcMapper.arrayStringTypeName", "jdbcMapper.allowedMaxRowParamNames", "jdbcMapper.sqlCheckerClass"})
 public class JdbcMapperProcessor extends AbstractProcessor {
 
-	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCcSs][LlQq][OoLl][Bb]?\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");
+	public static final Pattern paramPattern = Pattern.compile("\\{(([^\\s]+)\\s+(([Nn][Oo][Tt]\\s+)?[Ii][Nn]\\s+))?([BbCcSs][LlQqTt][OoLlRr][Bb]?\\s*:\\s*([^:}]+\\s*:\\s*)?)?([^}]+)\\}");
 
 	public static final SourceVersion RELEASE_8;
 	public static boolean java8;
@@ -423,23 +423,32 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 												bindParams.add(sve);
 												sqlParam = true;
 												sqlIterableParam |= sve.iterable || sve.bindable;
-											} else if(upperClobBlobSql.startsWith("CLOB") || upperClobBlobSql.startsWith("BLOB")) {
+											} else if(upperClobBlobSql.startsWith("CLOB") || upperClobBlobSql.startsWith("BLOB") || upperClobBlobSql.startsWith("STR")) {
 												bindParamMatcher.appendReplacement(sb, "?");
-												final boolean clobNotBlob = 'C' == upperClobBlobSql.charAt(0);
-												if (clobNotBlob) {
-													if (blobCharset != null)
-														processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with clob", bindParam);
-													bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.CLOB));
-												} else {
-													bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.BLOB, blobCharset));
+												switch (upperClobBlobSql.charAt(0)) {
+													case 'B':
+														bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.BLOB, blobCharset));
+														break;
+													case 'C':
+														if (blobCharset != null)
+															processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with clob", bindParam);
+														bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.CLOB));
+														break;
+													case 'S':
+														if (blobCharset != null)
+															processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with str", bindParam);
+														if(upperClobBlobSql.startsWith("STRB")) // side-effect of regex matching...
+															processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "special variable type can only be clob/blob/str/sql, not " + clobBlobSql, bindParam);
+														bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.STR_BOOLEAN));
+														break;
 												}
 											} else {
-												processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "special variable type can only be clob/blob/sql, not " + clobBlobSql, bindParam);
+												processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "special variable type can only be clob/blob/str/sql, not " + clobBlobSql, bindParam);
 											}
 										}
 									} else {
 										if(clobBlobSql != null)
-											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob/sql", bindParam);
+											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob/str/sql", bindParam);
 										SpecialVariableElement inListBindParam = inListBindParams.get(paramName);
 										if(inListBindParam == null) {
 											inListBindParam = new SpecialVariableElement(bindParam,
@@ -1014,6 +1023,16 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 						variableName = variableName + " == null ? null : new java.io.StringReader(" + variableName + ")";
 					} else if (!(types.isAssignable(o, readerType) || types.isAssignable(o, clobType))) {
 						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "JdbcMapper {clob:paramName} only valid for String, Clob, Reader", specialParam.delegate);
+						return;
+					}
+					break;
+				}
+				case STR_BOOLEAN: {
+					if (types.isAssignable(o, booleanType) || o.getKind() == TypeKind.BOOLEAN) {
+						method = "String";
+						variableName = "com.moparisthebest.jdbc.util.ResultSetUtil.booleanToString(" + variableName + ")";
+					} else {
+						processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "JdbcMapper {str:paramName} only valid for boolean, Boolean", specialParam.delegate);
 						return;
 					}
 					break;

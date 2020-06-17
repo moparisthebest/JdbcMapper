@@ -15,6 +15,14 @@ public class ResultSetUtil {
 	// the UpdateableDTO.YES/NO constants are for legacy reasons and should be considered deprecated
 	public static final String TRUE = System.getProperty("ResultSetUtil.TRUE", System.getProperty("UpdateableDTO.YES", "Y"));
 	public static final String FALSE = System.getProperty("ResultSetUtil.FALSE", System.getProperty("UpdateableDTO.NO", "N"));
+	
+	public static String booleanToString(boolean bool){
+		return bool ? TRUE : FALSE;
+	}
+	
+	public static String booleanToString(Boolean bool){
+		return bool == null ? null : booleanToString(bool.booleanValue());
+	}
 
 	public static Integer getObjectInt(final ResultSet rs, final int index) throws SQLException {
 		final int ret = rs.getInt(index);

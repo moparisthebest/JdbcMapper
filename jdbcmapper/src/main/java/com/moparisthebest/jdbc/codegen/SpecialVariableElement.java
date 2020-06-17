@@ -17,6 +17,7 @@ class SpecialVariableElement implements VariableElement {
 		CLOB,
 		BLOB,
 		SQL,
+		STR_BOOLEAN,
 	}
 
 	final VariableElement delegate;

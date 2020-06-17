@@ -49,6 +49,15 @@ public interface PersonDAO extends JdbcMapper {
 
 	@JdbcMapper.SQL("UPDATE person SET first_name = {blob:firstName} WHERE person_no = {personNo}")
 	void setFirstNameBlob(String firstName, long personNo) throws SQLException;
+	
+	@JdbcMapper.SQL("UPDATE person SET first_name = {blob:utf-16:firstName} WHERE person_no = {personNo}")
+	void setFirstNameBlobUtf16(String firstName, long personNo) throws SQLException;
+
+	@JdbcMapper.SQL("UPDATE person SET first_name = {clob:firstName} WHERE person_no = {personNo}")
+	void setFirstNameClob(String firstName, long personNo) throws SQLException;
+	
+	@JdbcMapper.SQL("UPDATE person SET first_name = {str:firstName} WHERE person_no = {personNo}")
+	void setFirstNameStringBoolean(boolean firstName, long personNo) throws SQLException;
 
 	@JdbcMapper.SQL("SELECT person_no FROM person WHERE last_name = {lastName}")
 	long getPersonNo(String lastName) throws SQLException;

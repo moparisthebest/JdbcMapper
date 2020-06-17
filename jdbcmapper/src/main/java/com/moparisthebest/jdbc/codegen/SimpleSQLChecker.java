@@ -3,6 +3,7 @@ package com.moparisthebest.jdbc.codegen;
 import com.moparisthebest.jdbc.ArrayInList;
 import com.moparisthebest.jdbc.QueryMapper;
 import com.moparisthebest.jdbc.util.Bindable;
+import com.moparisthebest.jdbc.util.ResultSetUtil;
 
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -135,6 +136,8 @@ public class SimpleSQLChecker implements SQLChecker {
 					return new ByteArrayInputStream(new byte[1]);
 				case CLOB:
 					return new StringReader(defaultString);
+				case STR_BOOLEAN:
+					return ResultSetUtil.TRUE;
 				case SQL:
 					return Bindable.empty;
 			}

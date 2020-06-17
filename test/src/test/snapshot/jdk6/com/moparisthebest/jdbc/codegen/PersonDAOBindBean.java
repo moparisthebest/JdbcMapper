@@ -171,6 +171,49 @@ public class PersonDAOBindBean implements PersonDAO {
 	}
 
 	@Override
+	public void setFirstNameBlobUtf16(final java.lang.String firstName, final long personNo) throws java.sql.SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("UPDATE person SET first_name = ? WHERE person_no = ?");
+			try {
+				ps.setBlob(1, firstName == null ? null : new java.io.ByteArrayInputStream(firstName.getBytes("utf-16")));
+			} catch (java.io.UnsupportedEncodingException e) {
+				throw new SQLException("String to Blob UnsupportedEncodingException", e);
+			}
+			ps.setObject(2, personNo);
+			ps.executeUpdate();
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	@Override
+	public void setFirstNameClob(final java.lang.String firstName, final long personNo) throws java.sql.SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("UPDATE person SET first_name = ? WHERE person_no = ?");
+			ps.setClob(1, firstName == null ? null : new java.io.StringReader(firstName));
+			ps.setObject(2, personNo);
+			ps.executeUpdate();
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	@Override
+	public void setFirstNameStringBoolean(final boolean firstName, final long personNo) throws java.sql.SQLException {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("UPDATE person SET first_name = ? WHERE person_no = ?");
+			ps.setString(1, com.moparisthebest.jdbc.util.ResultSetUtil.booleanToString(firstName));
+			ps.setObject(2, personNo);
+			ps.executeUpdate();
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	@Override
 	public long getPersonNo(final java.lang.String lastName) throws java.sql.SQLException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
