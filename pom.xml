@@ -246,6 +246,7 @@
                                 <excludes>
                                     <exclude>**/module-info.java</exclude>
                                     <exclude>**/PrestoPersonDAO.java</exclude>
+                                    <exclude>**/AutoCloseableUtil.java</exclude>
                                     <exclude>**/com/moparisthebest/jdbc/cache/*</exclude>
                                 </excludes>
                                 <compilerArgs>
