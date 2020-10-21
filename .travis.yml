@@ -32,7 +32,7 @@ before_script:
 script:
   - mvn -v
   # java8+ supports everything
-  - ./test/runSnapshotTests.sh --offline || travis_terminate 1;
+  - ./test/runSnapshotTests.sh || travis_terminate 1;
   # everything against BIND
   - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
   # everything against BIND jdbcMapper, but OPTIMAL queryMapper
@@ -55,6 +55,9 @@ matrix:
       script:
         # java6 doesn't support ms-sql at all, and doesn't support h2 with ANY
         - mvn -v
+        # java6 can't connect to https on maven central, use java7 to predownload everything, then clean up
+        - JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 mvn clean verify || travis_terminate 1;
+        - mvn --offline clean || travis_terminate 1;
         - ./test/runSnapshotTests.sh --offline || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND -DqueryMapper.databaseType=OPTIMAL -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' || travis_terminate 1;
@@ -66,7 +69,7 @@ matrix:
       script:
         # java7 doesn't support h2 with ANY
         - mvn -v
-        - ./test/runSnapshotTests.sh --offline || travis_terminate 1;
+        - ./test/runSnapshotTests.sh || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=BIND -DqueryMapper.databaseType=OPTIMAL -P oracle '-DjdbcUrl1=jdbc:postgresql:test_db' '-DjdbcUrl2=jdbc:mariadb://127.0.0.1:3306/test_db?user=root' '-DjdbcUrl3=jdbc:oracle:thin:travis_test/travis_test@127.0.0.1:1521/xe' '-DjdbcUrl4=jdbc:sqlserver://localhost:1433;databaseName=master;username=sa;password=<YourStrong!Passw0rd>;' || travis_terminate 1;
         - mvn --offline -B -pl test clean test -DjdbcMapper.databaseType=ANY '-DjdbcUrl=jdbc:postgresql:test_db' || travis_terminate 1;
