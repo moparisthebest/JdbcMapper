@@ -43,6 +43,12 @@ public class ParamPatternTest {
 		testMatch("{str:comment}", s(null, null, null, null, "str:", null, "comment"));
 		testMatch("{str: comment}", s(null, null, null, null, "str: ", null, "comment"));
 		testMatch("{str : comment}", s(null, null, null, null, "str : ", null, "comment"));
+
+		testMatch("{dto.personNo}", s(null, null, null, null, null, null, "dto.personNo"));
+		testMatch("{dto.subclass1.personNo}", s(null, null, null, null, null, null, "dto.subclass1.personNo"));
+		testMatch("{dto?.personNo}", s(null, null, null, null, null, null, "dto?.personNo"));
+		testMatch("{dto?.subclass1.personNo}", s(null, null, null, null, null, null, "dto?.subclass1.personNo"));
+		testMatch("{dto?.subclass1?.personNo}", s(null, null, null, null, null, null, "dto?.subclass1?.personNo"));
 	}
 
 	private static void testMatch(final String sql, final Collection<String[]> expected) {

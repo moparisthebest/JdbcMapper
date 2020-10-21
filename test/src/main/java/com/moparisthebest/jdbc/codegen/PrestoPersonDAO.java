@@ -32,6 +32,15 @@ public interface PrestoPersonDAO extends PersonDAO {
 	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({personNo}, {birthDate}, {firstName}, {lastName})")
 	int insertPerson(long personNo, Date birthDate, String firstName, String lastName);
 
+	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({person.personNo}, {person.birthDate}, {person.firstName}, {person.lastName})")
+	int insertPerson(FieldPerson person);
+
+	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({person.subClass1.subClass2.subClass3.personNo}, {person.subClass1.subClass2.subClass3.birthDate}, {person.firstName}, {person.subClass1.subClass2.subClass3.lastName})")
+	int insertPublicFieldDto(PublicFieldDto person);
+
+	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({person?.subClass1?.subClass2?.subClass3?.personNo}, {person?.subClass1?.subClass2?.subClass3?.birthDate}, {person.firstName}, {person?.subClass1?.subClass2?.subClass3?.lastName})")
+	int insertPublicFieldDtoNullSafe(PublicFieldDto person);
+
 	@JdbcMapper.SQL("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES ({personNo}, {birthDate}, {firstName}, {lastName})")
 	long insertPersonGeneratedKey(long personNo, Date birthDate, String firstName, String lastName);
 

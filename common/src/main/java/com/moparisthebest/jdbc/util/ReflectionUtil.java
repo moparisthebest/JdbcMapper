@@ -23,4 +23,17 @@ public class ReflectionUtil {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static <T> T getValue(final Class<?> clazz, final String declaredField, final Class<T> retClazz, final Object obj) {
+		if(obj == null) return null;
+		return getValue(getAccessibleField(clazz, declaredField), retClazz, obj);
+	}
+
+	public static <T> T getValue(final Field field, final Class<T> retClazz, final Object obj) {
+		try {
+			return retClazz.cast(field.get(obj));
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

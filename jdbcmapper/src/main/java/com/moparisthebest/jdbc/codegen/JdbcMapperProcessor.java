@@ -14,7 +14,6 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.*;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -30,7 +29,7 @@ import java.util.stream.Stream;
 import static com.moparisthebest.jdbc.TryClose.tryClose;
 import static com.moparisthebest.jdbc.codegen.JdbcMapper.DatabaseType.ORACLE;
 import static com.moparisthebest.jdbc.codegen.JdbcMapper.beanSuffix;
-import static com.moparisthebest.jdbc.codegen.SpecialVariableElement.SpecialType.SQL;
+import static com.moparisthebest.jdbc.codegen.SpecialVariableElement.SpecialType.*;
 
 /**
  * Created by mopar on 5/24/17.
@@ -391,12 +390,20 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 								int inListBindParamsIdx = -1;
 								while (bindParamMatcher.find()) {
 									final String paramName = bindParamMatcher.group(7);
-									final VariableElement bindParam = paramMap.get(paramName);
+									int indexOfFirstPeriod = paramName.indexOf(".");
+									final String paramNameTopLevel;
+									if (indexOfFirstPeriod != -1) {
+										final int indexOfFirstNullSafe = paramName.indexOf("?.");
+										paramNameTopLevel = paramName.substring(0, Math.min(indexOfFirstPeriod, indexOfFirstNullSafe == -1 ? Integer.MAX_VALUE : indexOfFirstNullSafe));
+									} else {
+										paramNameTopLevel = paramName;
+									}
+									final VariableElement bindParam = paramMap.get(paramNameTopLevel);
 									if (bindParam == null) {
 										processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, String.format("@JdbcMapper.SQL sql has bind param '%s' not in method parameter list", paramName), methodElement);
 										continue;
 									}
-									unusedParams.remove(paramName);
+									unusedParams.remove(paramNameTopLevel);
 									final String clobBlobSql = bindParamMatcher.group(5);
 									final String inColumnName = bindParamMatcher.group(2);
 									if (inColumnName == null) {
@@ -404,13 +411,14 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 											// shortcut for Bindable without sql:
 											if (types.isAssignable(bindParam.asType(), bindableType)) {
 												bindParamMatcher.appendReplacement(sb, "REPLACEMEWITHUNQUOTEDQUOTEPLZ + " + paramName + " + REPLACEMEWITHUNQUOTEDQUOTEPLZ");
-												final SpecialVariableElement sve = new SpecialVariableElement(bindParam, SQL, null);
+												final SpecialVariableElement sve = new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod, SQL, null);
 												bindParams.add(sve);
 												sqlParam = true;
 												sqlIterableParam |= sve.iterable || sve.bindable;
 											} else {
 												bindParamMatcher.appendReplacement(sb, "?");
-												bindParams.add(bindParam);
+												bindParams.add(indexOfFirstPeriod == -1 ? bindParam :
+														new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod, PLAIN));
 											}
 										} else {
 											final String upperClobBlobSql = clobBlobSql.toUpperCase();
@@ -419,7 +427,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 												blobCharset = blobCharset.substring(0, blobCharset.indexOf(':')).trim();
 											if(upperClobBlobSql.startsWith("SQL")) {
 												bindParamMatcher.appendReplacement(sb, "REPLACEMEWITHUNQUOTEDQUOTEPLZ + " + paramName + " + REPLACEMEWITHUNQUOTEDQUOTEPLZ");
-												final SpecialVariableElement sve = new SpecialVariableElement(bindParam, SQL, blobCharset);
+												final SpecialVariableElement sve = new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod, SQL, blobCharset);
 												bindParams.add(sve);
 												sqlParam = true;
 												sqlIterableParam |= sve.iterable || sve.bindable;
@@ -427,19 +435,19 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 												bindParamMatcher.appendReplacement(sb, "?");
 												switch (upperClobBlobSql.charAt(0)) {
 													case 'B':
-														bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.BLOB, blobCharset));
+														bindParams.add(new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod, BLOB, blobCharset));
 														break;
 													case 'C':
 														if (blobCharset != null)
 															processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with clob", bindParam);
-														bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.CLOB));
+														bindParams.add(new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod, CLOB));
 														break;
 													case 'S':
 														if (blobCharset != null)
 															processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "blob character set not valid with str", bindParam);
 														if(upperClobBlobSql.startsWith("STRB")) // side-effect of regex matching...
 															processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "special variable type can only be clob/blob/str/sql, not " + clobBlobSql, bindParam);
-														bindParams.add(new SpecialVariableElement(bindParam, SpecialVariableElement.SpecialType.STR_BOOLEAN));
+														bindParams.add(new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod, STR_BOOLEAN));
 														break;
 												}
 											} else {
@@ -451,8 +459,8 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 											processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "cannot combine in/not in and clob/blob/str/sql", bindParam);
 										SpecialVariableElement inListBindParam = inListBindParams.get(paramName);
 										if(inListBindParam == null) {
-											inListBindParam = new SpecialVariableElement(bindParam,
-                                                    databaseType == JdbcMapper.DatabaseType.BIND ? SpecialVariableElement.SpecialType.BIND_IN_LIST : SpecialVariableElement.SpecialType.IN_LIST,
+											inListBindParam = new SpecialVariableElement(allowReflection, bindParam, paramName, indexOfFirstPeriod,
+                                                    databaseType == JdbcMapper.DatabaseType.BIND ? BIND_IN_LIST : IN_LIST,
                                                     ++inListBindParamsIdx);
 											//IFJAVA8_START
 											if(databaseType == JdbcMapper.DatabaseType.BIND) {
@@ -981,9 +989,10 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 		// special behavior
 		if (param instanceof SpecialVariableElement) {
 			final SpecialVariableElement specialParam = (SpecialVariableElement) param;
+			variableName = specialParam.getName();
 			switch (specialParam.specialType) {
                 case BIND_IN_LIST: {
-                    w.append("for(final ").append(specialParam.getComponentTypeString()).append(" _bindInListParam : ").append(specialParam.getName()).append(")\n");
+                    w.append("for(final ").append(specialParam.getComponentTypeString()).append(" _bindInListParam : ").append(variableName).append(")\n");
                     w.append("\t\t\t\tps.setObject(").append(index).append(", _bindInListParam);\n");
                     return;
                 }
@@ -1109,7 +1118,7 @@ public class JdbcMapperProcessor extends AbstractProcessor {
 				method = "Ref";
 			} else {
 				// shouldn't get here ever, if we do the types should be more specific
-				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param: " + variableName, param);
+				processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "@JdbcMapper.SQL could not properly infer PreparedStatement bind call for param: " + variableName + ", type: " + o, param instanceof SpecialVariableElement ? ((SpecialVariableElement)param).delegate : param);
 				return;
 			}
 		w.write("ps.set");

@@ -65,6 +65,57 @@ public class PersonDAOBean implements PersonDAO {
 	}
 
 	@Override
+	public int insertPerson(final com.moparisthebest.jdbc.dto.FieldPerson person) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)");
+			ps.setObject(1, person.getPersonNo());
+			ps.setObject(2, person.getBirthDate() == null ? null : new java.sql.Timestamp(person.getBirthDate().getTime()));
+			ps.setObject(3, person.getFirstName());
+			ps.setObject(4, person.getLastName());
+			return ps.executeUpdate();
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	@Override
+	public int insertPublicFieldDto(final com.moparisthebest.jdbc.dto.PublicFieldDto person) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)");
+			ps.setObject(1, com.moparisthebest.jdbc.util.ReflectionUtil.getValue(com.moparisthebest.jdbc.dto.PublicFieldDto.SubClass3.class, "personNo", long.class, (person.subClass1.subClass2.subClass3)));
+			ps.setObject(2, person.subClass1.subClass2.subClass3.birthDate == null ? null : new java.sql.Timestamp(person.subClass1.subClass2.subClass3.birthDate.getTime()));
+			ps.setObject(3, person.firstName);
+			ps.setObject(4, person.subClass1.subClass2.subClass3.lastName);
+			return ps.executeUpdate();
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	@Override
+	public int insertPublicFieldDtoNullSafe(final com.moparisthebest.jdbc.dto.PublicFieldDto person) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("INSERT INTO person (person_no, birth_date, last_name, first_name) VALUES (?, ?, ?, ?)");
+			ps.setObject(1, com.moparisthebest.jdbc.util.ReflectionUtil.getValue(com.moparisthebest.jdbc.dto.PublicFieldDto.SubClass3.class, "personNo", long.class, (((((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3) == null ? null : (((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3)))));
+			ps.setObject(2, ((((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3) == null ? null : (((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3)).birthDate == null ? null : new java.sql.Timestamp(((((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3) == null ? null : (((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3)).birthDate.getTime()));
+			ps.setObject(3, person.firstName);
+			ps.setObject(4, ((((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3) == null ? null : (((((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2) == null ? null : (((((person) == null ? null : (person)).subClass1) == null ? null : (((person) == null ? null : (person)).subClass1)).subClass2)).subClass3)).lastName);
+			return ps.executeUpdate();
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			tryClose(ps);
+		}
+	}
+
+	@Override
 	public long insertPersonGeneratedKey(final long personNo, final java.util.Date birthDate, final java.lang.String firstName, final java.lang.String lastName) {
 		PreparedStatement ps = null;
 		try {
